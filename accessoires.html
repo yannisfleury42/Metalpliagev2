@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Accessoires de pose pour couvertines acier — éclisses, angles, cornières, supports, embouts, colle et visserie laquée. Metal Pliage.">
+  <title>Accessoires de Couvertines — Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .acc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+    .acc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.2rem 2rem;
+      transition: border-color var(--t), box-shadow var(--t), transform var(--t);
+      scroll-margin-top: calc(var(--nav-h) + 2rem);
+    }
+    .acc-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px var(--accent-glow);
+      transform: translateY(-3px);
+    }
+    .acc-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .acc-icon svg { color: var(--accent); }
+    .acc-num {
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .acc-card h3 {
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--text-primary);
+      margin-bottom: 0.9rem;
+    }
+    .acc-card p {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+    }
+    .acc-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .acc-badge {
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      background: #2A2A2A;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .acc-badge--color { border-color: var(--accent); color: var(--accent); }
+    @media (max-width: 1024px) { .acc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .acc-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+      <div class="france-badge" aria-label="Fabriqué en France">
+        <div class="france-flag" aria-hidden="true">
+          <span class="f-blue"></span>
+          <span class="f-white"></span>
+          <span class="f-red"></span>
+        </div>
+        Fabriqué en France
+      </div>
+      <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="index.html#couvertine">Couvertine</a></li>
+        <li class="nav-item"><a href="index.html#pliage">Pliage</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="Fil d'Ariane">
+        <a href="index.html">Accueil</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Accessoires</span>
+      </nav>
+      <p class="section-label">FINITIONS ET POSE</p>
+      <h1 class="animate-fadeup">ACCESSOIRES<br>DE COUVERTINES</h1>
+      <div class="page-hero-accent"></div>
+      <p class="page-hero-desc animate-fadeup" style="--delay: 0.15s">Tous les accessoires nécessaires à une pose soignée et durable de vos couvertines et profilés acier — jonctions, angles, fixations et consommables assortis.</p>
+    </div>
+  </section>
+
+  <!-- ACCESSORIES GRID -->
+  <section style="padding: var(--section-pad) 0; background: var(--bg-base);">
+    <div class="acc-grid">
+
+      <!-- 1. ÉCLISSES -->
+      <article id="eclisses" class="acc-card animate-fadeup">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><line x1="12" y1="5" x2="12" y2="19"/><rect x="3" y="10" width="18" height="4" rx="0"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 01</div>
+        <h3>Éclisses de Jonction</h3>
+        <p>Manchon intérieur métallique permettant de raccorder bout-à-bout deux longueurs de couvertine. Glisse à l'intérieur des deux éléments pour une jonction invisible et étanche.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Disponibles dans toutes les largeurs de couvertine. La longueur de chevauchement recommandée est de 150 mm de chaque côté pour une parfaite tenue.</p>
+        <div class="acc-badges">
+          <span class="acc-badge acc-badge--color">19 coloris RAL</span>
+          <span class="acc-badge">Toutes largeurs</span>
+          <span class="acc-badge">Jonction étanche</span>
+        </div>
+      </article>
+
+      <!-- 2. ANGLES -->
+      <article id="angles" class="acc-card animate-fadeup" style="--delay: 0.05s">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 7 13 7 13 15"/><path d="M21 7L13 15 3 15"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 02</div>
+        <h3>Angles de Couvertines</h3>
+        <p>Pièces d'angle fraisées numériquement (CNC) pour raccorder les couvertines aux coins intérieurs et extérieurs d'une tête de mur. La précision de découpe garantit un ajustement parfait, sans jeu ni superposition.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Disponibles en angle rentrant (90° intérieur) et angle sortant (90° extérieur). Sur mesure pour angles spéciaux sur demande.</p>
+        <div class="acc-badges">
+          <span class="acc-badge acc-badge--color">19 coloris RAL</span>
+          <span class="acc-badge">CNC précision</span>
+          <span class="acc-badge">Rentrant / Sortant</span>
+        </div>
+      </article>
+
+      <!-- 3. CORNIÈRES -->
+      <article id="cornieres" class="acc-card animate-fadeup" style="--delay: 0.1s">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21L3 5L19 5"/><line x1="3" y1="21" x2="19" y2="5"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 03</div>
+        <h3>Cornières de Départ</h3>
+        <p>Profilé d'amorce fixé au nu du mur pour recevoir le bord latéral de la couvertine. Permet une mise en niveau précise et assure l'étanchéité côté façade dès la première rangée.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Longueur standard 2 000 mm, recoupable selon besoins. Épaisseur adaptée pour chaque type de couvertine.</p>
+        <div class="acc-badges">
+          <span class="acc-badge acc-badge--color">19 coloris RAL</span>
+          <span class="acc-badge">L = 2 000 mm</span>
+          <span class="acc-badge">Mise à niveau</span>
+        </div>
+      </article>
+
+      <!-- 4. SUPPORTS -->
+      <article id="supports" class="acc-card animate-fadeup" style="--delay: 0.15s">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 04</div>
+        <h3>Supports de Fixation</h3>
+        <p>Système d'attaches métalliques permettant une pose sans collage (pose sur support). Les pattes de fixation s'insèrent sous la couvertine et permettent les mouvements de dilatation thermique sans contraindre le profilé.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Disponibles en acier inoxydable ou acier galvanisé. Fixation dans le mortier de jointoiement ou en chevillage sur maçonnerie.</p>
+        <div class="acc-badges">
+          <span class="acc-badge">Acier inox / galva</span>
+          <span class="acc-badge">Dilatation libre</span>
+          <span class="acc-badge">Pose sans colle</span>
+        </div>
+      </article>
+
+      <!-- 5. EMBOUTS -->
+      <article id="embouts" class="acc-card animate-fadeup" style="--delay: 0.2s">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 05</div>
+        <h3>Embouts de Couvertine</h3>
+        <p>Pièces de fermeture positionnées aux extrémités ouvertes d'une couvertine. Ils ferment les faces latérales, empêchent l'infiltration d'eau et d'insectes, et donnent une finition nette à l'extrémité du profilé.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Fabriqués sur mesure selon le profil exact de votre couvertine. Pose par agrafage ou collage.</p>
+        <div class="acc-badges">
+          <span class="acc-badge acc-badge--color">19 coloris RAL</span>
+          <span class="acc-badge">Sur mesure</span>
+          <span class="acc-badge">Fermeture étanche</span>
+        </div>
+      </article>
+
+      <!-- 6. COLLE -->
+      <article id="colle" class="acc-card animate-fadeup" style="--delay: 0.25s">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 06</div>
+        <h3>Colle pour Couvertine</h3>
+        <p>Mastic adhésif MS polymère haute performance pour la pose collée des couvertines sur muret ou support maçonné. Compatible avec l'acier laqué, l'aluminium et le béton. Résistance au gel, aux UV et aux intempéries.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Application au pistolet standard. Conditionnement 600 ml — suffit pour environ 8 à 12 mètres linéaires selon la largeur du cordon.</p>
+        <div class="acc-badges">
+          <span class="acc-badge">MS Polymère</span>
+          <span class="acc-badge">600 ml</span>
+          <span class="acc-badge">Résistant UV / gel</span>
+        </div>
+      </article>
+
+      <!-- 7. VISSERIE -->
+      <article id="visserie" class="acc-card animate-fadeup" style="--delay: 0.3s">
+        <div class="acc-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M8.5 6 A4 4 0 0 1 12 2 A4 4 0 0 1 15.5 6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="9" y1="14" x2="15" y2="14"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+        </div>
+        <div class="acc-num">Accessoire 07</div>
+        <h3>Visserie Laquée</h3>
+        <p>Vis auto-perforantes (auto-foreuses) pour la fixation discrète des couvertines et profilés acier. Tête hexagonale avec rondelle EPDM intégrée pour étanchéité. Disponibles dans la même teinte RAL que votre couvertine.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Dimension standard 4,8 × 35 mm. Conditionnement par boîtes de 100 unités. Compatible avec support bois, acier et aluminium.</p>
+        <div class="acc-badges">
+          <span class="acc-badge acc-badge--color">19 coloris RAL</span>
+          <span class="acc-badge">Auto-perforantes</span>
+          <span class="acc-badge">Joint EPDM</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- TRUST SECTION -->
+  <section class="trust-section" aria-label="Nos garanties">
+    <div class="trust-grid">
+      <article class="trust-card animate-fadeup">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h4>Fabrication française</h4>
+        <p>Toutes nos pièces sont fabriquées dans notre atelier en France, sur plieuses numériques haute précision.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.1s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Laquage poudre Époxy 80 microns</h4>
+        <p>Résistance garantie aux UV, à la corrosion, aux intempéries et aux variations climatiques. Tenue des couleurs dans le temps.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.2s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h4>Livraison sous 10 jours ouvrés</h4>
+        <p>Franco de port dès 1 200 € HT. Livraison à domicile ou directement sur chantier.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.3s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h4>Conseil technique disponible</h4>
+        <p>Notre équipe vous accompagne dans le choix de vos pièces, des cotes et des finitions adaptées à votre projet.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding: var(--section-pad) 0; background: var(--bg-base);">
+    <div class="cta-banner animate-fadeup">
+      <div class="cta-banner-text">
+        <h3>Besoin d'un devis accessoires ?</h3>
+        <p>Contactez-nous avec votre liste de produits et nous vous préparons un devis complet sous 24h.</p>
+      </div>
+      <a href="contact.html" class="btn-primary">Demander un devis</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo footer-logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <p class="footer-tagline">Fabrication française &nbsp;·&nbsp; Acier de précision sur mesure</p>
+      </div>
+      <nav class="footer-nav" aria-label="Liens de bas de page">
+        <ul role="list">
+          <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="configurateur.html">Configurateur</a></li>
+          <li><a href="accessoires.html">Accessoires</a></li>
+          <li><a href="guides.html">Guides de pose</a></li>
+          <li><a href="contact.html">Contact / Devis</a></li>
+        </ul>
+      </nav>
+      <address class="footer-contact">
+        <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
+        <p><a href="tel:+33100000000">+33 (0)1 00 00 00 00</a></p>
+        <p>France</p>
+      </address>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+      <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
+    </div>
+  </footer>
+
+  <div class="cart-drawer" id="cart-drawer" aria-hidden="true" role="dialog" aria-label="Votre panier">
+    <div class="cart-drawer-inner">
+      <div class="cart-drawer-header">
+        <h3>VOTRE PANIER</h3>
+        <button class="cart-close-btn" id="cart-close-btn" aria-label="Fermer le panier">×</button>
+      </div>
+      <div class="cart-items-list" id="cart-items-list"></div>
+      <div class="cart-empty-state" id="cart-empty"><p>Votre panier est vide.</p></div>
+      <div class="cart-drawer-footer" id="cart-footer" hidden>
+        <div class="cart-total-row">
+          <span>Total commande</span>
+          <span id="cart-total-display">0,00 €</span>
+        </div>
+        <button class="btn-checkout" id="btn-checkout">Procéder au paiement</button>
+      </div>
+    </div>
+  </div>
+  <div class="cart-backdrop" id="cart-backdrop"></div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>
+

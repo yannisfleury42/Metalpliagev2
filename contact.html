@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contactez Metal Pliage pour un devis gratuit sur mesure. Réponse sous 24h ouvrées. Fabrication française d'acier, inox, couvertines.">
+  <title>Contact &amp; Devis — Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/futuriste.css">
+</head>
+<body>
+
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+      <div class="france-badge" aria-label="Fabriqué en France">
+        <div class="france-flag" aria-hidden="true">
+          <span class="f-blue"></span>
+          <span class="f-white"></span>
+          <span class="f-red"></span>
+        </div>
+        Fabriqué en France
+      </div>
+      <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="index.html#couvertine">Couvertine</a></li>
+        <li class="nav-item"><a href="index.html#pliage">Pliage</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO COURT
+  ═══════════════════════════════════════════ -->
+  <section class="page-hero" aria-label="Contact">
+    <div class="page-hero-inner">
+      <nav class="breadcrumb" aria-label="Fil d'Ariane">
+        <a href="index.html">Accueil</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Contact</span>
+      </nav>
+      <span class="section-label animate-fadeup">DEVIS GRATUIT · RÉPONSE 24H</span>
+      <h1 class="animate-fadeup" style="--delay: 0.1s">PARLONS DE<br><span class="text-gradient">VOTRE PROJET</span></h1>
+      <p class="page-hero-desc animate-fadeup" style="--delay: 0.2s">Devis gratuit et sans engagement. Notre équipe technique vous répond sous 24 heures ouvrées.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FORMULAIRE + INFOS
+  ═══════════════════════════════════════════ -->
+  <section class="contact-page-section" aria-labelledby="contact-title">
+    <div class="section-inner contact-page-inner">
+
+      <div class="contact-page-form animate-fadeup">
+        <header class="contact-form-header">
+          <h2 id="contact-title">Demande de devis</h2>
+          <p>Remplissez le formulaire ci-dessous ou envoyez-nous vos plans / DXF. Nous vous contactons sous 24h.</p>
+        </header>
+
+        <form class="contact-form" novalidate>
+          <div class="form-row form-row--2col">
+            <div class="form-group">
+              <label for="f-name">Nom *</label>
+              <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Jean Dupont" required aria-required="true">
+            </div>
+            <div class="form-group">
+              <label for="f-company">Société</label>
+              <input type="text" id="f-company" name="company" autocomplete="organization" placeholder="Entreprise SA">
+            </div>
+          </div>
+          <div class="form-row form-row--2col">
+            <div class="form-group">
+              <label for="f-email">Email *</label>
+              <input type="email" id="f-email" name="email" autocomplete="email" placeholder="contact@entreprise.fr" required aria-required="true">
+            </div>
+            <div class="form-group">
+              <label for="f-phone">Téléphone</label>
+              <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="+33 6 00 00 00 00">
+            </div>
+          </div>
+          <div class="form-row form-row--2col">
+            <div class="form-group">
+              <label for="f-product">Produit *</label>
+              <select id="f-product" name="product" required aria-required="true">
+                <option value="" disabled selected>Sélectionner un produit</option>
+                <option value="tole-acier">Tôle Acier Huilée</option>
+                <option value="inox-304">Inox 304 / 316L</option>
+                <option value="inox-brosse">Inox Brossé</option>
+                <option value="couvertine-std">Couvertines Standard</option>
+                <option value="couvertine-custom">Couvertines Sur Mesure</option>
+                <option value="pliage">Pliage Sur Mesure</option>
+                <option value="autre">Autre / Plusieurs produits</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-qty">Quantité / Linéaire</label>
+              <input type="text" id="f-qty" name="quantity" placeholder="Ex : 50 ml, 20 m², 100 pièces">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-dimensions">Dimensions / Cotes</label>
+            <input type="text" id="f-dimensions" name="dimensions" placeholder="Ex : 300 × 600 mm, épaisseur 1,5 mm, angle 90°">
+          </div>
+          <div class="form-group">
+            <label for="f-message">Message / Détails du projet</label>
+            <textarea id="f-message" name="message" rows="5" placeholder="Décrivez votre projet, vos contraintes, votre délai souhaité..."></textarea>
+          </div>
+          <div class="form-footer">
+            <p class="form-legal">* Champs obligatoires. Vos données ne sont pas transmises à des tiers.</p>
+            <button type="submit" class="btn-primary">Envoyer la demande</button>
+          </div>
+        </form>
+
+        <div class="form-success-msg" aria-live="polite" hidden>
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h3>Demande envoyée</h3>
+          <p>Nous vous répondrons sous 24h ouvrées.</p>
+        </div>
+      </div>
+
+      <!-- INFOS PRATIQUES -->
+      <aside class="contact-page-info animate-fadeup" style="--delay: 0.1s" aria-label="Informations de contact">
+        <div class="contact-info-block">
+          <span class="section-label">EMAIL</span>
+          <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
+        </div>
+        <div class="contact-info-block">
+          <span class="section-label">TÉLÉPHONE</span>
+          <p><a href="tel:+33100000000">+33 (0)1 00 00 00 00</a></p>
+          <p class="contact-info-note">Du lundi au vendredi, 8h – 17h</p>
+        </div>
+        <div class="contact-info-block">
+          <span class="section-label">LOCALISATION</span>
+          <p>France — Livraison nationale</p>
+          <p class="contact-info-note">Retrait atelier sur rendez-vous</p>
+        </div>
+        <div class="contact-info-block">
+          <span class="section-label">DÉLAI DE RÉPONSE</span>
+          <p>Sous 24h ouvrées</p>
+          <p class="contact-info-note">Devis détaillé sans engagement</p>
+        </div>
+        <div class="contact-configurateur-cta">
+          <p>Besoin d'un prix immédiat ?</p>
+          <a href="configurateur.html" class="btn-outline btn-magnetic">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Utiliser le configurateur
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TRUST SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="trust-section" aria-label="Nos garanties">
+    <div class="trust-grid">
+      <article class="trust-card animate-fadeup">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h4>Fabrication française</h4>
+        <p>Toutes nos pièces sont fabriquées dans notre atelier en France, sur plieuses numériques haute précision.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.1s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Laquage poudre Époxy 80 microns</h4>
+        <p>Résistance garantie aux UV, à la corrosion, aux intempéries et aux variations climatiques. Tenue des couleurs dans le temps.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.2s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h4>Livraison sous 10 jours ouvrés</h4>
+        <p>Franco de port dès 1 200 € HT. Livraison à domicile ou directement sur chantier.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.3s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h4>Conseil technique disponible</h4>
+        <p>Notre équipe vous accompagne dans le choix de vos pièces, des cotes et des finitions adaptées à votre projet.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo footer-logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <p class="footer-tagline">Fabrication française &nbsp;·&nbsp; Acier de précision sur mesure</p>
+      </div>
+      <nav class="footer-nav" aria-label="Liens de bas de page">
+        <ul role="list">
+          <li><a href="index.html#products">Produits</a></li>
+          <li><a href="index.html#fabrication">Savoir-Faire</a></li>
+          <li><a href="index.html#finishes">Finitions</a></li>
+          <li><a href="contact.html" aria-current="page">Contact / Devis</a></li>
+        </ul>
+      </nav>
+      <address class="footer-contact">
+        <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
+        <p><a href="tel:+33100000000">+33 (0)1 00 00 00 00</a></p>
+        <p>France</p>
+      </address>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+      <div class="footer-legal-links">
+        <a href="cgv.html">CGV</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="livraison-retours.html">Livraison &amp; Retours</a>
+      </div>
+      <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/futuriste.js"></script>
+</body>
+</html>
+
