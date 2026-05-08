@@ -332,35 +332,121 @@
           <div class="acc-diag-card" onclick="document.getElementById('acc-angle').scrollIntoView({behavior:'smooth',block:'center'})">
             <div class="acc-diag-num">③</div>
             <div class="acc-diag-svgwrap">
-              <svg viewBox="0 0 300 165" fill="none" xmlns="http://www.w3.org/2000/svg"
-                   aria-label="Schéma angle de finition 90°">
-                <rect width="300" height="165" fill="#0a1018"/>
-                <!-- Couvertine principale (horizontale) -->
-                <rect id="diag-angle-cov-main" x="15" y="85" width="162" height="32" fill="#4A7090"/>
-                <rect x="15" y="117" width="162" height="6" fill="#2A5060"/>
-                <!-- Couvertine perpendiculaire -->
-                <rect id="diag-angle-cov-perp" x="147" y="18" width="32" height="67" fill="#4A7090"/>
-                <rect x="179" y="18" width="6" height="67" fill="#2A5060"/>
-                <!-- ANGLE DE FINITION (orange — pièce en L à l'angle extérieur) -->
-                <!-- Bras horizontal (va vers la droite depuis le bout de la section principale) -->
-                <rect x="177" y="82" width="32" height="38" fill="#FF4500" opacity="0.93"/>
-                <!-- Bras vertical (va vers le haut depuis le bout de la section perpendiculaire) -->
-                <rect x="144" y="15" width="36" height="32" fill="#FF4500" opacity="0.93"/>
-                <!-- Coins propres -->
-                <rect x="177" y="82" width="36" height="5" fill="#CC3300" opacity="0.9"/>
-                <rect x="177" y="82" width="5" height="38" fill="#CC3300" opacity="0.9"/>
-                <!-- Filet de jointure entre les deux bras -->
-                <rect x="177" y="15" width="4" height="72" fill="#FF4500" opacity="0.6"/>
-                <!-- Labels indicatifs -->
-                <text x="96" y="106" text-anchor="middle" font-size="8" font-family="Inter,sans-serif"
-                      fill="rgba(255,255,255,0.28)" letter-spacing="0.1em" font-weight="600">COUVERTINE</text>
-                <text x="163" y="58" text-anchor="middle" font-size="8" font-family="Inter,sans-serif"
-                      fill="rgba(255,255,255,0.28)" letter-spacing="0.1em" font-weight="600" transform="rotate(-90,163,58)">COUVERTINE</text>
-                <!-- Symbole angle droit -->
-                <path d="M177,117 L177,123 L183,123" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="none"/>
-                <!-- Label -->
-                <text x="150" y="156" text-anchor="middle" font-size="8" font-family="Inter,sans-serif"
-                      fill="rgba(255,255,255,0.38)" letter-spacing="0.13em" font-weight="600">ANGLE DE FINITION 90°</text>
+              <svg viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+                   aria-label="Schéma angle de finition 90° — vue 3D">
+                <defs>
+                  <linearGradient id="muret-top-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#c8d0d4"/>
+                    <stop offset="100%" stop-color="#9ca5a8"/>
+                  </linearGradient>
+                  <linearGradient id="muret-front-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#9ca5a8"/>
+                    <stop offset="100%" stop-color="#7a8388"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Fond clair -->
+                <rect width="600" height="300" fill="#1e2630"/>
+
+                <!-- Ombre au sol pour ancrer le muret -->
+                <ellipse cx="270" cy="245" rx="230" ry="14" fill="#0a1018" opacity="0.5"/>
+
+                <!-- ═══ MURET en L (vue 3D iso) ═══ -->
+
+                <!-- Face droite (côté visible à droite) -->
+                <polygon points="380,220 453.6,177.5 453.6,107.5 380,150"
+                         fill="#7a8388" stroke="#4a5358" stroke-width="0.6"/>
+
+                <!-- Face avant (front) -->
+                <polygon points="40,220 380,220 380,150 40,150"
+                         fill="url(#muret-front-grad)" stroke="#4a5358" stroke-width="0.6"/>
+
+                <!-- Joints horizontaux face avant (parpaings) -->
+                <line x1="40" y1="173" x2="380" y2="173" stroke="#5a6266" stroke-width="0.8"/>
+                <line x1="40" y1="197" x2="380" y2="197" stroke="#5a6266" stroke-width="0.8"/>
+
+                <!-- Joints verticaux face avant (motif briques décalées) -->
+                <line x1="100" y1="150" x2="100" y2="173" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="220" y1="150" x2="220" y2="173" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="340" y1="150" x2="340" y2="173" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="160" y1="173" x2="160" y2="197" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="280" y1="173" x2="280" y2="197" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="100" y1="197" x2="100" y2="220" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="220" y1="197" x2="220" y2="220" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="340" y1="197" x2="340" y2="220" stroke="#5a6266" stroke-width="0.6"/>
+
+                <!-- Joints sur la face droite (parpaings vus de côté) -->
+                <line x1="380" y1="173" x2="453.6" y2="130.5" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="380" y1="197" x2="453.6" y2="154.5" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="397" y1="159" x2="397" y2="220" stroke="#5a6266" stroke-width="0.5"/>
+                <line x1="430" y1="140" x2="430" y2="201" stroke="#5a6266" stroke-width="0.5"/>
+
+                <!-- Top face du muret en L (les portions visibles, hors couvertine) -->
+                <polygon points="40,150 380,150 453.6,107.5 403.6,107.5 351.65,137.5 61.65,137.5"
+                         fill="url(#muret-top-grad)" stroke="#4a5358" stroke-width="0.6"/>
+
+                <!-- Joints subtils sur le top (suivent les arêtes des parpaings) -->
+                <line x1="61.65" y1="137.5" x2="380" y2="150" stroke="rgba(110,120,124,0.55)" stroke-width="0.5"/>
+                <line x1="403.6" y1="107.5" x2="380" y2="150" stroke="rgba(110,120,124,0.55)" stroke-width="0.5"/>
+
+                <!-- ═══ COUVERTINE pré-pliée 90° d'un seul tenant ═══ -->
+
+                <!-- Bras 2 (vertical, profondeur) — face droite, raccourci à y=90 -->
+                <polygon points="406.65,137.5 423.97,127.5 423.97,122.5 406.65,132.5"
+                         fill="#3A5868"/>
+
+                <!-- Bras 2 — TOP (couleur RAL dynamique, raccourci à y=90) -->
+                <polygon id="diag-angle-cov-perp"
+                         points="346.65,132.5 406.65,132.5 423.97,122.5 363.97,122.5"
+                         fill="#4A7090"/>
+
+                <!-- Bras 1 (horizontal, devant) — face droite -->
+                <polygon points="382.84,151.25 406.65,137.5 406.65,132.5 382.84,146.25"
+                         fill="#3A5868"/>
+
+                <!-- Bras 1 — face avant (rejet d'eau visible, raccourci à x=305) -->
+                <polygon points="302.84,151.25 382.84,151.25 382.84,146.25 302.84,146.25"
+                         fill="#2A4858"/>
+
+                <!-- Bras 1 — TOP (couleur RAL dynamique, raccourci à x=305, mesh à y=50 avec bras 2) -->
+                <polygon id="diag-angle-cov-main"
+                         points="302.84,146.25 382.84,146.25 406.65,132.5 326.65,132.5"
+                         fill="#4A7090"/>
+
+                <!-- ═══ Annotations ═══ -->
+
+                <!-- Label MURET (sur la portion visible du bras horizontal) -->
+                <text x="170" y="195" text-anchor="middle" font-size="14" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.85)" letter-spacing="0.25em" font-weight="700">MURET</text>
+
+                <!-- Label COUVERTINE avec leader line vers la pièce -->
+                <text x="105" y="50" text-anchor="start" font-size="13" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">COUVERTINE PRÉ-PLIÉE 90°</text>
+                <text x="105" y="63" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,140,90,0.85)" letter-spacing="0.16em" font-weight="600">UN SEUL TENANT — couvre uniquement le coin</text>
+                <line x1="305" y1="55" x2="350" y2="138" stroke="rgba(255,69,0,0.55)" stroke-width="1" stroke-dasharray="3,3"/>
+                <circle cx="350" cy="138" r="2.5" fill="rgba(255,69,0,0.85)"/>
+
+                <!-- Indication "couvertines droites suivent" à gauche du muret -->
+                <polygon points="6,185 16,180 16,190" fill="rgba(255,69,0,0.75)"/>
+                <text x="22" y="170" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">couvertines droites</text>
+                <text x="22" y="183" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">suivent ←</text>
+
+                <!-- Indication "couvertines droites suivent" à l'arrière (haut-droite, vers la profondeur) -->
+                <polygon points="475,75 470,85 480,85" fill="rgba(255,69,0,0.75)"/>
+                <line x1="475" y1="85" x2="450" y2="105" stroke="rgba(255,69,0,0.55)" stroke-width="1.2"/>
+                <text x="488" y="60" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">↑ couvertines</text>
+                <text x="488" y="73" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">droites suivent</text>
+
+                <!-- Titre principal en bas -->
+                <text x="300" y="278" text-anchor="middle" font-size="11" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.7)" letter-spacing="0.22em" font-weight="700">ANGLE DE FINITION 90°</text>
+                <text x="300" y="291" text-anchor="middle" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.45)" letter-spacing="0.14em">VUE 3D · COIN DE MURET EN L · COUVERTURE LOCALE</text>
               </svg>
             </div>
             <div class="acc-diag-info">

@@ -880,8 +880,8 @@
 /* ── Schémas accessoires (3 cartes) ─────────────────────────── */
 .acc-diagrams-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: .75rem;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
   margin-bottom: 1.75rem;
 }
 

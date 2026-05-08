@@ -522,7 +522,13 @@
       card.classList.toggle('is-selected', sel);
       card.setAttribute('aria-pressed', String(sel));
     });
+    // Déverrouiller toutes les étapes en une fois — l'utilisateur peut accepter
+    // les valeurs par défaut (B=200, A=40, C=250, L=2000) et passer direct à la
+    // couleur ou aux accessoires sans toucher aux dimensions.
     unlockStep(2);
+    unlockStep(3);
+    unlockStep(4);
+    unlockStep(5);
     updateUI();
   }
 
