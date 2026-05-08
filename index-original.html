@@ -43,11 +43,6 @@
     }
   }
   </script>
-  <style>
-    .hero-slideshow{position:absolute;inset:0;z-index:0;overflow:hidden}
-    .hs-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease-in-out;will-change:opacity}
-    .hs-slide.hs-active{opacity:1}
-  </style>
 </head>
 <body>
 
@@ -159,23 +154,9 @@
   <section id="hero" aria-label="Présentation">
     <div class="hero-letterbox-top" aria-hidden="true"></div>
     <div class="hero-letterbox-bottom" aria-hidden="true"></div>
-    <div class="hero-slideshow" aria-hidden="true">
-      <div class="hs-slide hs-active" style="background-image:url('assets/photos/slide-01.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-02.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-03.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-04.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-05.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-06.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-07.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-08.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-09.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-10.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-11.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-12.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-13.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-14.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-15.jpg')"></div>
-    </div>
+    <video class="hero-video" autoplay muted playsinline aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-ambient-glow" aria-hidden="true"></div>
     <div class="hero-content">
@@ -948,17 +929,6 @@
   </div>
   <div class="cart-backdrop" id="cart-backdrop"></div>
 
-  <script>
-  (function(){
-    var slides = document.querySelectorAll('.hs-slide');
-    var cur = 0;
-    setInterval(function(){
-      slides[cur].classList.remove('hs-active');
-      cur = (cur + 1) % slides.length;
-      slides[cur].classList.add('hs-active');
-    }, 5000);
-  })();
-  </script>
   <script src="https://js.stripe.com/v3/"></script>
   <script src="js/main.js"></script>
   <script src="js/cart.js"></script>

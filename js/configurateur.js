@@ -28,7 +28,7 @@
 
   const ACCESSORIES = [
     { id: 'angle',  name: 'Angle 90°', price: 8 },
-    { id: 'clisse', name: 'Clisse',    price: 6 },
+    { id: 'clisse', name: 'Éclisse',   price: 6 },
     { id: 'talon',  name: 'Talon',     price: 5 },
   ];
 
@@ -707,11 +707,13 @@
     document.getElementById('diag-talon-cov-face')?.setAttribute('fill', face);
     document.getElementById('diag-talon-cov-back')?.setAttribute('fill', back);
 
-    // Clisse diagram
+    // Éclisse diagram — toutes les pièces en couleur RAL (même matériau)
     document.getElementById('diag-clisse-cov-top-l')?.setAttribute('fill', top);
     document.getElementById('diag-clisse-cov-face-l')?.setAttribute('fill', face);
     document.getElementById('diag-clisse-cov-top-r')?.setAttribute('fill', top);
     document.getElementById('diag-clisse-cov-face-r')?.setAttribute('fill', face);
+    document.getElementById('diag-clisse-eclisse-top')?.setAttribute('fill', top);
+    document.getElementById('diag-clisse-eclisse-face')?.setAttribute('fill', face);
 
     // Angle diagram
     document.getElementById('diag-angle-cov-main')?.setAttribute('fill', top);

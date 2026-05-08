@@ -288,42 +288,158 @@
             </div>
           </div>
 
-          <!-- ── CLISSE ── -->
+          <!-- ── ÉCLISSE ── -->
           <div class="acc-diag-card" onclick="document.getElementById('acc-clisse').scrollIntoView({behavior:'smooth',block:'center'})">
             <div class="acc-diag-num">②</div>
             <div class="acc-diag-svgwrap">
-              <svg viewBox="0 0 300 165" fill="none" xmlns="http://www.w3.org/2000/svg"
-                   aria-label="Schéma clisse de jonction">
-                <rect width="300" height="165" fill="#0a1018"/>
-                <!-- Section gauche -->
-                <polygon id="diag-clisse-cov-top-l" points="10,90 140,90 162,75 32,75" fill="#4A7090"/>
-                <polygon points="10,90 140,90 162,75 32,75" fill="rgba(255,255,255,0.05)" pointer-events="none"/>
-                <rect id="diag-clisse-cov-face-l" x="10" y="90" width="130" height="6" fill="#3A5868"/>
-                <rect x="10" y="96" width="5" height="38" fill="#2A4858"/>
-                <rect x="135" y="96" width="5" height="38" fill="#2A4858"/>
-                <!-- Section droite -->
-                <polygon id="diag-clisse-cov-top-r" points="148,90 278,90 300,75 170,75" fill="#4A7090"/>
-                <polygon points="148,90 278,90 300,75 170,75" fill="rgba(255,255,255,0.05)" pointer-events="none"/>
-                <rect id="diag-clisse-cov-face-r" x="148" y="90" width="130" height="6" fill="#3A5868"/>
-                <rect x="148" y="96" width="5" height="38" fill="#2A4858"/>
-                <rect x="273" y="96" width="5" height="38" fill="#2A4858"/>
-                <!-- Ligne de joint -->
-                <line x1="144" y1="74" x2="144" y2="134" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" stroke-dasharray="5,3.5"/>
-                <line x1="166" y1="74" x2="166" y2="122" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-dasharray="5,3.5"/>
-                <!-- CLISSE (orange, posée sur les deux sections) -->
-                <polygon points="112,74 188,74 210,59 134,59" fill="#FF4500" opacity="0.93"/>
-                <polygon points="112,74 188,74 210,59 134,59" fill="rgba(255,255,255,0.05)" pointer-events="none"/>
-                <line x1="112" y1="74" x2="188" y2="74" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" pointer-events="none"/>
-                <rect x="112" y="74" width="76" height="6" fill="#CC3300" opacity="0.95"/>
-                <!-- Face gauche clisse -->
-                <polygon points="112,74 134,59 134,65 112,80" fill="#AA2200" opacity="0.9"/>
-                <!-- Label -->
-                <text x="155" y="156" text-anchor="middle" font-size="8" font-family="Inter,sans-serif"
-                      fill="rgba(255,255,255,0.38)" letter-spacing="0.13em" font-weight="600">CLISSE · JONCTION DE LONGUEURS</text>
+              <svg viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg"
+                   aria-label="Schéma éclisse de jonction — vue 3D">
+                <defs>
+                  <linearGradient id="muret-ecl-front" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#9ca5a8"/>
+                    <stop offset="100%" stop-color="#7a8388"/>
+                  </linearGradient>
+                  <linearGradient id="muret-ecl-top" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#c8d0d4"/>
+                    <stop offset="100%" stop-color="#9ca5a8"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Fond -->
+                <rect width="600" height="300" fill="#1e2630"/>
+
+                <!-- Ombre sol -->
+                <ellipse cx="250" cy="255" rx="195" ry="12" fill="#0a1018" opacity="0.5"/>
+
+                <!-- ═══ MURET (x=80→430, iz×1 = +73.6,−42.5) ═══ -->
+
+                <!-- Face droite -->
+                <polygon points="430,225 503.6,182.5 503.6,107.5 430,150"
+                         fill="#7a8388" stroke="#4a5358" stroke-width="0.6"/>
+
+                <!-- Face avant -->
+                <polygon points="80,225 430,225 430,150 80,150"
+                         fill="url(#muret-ecl-front)" stroke="#4a5358" stroke-width="0.6"/>
+
+                <!-- Joints horizontaux -->
+                <line x1="80"  y1="175" x2="430" y2="175" stroke="#5a6266" stroke-width="0.8"/>
+                <line x1="80"  y1="200" x2="430" y2="200" stroke="#5a6266" stroke-width="0.8"/>
+
+                <!-- Joints verticaux alternés -->
+                <line x1="140" y1="150" x2="140" y2="175" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="260" y1="150" x2="260" y2="175" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="380" y1="150" x2="380" y2="175" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="200" y1="175" x2="200" y2="200" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="320" y1="175" x2="320" y2="200" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="140" y1="200" x2="140" y2="225" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="260" y1="200" x2="260" y2="225" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="380" y1="200" x2="380" y2="225" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="430" y1="175" x2="503.6" y2="132.5" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="430" y1="200" x2="503.6" y2="157.5" stroke="#5a6266" stroke-width="0.6"/>
+
+                <!-- Top muret -->
+                <polygon points="80,150 430,150 503.6,107.5 153.6,107.5"
+                         fill="url(#muret-ecl-top)" stroke="#4a5358" stroke-width="0.5"/>
+
+                <!-- ═══ COUVERTINE GAUCHE — dessous (iz×0.45 = +33,−19) ═══ -->
+
+                <!-- Top -->
+                <polygon id="diag-clisse-cov-top-l"
+                         points="80,140 200,140 233,121 113,121" fill="#4A7090"/>
+                <polygon points="80,140 200,140 233,121 113,121"
+                         fill="rgba(0,0,0,0.18)" pointer-events="none"/>
+
+                <!-- About droit -->
+                <polygon points="200,150 233,131 233,121 200,140" fill="#3A5868" opacity="0.7"/>
+
+                <!-- Face avant -->
+                <rect id="diag-clisse-cov-face-l"
+                      x="80" y="140" width="120" height="10" fill="#2A4858"/>
+                <rect x="80" y="140" width="120" height="10"
+                      fill="rgba(0,0,0,0.22)" pointer-events="none"/>
+
+                <!-- ═══ COUVERTINE DROITE — dessous (iz×0.45 = +33,−19) ═══ -->
+
+                <!-- Top -->
+                <polygon id="diag-clisse-cov-top-r"
+                         points="270,140 390,140 423,121 303,121" fill="#4A7090"/>
+                <polygon points="270,140 390,140 423,121 303,121"
+                         fill="rgba(0,0,0,0.18)" pointer-events="none"/>
+
+                <!-- About gauche -->
+                <polygon points="270,150 303,131 303,121 270,140" fill="#3A5868" opacity="0.7"/>
+
+                <!-- Face avant -->
+                <rect id="diag-clisse-cov-face-r"
+                      x="270" y="140" width="120" height="10" fill="#2A4858"/>
+                <rect x="270" y="140" width="120" height="10"
+                      fill="rgba(0,0,0,0.22)" pointer-events="none"/>
+
+                <!-- ═══ ÉCLISSE PAR-DESSUS — manchon extérieur (iz×0.48 = +35,−20) ═══ -->
+
+                <!-- About gauche (end cap gauche, profil visible) -->
+                <polygon points="140,150 175,130 175,112 140,132" fill="#3A5868"/>
+
+                <!-- Top (couleur RAL dynamique) -->
+                <polygon id="diag-clisse-eclisse-top"
+                         points="140,132 325,132 360,112 175,112"
+                         fill="#4A7090"/>
+                <polygon points="140,132 325,132 360,112 175,112"
+                         fill="rgba(0,0,0,0.08)" pointer-events="none"/>
+
+                <!-- About droit (end cap droit, profil visible) -->
+                <polygon points="325,150 360,130 360,112 325,132" fill="#3A5868"/>
+
+                <!-- Face avant (couleur RAL dynamique — retombée plus haute que la couvertine) -->
+                <rect id="diag-clisse-eclisse-face"
+                      x="140" y="132" width="185" height="18" fill="#2A4858"/>
+
+                <!-- Joint pointillé centre -->
+                <line x1="235" y1="110" x2="235" y2="225"
+                      stroke="rgba(255,255,255,0.38)" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+                <!-- ═══ ANNOTATIONS ═══ -->
+
+                <!-- Label MURET -->
+                <text x="255" y="193" text-anchor="middle" font-size="14" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.85)" letter-spacing="0.25em" font-weight="700">MURET</text>
+
+                <!-- Titre ÉCLISSE + leader line -->
+                <text x="235" y="48" text-anchor="middle" font-size="13" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ÉCLISSE DE JONCTION</text>
+                <text x="235" y="62" text-anchor="middle" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,140,90,0.85)" letter-spacing="0.14em" font-weight="600">manchon extérieur — profil en U, épouse la couvertine</text>
+                <line x1="235" y1="67" x2="235" y2="130" stroke="rgba(255,69,0,0.55)" stroke-width="1" stroke-dasharray="3,3"/>
+                <circle cx="235" cy="131" r="2.5" fill="rgba(255,69,0,0.85)"/>
+
+                <!-- Flèche couvertine gauche -->
+                <polygon points="6,170 16,165 16,175" fill="rgba(255,69,0,0.75)"/>
+                <text x="22" y="167" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">couvertines droites</text>
+                <text x="22" y="180" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">suivent ←</text>
+
+                <!-- Flèche couvertine droite (vers profondeur) -->
+                <polygon points="453,85 448,95 458,95" fill="rgba(255,69,0,0.75)"/>
+                <line x1="453" y1="95" x2="432" y2="112" stroke="rgba(255,69,0,0.55)" stroke-width="1.2"/>
+                <text x="462" y="72" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">↑ couvertines</text>
+                <text x="462" y="85" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">droites suivent</text>
+
+                <!-- Label JOINT -->
+                <text x="239" y="218" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.5)" letter-spacing="0.1em">JOINT</text>
+
+                <!-- Titre bas -->
+                <text x="255" y="278" text-anchor="middle" font-size="11" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.7)" letter-spacing="0.22em" font-weight="700">ÉCLISSE DE JONCTION</text>
+                <text x="255" y="291" text-anchor="middle" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.45)" letter-spacing="0.14em">MANCHON DE JONCTION · COUVERTINES DROITES</text>
               </svg>
             </div>
             <div class="acc-diag-info">
-              <strong>Clisse de jonction</strong>
+              <strong>Éclisse de jonction</strong>
               <span>Pont de recouvrement au joint entre deux longueurs</span>
             </div>
           </div>
@@ -481,7 +597,7 @@
             </div>
           </div>
 
-          <!-- Clisse de jonction -->
+          <!-- Éclisse de jonction -->
           <div class="accessory-row" id="acc-clisse">
             <div class="accessory-icon" aria-hidden="true">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -490,15 +606,15 @@
               </svg>
             </div>
             <div class="accessory-info">
-              <strong>Clisse de jonction</strong>
+              <strong>Éclisse de jonction</strong>
               <span class="accessory-price">6 € / pièce HT</span>
             </div>
             <div class="accessory-qty">
-              <button class="qty-btn" data-acc="clisse" data-dir="-1" aria-label="Retirer une clisse">−</button>
-              <input type="number" class="qty-input" id="qty-clisse" value="0" min="0" max="20" aria-label="Quantité clisses" readonly>
-              <button class="qty-btn" data-acc="clisse" data-dir="1" aria-label="Ajouter une clisse">+</button>
+              <button class="qty-btn" data-acc="clisse" data-dir="-1" aria-label="Retirer une éclisse">−</button>
+              <input type="number" class="qty-input" id="qty-clisse" value="0" min="0" max="20" aria-label="Quantité éclisses" readonly>
+              <button class="qty-btn" data-acc="clisse" data-dir="1" aria-label="Ajouter une éclisse">+</button>
             </div>
-            <div class="accessory-colors" id="colors-clisse" role="group" aria-label="Couleur clisse">
+            <div class="accessory-colors" id="colors-clisse" role="group" aria-label="Couleur éclisse">
               <!-- 5 swatches par JS -->
             </div>
           </div>
