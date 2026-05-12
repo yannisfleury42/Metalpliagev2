@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ambiances couleur — Métal Pliage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    color: var(--text);
+    background: var(--bg-base);
+    transition: background 0.5s ease;
+    min-height:100%;
+  }
+
+  :root {
+    --bg-base: #1A1A1A;
+    --bg-surface: #222222;
+    --bg-card: #2A2A2A;
+    --border: #2E2E2E;
+    --text: #F5F5F5;
+    --text-soft: #BDBDBD;
+    --text-muted: #757575;
+    --accent: #FF4500;
+    --accent-warm: #FFB347;
+    --gold: transparent;
+  }
+
+  /* ═══ AMBIANCES ═══ */
+  [data-theme="current"] {
+    --bg-base: #1A1A1A;
+    --bg-surface: #222222;
+    --bg-card: #2A2A2A;
+    --border: #2E2E2E;
+    --text: #F5F5F5;
+    --text-soft: #BDBDBD;
+    --text-muted: #757575;
+    --gold: transparent;
+  }
+  [data-theme="anthracite"] {
+    --bg-base: #1F1B17;
+    --bg-surface: #2A2520;
+    --bg-card: #34302A;
+    --border: #3D3830;
+    --text: #F5F0E8;
+    --text-soft: #C9C0B2;
+    --text-muted: #7A7065;
+    --gold: transparent;
+  }
+  [data-theme="charbon"] {
+    --bg-base: #1C1A18;
+    --bg-surface: #26221E;
+    --bg-card: #2E2A26;
+    --border: #3F3A32;
+    --text: #F5F0E5;
+    --text-soft: #C9C0B0;
+    --text-muted: #807668;
+    --gold: #C9A961;
+  }
+  [data-theme="ambre"] {
+    --bg-base: #221C14;
+    --bg-surface: #2E2719;
+    --bg-card: #3A301F;
+    --border: #4A3E26;
+    --text: #F8F1E4;
+    --text-soft: #D0C4A8;
+    --text-muted: #897C5F;
+    --gold: transparent;
+  }
+  [data-theme="creme"] {
+    --bg-base: #2A2520;
+    --bg-surface: #363029;
+    --bg-card: #423B33;
+    --border: #54493F;
+    --text: #F8F2EA;
+    --text-soft: #D5C9B8;
+    --text-muted: #9C8E7C;
+    --gold: transparent;
+  }
+
+  /* ═══ TOPBAR ═══ */
+  .topbar {
+    position:sticky; top:0;
+    padding:16px 28px;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px);
+    border-bottom:1px solid var(--border);
+    z-index:1000;
+  }
+  .topbar h1 {
+    font-size:12px; font-weight:600; letter-spacing:2px;
+    text-transform:uppercase;
+    background: linear-gradient(135deg, #FFD700, #FF6F00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right:14px;
+  }
+  .theme-btn {
+    padding:8px 14px;
+    background: rgba(255,255,255,0.05);
+    border:1px solid rgba(255,69,0,0.3);
+    color:#eee;
+    border-radius:6px;
+    font-size:11px; font-weight:500;
+    cursor:pointer;
+    transition: all 0.2s;
+  }
+  .theme-btn:hover {
+    background: rgba(255,69,0,0.15);
+    border-color: rgba(255,69,0,0.6);
+  }
+  .theme-btn.active {
+    background: linear-gradient(135deg, #FF6F00, #FF4500);
+    border-color: #FF4500;
+    color:#fff;
+    box-shadow: 0 4px 16px rgba(255,69,0,0.4);
+  }
+
+  /* ═══ SECTIONS DÉMO ═══ */
+  .hero {
+    padding: 100px 40px 80px;
+    text-align:center;
+    background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute;
+    top:50%; left:50%;
+    width:600px; height:600px;
+    background: radial-gradient(circle, rgba(255,69,0,0.08), transparent 70%);
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+  }
+  .eyebrow {
+    font-size:11px; letter-spacing:5px; font-weight:600;
+    color: var(--accent);
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero h2 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight:300; letter-spacing:2px;
+    color: var(--text);
+    margin-bottom:18px;
+  }
+  .hero h2 span {
+    color: var(--accent);
+    font-weight:500;
+  }
+  .hero p {
+    color: var(--text-soft);
+    font-size:16px;
+    max-width:600px;
+    margin: 0 auto 32px;
+  }
+  .cta {
+    display:inline-flex; gap:12px;
+  }
+  .btn {
+    padding: 14px 28px;
+    font-size:13px; font-weight:500; letter-spacing:1px;
+    text-transform:uppercase;
+    border-radius:6px;
+    cursor:pointer;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #FF6F00, #FF4500);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(255,69,0,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,69,0,0.5); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ═══ SECTION CARDS ═══ */
+  .section {
+    padding: 80px 40px;
+    background: var(--bg-base);
+  }
+  .section-header {
+    text-align:center; margin-bottom:50px;
+  }
+  .section-header h3 {
+    font-size:32px; font-weight:300; letter-spacing:2px;
+    color: var(--text);
+    margin-bottom:10px;
+  }
+  .section-header p {
+    color: var(--text-muted);
+    font-size:14px;
+  }
+  .cards {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap:24px;
+    max-width:1200px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:28px;
+    transition: all 0.3s;
+    position:relative;
+    overflow:hidden;
+  }
+  [data-theme="charbon"] .card {
+    border-color: rgba(201,169,97,0.18);
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 12px 40px rgba(255,69,0,0.15);
+  }
+  [data-theme="charbon"] .card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 12px 40px rgba(201,169,97,0.2);
+  }
+  .card-icon {
+    width:48px; height:48px;
+    border-radius:8px;
+    background: linear-gradient(135deg, rgba(255,69,0,0.2), rgba(255,69,0,0.05));
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px;
+    font-size:22px;
+    color: var(--accent);
+  }
+  [data-theme="charbon"] .card-icon {
+    background: linear-gradient(135deg, rgba(201,169,97,0.2), rgba(201,169,97,0.05));
+    color: var(--gold);
+  }
+  .card h4 {
+    font-size:18px; font-weight:500;
+    color: var(--text);
+    margin-bottom:8px;
+  }
+  .card p {
+    color: var(--text-soft);
+    font-size:14px;
+    line-height:1.6;
+  }
+  .card .price {
+    margin-top:18px;
+    font-size:24px; font-weight:600;
+    color: var(--accent);
+  }
+  [data-theme="charbon"] .card .price { color: var(--gold); }
+  .card .price span { font-size:12px; color: var(--text-muted); font-weight:400; }
+
+  /* ═══ SURFACE ═══ */
+  .surface-band {
+    background: var(--bg-surface);
+    padding: 60px 40px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .surface-content {
+    max-width:1000px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:32px;
+  }
+  .stat { text-align:center; }
+  .stat .num {
+    font-size:42px; font-weight:200;
+    background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat .lbl {
+    font-size:12px; letter-spacing:3px;
+    color: var(--text-muted);
+    text-transform:uppercase;
+    margin-top:6px;
+  }
+
+  /* ═══ INFO PANEL ═══ */
+  .info-panel {
+    position:fixed;
+    bottom:20px; left:50%;
+    transform:translateX(-50%);
+    padding:14px 28px;
+    background: rgba(0,0,0,0.85);
+    border:1px solid rgba(255,69,0,0.4);
+    border-radius:30px;
+    font-size:12px;
+    color: #eee;
+    backdrop-filter: blur(10px);
+    z-index:999;
+    max-width:780px;
+    text-align:center;
+  }
+  .info-panel strong { color: #FF8C42; }
+  .info-panel em { color: rgba(255,255,255,0.6); font-style:normal; font-size:10px; display:block; margin-top:3px; }
+
+  @media (max-width: 700px) {
+    .surface-content { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body data-theme="current">
+
+  <div class="topbar">
+    <h1>◆ Ambiances couleur</h1>
+    <button class="theme-btn active" data-theme="current">0 · Actuel</button>
+    <button class="theme-btn" data-theme="anthracite">1 · Anthracite chaud</button>
+    <button class="theme-btn" data-theme="charbon">2 · Charbon premium + or</button>
+    <button class="theme-btn" data-theme="ambre">3 · Onyx ambre</button>
+    <button class="theme-btn" data-theme="creme">4 · Café crème</button>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">Précision métal · Fabriqué en France</div>
+    <h2>Métal Pliage <span>—</span> Sur mesure</h2>
+    <p>Couvertines, appuis de fenêtre, habillages bandeaux. Pliage de tôle aluminium et zinc, fabrication française, livraison directe.</p>
+    <div class="cta">
+      <button class="btn btn-primary">Configurer mon pliage</button>
+      <button class="btn btn-outline">Voir les produits</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h3>Nos produits</h3>
+      <p>Tout l'univers du pliage métal</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">◆</div>
+        <h4>Couvertines</h4>
+        <p>Protection sommet de muret en aluminium ou zinc, pliée sur mesure aux dimensions exactes.</p>
+        <div class="price">45€ <span>/m</span></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">◇</div>
+        <h4>Appuis de fenêtre</h4>
+        <p>Finition élégante des seuils, formats standards ou sur cotes précises au millimètre.</p>
+        <div class="price">38€ <span>/m</span></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">▲</div>
+        <h4>Habillages bandeaux</h4>
+        <p>Habillage de débord de toiture et bandeaux de façade, finition aluminium laqué.</p>
+        <div class="price">52€ <span>/m</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="surface-band">
+    <div class="surface-content">
+      <div class="stat">
+        <div class="num">12 ans</div>
+        <div class="lbl">Expérience</div>
+      </div>
+      <div class="stat">
+        <div class="num">2500+</div>
+        <div class="lbl">Pliages livrés</div>
+      </div>
+      <div class="stat">
+        <div class="num">48h</div>
+        <div class="lbl">Délai moyen</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h3>Demande de devis</h3>
+      <p>Configuration en ligne, prix immédiat</p>
+    </div>
+    <div style="max-width:600px; margin:0 auto; display:flex; gap:12px;">
+      <button class="btn btn-primary" style="flex:1">Commencer maintenant</button>
+      <button class="btn btn-outline" style="flex:1">Nous contacter</button>
+    </div>
+  </section>
+
+  <div class="info-panel" id="info">
+    <strong>Ambiance actuelle (référence)</strong>
+    <em>L'orange #FF4500 reste identique sur toutes les ambiances — seuls les fonds changent</em>
+  </div>
+
+<script>
+  const infos = {
+    current: { title: 'Ambiance actuelle (référence)', sub: 'Fonds gris-noir purs #1A1A1A → #2A2A2A · le baseline du site' },
+    anthracite: { title: 'Anthracite chaud (lift léger)', sub: 'Fonds passent de gris pur à gris-brun chaud · le moins de changement visuel · reste très sombre mais respire' },
+    charbon: { title: 'Charbon premium + accents or (touche luxe)', sub: 'Subtile teinte chaude + accents dorés #C9A961 sur prix/icônes/bordures hover · le plus luxe sans sortir de la charte' },
+    ambre: { title: 'Onyx ambre (chaleur prononcée)', sub: 'Teinte ambre/cognac dans les fonds · look atelier feutré · le plus chaleureux' },
+    creme: { title: 'Café crème (lift fort)', sub: 'Fonds clairement plus clairs · ambiance "café dark" · le plus de changement, le plus lumineux' }
+  };
+  const btns = document.querySelectorAll('.theme-btn');
+  const info = document.getElementById('info');
+  btns.forEach(b => {
+    b.addEventListener('click', () => {
+      const t = b.dataset.theme;
+      document.body.dataset.theme = t;
+      btns.forEach(x => x.classList.toggle('active', x === b));
+      info.innerHTML = '<strong>' + infos[t].title + '</strong><em>' + infos[t].sub + '</em>';
+    });
+  });
+</script>
+</body>
+</html>

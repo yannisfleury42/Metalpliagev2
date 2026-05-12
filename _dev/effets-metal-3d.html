@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Effets métal 3D animés — démo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0a0a0a;color:#eee;font-family:'Inter',sans-serif}
+  body{padding:32px;min-height:100vh}
+  h1{font-size:22px;margin-bottom:6px}
+  .intro{color:#888;font-size:14px;margin-bottom:28px;max-width:780px;line-height:1.6}
+
+  .grid{display:grid;grid-template-columns:1fr;gap:22px}
+  .card{
+    background:#111;border-radius:14px;padding:48px 36px;border:1px solid #222;
+    text-align:center;position:relative;overflow:hidden;
+    perspective:1400px;
+  }
+  .card .num{
+    position:absolute;top:14px;left:18px;font-size:11px;color:#9bb;
+    font-weight:700;letter-spacing:.2em;background:rgba(120,180,200,.1);
+    padding:4px 10px;border-radius:20px;z-index:5
+  }
+  .card .name{font-size:14px;color:#ddd;margin-top:24px;font-weight:700}
+  .card .desc{font-size:12px;color:#888;margin-top:4px;max-width:640px;margin-left:auto;margin-right:auto}
+
+  .word{
+    font-size:84px;font-weight:900;letter-spacing:-.02em;line-height:1;
+    display:inline-block;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     PALETTE COMMUNE : alu → inox → corten brun foncé
+  ═══════════════════════════════════════════════════════ */
+  .metal-fade{
+    background:
+      repeating-linear-gradient(180deg,
+        rgba(255,255,255,.12) 0,
+        rgba(255,255,255,.12) 1px,
+        rgba(0,0,0,.12)       1px,
+        rgba(0,0,0,.12)       2px),
+      linear-gradient(180deg,
+        rgba(255,255,255,.22) 0%,
+        rgba(255,255,255,.04) 25%,
+        transparent           45%,
+        rgba(0,0,0,.18)       55%,
+        rgba(255,255,255,.04) 80%,
+        rgba(255,255,255,.20) 100%),
+      linear-gradient(90deg,
+        #ededed 0%, #d4d4d4 14%, #b2b2b2 28%, #939393 40%,
+        #6e4830 50%, #582410 60%, #421a08 70%, #2e1608 82%,
+        #1e0c04 92%, #140804 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.55));
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     A — PLAQUE 3D FLOTTANTE (rotateX/Y en boucle lente, ease-in-out)
+  ════════════════════════════════════════════════════════════════════ */
+  .stage-a{
+    transform-style:preserve-3d;
+    animation:tilt-A 10s ease-in-out infinite;
+    display:inline-block;
+  }
+  @keyframes tilt-A{
+    0%   { transform: rotateY(-18deg) rotateX(8deg); }
+    25%  { transform: rotateY( 0deg ) rotateX(-6deg);}
+    50%  { transform: rotateY( 18deg) rotateX(8deg); }
+    75%  { transform: rotateY( 0deg ) rotateX(-6deg);}
+    100% { transform: rotateY(-18deg) rotateX(8deg); }
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     C — ROTATION Y CONTINUE (pivot Y, oscillation large)
+  ════════════════════════════════════════════════════════════════════ */
+  .stage-c{
+    transform-style:preserve-3d;
+    animation:rotY-C 7s ease-in-out infinite;
+    display:inline-block;
+  }
+  @keyframes rotY-C{
+    0%   { transform: rotateY(-30deg); }
+    50%  { transform: rotateY( 30deg); }
+    100% { transform: rotateY(-30deg); }
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     D — REFLET PANORAMIQUE (gradient répété qui défile en boucle)
+         Donne l'illusion d'un environnement qui se reflète sur surface
+         métallique courbe.
+  ════════════════════════════════════════════════════════════════════ */
+  .reflect-D{
+    background:linear-gradient(105deg,
+      /* tour 1 */
+      #140804 0%, #2e1608 4%, #582410 9%, #6e4830 14%,
+      #939393 20%, #ededed 27%, #ffffff 30%, #ededed 33%,
+      #b2b2b2 38%, #6e4830 45%, #421a08 50%,
+      /* tour 2 (boucle) */
+      #140804 50%, #2e1608 54%, #582410 59%, #6e4830 64%,
+      #939393 70%, #ededed 77%, #ffffff 80%, #ededed 83%,
+      #b2b2b2 88%, #6e4830 95%, #421a08 100%);
+    background-size:300% 100%;
+    background-position:0% 50%;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.55));
+    animation:pan-D 8s linear infinite;
+  }
+  @keyframes pan-D{
+    0%   { background-position:   0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     F — PROFONDEUR PARALLAXE (couches multiples 3D, oscillation)
+  ════════════════════════════════════════════════════════════════════ */
+  .stage-f{
+    transform-style:preserve-3d;
+    animation:tilt-F 9s ease-in-out infinite;
+    display:inline-block;
+    position:relative;
+  }
+  .stage-f .ply{
+    position:absolute;top:0;left:0;width:100%;
+    transform-style:preserve-3d;
+  }
+  .stage-f .ply.back{
+    transform: translateZ(-26px);
+    color:#1c0e06;
+    background:none;-webkit-text-fill-color:#1c0e06;
+    filter:blur(.6px) drop-shadow(0 0 4px rgba(0,0,0,.6));
+    opacity:.85;
+  }
+  .stage-f .ply.mid{
+    transform: translateZ(-12px);
+    background:linear-gradient(90deg,#7a7a7a,#3a2814);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:blur(.3px);
+  }
+  @keyframes tilt-F{
+    0%   { transform: rotateY(-22deg) rotateX(10deg); }
+    50%  { transform: rotateY( 22deg) rotateX(-10deg);}
+    100% { transform: rotateY(-22deg) rotateX(10deg); }
+  }
+
+  /* card-d-container pour Three.js */
+  .threejs-stage{
+    width:100%;height:340px;position:relative;
+  }
+  .threejs-stage canvas{display:block;margin:0 auto}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SVG : filtres globaux (utilisés par les démos B et plus tard E)
+═══════════════════════════════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- B : lumière qui orbite automatiquement -->
+    <filter id="orbitLight" x="-2%" y="-5%" width="104%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="3 0.015" numOctaves="2" seed="14" result="noise"/>
+      <feSpecularLighting id="orbitSpec" in="noise" surfaceScale="2.4" specularConstant="1.8"
+                          specularExponent="32" lighting-color="#ffffff" result="spec">
+        <fePointLight id="orbitPoint" x="300" y="80" z="160"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceGraphic" operator="in" result="specOnText"/>
+      <feComposite in="SourceGraphic" in2="specOnText" operator="arithmetic"
+                   k1="0" k2="1" k3="1" k4="0"/>
+    </filter>
+
+    <linearGradient id="metalGradB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="#ededed"/>
+      <stop offset=".15" stop-color="#c4c4c4"/>
+      <stop offset=".30" stop-color="#9a9a9a"/>
+      <stop offset=".50" stop-color="#6e4830"/>
+      <stop offset=".68" stop-color="#421a08"/>
+      <stop offset=".85" stop-color="#2a1408"/>
+      <stop offset="1"   stop-color="#160806"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<h1>Effets métal 3D — animations automatiques</h1>
+<p class="intro">
+  Tous les effets bouclent en continu, sans interaction. Palette commune
+  alu → inox → corten brun foncé. Dis-moi le numéro retenu et les corrections
+  (vitesse, amplitude, direction, palette…) — j'intègre ensuite sur le hero.
+</p>
+
+<div class="grid">
+
+  <!-- ────────────────────────────────────────────────────────────
+       A — Plaque 3D flottante (CSS pur, tilt rotateX/Y looping)
+  ──────────────────────────────────────────────────────────── -->
+  <div class="card">
+    <span class="num">A — PLAQUE FLOTTANTE</span>
+    <div class="stage-a">
+      <div class="word metal-fade">METAL</div><br>
+      <div class="word metal-fade">PLIAGE</div>
+    </div>
+    <div class="name">Tilt 3D ample en boucle (rotateX + rotateY)</div>
+    <div class="desc">La plaque pivote doucement comme une enseigne suspendue. CSS pur, très léger.</div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────
+       B — Spot lumineux qui orbite (SVG specular light orbit auto)
+  ──────────────────────────────────────────────────────────── -->
+  <div class="card">
+    <span class="num">B — SPOT LUMINEUX TOURNANT</span>
+    <svg viewBox="0 0 600 220" width="600" height="220">
+      <text x="300" y="100" text-anchor="middle" fill="url(#metalGradB)"
+            font-family="Inter,sans-serif" font-size="96" font-weight="900"
+            filter="url(#orbitLight)">METAL</text>
+      <text x="300" y="200" text-anchor="middle" fill="url(#metalGradB)"
+            font-family="Inter,sans-serif" font-size="96" font-weight="900"
+            filter="url(#orbitLight)">PLIAGE</text>
+    </svg>
+    <div class="name">Lumière 3D bump SVG qui tourne autour du texte</div>
+    <div class="desc">Vraie simulation 3D : un point lumineux orbite et fait jouer les reflets. Le plus réaliste.</div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────
+       C — Rotation Y ample
+  ──────────────────────────────────────────────────────────── -->
+  <div class="card">
+    <span class="num">C — ROTATION Y AMPLE</span>
+    <div class="stage-c">
+      <div class="word metal-fade">METAL</div><br>
+      <div class="word metal-fade">PLIAGE</div>
+    </div>
+    <div class="name">Oscillation Y ±30° en boucle</div>
+    <div class="desc">Effet plus marqué que A : le texte semble pivoter face caméra.</div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────
+       D — Reflet panoramique défilant
+  ──────────────────────────────────────────────────────────── -->
+  <div class="card">
+    <span class="num">D — REFLET PANORAMIQUE</span>
+    <div class="word reflect-D">METAL</div><br>
+    <div class="word reflect-D">PLIAGE</div>
+    <div class="name">Gradient répété qui défile (simule un environnement réfléchi)</div>
+    <div class="desc">L'effet "carte holographique" : on a l'impression que la surface métallique reflète un environnement en mouvement.</div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────
+       E — Three.js : vraie 3D extrudée métallique PBR
+  ──────────────────────────────────────────────────────────── -->
+  <div class="card">
+    <span class="num">E — VRAIE 3D (Three.js PBR)</span>
+    <div class="threejs-stage" id="threejs-stage"></div>
+    <div class="name">Texte extrudé 3D, matériau métallique physiquement réaliste</div>
+    <div class="desc">Mesh 3D avec metalness/roughness + environnement HDR-like. Rotation lente automatique. Le plus impressionnant, plus lourd à charger.</div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────────
+       F — Profondeur parallaxe (3 couches superposées en Z)
+  ──────────────────────────────────────────────────────────── -->
+  <div class="card">
+    <span class="num">F — PROFONDEUR PARALLAXE</span>
+    <div class="stage-f">
+      <div class="ply back"><div class="word">METAL</div><br><div class="word">PLIAGE</div></div>
+      <div class="ply mid"><div class="word">METAL</div><br><div class="word">PLIAGE</div></div>
+      <div class="word metal-fade" style="position:relative">METAL</div><br>
+      <div class="word metal-fade" style="position:relative">PLIAGE</div>
+    </div>
+    <div class="name">3 plans superposés à différentes profondeurs Z + tilt</div>
+    <div class="desc">Effet d'extrusion réelle : couche arrière sombre (corten), couche médiane intermédiaire, couche avant alu — vrai relief perceptible quand ça pivote.</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCRIPTS : animation auto pour B (spot lumineux orbital)
+                + Three.js pour E
+═══════════════════════════════════════════════════════════════ -->
+<script>
+  // ─── B : light orbit (autoplay) ──────────────────────────────
+  (function(){
+    const light = document.getElementById('orbitPoint');
+    if(!light) return;
+    const cx = 300, cy = 110, rx = 320, ry = 130;
+    let t0 = performance.now();
+    function tick(now){
+      const t = (now - t0) / 1000;
+      const a = t * 0.55;             // 0.55 rad/s ≈ 5.5s par tour
+      light.setAttribute('x', cx + Math.cos(a) * rx);
+      light.setAttribute('y', cy + Math.sin(a) * ry);
+      light.setAttribute('z', 160 + Math.sin(a*2) * 40);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+</script>
+
+<!-- Three.js PBR : import map + module script -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+  import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+  const stage = document.getElementById('threejs-stage');
+  const W = stage.clientWidth, H = stage.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  stage.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  const camera = new THREE.PerspectiveCamera(35, W/H, 0.1, 100);
+  camera.position.set(0, 0, 12);
+
+  // Lights complémentaires
+  scene.add(new THREE.AmbientLight(0xffffff, 0.18));
+  const key = new THREE.DirectionalLight(0xfff5e0, 1.2);
+  key.position.set(4, 6, 5); scene.add(key);
+  const fill = new THREE.DirectionalLight(0x8aa8c8, 0.6);
+  fill.position.set(-5, -2, 4); scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xff7030, 0.7);
+  rim.position.set(-3, 3, -4); scene.add(rim);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  // Matériau type acier brossé / corten gradient
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: 0xc8c8c8,
+    metalness: 1.0,
+    roughness: 0.28,
+    clearcoat: 0.5,
+    clearcoatRoughness: 0.2,
+    envMapIntensity: 1.2,
+  });
+  const matBack = new THREE.MeshPhysicalMaterial({
+    color: 0x4a1e0c,
+    metalness: 1.0,
+    roughness: 0.55,
+    envMapIntensity: 1.0,
+  });
+
+  // Loader font (helvetiker bold built-in)
+  new FontLoader().load(
+    'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json',
+    (font) => {
+      const buildText = (txt, yOffset) => {
+        const geo = new TextGeometry(txt, {
+          font,
+          size: 1.6,
+          depth: 0.55,
+          curveSegments: 6,
+          bevelEnabled: true,
+          bevelThickness: 0.08,
+          bevelSize: 0.05,
+          bevelOffset: 0,
+          bevelSegments: 4,
+        });
+        geo.center();
+        const mesh = new THREE.Mesh(geo, [mat, matBack]);
+        mesh.position.y = yOffset;
+        group.add(mesh);
+      };
+      buildText('METAL', 0.95);
+      buildText('PLIAGE', -1.15);
+    },
+    undefined,
+    (err) => console.warn('Font load error', err)
+  );
+
+  function onResize(){
+    const w = stage.clientWidth, h = stage.clientHeight;
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+  window.addEventListener('resize', onResize);
+
+  const t0 = performance.now();
+  (function animate(now){
+    const t = (now - t0) / 1000;
+    group.rotation.y = Math.sin(t * 0.35) * 0.55;
+    group.rotation.x = Math.sin(t * 0.22) * 0.18;
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  })(t0);
+</script>
+
+</body>
+</html>

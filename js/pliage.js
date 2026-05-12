@@ -9,10 +9,19 @@
 /* ── CONSTANTES ─────────────────────────────────────────────── */
 const RATES = {
   'acier-0.75': 75,
-  'alu-1':      90,
+  'acier-1.5': 100,
+  'alu-1.5':   100,
   'alu-2':     115,
   'inox-1':    125,
   'inox-2':    160,
+  'inox-3':    200,
+};
+
+// Épaisseurs disponibles par matière
+const THICKNESS_OPTIONS = {
+  acier: [0.75, 1.5],
+  alu:   [1.5, 2],
+  inox:  [1, 2, 3],
 };
 
 const RAL_COLORS = [
@@ -85,6 +94,12 @@ const SHAPES = {
 };
 
 
+/* ── ACCESSOIRES ─────────────────────────────────────────────── */
+const ACCESSORIES_PLIAGE = [
+  { id: 'vis', name: 'Vis inox auto-foreuses tête RAL (lot de 100)', price: 32.00 },
+];
+
+
 /* ── ÉTAT GLOBAL ─────────────────────────────────────────────── */
 const state = {
   shape:     null,  // 'U' | 'L' | 'Z' | 'appui'
@@ -93,6 +108,9 @@ const state = {
   dims:      {},    // { A, B, H } selon forme
   L:         2000,
   color:     null,  // code RAL | 'brut'
+  accessories: {
+    vis: { qty: 0, color: '7016' },  // RAL par défaut, suit la couleur de la tôle
+  },
   qty:       1,
 };
 
@@ -138,15 +156,13 @@ function unlockStep(n) {
 
 /* ── CALCUL PRIX ─────────────────────────────────────────────── */
 function rateKey() {
-  const th = state.material === 'acier' ? 0.75 : state.thickness;
-  return `${state.material}-${th}`;
+  return `${state.material}-${state.thickness}`;
 }
 
 function calcPrice() {
   if (!state.shape || !state.material) return { ht: null, ttc: null };
   const shape = SHAPES[state.shape];
-  const dimsFull = state.material === 'acier' || state.thickness
-    ? dimsValid() : false;
+  const dimsFull = state.thickness ? dimsValid() : false;
   if (!dimsFull) return { ht: null, ttc: null };
 
   const devMm  = shape.dev(state.dims);
@@ -155,7 +171,14 @@ function calcPrice() {
   const rate   = RATES[rk];
   if (!rate) return { ht: null, ttc: null };
 
-  const priceHT  = Math.max(surfM2 * rate, PRICE_MIN) * state.qty;
+  let priceHT  = Math.max(surfM2 * rate, PRICE_MIN) * state.qty;
+
+  // Accessoires (quantité absolue, non multipliée par state.qty)
+  for (const acc of ACCESSORIES_PLIAGE) {
+    const q = state.accessories[acc.id].qty;
+    if (q > 0) priceHT += q * acc.price;
+  }
+
   const priceTTC = priceHT * TVA;
   return { ht: priceHT, ttc: priceTTC };
 }
@@ -419,11 +442,48 @@ function buildRalGrid() {
       document.querySelectorAll('.ral-swatch').forEach((s) => s.classList.remove('is-selected'));
       btn.classList.add('is-selected');
       state.color = ral.code;
+      // Sync auto : la couleur de tête des vis suit celle de la tôle
+      state.accessories.vis.color = ral.code;
+      updateVisRalSelection();
       updateUI();
       unlockStep(5);
+      unlockStep(6);
     });
     elRalGrid.appendChild(btn);
   }
+}
+
+
+/* ── BUILD VIS RAL SWATCHES (sélecteur de couleur de tête des vis) ── */
+function buildVisRalSwatches() {
+  const wrap = document.getElementById('vis-ral-swatches');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  RAL_COLORS.forEach((ral) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'vis-ral-swatch';
+    btn.dataset.code = ral.code;
+    btn.style.background = ral.hex;
+    btn.title = `RAL ${ral.code} — ${ral.name}`;
+    btn.setAttribute('aria-label', `RAL ${ral.code} ${ral.name}`);
+    btn.setAttribute('aria-pressed', 'false');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      state.accessories.vis.color = ral.code;
+      updateVisRalSelection();
+    });
+    wrap.appendChild(btn);
+  });
+  updateVisRalSelection();
+}
+
+function updateVisRalSelection() {
+  document.querySelectorAll('.vis-ral-swatch').forEach((s) => {
+    const sel = s.dataset.code === state.accessories.vis.color;
+    s.classList.toggle('is-selected', sel);
+    s.setAttribute('aria-pressed', sel ? 'true' : 'false');
+  });
 }
 
 
@@ -475,7 +535,7 @@ function updateUI() {
   elRecapShape.textContent    = shape ? shape.label : '—';
   elRecapMaterial.textContent = state.material
     ? `${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${
-        state.material === 'acier' ? '0,75 mm' : (state.thickness ? state.thickness + ' mm' : '—')
+        state.thickness ? String(state.thickness).replace('.', ',') + ' mm' : '—'
       }`
     : '—';
   if (shape && dimsValid()) {
@@ -529,7 +589,7 @@ function updateMaterialAvailability() {
 function checkUnlockStep3() {
   // Unlock step 3 when material + (acier OR thickness chosen)
   if (!state.material) return;
-  if (state.material === 'acier' || state.thickness) {
+  if (state.thickness) {
     unlockStep(3);
     // Re-render dim inputs after shape is set
     if (state.shape && elDimInputs.children.length === 0) renderDimInputs();
@@ -537,16 +597,23 @@ function checkUnlockStep3() {
 }
 
 function checkUnlockStep4() {
-  const matReady = state.material && (state.material === 'acier' || state.thickness);
+  const matReady = state.material && state.thickness;
   if (dimsValid() && matReady) {
     unlockStep(4);
-    // Inox: color already 'brut', auto-unlock step 5
-    if (state.color) unlockStep(5);
+    // Couleur déjà choisie (ex: Inox brut) -> débloque accessoires + quantité
+    if (state.color) {
+      unlockStep(5);
+      unlockStep(6);
+    }
   }
 }
 
 function checkUnlockStep5() {
-  if (state.color) unlockStep(5);
+  // Step 5 = Accessoires (et 6 = Quantité) ; les deux s'ouvrent en même temps une fois la couleur validée
+  if (state.color) {
+    unlockStep(5);
+    unlockStep(6);
+  }
 }
 
 
@@ -590,8 +657,9 @@ document.querySelectorAll('.material-card').forEach((card) => {
 
     // Thickness selector
     if (mat === 'acier') {
-      elThicknessSelect.hidden = true;
+      elThicknessSelect.hidden = false;
       state.thickness = null;
+      rebuildThicknessBtns('acier');
 
       // RAL panel for acier
       elColorRalPanel.hidden  = false;
@@ -603,12 +671,10 @@ document.querySelectorAll('.material-card').forEach((card) => {
         state.color = null;
         document.querySelectorAll('.ral-swatch').forEach((s) => s.classList.remove('is-selected'));
       }
-
-      checkUnlockStep3();
-      checkUnlockStep4();
     } else if (mat === 'alu') {
       elThicknessSelect.hidden = false;
       state.thickness = null;
+      rebuildThicknessBtns('alu');
 
       elColorRalPanel.hidden  = false;
       elColorInoxPanel.hidden = true;
@@ -621,6 +687,7 @@ document.querySelectorAll('.material-card').forEach((card) => {
     } else if (mat === 'inox') {
       elThicknessSelect.hidden = false;
       state.thickness = null;
+      rebuildThicknessBtns('inox');
 
       elColorRalPanel.hidden  = true;
       elColorInoxPanel.hidden = false;
@@ -634,18 +701,29 @@ document.querySelectorAll('.material-card').forEach((card) => {
   });
 });
 
-// Thickness buttons
-document.querySelectorAll('.thickness-btn').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.thickness-btn').forEach((b) => b.setAttribute('aria-pressed', 'false'));
-    btn.setAttribute('aria-pressed', 'true');
-    state.thickness = parseInt(btn.dataset.thickness, 10);
-
-    checkUnlockStep3();
-    updateUI();
-    checkUnlockStep4();
+// Reconstruit dynamiquement les boutons d'épaisseur selon la matière sélectionnée
+function rebuildThicknessBtns(mat) {
+  const wrap = document.querySelector('.thickness-btns');
+  if (!wrap) return;
+  const options = THICKNESS_OPTIONS[mat] || [];
+  wrap.innerHTML = '';
+  options.forEach((th) => {
+    const btn = document.createElement('button');
+    btn.className = 'thickness-btn';
+    btn.dataset.thickness = String(th);
+    btn.setAttribute('aria-pressed', 'false');
+    btn.textContent = String(th).replace('.', ',') + ' mm';
+    btn.addEventListener('click', () => {
+      wrap.querySelectorAll('.thickness-btn').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      state.thickness = parseFloat(btn.dataset.thickness);
+      checkUnlockStep3();
+      updateUI();
+      checkUnlockStep4();
+    });
+    wrap.appendChild(btn);
   });
-});
+}
 
 // Longueur input
 elInputL.addEventListener('input', () => {
@@ -679,17 +757,48 @@ elMainQty.addEventListener('input', () => {
   updateUI();
 });
 
+// Accessory qty controls
+document.querySelectorAll('.qty-btn[data-acc]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const accId = btn.dataset.acc;
+    const dir   = parseInt(btn.dataset.dir, 10);
+    const s     = state.accessories[accId];
+    s.qty = Math.max(0, Math.min(50, s.qty + dir));
+    const input = document.getElementById('qty-' + accId);
+    if (input) input.value = s.qty;
+    const row = document.getElementById('acc-' + accId);
+    if (row) row.classList.toggle('acc-inactive', s.qty === 0);
+    updateUI();
+  });
+});
+
+// État initial : accessoires inactifs visuellement
+ACCESSORIES_PLIAGE.forEach((acc) => {
+  const row = document.getElementById('acc-' + acc.id);
+  if (row) row.classList.add('acc-inactive');
+});
+
 // Cart buttons
 function addToCart() {
   if (!state.shape || !state.material) return;
   const shape     = SHAPES[state.shape];
   const dimStr    = shape.dimKeys.map((k) => `${k}=${state.dims[k]}mm`).join(' · ');
   const finish    = state.color === 'brut' ? 'Inox Brut' : `RAL ${state.color}`;
-  const th        = state.material === 'acier' ? '0,75' : state.thickness;
+  const th        = state.thickness;
   const { ttc }   = calcPrice();
 
+  // Suffixe accessoires pour transparence (ex: "+ 2× vis RAL 7016")
+  const accParts = ACCESSORIES_PLIAGE
+    .filter((acc) => state.accessories[acc.id].qty > 0)
+    .map((acc) => {
+      const a = state.accessories[acc.id];
+      const ralPart = acc.id === 'vis' && a.color ? ` RAL ${a.color}` : '';
+      return `${a.qty}× ${acc.id}${ralPart}`;
+    });
+  const accSuffix = accParts.length ? ` + ${accParts.join(', ')}` : '';
+
   window.CartAddItem?.({
-    name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm`,
+    name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm${accSuffix}`,
     finish,
     length: `${dimStr} · L=${state.L}mm`,
     price:  Math.round(ttc * 100),  // centimes TTC (cohérent avec cart.js)
@@ -724,6 +833,7 @@ if (cartOpenBtn && cartDrawer) {
 
 /* ── INIT ────────────────────────────────────────────────────── */
 buildRalGrid();
+buildVisRalSwatches();
 
 // Inox brut panel: auto-unlock step 5 when inox is chosen
 const inoxBrutCard = document.querySelector('.inox-brut-card');
@@ -734,6 +844,7 @@ if (inoxBrutCard) {
     checkUnlockStep4();
     if (dimsValid()) {
       unlockStep(5);
+      unlockStep(6);
       updateUI();
     }
   });
@@ -741,3 +852,14 @@ if (inoxBrutCard) {
 
 // Initial draw (empty state)
 updateUI();
+
+// Auto-sélection de la forme depuis l'URL (?forme=U|L|Z|appui)
+(function preselectShapeFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const forme  = params.get('forme');
+  if (!forme) return;
+  const valid = ['U', 'L', 'Z', 'appui'];
+  if (!valid.includes(forme)) return;
+  const card = document.querySelector('.shape-card[data-shape="' + forme + '"]');
+  if (card) card.click();
+})();

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAQUETTE — Page Couvertines · 2 variantes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* ── Bandeau maquette + switch ── */
+    .mockup-banner {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 9999;
+      background: #FF4500; color: #fff;
+      text-align: center;
+      padding: 6px 14px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .variant-switch {
+      position: fixed;
+      top: 28px; left: 0; right: 0;
+      z-index: 998;
+      background: rgba(15,15,15,0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 0;
+    }
+    .variant-switch-inner {
+      max-width: 1320px; margin: 0 auto;
+      padding: 0 24px;
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+    }
+    .variant-switch strong {
+      font-family: var(--font-head);
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-right: 6px;
+    }
+    .variant-switch button {
+      padding: 7px 16px;
+      font-family: var(--font-head);
+      font-size: 11.5px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      transition: all var(--t) var(--ease);
+      cursor: pointer;
+    }
+    .variant-switch button:hover { border-color: var(--accent); color: var(--accent); }
+    .variant-switch button.is-active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    body { padding-top: 80px; }
+    .variant-page { display: none; }
+    .variant-page.is-active { display: block; }
+    .variant-desc {
+      max-width: 920px; margin: 0 auto;
+      padding: 1.2rem clamp(1.5rem, 5vw, 4rem);
+      background: #1a1a1a;
+      border-left: 3px solid var(--accent);
+    }
+    .variant-desc strong { color: var(--accent); display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 6px; }
+    .variant-desc p { color: var(--text-secondary); font-size: 13.5px; line-height: 1.6; }
+
+    /* ═══ STYLES MIROIR DE PLIAGE.HTML (réutilisés à l'identique) ═══ */
+    .pliage-header {
+      padding: 3.5rem 1.5rem 3rem;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .pliage-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .pliage-title {
+      font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin: 0 0 0.9rem;
+    }
+    .pliage-title strong { color: var(--accent); font-weight: 500; }
+    .pliage-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .forms-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem clamp(1.5rem, 3vw, 2.5rem) 5rem;
+    }
+    .forms-header { text-align: center; margin-bottom: 3rem; }
+    .forms-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .forms-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+    .forms-title em { font-style: normal; color: var(--accent); font-weight: 500; }
+    .forms-subtitle {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 1rem auto 0;
+      font-size: 0.95rem;
+    }
+    .forms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .form-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 50px rgba(255, 69, 0, 0.18);
+    }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #FFB347);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+    .form-card:hover::before { transform: scaleX(1); }
+    .form-visual {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+      padding: 2.2rem 1.5rem 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-visual svg { width: 170px; height: 110px; overflow: visible; }
+    .form-visual svg .shape {
+      stroke: var(--accent);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      filter: drop-shadow(0 4px 12px rgba(255, 69, 0, 0.3));
+    }
+    .form-visual svg .ground {
+      stroke: rgba(180,180,180,0.35);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+    .form-visual svg .dim-line {
+      stroke: rgba(255, 180, 80, 0.5);
+      stroke-width: 0.8;
+      stroke-dasharray: 3 2;
+      fill: none;
+    }
+    .form-visual svg .dim-tick { stroke: rgba(255, 180, 80, 0.5); stroke-width: 1; }
+    .form-visual svg .dim-label {
+      fill: #F5F0E8;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.05em;
+      stroke: none;
+    }
+    .form-visual svg .pli-marker { fill: var(--accent); stroke: none; }
+    .form-body {
+      padding: 1.5rem 1.6rem 1.6rem;
+      display: flex; flex-direction: column; flex: 1;
+    }
+    .form-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #C8C8C8;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .form-name {
+      font-size: 1.45rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    .form-desc {
+      font-size: 0.95rem;
+      color: #E0E0E0;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .form-uses { list-style: none; padding: 0; margin: 0 0 1.2rem 0; flex: 1; }
+    .form-uses li {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.92rem; color: #E0E0E0; padding: 0.25rem 0;
+    }
+    .form-uses li::before { content: '→'; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+    .form-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1rem; border-top: 1px solid var(--border);
+      gap: 0.8rem; flex-wrap: wrap;
+    }
+    .form-price { font-size: 1.05rem; color: #D8D8D8; }
+    .form-price strong {
+      color: var(--accent); font-weight: 600;
+      font-size: 1.25rem; display: block; margin-top: 2px;
+    }
+    .form-price-quote { color: var(--accent); font-weight: 500; font-style: italic; }
+    .form-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px;
+      background: var(--accent); color: #fff;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.25s var(--ease);
+      white-space: nowrap;
+    }
+    .form-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4);
+    }
+    .form-cta-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-hover);
+    }
+    .form-cta-outline:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: transparent; box-shadow: none;
+    }
+
+    /* ── Matériaux (réutilisé) ── */
+    .materials-band {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .materials-inner { max-width: 1280px; margin: 0 auto; }
+    .materials-header { text-align: center; margin-bottom: 2.5rem; }
+    .materials-header h3 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+    }
+    .materials-header h3 em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .materials-header p {
+      color: var(--text-secondary);
+      max-width: 560px; margin: 0 auto;
+      font-size: 0.95rem;
+    }
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .material-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem 1.4rem;
+    }
+    .material-row h4 {
+      font-size: 1.1rem; font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .material-row h4::before {
+      content: ''; display: inline-block;
+      width: 10px; height: 10px;
+      background: var(--accent); border-radius: 50%;
+    }
+    .material-row dl { font-size: 0.85rem; color: var(--text-secondary); }
+    .material-row dt {
+      color: var(--text-muted); font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-top: 0.7rem;
+    }
+    .material-row dt:first-child { margin-top: 0; }
+    .material-row dd { color: var(--text-primary); margin: 0.25rem 0 0; }
+
+    /* ── CTA final (réutilisé) ── */
+    .pliage-cta { max-width: 1280px; margin: 0 auto; padding: 5rem clamp(1.5rem, 3vw, 2.5rem); text-align: center; }
+    .pliage-cta-inner {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .pliage-cta-inner::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 69, 0, 0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .pliage-cta-inner > * { position: relative; z-index: 1; }
+    .pliage-cta h3 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .pliage-cta h3 em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .pliage-cta p {
+      color: var(--text-secondary);
+      max-width: 560px; margin: 0 auto 2rem;
+      font-size: 0.95rem;
+    }
+    .pliage-cta-btns { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+    /* ═══ VARIANTE B — Layout vedette + secondaires ═══ */
+    .featured-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem clamp(1.5rem, 3vw, 2.5rem) 3rem;
+    }
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .featured-card::before {
+      content: 'PRODUIT PRINCIPAL';
+      position: absolute;
+      top: 18px; right: 18px;
+      z-index: 2;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      padding: 5px 14px;
+      border-radius: 4px;
+    }
+    .featured-visual {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      min-height: 320px;
+      border-right: 1px solid var(--border);
+    }
+    .featured-visual svg { width: 100%; max-width: 320px; height: auto; }
+    .featured-body { padding: 2.6rem 2.4rem; }
+    .featured-body h3 {
+      font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+    }
+    .featured-body .form-tag { margin-bottom: 0.4rem; display: block; }
+    .featured-body p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+    .featured-body ul { list-style: none; padding: 0; margin: 0 0 1.4rem; }
+    .featured-body ul li {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.92rem; color: #E0E0E0; padding: 0.3rem 0;
+    }
+    .featured-body ul li::before { content: '→'; color: var(--accent); font-weight: 600; }
+    .featured-body .form-footer { margin-top: 1.4rem; }
+
+    .secondary-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 3vw, 2.5rem) 5rem;
+    }
+    .secondary-header {
+      text-align: center;
+      margin: 1rem auto 2rem;
+    }
+    .secondary-header h4 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .secondary-header p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      max-width: 560px; margin: 0 auto;
+    }
+    .secondary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+    .secondary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all var(--t) var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .secondary-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+    .secondary-card-visual {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+      padding: 1.8rem 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 130px;
+      border-bottom: 1px solid var(--border);
+    }
+    .secondary-card-visual svg { width: 140px; height: 80px; overflow: visible; }
+    .secondary-card-body { padding: 1.1rem 1.2rem 1.2rem; }
+    .secondary-card-body h5 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .secondary-card-body p {
+      font-size: 0.82rem;
+      color: #BBBBBB;
+      line-height: 1.5;
+      margin-bottom: 0.8rem;
+    }
+    .secondary-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.6rem;
+      padding-top: 0.7rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .secondary-card-footer .price { color: var(--accent); font-weight: 600; }
+    .secondary-card-footer a {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none;
+    }
+    .secondary-card-footer a:hover { color: var(--accent-hover); }
+
+    @media (max-width: 720px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-visual { border-right: none; border-bottom: 1px solid var(--border); min-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mockup-banner">⚠️ Maquette Couvertines · 2 variantes · Aucune modif sur le vrai site</div>
+
+  <div class="variant-switch">
+    <div class="variant-switch-inner">
+      <strong>Page Couvertines →</strong>
+      <button class="is-active" data-variant="vA">A · Miroir Pliage (5 cartes)</button>
+      <button data-variant="vB">B · Vedette + variantes</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       VARIANTE A — Miroir exact de pliage.html
+  ══════════════════════════════════════════════════════════ -->
+  <section class="variant-page is-active" data-variant="vA">
+
+    <header class="pliage-header">
+      <div class="pliage-eyebrow">— COUVERTINES SUR MESURE —</div>
+      <h1 class="pliage-title">Quelle <strong>couvertine</strong> choisir ?</h1>
+      <p class="pliage-desc">Couvertine = protection métallique posée sur la tête d'un muret pour évacuer l'eau et habiller la finition. Choisissez le profil le plus proche de votre besoin parmi nos types standards, ou optez pour la forme libre sur plan.</p>
+    </header>
+
+    <section class="forms-section">
+      <div class="forms-header">
+        <span class="forms-eyebrow">Nos profils</span>
+        <h2 class="forms-title">5 types <em>au choix</em></h2>
+        <p class="forms-subtitle">Cliquez sur « Configurer » pour lancer le configurateur avec le profil pré-sélectionné.</p>
+      </div>
+
+      <div class="forms-grid">
+
+        <!-- COUVERTINE PLATE AVEC RETOURS -->
+        <article class="form-card">
+          <div class="form-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <!-- Cote B : largeur muret -->
+              <line class="dim-line" x1="35" y1="-2" x2="105" y2="-2"/>
+              <line class="dim-tick" x1="35" y1="-5" x2="35" y2="1"/>
+              <line class="dim-tick" x1="105" y1="-5" x2="105" y2="1"/>
+              <text class="dim-label" x="70" y="-6" text-anchor="middle">B</text>
+              <!-- Cote A : hauteur retour -->
+              <line class="dim-line" x1="20" y1="20" x2="20" y2="55"/>
+              <line class="dim-tick" x1="17" y1="20" x2="23" y2="20"/>
+              <line class="dim-tick" x1="17" y1="55" x2="23" y2="55"/>
+              <text class="dim-label" x="18" y="40" text-anchor="middle" transform="rotate(-90 18 40)">A</text>
+              <!-- Profil : retour gauche / dessus plat / retour droit -->
+              <polyline class="shape" points="25,55 25,20 115,20 115,55"/>
+              <!-- Sol simulé (muret) -->
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="20" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="20" x2="105" y2="70"/>
+              <circle class="pli-marker" cx="25" cy="20" r="2.5"/>
+              <circle class="pli-marker" cx="115" cy="20" r="2.5"/>
+            </svg>
+          </div>
+          <div class="form-body">
+            <span class="form-tag">Standard</span>
+            <h3 class="form-name">Plate avec retours</h3>
+            <p class="form-desc">Profil plat horizontal avec deux retours descendants. Le plus polyvalent — protège la tête du muret et redirige l'eau vers les côtés.</p>
+            <ul class="form-uses">
+              <li>Mur de clôture, terrasse</li>
+              <li>Couronnement de muret bas</li>
+              <li>Habillage de couture</li>
+            </ul>
+            <div class="form-footer">
+              <span class="form-price">À partir de<strong>28 € HT/ml</strong></span>
+              <a href="../configurateur.html?type=plate" class="form-cta">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- COUVERTINE 1 PENTE (MONO-PENTE) -->
+        <article class="form-card">
+          <div class="form-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <line class="dim-line" x1="35" y1="-2" x2="105" y2="-2"/>
+              <line class="dim-tick" x1="35" y1="-5" x2="35" y2="1"/>
+              <line class="dim-tick" x1="105" y1="-5" x2="105" y2="1"/>
+              <text class="dim-label" x="70" y="-6" text-anchor="middle">B</text>
+              <text class="dim-label" x="84" y="20" text-anchor="middle">10°</text>
+              <!-- Profil pente : descend de gauche à droite -->
+              <polyline class="shape" points="25,55 25,15 115,30 115,55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="30" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="30" x2="105" y2="70"/>
+              <circle class="pli-marker" cx="25" cy="15" r="2.5"/>
+              <circle class="pli-marker" cx="115" cy="30" r="2.5"/>
+            </svg>
+          </div>
+          <div class="form-body">
+            <span class="form-tag">Standard</span>
+            <h3 class="form-name">Mono-pente</h3>
+            <p class="form-desc">Profil incliné qui dirige l'eau de pluie vers un seul côté du muret. Très efficace contre les infiltrations côté façade.</p>
+            <ul class="form-uses">
+              <li>Mur contre façade ou terrasse</li>
+              <li>Couronnement avec écoulement orienté</li>
+              <li>Évacuation contrôlée</li>
+            </ul>
+            <div class="form-footer">
+              <span class="form-price">À partir de<strong>32 € HT/ml</strong></span>
+              <a href="../configurateur.html?type=mono-pente" class="form-cta">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- COUVERTINE 2 PENTES -->
+        <article class="form-card">
+          <div class="form-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <line class="dim-line" x1="35" y1="-2" x2="105" y2="-2"/>
+              <line class="dim-tick" x1="35" y1="-5" x2="35" y2="1"/>
+              <line class="dim-tick" x1="105" y1="-5" x2="105" y2="1"/>
+              <text class="dim-label" x="70" y="-6" text-anchor="middle">B</text>
+              <!-- Profil 2 pentes en V inversé (toit) -->
+              <polyline class="shape" points="25,55 25,28 70,12 115,28 115,55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="28" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="28" x2="105" y2="70"/>
+              <circle class="pli-marker" cx="25" cy="28" r="2.5"/>
+              <circle class="pli-marker" cx="70" cy="12" r="2.5"/>
+              <circle class="pli-marker" cx="115" cy="28" r="2.5"/>
+            </svg>
+          </div>
+          <div class="form-body">
+            <span class="form-tag">Standard</span>
+            <h3 class="form-name">Deux versants</h3>
+            <p class="form-desc">Profil en toit double pente. Symétrique, l'eau s'évacue des deux côtés du muret. Look architectural prononcé.</p>
+            <ul class="form-uses">
+              <li>Mur de clôture autoportant</li>
+              <li>Pilier de jardin, muret central</li>
+              <li>Finition décorative</li>
+            </ul>
+            <div class="form-footer">
+              <span class="form-price">À partir de<strong>34 € HT/ml</strong></span>
+              <a href="../configurateur.html?type=deux-versants" class="form-cta">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- COUVERTINE BOMBÉE -->
+        <article class="form-card">
+          <div class="form-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <line class="dim-line" x1="35" y1="-2" x2="105" y2="-2"/>
+              <line class="dim-tick" x1="35" y1="-5" x2="35" y2="1"/>
+              <line class="dim-tick" x1="105" y1="-5" x2="105" y2="1"/>
+              <text class="dim-label" x="70" y="-6" text-anchor="middle">B</text>
+              <!-- Profil arrondi -->
+              <path class="shape" d="M 25 55 L 25 26 Q 25 12 70 12 Q 115 12 115 26 L 115 55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="26" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="26" x2="105" y2="70"/>
+              <circle class="pli-marker" cx="25" cy="26" r="2.5"/>
+              <circle class="pli-marker" cx="115" cy="26" r="2.5"/>
+            </svg>
+          </div>
+          <div class="form-body">
+            <span class="form-tag">Standard</span>
+            <h3 class="form-name">Bombée</h3>
+            <p class="form-desc">Profil arrondi sur le dessus, sans angles vifs. Esthétique douce, parfaite pour les projets résidentiels haut de gamme.</p>
+            <ul class="form-uses">
+              <li>Mur de villa, maison contemporaine</li>
+              <li>Finition élégante et discrète</li>
+              <li>Évacuation naturelle sur les côtés</li>
+            </ul>
+            <div class="form-footer">
+              <span class="form-price">À partir de<strong>36 € HT/ml</strong></span>
+              <a href="../configurateur.html?type=bombee" class="form-cta">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- COUVERTINE FORME LIBRE -->
+        <article class="form-card">
+          <div class="form-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <text class="dim-label" x="20" y="35" text-anchor="middle">A</text>
+              <text class="dim-label" x="50" y="14" text-anchor="middle">B</text>
+              <text class="dim-label" x="95" y="14" text-anchor="middle">C</text>
+              <text class="dim-label" x="125" y="35" text-anchor="middle">D</text>
+              <!-- Profil personnalisé en pointillés indicatifs -->
+              <polyline class="shape" points="25,55 25,30 50,20 95,20 115,32 115,55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="32" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="32" x2="105" y2="70"/>
+              <circle class="pli-marker" cx="25" cy="30" r="2.5"/>
+              <circle class="pli-marker" cx="50" cy="20" r="2.5"/>
+              <circle class="pli-marker" cx="95" cy="20" r="2.5"/>
+              <circle class="pli-marker" cx="115" cy="32" r="2.5"/>
+            </svg>
+          </div>
+          <div class="form-body">
+            <span class="form-tag">Sur cahier des charges</span>
+            <h3 class="form-name">Forme libre</h3>
+            <p class="form-desc">Profil entièrement personnalisé sur plan. Envoyez-nous votre DXF ou un croquis coté, nous étudions chaque demande.</p>
+            <ul class="form-uses">
+              <li>Profil non standard</li>
+              <li>Reproduction à l'identique</li>
+              <li>Architecture sur mesure</li>
+            </ul>
+            <div class="form-footer">
+              <span class="form-price"><span class="form-price-quote">Sur devis 24h</span></span>
+              <a href="../forme-libre.html" class="form-cta form-cta-outline">Demander →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Matériaux -->
+    <section class="materials-band">
+      <div class="materials-inner">
+        <div class="materials-header">
+          <h3>Trois matières, <em>plusieurs épaisseurs</em></h3>
+          <p>Toutes nos couvertines sont disponibles en acier laqué, aluminium ou inox. Plusieurs épaisseurs au choix selon le profil et la portée.</p>
+        </div>
+        <div class="materials-grid">
+          <div class="material-row">
+            <h4>Acier laqué</h4>
+            <dl>
+              <dt>Épaisseur</dt><dd>0,75 mm (standard) · 1 mm (renforcé)</dd>
+              <dt>Tarif</dt><dd>à partir de 28 € HT/ml</dd>
+              <dt>Finition</dt><dd>5 RAL standard ou RAL personnalisé sur devis</dd>
+            </dl>
+          </div>
+          <div class="material-row">
+            <h4>Aluminium</h4>
+            <dl>
+              <dt>Épaisseurs</dt><dd>1 mm · 1,5 mm · 2 mm</dd>
+              <dt>Tarif</dt><dd>à partir de 35 € HT/ml</dd>
+              <dt>Finition</dt><dd>Brut, laqué RAL ou anodisé</dd>
+            </dl>
+          </div>
+          <div class="material-row">
+            <h4>Inox</h4>
+            <dl>
+              <dt>Qualité</dt><dd>304 ou 316L (extérieur littoral)</dd>
+              <dt>Épaisseurs</dt><dd>1 mm · 1,5 mm · 2 mm</dd>
+              <dt>Finition</dt><dd>Brossé, poli miroir ou brut</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="pliage-cta">
+      <div class="pliage-cta-inner">
+        <h3>Prêt à <em>configurer</em> votre couvertine ?</h3>
+        <p>Renseignez vos cotes en quelques clics et obtenez un prix immédiat. Particulier ou professionnel : commande directe ou devis sur plan, comme vous voulez.</p>
+        <div class="pliage-cta-btns">
+          <a href="../configurateur.html" class="form-cta">Lancer le configurateur →</a>
+          <a href="../contact.html" class="form-cta form-cta-outline">Demander un devis</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="variant-desc">
+      <strong>Variante A — Miroir exact de pliage.html</strong>
+      <p>Structure 100% identique à ta page Pliage : header sobre, grille de 5 cartes (Plate avec retours · Mono-pente · Deux versants · Bombée · Forme libre), section "Trois matières plusieurs épaisseurs", puis CTA final. Cohérence visuelle parfaite entre tes 2 pages produit.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       VARIANTE B — Vedette + variantes
+  ══════════════════════════════════════════════════════════ -->
+  <section class="variant-page" data-variant="vB">
+
+    <header class="pliage-header">
+      <div class="pliage-eyebrow">— COUVERTINES SUR MESURE —</div>
+      <h1 class="pliage-title">Une <strong>couvertine</strong> phare, plusieurs variantes</h1>
+      <p class="pliage-desc">Notre best-seller : la couvertine plate avec retours. Disponible aussi en versions mono-pente, deux versants, bombée ou sur cahier des charges.</p>
+    </header>
+
+    <!-- Couvertine vedette -->
+    <section class="featured-section">
+      <article class="featured-card">
+        <div class="featured-visual">
+          <svg viewBox="-15 -10 170 110" aria-hidden="true">
+            <line class="dim-line" x1="35" y1="-2" x2="105" y2="-2"/>
+            <line class="dim-tick" x1="35" y1="-5" x2="35" y2="1"/>
+            <line class="dim-tick" x1="105" y1="-5" x2="105" y2="1"/>
+            <text class="dim-label" x="70" y="-6" text-anchor="middle">B</text>
+            <line class="dim-line" x1="20" y1="20" x2="20" y2="55"/>
+            <line class="dim-tick" x1="17" y1="20" x2="23" y2="20"/>
+            <line class="dim-tick" x1="17" y1="55" x2="23" y2="55"/>
+            <text class="dim-label" x="18" y="40" text-anchor="middle" transform="rotate(-90 18 40)">A</text>
+            <polyline class="shape" points="25,55 25,20 115,20 115,55"/>
+            <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+            <line class="ground" x1="35" y1="20" x2="35" y2="70"/>
+            <line class="ground" x1="105" y1="20" x2="105" y2="70"/>
+            <circle class="pli-marker" cx="25" cy="20" r="2.5"/>
+            <circle class="pli-marker" cx="115" cy="20" r="2.5"/>
+          </svg>
+        </div>
+        <div class="featured-body">
+          <span class="form-tag">Best-seller · 80% des commandes</span>
+          <h3>Couvertine plate avec retours</h3>
+          <p>Profil plat horizontal avec deux retours descendants. Le plus polyvalent : il protège la tête du muret des infiltrations, redirige l'eau vers les côtés et habille proprement la finition. Disponible en acier laqué, aluminium ou inox, plusieurs épaisseurs.</p>
+          <ul>
+            <li>Mur de clôture, terrasse, copro</li>
+            <li>Couronnement de muret bas (jusqu'à 60 cm large)</li>
+            <li>Pose en applique avec joint EPDM optionnel</li>
+            <li>Compatible avec tous les accessoires (jonctions, angles)</li>
+          </ul>
+          <div class="form-footer">
+            <span class="form-price">À partir de<strong>28 € HT/ml</strong></span>
+            <a href="../configurateur.html?type=plate" class="form-cta">Configurer →</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Variantes secondaires -->
+    <section class="secondary-section">
+      <div class="secondary-header">
+        <h4>Vous cherchez une autre forme ?</h4>
+        <p>4 variantes disponibles pour adapter à votre projet spécifique.</p>
+      </div>
+      <div class="secondary-grid">
+
+        <article class="secondary-card">
+          <div class="secondary-card-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <text class="dim-label" x="84" y="22" text-anchor="middle">10°</text>
+              <polyline class="shape" points="25,55 25,15 115,30 115,55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="30" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="30" x2="105" y2="70"/>
+            </svg>
+          </div>
+          <div class="secondary-card-body">
+            <h5>Mono-pente</h5>
+            <p>Profil incliné, écoulement orienté côté façade.</p>
+            <div class="secondary-card-footer">
+              <span class="price">32 € HT/ml</span>
+              <a href="../configurateur.html?type=mono-pente">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="secondary-card">
+          <div class="secondary-card-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <polyline class="shape" points="25,55 25,28 70,12 115,28 115,55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="28" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="28" x2="105" y2="70"/>
+            </svg>
+          </div>
+          <div class="secondary-card-body">
+            <h5>Deux versants</h5>
+            <p>Profil en toit double pente, évacuation des 2 côtés.</p>
+            <div class="secondary-card-footer">
+              <span class="price">34 € HT/ml</span>
+              <a href="../configurateur.html?type=deux-versants">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="secondary-card">
+          <div class="secondary-card-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <path class="shape" d="M 25 55 L 25 26 Q 25 12 70 12 Q 115 12 115 26 L 115 55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="26" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="26" x2="105" y2="70"/>
+            </svg>
+          </div>
+          <div class="secondary-card-body">
+            <h5>Bombée</h5>
+            <p>Profil arrondi, esthétique douce pour résidentiel.</p>
+            <div class="secondary-card-footer">
+              <span class="price">36 € HT/ml</span>
+              <a href="../configurateur.html?type=bombee">Configurer →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="secondary-card">
+          <div class="secondary-card-visual">
+            <svg viewBox="-15 -10 170 110" aria-hidden="true">
+              <polyline class="shape" points="25,55 25,30 50,20 95,20 115,32 115,55"/>
+              <line class="ground" x1="0" y1="70" x2="140" y2="70"/>
+              <line class="ground" x1="35" y1="32" x2="35" y2="70"/>
+              <line class="ground" x1="105" y1="32" x2="105" y2="70"/>
+            </svg>
+          </div>
+          <div class="secondary-card-body">
+            <h5>Forme libre</h5>
+            <p>Profil sur plan ou DXF — demande spécifique.</p>
+            <div class="secondary-card-footer">
+              <span class="price" style="color:var(--accent); font-style:italic;">sur devis 24h</span>
+              <a href="../forme-libre.html">Demander →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Matériaux (identiques) -->
+    <section class="materials-band">
+      <div class="materials-inner">
+        <div class="materials-header">
+          <h3>Trois matières, <em>plusieurs épaisseurs</em></h3>
+          <p>Toutes nos couvertines sont disponibles en acier laqué, aluminium ou inox. Plusieurs épaisseurs au choix.</p>
+        </div>
+        <div class="materials-grid">
+          <div class="material-row">
+            <h4>Acier laqué</h4>
+            <dl>
+              <dt>Épaisseur</dt><dd>0,75 mm · 1 mm</dd>
+              <dt>Finition</dt><dd>5 RAL standard ou personnalisé</dd>
+              <dt>Tarif</dt><dd>à partir de 28 € HT/ml</dd>
+            </dl>
+          </div>
+          <div class="material-row">
+            <h4>Aluminium</h4>
+            <dl>
+              <dt>Épaisseurs</dt><dd>1 mm · 1,5 mm · 2 mm</dd>
+              <dt>Finition</dt><dd>Brut, laqué RAL ou anodisé</dd>
+              <dt>Tarif</dt><dd>à partir de 35 € HT/ml</dd>
+            </dl>
+          </div>
+          <div class="material-row">
+            <h4>Inox</h4>
+            <dl>
+              <dt>Qualité</dt><dd>304 · 316L (littoral)</dd>
+              <dt>Épaisseurs</dt><dd>1 mm · 1,5 mm · 2 mm</dd>
+              <dt>Finition</dt><dd>Brossé, poli miroir ou brut</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pliage-cta">
+      <div class="pliage-cta-inner">
+        <h3>Prêt à <em>configurer</em> votre couvertine ?</h3>
+        <p>Renseignez vos cotes, obtenez un prix immédiat. Particulier ou professionnel : commande directe ou devis sur plan.</p>
+        <div class="pliage-cta-btns">
+          <a href="../configurateur.html" class="form-cta">Lancer le configurateur →</a>
+          <a href="../contact.html" class="form-cta form-cta-outline">Demander un devis</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="variant-desc">
+      <strong>Variante B — Vedette + variantes</strong>
+      <p>Hiérarchie marketing : la couvertine plate (best-seller, 80% des commandes) prend toute la largeur en haut avec un descriptif détaillé. Les 4 autres profils (Mono-pente, Deux versants, Bombée, Forme libre) viennent en mini-cartes en dessous. Plus orienté "tunnel de vente" — guide le client vers le produit le plus populaire tout en proposant les alternatives.</p>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.variant-switch button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.dataset.variant;
+        document.querySelectorAll('.variant-switch button').forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+        document.querySelectorAll('.variant-page').forEach(function (v) {
+          v.classList.toggle('is-active', v.dataset.variant === target);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

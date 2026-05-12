@@ -3,366 +3,803 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Configurateur de pliage sur mesure — Forme U, L, Z, Appui de fenêtre. Acier, aluminium, inox. Prix instantané.">
-  <title>Configurateur Pliage Sur Mesure — Metal Pliage</title>
+  <meta name="description" content="Pliage acier, aluminium et inox sur mesure — formes U, L, Z, appui de fenêtre et formes libres. Fabrication française, prix instantané, livraison 10 jours.">
+  <title>Pliage Sur Mesure — Formes U, L, Z, Appuis · Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/configurateur.css">
-  <link rel="stylesheet" href="css/pliage.css">
-</head>
-<body class="page-configurateur">
+  <link rel="stylesheet" href="css/futuriste.css">
+  <link rel="stylesheet" href="css/preloader.css">
+  <style>
+    /* ═══ PAGE PLIAGE MARKETING — EN-TÊTE SOBRE CENTRÉ ═══ */
+    .pliage-header {
+      padding: calc(var(--nav-h) + 3.5rem) 1.5rem 3rem;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .pliage-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .pliage-title {
+      font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin: 0 0 0.9rem;
+    }
+    .pliage-title strong { color: var(--accent); font-weight: 500; }
+    .pliage-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
 
+    /* ═══ GRILLE DES 5 FORMES ═══ */
+    .forms-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem clamp(1.5rem, 3vw, 2.5rem) 5rem;
+    }
+    .forms-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .forms-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .forms-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+    .forms-title em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .forms-subtitle {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 1rem auto 0;
+      font-size: 0.95rem;
+    }
+    .forms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .form-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 50px rgba(255, 69, 0, 0.18);
+    }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #FFB347);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+    .form-card:hover::before { transform: scaleX(1); }
+
+    .form-visual {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+      padding: 2.2rem 1.5rem 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-visual svg {
+      width: 170px;
+      height: 110px;
+      overflow: visible;
+    }
+    .form-visual svg .shape {
+      stroke: var(--accent);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      filter: drop-shadow(0 4px 12px rgba(255, 69, 0, 0.3));
+    }
+    /* Annotations style plan technique */
+    .form-visual svg .dim-line {
+      stroke: rgba(255, 180, 80, 0.5);
+      stroke-width: 0.8;
+      stroke-dasharray: 3 2;
+      fill: none;
+    }
+    .form-visual svg .dim-tick {
+      stroke: rgba(255, 180, 80, 0.5);
+      stroke-width: 1;
+    }
+    .form-visual svg .dim-label {
+      fill: #F5F0E8;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.05em;
+      stroke: none;
+    }
+    .form-visual svg .angle-arc {
+      stroke: rgba(255, 180, 80, 0.6);
+      stroke-width: 0.8;
+      fill: none;
+    }
+    .form-visual svg .angle-label {
+      fill: #F5F0E8;
+      font-size: 10px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      stroke: none;
+    }
+    .form-visual svg .pli-marker {
+      fill: var(--accent);
+      stroke: none;
+    }
+
+    .form-body {
+      padding: 1.5rem 1.6rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .form-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #C8C8C8;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .form-name {
+      font-size: 1.45rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    .form-desc {
+      font-size: 0.95rem;
+      color: #E0E0E0;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .form-uses {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.2rem 0;
+      flex: 1;
+    }
+    .form-uses li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      color: #E0E0E0;
+      padding: 0.25rem 0;
+    }
+    .form-uses li::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .form-price {
+      font-size: 1.05rem;
+      color: #D8D8D8;
+    }
+    .form-price strong {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1.25rem;
+      display: block;
+      margin-top: 2px;
+    }
+    .form-price-quote {
+      color: var(--accent);
+      font-weight: 500;
+      font-style: italic;
+    }
+    .form-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.25s var(--ease);
+      white-space: nowrap;
+    }
+    .form-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4);
+    }
+    .form-cta-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-hover);
+    }
+    .form-cta-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: transparent;
+      box-shadow: none;
+    }
+
+    /* ═══ SECTION MATÉRIAUX ═══ */
+    .materials-band {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .materials-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .materials-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .materials-header h3 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+    }
+    .materials-header h3 em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .materials-header p {
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .material-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem 1.4rem;
+    }
+    .material-row h4 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .material-row h4::before {
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .material-row dl {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .material-row dt {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.7rem;
+    }
+    .material-row dt:first-child { margin-top: 0; }
+    .material-row dd {
+      color: var(--text-primary);
+      margin: 0.25rem 0 0;
+    }
+
+    /* ═══ STRONG CTA ═══ */
+    .pliage-cta {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem clamp(1.5rem, 3vw, 2.5rem);
+      text-align: center;
+    }
+    .pliage-cta-inner {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .pliage-cta-inner::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 69, 0, 0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .pliage-cta-inner > * { position: relative; z-index: 1; }
+    .pliage-cta h3 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .pliage-cta h3 em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .pliage-cta p {
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      font-size: 0.95rem;
+    }
+    .pliage-cta-btns {
+      display: inline-flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (max-width: 600px) {
+      .form-footer { flex-direction: column; align-items: stretch; }
+      .form-footer .form-price, .form-footer .form-cta { width: 100%; }
+      .form-cta { justify-content: center; }
+    }
+  </style>
+</head>
+<body class="page-pliage">
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════ -->
   <nav id="navbar" aria-label="Navigation principale">
     <div class="nav-inner">
-      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
-      <div class="france-badge" aria-label="Fabriqué en France">
-        <div class="france-flag" aria-hidden="true">
-          <span class="f-blue"></span><span class="f-white"></span><span class="f-red"></span>
+      <div class="nav-left">
+        <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <div class="france-badge" aria-label="Fabriqué en France">
+          <div class="france-flag" aria-hidden="true">
+            <span class="f-blue"></span>
+            <span class="f-white"></span>
+            <span class="f-red"></span>
+          </div>
+          Fabriqué en France
         </div>
-        Fabriqué en France
       </div>
       <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
         <li class="nav-item"><a href="index.html#couvertine">Couvertine</a></li>
-        <li class="nav-item"><a href="index.html#pliage">Pliage</a></li>
+        <li class="nav-item"><a href="pliage.html" class="active">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
-      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      </div>
     </div>
   </nav>
 
-  <header class="cfg-page-header">
-    <div class="cfg-page-header-inner">
-      <div class="cfg-page-header-badge">SUR MESURE</div>
-      <h1>CONFIGURATEUR PLIAGE</h1>
-      <p>Forme U · L · Z · Appui de fenêtre — Acier, Aluminium ou Inox, dimensions libres</p>
-    </div>
+  <!-- ═══════════════════════════════════════════
+       EN-TÊTE PAGE — Sobre centré
+  ═══════════════════════════════════════════ -->
+  <header class="pliage-header">
+    <div class="pliage-eyebrow">— PLIAGE SUR MESURE —</div>
+    <h1 class="pliage-title">Quelle <strong>forme</strong> choisir ?</h1>
+    <p class="pliage-desc">Notre configurateur calcule le prix de votre pièce en temps réel. Choisissez d'abord la forme la plus proche de votre besoin parmi nos profils standards, ou optez pour la forme libre.</p>
   </header>
 
-  <div class="config-layout">
-
-    <!-- ── ÉTAPES ── -->
-    <div class="config-steps">
-
-      <!-- STEP 1 : FORME -->
-      <section class="step-section" id="step-1" aria-label="Étape 1 — Forme">
-        <div class="step-header">
-          <span class="step-num" aria-hidden="true">1</span>
-          <div class="step-header-text">
-            <h2>Forme</h2>
-            <p class="step-desc">Sélectionnez le profil de votre pièce</p>
-          </div>
-        </div>
-
-        <div class="shape-cards" role="group" aria-label="Choix de forme">
-
-          <button class="shape-card" data-shape="U" aria-pressed="false">
-            <div class="shape-card-svg" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20,8 20,42 60,42 60,8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                <text x="32" y="48" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">B</text>
-                <text x="11" y="28" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">A</text>
-              </svg>
-            </div>
-            <strong>Forme U</strong>
-            <span>Canal · Habillage · Cornière</span>
-          </button>
-
-          <button class="shape-card" data-shape="L" aria-pressed="false">
-            <div class="shape-card-svg" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="15,8 15,42 68,42" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                <text x="5"  y="28" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">A</text>
-                <text x="38" y="49" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">B</text>
-              </svg>
-            </div>
-            <strong>Forme L</strong>
-            <span>Angle · Seuil · Appui</span>
-          </button>
-
-          <button class="shape-card" data-shape="Z" aria-pressed="false">
-            <div class="shape-card-svg" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="8,14 38,14 38,38 70,38" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                <text x="18" y="11" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">A</text>
-                <text x="41" y="29" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">H</text>
-                <text x="50" y="48" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">B</text>
-              </svg>
-            </div>
-            <strong>Forme Z</strong>
-            <span>Décalage · Recouvrement</span>
-          </button>
-
-          <button class="shape-card" data-shape="appui" aria-pressed="false">
-            <div class="shape-card-svg" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Profil 5 points : retour A · pente B (10°) · nez C (92°) · pince 12mm -->
-                <polyline points="9,4 9,17 71,28 67,46 64,46" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Arc indicateur de l'angle 92° à la jonction B-C -->
-                <path d="M 63,27 A 8,8 0 0 0 69,36" stroke="currentColor" stroke-width="1" fill="none" opacity="0.45"/>
-                <!-- Labels hors profil -->
-                <text x="1"  y="12" font-size="6" fill="currentColor" font-family="Inter,sans-serif" opacity="0.65">A</text>
-                <text x="36" y="11" font-size="6" fill="currentColor" font-family="Inter,sans-serif" opacity="0.65">B</text>
-                <text x="74" y="38" font-size="6" fill="currentColor" font-family="Inter,sans-serif" opacity="0.65">C</text>
-              </svg>
-            </div>
-            <strong>Appui de Fenêtre</strong>
-            <span>Retour · Pente 10° · Nez 92°</span>
-          </button>
-
-        </div>
-      </section>
-
-      <!-- STEP 2 : MATIÈRE & ÉPAISSEUR -->
-      <section class="step-section step-section--disabled" id="step-2" aria-label="Étape 2 — Matière">
-        <div class="step-header">
-          <span class="step-num" aria-hidden="true">2</span>
-          <div class="step-header-text">
-            <h2>Matière &amp; Épaisseur</h2>
-            <p class="step-desc">Choisissez le matériau et l'épaisseur de la tôle</p>
-          </div>
-        </div>
-
-        <div class="material-cards material-cards--3" role="group" aria-label="Choix de matière">
-          <button class="material-card" data-material="acier" aria-pressed="false">
-            <div class="material-card-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <rect x="3" y="14" width="26" height="4" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
-                <line x1="3" y1="14" x2="3" y2="18" stroke="#FF4500" stroke-width="2" stroke-linecap="round"/>
-                <line x1="29" y1="14" x2="29" y2="18" stroke="#FF4500" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="material-card-body">
-              <strong>Acier</strong>
-              <span class="material-epaisseur">0,75 mm</span>
-              <span class="material-desc">Résistance · Prix compétitif</span>
-            </div>
-            <div class="material-card-check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </button>
-
-          <button class="material-card" data-material="alu" aria-pressed="false">
-            <div class="material-card-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <rect x="3" y="13" width="26" height="6" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
-                <line x1="3" y1="13" x2="3" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="29" y1="13" x2="29" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="material-card-body">
-              <strong>Aluminium</strong>
-              <span class="material-epaisseur" id="alu-epaisseur">1 ou 2 mm</span>
-              <span class="material-desc">Légèreté · Anticorrosion</span>
-            </div>
-            <div class="material-card-check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </button>
-
-          <button class="material-card" data-material="inox" aria-pressed="false">
-            <div class="material-card-icon" aria-hidden="true">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                <rect x="3" y="13" width="26" height="6" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
-                <line x1="3" y1="13" x2="3" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
-                <line x1="29" y1="13" x2="29" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="16" cy="16" r="2" fill="#FF4500" opacity="0.4"/>
-              </svg>
-            </div>
-            <div class="material-card-body">
-              <strong>Inox</strong>
-              <span class="material-epaisseur" id="inox-epaisseur">1 ou 2 mm</span>
-              <span class="material-desc">Brut · Haut de gamme</span>
-            </div>
-            <div class="material-card-check" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </button>
-        </div>
-
-        <!-- Sélecteur épaisseur (Alu/Inox) -->
-        <div class="thickness-selector" id="thickness-selector" hidden>
-          <p class="thickness-label">Épaisseur de la tôle</p>
-          <div class="thickness-btns" role="group" aria-label="Épaisseur">
-            <button class="thickness-btn" data-thickness="1" aria-pressed="false">1 mm</button>
-            <button class="thickness-btn" data-thickness="2" aria-pressed="false">2 mm</button>
-          </div>
-          <p class="thickness-note">Autre épaisseur → <a href="contact.html">Demander un devis</a></p>
-        </div>
-      </section>
-
-      <!-- STEP 3 : DIMENSIONS -->
-      <section class="step-section step-section--disabled" id="step-3" aria-label="Étape 3 — Dimensions">
-        <div class="step-header">
-          <span class="step-num" aria-hidden="true">3</span>
-          <div class="step-header-text">
-            <h2>Dimensions</h2>
-            <p class="step-desc">Saisissez les cotes en millimètres</p>
-          </div>
-        </div>
-
-        <!-- SVG dynamique -->
-        <div class="couvertine-preview" id="pliage-preview" aria-label="Aperçu du profil">
-          <svg id="profile-svg" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profil de pliage"></svg>
-        </div>
-
-        <!-- Inputs dimensions (générés par JS) -->
-        <div class="dim-inputs" id="dim-inputs"></div>
-
-        <!-- Longueur (toujours présente) -->
-        <div class="dim-inputs" style="margin-top:.5rem">
-          <div class="dim-row">
-            <label class="dim-label" for="input-L">
-              <span class="dim-letter" style="background:rgba(255,69,0,.08);color:var(--text-secondary)">L</span>
-              Longueur de la tôle
-            </label>
-            <div class="dim-input-wrap">
-              <input type="number" id="input-L" class="dim-input" value="2000" min="100" max="6000" step="50">
-              <span class="dim-unit">mm</span>
-            </div>
-            <span class="dim-hint">min 100 — max 6 000</span>
-          </div>
-        </div>
-
-        <!-- Barre d'info -->
-        <div class="info-bar" id="info-bar">
-          <span id="info-dev">Développé : — mm</span>
-          <span class="info-sep">|</span>
-          <span id="info-len">Longueur : — mm</span>
-          <span class="info-sep">|</span>
-          <span id="info-surf">Surface : — m²</span>
-        </div>
-      </section>
-
-      <!-- STEP 4 : COULEUR / FINITION -->
-      <section class="step-section step-section--disabled" id="step-4" aria-label="Étape 4 — Couleur">
-        <div class="step-header">
-          <span class="step-num" aria-hidden="true">4</span>
-          <div class="step-header-text">
-            <h2>Couleur &amp; Finition</h2>
-            <p class="step-desc" id="color-step-desc">5 coloris RAL standard</p>
-          </div>
-        </div>
-
-        <!-- RAL (Acier/Alu) -->
-        <div id="color-ral-panel">
-          <div class="ral-grid" id="ral-grid" role="group" aria-label="Choix de couleur RAL"></div>
-          <a href="contact.html" class="btn-autre-ral">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-            Autre RAL — Demander un devis
-          </a>
-        </div>
-
-        <!-- Inox brut (affiché si Inox) -->
-        <div id="color-inox-panel" hidden>
-          <div class="inox-brut-card">
-            <div class="inox-brut-swatch" aria-hidden="true"></div>
-            <div>
-              <strong>Inox Brut</strong>
-              <p>L'inox est livré en finition naturelle brossée — aucun revêtement, aucune couleur RAL. Aspect métallique premium, résistance à la corrosion naturelle.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 5 : QUANTITÉ & CTA -->
-      <section class="step-section step-section--disabled" id="step-5" aria-label="Étape 5 — Quantité">
-        <div class="step-header">
-          <span class="step-num" aria-hidden="true">5</span>
-          <div class="step-header-text">
-            <h2>Quantité &amp; Commande</h2>
-            <p class="step-desc">Nombre de pièces identiques souhaitées</p>
-          </div>
-        </div>
-
-        <div class="qty-row-main">
-          <label class="qty-label" for="main-qty">Quantité</label>
-          <div class="qty-controls">
-            <button class="qty-btn qty-btn--lg" id="main-qty-minus" aria-label="Diminuer">−</button>
-            <input type="number" id="main-qty" class="qty-input qty-input--lg" value="1" min="1" max="999">
-            <button class="qty-btn qty-btn--lg" id="main-qty-plus" aria-label="Augmenter">+</button>
-          </div>
-        </div>
-
-        <div class="step5-price-block">
-          <div class="step5-price-ht"><span id="step5-ht">—</span> <em>€ HT</em></div>
-          <div class="step5-price-ttc">soit <span id="step5-ttc">—</span> € TTC</div>
-        </div>
-
-        <div class="step5-ctas">
-          <button class="btn-primary btn-full" id="btn-cart" disabled>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            Ajouter au panier
-          </button>
-          <a href="contact.html" class="btn-outline btn-full">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Demander un devis
-          </a>
-        </div>
-      </section>
-
-    </div><!-- /config-steps -->
-
-    <!-- ── SIDEBAR ── -->
-    <aside class="config-sidebar" aria-label="Récapitulatif">
-      <div class="sidebar-head"><h3>Votre configuration</h3></div>
-
-      <div class="sidebar-svg-mini" id="sidebar-svg-mini" aria-hidden="true">
-        <svg id="mini-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"></svg>
-      </div>
-
-      <dl class="sidebar-recap" id="sidebar-recap">
-        <div class="recap-row"><dt>Forme</dt><dd id="recap-shape">—</dd></div>
-        <div class="recap-row"><dt>Matière</dt><dd id="recap-material">—</dd></div>
-        <div class="recap-row"><dt>Dimensions</dt><dd id="recap-dims">—</dd></div>
-        <div class="recap-row"><dt>Développé</dt><dd id="recap-dev">—</dd></div>
-        <div class="recap-row"><dt>Couleur</dt><dd id="recap-color">—</dd></div>
-        <div class="recap-row"><dt>Quantité</dt><dd id="recap-qty">1</dd></div>
-      </dl>
-
-      <div class="sidebar-price-block">
-        <div class="sidebar-price-ht"><span id="price-ht">—</span> <em>€ HT</em></div>
-        <div class="sidebar-price-ttc">soit <span id="price-ttc">—</span> € TTC</div>
-      </div>
-
-      <div class="sidebar-ctas">
-        <button class="btn-primary btn-full" id="sidebar-btn-cart" disabled>Ajouter au panier</button>
-        <a href="contact.html" class="btn-outline btn-full">Demander un devis</a>
-      </div>
-
-      <p class="sidebar-note">Prix indicatif HT, hors livraison. Devis sous 24h pour toute demande spécifique.</p>
-    </aside>
-
-  </div><!-- /config-layout -->
-
-  <!-- Cart drawer -->
-  <div id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" hidden>
-    <div class="cart-drawer-header">
-      <h2>Votre panier</h2>
-      <button id="cart-close-btn" class="cart-close" aria-label="Fermer">×</button>
+  <!-- ═══════════════════════════════════════════
+       LES 5 FORMES
+  ═══════════════════════════════════════════ -->
+  <section class="forms-section" aria-labelledby="forms-title">
+    <div class="forms-header">
+      <span class="forms-eyebrow">Nos profils</span>
+      <h2 class="forms-title" id="forms-title">5 formes <em>au choix</em></h2>
+      <p class="forms-subtitle">Survolez une carte pour la mettre en avant. Cliquez sur « Configurer » pour lancer le configurateur avec la forme pré-sélectionnée.</p>
     </div>
-    <div class="cart-drawer-body">
-      <div id="cart-empty" class="cart-empty">Votre panier est vide.</div>
-      <ul id="cart-items-list" class="cart-items"></ul>
-    </div>
-    <div id="cart-footer" class="cart-footer" hidden>
-      <div class="cart-total">Total : <strong id="cart-total-display">0,00 €</strong></div>
-      <button id="btn-checkout" class="btn-primary btn-full">Passer la commande</button>
-    </div>
-  </div>
-  <div id="cart-backdrop" class="cart-backdrop" hidden></div>
 
-  <button id="cart-open-btn" class="cart-fab" aria-label="Panier (0 article)">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    <span id="cart-count-badge" class="cart-badge">0</span>
-  </button>
+    <div class="forms-grid">
+
+      <!-- FORME U -->
+      <article class="form-card">
+        <div class="form-visual">
+          <svg viewBox="-15 -10 170 110" aria-hidden="true">
+            <!-- Cote A1 (bras gauche) -->
+            <line class="dim-line" x1="8" y1="15" x2="8" y2="70"/>
+            <line class="dim-tick" x1="5" y1="15" x2="11" y2="15"/>
+            <line class="dim-tick" x1="5" y1="70" x2="11" y2="70"/>
+            <text class="dim-label" x="6" y="44" text-anchor="middle" transform="rotate(-90 6 44)">A1</text>
+            <!-- Cote B (base) -->
+            <line class="dim-line" x1="20" y1="82" x2="120" y2="82"/>
+            <line class="dim-tick" x1="20" y1="79" x2="20" y2="85"/>
+            <line class="dim-tick" x1="120" y1="79" x2="120" y2="85"/>
+            <text class="dim-label" x="70" y="92" text-anchor="middle">B</text>
+            <!-- Cote A2 (bras droit) -->
+            <line class="dim-line" x1="132" y1="15" x2="132" y2="70"/>
+            <line class="dim-tick" x1="129" y1="15" x2="135" y2="15"/>
+            <line class="dim-tick" x1="129" y1="70" x2="135" y2="70"/>
+            <text class="dim-label" x="134" y="44" text-anchor="middle" transform="rotate(90 134 44)">A2</text>
+            <!-- Angles -->
+            <path class="angle-arc" d="M 26 70 A 6 6 0 0 0 20 64"/>
+            <path class="angle-arc" d="M 114 70 A 6 6 0 0 1 120 64"/>
+            <!-- Polyline originale -->
+            <polyline class="shape" points="20,15 20,70 120,70 120,15"/>
+            <!-- Marqueurs de pli -->
+            <circle class="pli-marker" cx="20" cy="70" r="2.5"/>
+            <circle class="pli-marker" cx="120" cy="70" r="2.5"/>
+          </svg>
+        </div>
+        <div class="form-body">
+          <span class="form-tag">Profil standard</span>
+          <h3 class="form-name">Forme U</h3>
+          <p class="form-desc">Pliage en U avec deux bras parallèles. Le plus polyvalent — couvre, encadre, protège.</p>
+          <ul class="form-uses">
+            <li>Couverture de muret bas</li>
+            <li>Habillage de poteau ou de poutre</li>
+            <li>Encadrement de baie, finition de seuil</li>
+          </ul>
+          <div class="form-footer">
+            <span class="form-price">À partir de<strong>45 € HT</strong></span>
+            <a href="configurateur-pliage.html?forme=U" class="form-cta">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- FORME L -->
+      <article class="form-card">
+        <div class="form-visual">
+          <svg viewBox="-15 -10 170 110" aria-hidden="true">
+            <!-- Cote A (jambe) -->
+            <line class="dim-line" x1="13" y1="15" x2="13" y2="70"/>
+            <line class="dim-tick" x1="10" y1="15" x2="16" y2="15"/>
+            <line class="dim-tick" x1="10" y1="70" x2="16" y2="70"/>
+            <text class="dim-label" x="11" y="44" text-anchor="middle" transform="rotate(-90 11 44)">A</text>
+            <!-- Cote B (base) -->
+            <line class="dim-line" x1="25" y1="82" x2="120" y2="82"/>
+            <line class="dim-tick" x1="25" y1="79" x2="25" y2="85"/>
+            <line class="dim-tick" x1="120" y1="79" x2="120" y2="85"/>
+            <text class="dim-label" x="72" y="92" text-anchor="middle">B</text>
+            <!-- Angle -->
+            <path class="angle-arc" d="M 31 70 A 6 6 0 0 0 25 64"/>
+            <!-- Polyline originale -->
+            <polyline class="shape" points="25,15 25,70 120,70"/>
+            <!-- Marqueur de pli -->
+            <circle class="pli-marker" cx="25" cy="70" r="2.5"/>
+          </svg>
+        </div>
+        <div class="form-body">
+          <span class="form-tag">Profil standard</span>
+          <h3 class="form-name">Forme L</h3>
+          <p class="form-desc">Cornière à 90° avec deux ailes perpendiculaires. La finition angle la plus simple et la plus rapide.</p>
+          <ul class="form-uses">
+            <li>Cornière de finition d'angle de mur</li>
+            <li>Plinthe métallique, jonction sol/mur</li>
+            <li>Bordure de marche ou de pierre</li>
+          </ul>
+          <div class="form-footer">
+            <span class="form-price">À partir de<strong>35 € HT</strong></span>
+            <a href="configurateur-pliage.html?forme=L" class="form-cta">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- FORME Z -->
+      <article class="form-card">
+        <div class="form-visual">
+          <svg viewBox="-15 -10 170 110" aria-hidden="true">
+            <!-- Cote A (aile haute) -->
+            <line class="dim-line" x1="15" y1="10" x2="70" y2="10"/>
+            <line class="dim-tick" x1="15" y1="7" x2="15" y2="13"/>
+            <line class="dim-tick" x1="70" y1="7" x2="70" y2="13"/>
+            <text class="dim-label" x="42" y="6" text-anchor="middle">A</text>
+            <!-- Cote H (hauteur âme) -->
+            <line class="dim-line" x1="80" y1="20" x2="80" y2="65"/>
+            <line class="dim-tick" x1="77" y1="20" x2="83" y2="20"/>
+            <line class="dim-tick" x1="77" y1="65" x2="83" y2="65"/>
+            <text class="dim-label" x="78" y="44" text-anchor="middle" transform="rotate(-90 78 44)">H</text>
+            <!-- Cote B (aile basse) -->
+            <line class="dim-line" x1="70" y1="77" x2="125" y2="77"/>
+            <line class="dim-tick" x1="70" y1="74" x2="70" y2="80"/>
+            <line class="dim-tick" x1="125" y1="74" x2="125" y2="80"/>
+            <text class="dim-label" x="97" y="87" text-anchor="middle">B</text>
+            <!-- Angles -->
+            <path class="angle-arc" d="M 70 26 A 6 6 0 0 0 76 20"/>
+            <path class="angle-arc" d="M 70 59 A 6 6 0 0 1 76 65"/>
+            <!-- Polyline originale -->
+            <polyline class="shape" points="15,20 70,20 70,65 125,65"/>
+            <!-- Marqueurs de pli -->
+            <circle class="pli-marker" cx="70" cy="20" r="2.5"/>
+            <circle class="pli-marker" cx="70" cy="65" r="2.5"/>
+          </svg>
+        </div>
+        <div class="form-body">
+          <span class="form-tag">Profil standard</span>
+          <h3 class="form-name">Forme Z</h3>
+          <p class="form-desc">Pliage en Z avec deux ailes opposées et une âme centrale. Idéal pour jonctions de niveaux décalés.</p>
+          <ul class="form-uses">
+            <li>Larmier sous toiture ou solin</li>
+            <li>Jonction entre deux plans décalés</li>
+            <li>Profilé de fixation en applique</li>
+          </ul>
+          <div class="form-footer">
+            <span class="form-price">À partir de<strong>35 € HT</strong></span>
+            <a href="configurateur-pliage.html?forme=Z" class="form-cta">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- APPUI DE FENÊTRE -->
+      <article class="form-card">
+        <div class="form-visual">
+          <svg viewBox="-15 -10 170 110" aria-hidden="true">
+            <!-- Cote A (retour vertical gauche) -->
+            <line class="dim-line" x1="13" y1="12" x2="13" y2="37"/>
+            <line class="dim-tick" x1="10" y1="12" x2="16" y2="12"/>
+            <line class="dim-tick" x1="10" y1="37" x2="16" y2="37"/>
+            <text class="dim-label" x="11" y="26" text-anchor="middle" transform="rotate(-90 11 26)">A</text>
+            <!-- Cote B (profondeur surface) -->
+            <line class="dim-line" x1="25" y1="-2" x2="130" y2="-2"/>
+            <line class="dim-tick" x1="25" y1="-5" x2="25" y2="1"/>
+            <line class="dim-tick" x1="130" y1="-5" x2="130" y2="1"/>
+            <text class="dim-label" x="77" y="-6" text-anchor="middle">B</text>
+            <!-- Cote C (nez vertical droit, parallèle à A) -->
+            <line class="dim-line" x1="142" y1="37" x2="142" y2="85"/>
+            <line class="dim-tick" x1="139" y1="37" x2="145" y2="37"/>
+            <line class="dim-tick" x1="139" y1="85" x2="145" y2="85"/>
+            <text class="dim-label" x="144" y="62" text-anchor="middle" transform="rotate(90 144 62)">C</text>
+            <!-- Tag "10°" : pente d'écoulement (info technique, surface dessinée plate pour clarté) -->
+            <text class="angle-label" x="78" y="32" text-anchor="middle">surface 10°</text>
+            <!-- Label pince -->
+            <text class="angle-label" x="122" y="93" text-anchor="middle">pince</text>
+            <!-- Polyline : retour A vertical + surface plate + nez C vertical PARALLÈLE à A + pince 15mm -->
+            <polyline class="shape" points="25,12 25,37 130,37 130,85 115,85"/>
+            <!-- Marqueurs de pli (3 plis) -->
+            <circle class="pli-marker" cx="25" cy="37" r="2.5"/>
+            <circle class="pli-marker" cx="130" cy="37" r="2.5"/>
+            <circle class="pli-marker" cx="130" cy="85" r="2.5"/>
+          </svg>
+        </div>
+        <div class="form-body">
+          <span class="form-tag">Profil standard</span>
+          <h3 class="form-name">Appui de fenêtre</h3>
+          <p class="form-desc">Profil incliné à 10° avec nez et pince. Évacue parfaitement l'eau de pluie hors du dormant.</p>
+          <ul class="form-uses">
+            <li>Seuil bas de fenêtre, baie vitrée</li>
+            <li>Recouvrement de tablette béton</li>
+            <li>Rénovation d'appuis dégradés</li>
+          </ul>
+          <div class="form-footer">
+            <span class="form-price">À partir de<strong>45 € HT</strong></span>
+            <a href="configurateur-pliage.html?forme=appui" class="form-cta">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- FORME LIBRE -->
+      <article class="form-card">
+        <div class="form-visual">
+          <svg viewBox="-15 -10 170 110" aria-hidden="true">
+            <!-- Labels indicatifs des plis -->
+            <text class="dim-label" x="10" y="55" text-anchor="middle">A</text>
+            <text class="dim-label" x="32" y="34" text-anchor="middle">B</text>
+            <text class="dim-label" x="60" y="14" text-anchor="middle">C</text>
+            <text class="dim-label" x="100" y="14" text-anchor="middle">D</text>
+            <text class="dim-label" x="118" y="48" text-anchor="middle">E</text>
+            <!-- Polyline originale -->
+            <polyline class="shape" points="15,70 15,40 50,40 50,20 90,20 90,55 125,55"/>
+            <!-- Marqueurs de pli à chaque cassure -->
+            <circle class="pli-marker" cx="15" cy="40" r="2.5"/>
+            <circle class="pli-marker" cx="50" cy="40" r="2.5"/>
+            <circle class="pli-marker" cx="50" cy="20" r="2.5"/>
+            <circle class="pli-marker" cx="90" cy="20" r="2.5"/>
+            <circle class="pli-marker" cx="90" cy="55" r="2.5"/>
+          </svg>
+        </div>
+        <div class="form-body">
+          <span class="form-tag">Sur cahier des charges</span>
+          <h3 class="form-name">Forme libre</h3>
+          <p class="form-desc">Jusqu'à 10 plis personnalisés. Envoyez votre plan ou schéma — nous étudions chaque demande spécifique.</p>
+          <ul class="form-uses">
+            <li>Profils techniques non standards</li>
+            <li>Pièces architecturales sur plan d'architecte</li>
+            <li>Reproductions à l'identique d'existants</li>
+          </ul>
+          <div class="form-footer">
+            <span class="form-price"><span class="form-price-quote">Sur devis 24h</span></span>
+            <a href="forme-libre.html" class="form-cta form-cta-outline">Demander →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       MATÉRIAUX ET TARIFS
+  ═══════════════════════════════════════════ -->
+  <section class="materials-band" aria-labelledby="mat-title">
+    <div class="materials-inner">
+      <div class="materials-header">
+        <h3 id="mat-title">Trois matières, <em>cinq tarifs</em></h3>
+        <p>Tous nos pliages sont disponibles en acier laqué (32 couleurs RAL), aluminium ou inox brut. Tarif au m² appliqué sur la surface développée de votre pièce.</p>
+      </div>
+      <div class="materials-grid">
+
+        <div class="material-row">
+          <h4>Acier laqué</h4>
+          <dl>
+            <dt>Épaisseur</dt><dd>0,75 mm (7,5/10ème)</dd>
+            <dt>Tarif</dt><dd>75 € HT / m²</dd>
+            <dt>Finition</dt><dd>32 coloris RAL — poudre époxy 80 microns</dd>
+          </dl>
+        </div>
+
+        <div class="material-row">
+          <h4>Aluminium</h4>
+          <dl>
+            <dt>Épaisseurs</dt><dd>1 mm ou 2 mm</dd>
+            <dt>Tarif</dt><dd>90 € HT / m² (1 mm) — 115 € HT / m² (2 mm)</dd>
+            <dt>Finition</dt><dd>Brut, laqué RAL, brossé ou anodisé</dd>
+          </dl>
+        </div>
+
+        <div class="material-row">
+          <h4>Inox</h4>
+          <dl>
+            <dt>Épaisseurs</dt><dd>1 mm ou 2 mm</dd>
+            <dt>Tarif</dt><dd>125 € HT / m² (1 mm) — 160 € HT / m² (2 mm)</dd>
+            <dt>Finition</dt><dd>Brut brossé (laqué non standard)</dd>
+          </dl>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STRONG CTA
+  ═══════════════════════════════════════════ -->
+  <section class="pliage-cta">
+    <div class="pliage-cta-inner">
+      <h3>Lancez votre <em>pliage en 2 minutes</em></h3>
+      <p>Configurateur en ligne, prix HT/TTC instantané, paiement sécurisé. Livraison 5 à 10 jours ouvrés partout en France.</p>
+      <div class="pliage-cta-btns">
+        <a href="configurateur-pliage.html" class="btn-primary">Configurer mon pliage</a>
+        <a href="contact.html" class="btn-outline">Demander un devis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TRUST SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="trust-section" aria-label="Nos garanties">
+    <div class="trust-grid">
+      <article class="trust-card animate-fadeup">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h4>Fabrication française</h4>
+        <p>Toutes nos pièces sont pliées dans notre atelier sur plieuses numériques haute précision.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.1s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Précision millimétrée</h4>
+        <p>Tolérance ±0,5 mm sur les cotes finies. Recoupable à la scie sauteuse ou à la disqueuse si besoin.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.2s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h4>Livraison 5 à 10 jours</h4>
+        <p>Franco de port dès 1 200 € HT — livraison à domicile ou directement sur votre chantier.</p>
+      </article>
+      <article class="trust-card animate-fadeup" style="--delay: 0.3s">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h4>Conseil technique disponible</h4>
+        <p>Notre équipe vous accompagne dans le choix des cotes, des matières et des finitions adaptées.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo footer-logo" aria-label="Metal Pliage — Retour en haut">METAL <span>PLIAGE</span></a>
+        <p class="footer-tagline">Fabrication française &nbsp;·&nbsp; Acier de précision sur mesure</p>
+      </div>
+      <nav class="footer-nav" aria-label="Liens de bas de page">
+        <ul role="list">
+          <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="pliage.html">Pliage</a></li>
+          <li><a href="configurateur-pliage.html">Configurateur Pliage</a></li>
+          <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="contact.html">Contact / Devis</a></li>
+        </ul>
+      </nav>
+      <address class="footer-contact">
+        <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
+        <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
+        <p>France</p>
+      </address>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+      <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
+    </div>
+  </footer>
 
   <script src="js/main.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/pliage.js"></script>
+  <script src="js/futuriste.js"></script>
+  <script src="js/preloader.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

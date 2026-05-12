@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aperçu illustrations SVG — 5 formes × 4 styles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #242424;
+      color: #F5F5F5;
+      min-height: 100vh;
+    }
+    :root {
+      --bg-base: #242424;
+      --bg-surface: #2E2E2E;
+      --bg-card: #383838;
+      --border: #3A3A3A;
+      --accent: #FF4500;
+      --accent-warm: #FFB347;
+      --text: #F5F5F5;
+      --text-soft: #BDBDBD;
+      --text-muted: #757575;
+    }
+
+    /* SÉLECTEUR */
+    .selector {
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 14px 24px;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      background: rgba(15,12,10,0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 99999;
+    }
+    .selector h1 {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FFB347, #FF4500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-right: 14px;
+    }
+    .v-btn {
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,69,0,0.3);
+      color: #eee;
+      border-radius: 6px;
+      font-size: 11px; font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .v-btn:hover { background: rgba(255,69,0,0.15); border-color: rgba(255,69,0,0.6); }
+    .v-btn.active {
+      background: linear-gradient(135deg, #FF6F00, #FF4500);
+      border-color: #FF4500;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(255,69,0,0.4);
+    }
+    body { padding-top: 56px; }
+
+    /* Page */
+    .page-header {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+    }
+    .page-header .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .page-header h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .page-header h2 em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* GRILLE 5 FORMES */
+    .forms-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 3vw, 2.5rem) 5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .form-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 36px rgba(255,69,0,0.15);
+    }
+    .form-visual {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+      padding: 1.8rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 170px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-visual svg {
+      width: 160px;
+      height: 110px;
+      overflow: visible;
+    }
+    .form-body {
+      padding: 1.2rem 1.4rem 1.4rem;
+      text-align: center;
+    }
+    .form-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .form-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Visibilité variantes */
+    .svg-variant { display: none; }
+    body[data-v="trait"] .svg-variant.trait,
+    body[data-v="iso"]   .svg-variant.iso,
+    body[data-v="brush"] .svg-variant.brush,
+    body[data-v="plan"]  .svg-variant.plan { display: block; }
+
+    /* ════ V1 — TRAIT ÉPAISSI AVEC COTES ════ */
+    .v-trait .sheet {
+      fill: rgba(255, 69, 0, 0.12);
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
+    .v-trait .dim-label {
+      fill: var(--accent);
+      font-size: 9px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+    }
+    .v-trait .dim-line {
+      stroke: var(--accent);
+      stroke-width: 0.6;
+      stroke-dasharray: 2 2;
+      opacity: 0.7;
+    }
+
+    /* ════ V2 — 3D ISOMÉTRIQUE ════ */
+    .v-iso .sheet-back {
+      stroke: rgba(255,255,255,0.2);
+      stroke-width: 0.8;
+      fill: none;
+    }
+    .v-iso .sheet-depth {
+      stroke: rgba(255,255,255,0.25);
+      stroke-width: 0.6;
+    }
+    .v-iso .sheet-front {
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 4px 10px rgba(255,69,0,0.4));
+    }
+
+    /* ════ V3 — MÉTAL BROSSÉ ════ */
+    .v-brush .sheet {
+      stroke: var(--accent-warm);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      filter: drop-shadow(0 4px 12px rgba(255,179,71,0.35));
+    }
+    .v-brush .sheet-highlight {
+      stroke: rgba(255,255,255,0.5);
+      stroke-width: 1;
+      fill: none;
+    }
+    .v-brush .brushed-fill {
+      opacity: 0.4;
+    }
+
+    /* ════ V4 — PLAN TECHNIQUE ANNOTÉ ════ */
+    .v-plan .sheet {
+      stroke: var(--text);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .v-plan .dim-line {
+      stroke: var(--accent);
+      stroke-width: 0.6;
+      stroke-dasharray: 2 2;
+      opacity: 0.85;
+    }
+    .v-plan .dim-tick {
+      stroke: var(--accent);
+      stroke-width: 0.8;
+    }
+    .v-plan .dim-label {
+      fill: var(--accent);
+      font-size: 7px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.05em;
+    }
+    .v-plan .angle-arc {
+      stroke: var(--accent);
+      stroke-width: 0.8;
+      fill: none;
+    }
+    .v-plan .angle-label {
+      fill: var(--accent);
+      font-size: 6px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* INFO */
+    .info-banner {
+      position: fixed;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 26px;
+      background: rgba(15,12,10,0.95);
+      border: 1px solid rgba(255,69,0,0.4);
+      border-radius: 30px;
+      font-size: 12px;
+      color: #f5f5f5;
+      backdrop-filter: blur(10px);
+      z-index: 99998;
+      text-align: center;
+      max-width: 720px;
+    }
+    .info-banner strong { color: #FFB347; }
+    .info-banner em { color: rgba(255,255,255,0.55); font-style: normal; font-size: 10px; display: block; margin-top: 3px; }
+  </style>
+</head>
+<body data-v="trait">
+
+  <div class="selector">
+    <h1>◆ SVG des formes · 4 styles</h1>
+    <button class="v-btn active" data-v="trait">1 · Trait épais + cotes</button>
+    <button class="v-btn" data-v="iso">2 · 3D isométrique</button>
+    <button class="v-btn" data-v="brush">3 · Métal brossé</button>
+    <button class="v-btn" data-v="plan">4 · Plan technique</button>
+  </div>
+
+  <div class="page-header">
+    <div class="eyebrow">— STYLES D'ILLUSTRATIONS —</div>
+    <h2>Quelles <em>illustrations</em> pour tes formes ?</h2>
+  </div>
+
+  <div class="forms-grid">
+
+    <!-- ═══════ FORME U ═══════ -->
+    <article class="form-card">
+      <div class="form-visual">
+        <!-- V1 TRAIT -->
+        <svg class="svg-variant trait v-trait" viewBox="0 0 160 110" aria-hidden="true">
+          <!-- Tôle avec épaisseur (largeur de tôle visible) -->
+          <path class="sheet" d="M 22 18 L 30 18 L 30 78 L 130 78 L 130 18 L 138 18 L 138 86 L 22 86 Z"/>
+          <!-- Cotes -->
+          <line class="dim-line" x1="30" y1="98" x2="130" y2="98"/>
+          <text class="dim-label" x="80" y="106" text-anchor="middle">B</text>
+          <line class="dim-line" x1="14" y1="18" x2="14" y2="86"/>
+          <text class="dim-label" x="11" y="55" text-anchor="middle" transform="rotate(-90 11 55)">A</text>
+        </svg>
+        <!-- V2 ISO -->
+        <svg class="svg-variant iso v-iso" viewBox="0 0 160 110" aria-hidden="true">
+          <!-- Face arrière (perspective) -->
+          <path class="sheet-back" d="M 32 12 L 32 70 L 132 70 L 132 12"/>
+          <line class="sheet-depth" x1="22" y1="22" x2="32" y2="12"/>
+          <line class="sheet-depth" x1="22" y1="80" x2="32" y2="70"/>
+          <line class="sheet-depth" x1="122" y1="80" x2="132" y2="70"/>
+          <line class="sheet-depth" x1="122" y1="22" x2="132" y2="12"/>
+          <!-- Face avant -->
+          <path class="sheet-front" d="M 22 22 L 22 80 L 122 80 L 122 22" fill="url(#grad-u-iso)"/>
+          <defs>
+            <linearGradient id="grad-u-iso" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,179,71,0.25)"/>
+              <stop offset="100%" stop-color="rgba(255,69,0,0.08)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <!-- V3 BRUSHED -->
+        <svg class="svg-variant brush v-brush" viewBox="0 0 160 110" aria-hidden="true">
+          <defs>
+            <pattern id="brush-u" x="0" y="0" width="3" height="60" patternUnits="userSpaceOnUse">
+              <line x1="1" y1="0" x2="1" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="0.4"/>
+              <line x1="2" y1="0" x2="2" y2="60" stroke="rgba(0,0,0,0.15)" stroke-width="0.3"/>
+            </pattern>
+            <linearGradient id="metal-u" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c0c0c0"/>
+              <stop offset="50%" stop-color="#7a7a7a"/>
+              <stop offset="100%" stop-color="#a0a0a0"/>
+            </linearGradient>
+          </defs>
+          <!-- Tôle métal -->
+          <path d="M 22 18 L 30 18 L 30 78 L 130 78 L 130 18 L 138 18 L 138 86 L 22 86 Z"
+                fill="url(#metal-u)" class="brushed-fill"/>
+          <path d="M 22 18 L 30 18 L 30 78 L 130 78 L 130 18 L 138 18 L 138 86 L 22 86 Z"
+                fill="url(#brush-u)"/>
+          <path class="sheet" d="M 22 18 L 30 18 L 30 78 L 130 78 L 130 18 L 138 18 L 138 86 L 22 86 Z"
+                fill="none"/>
+          <!-- Highlight haut -->
+          <line class="sheet-highlight" x1="22" y1="19" x2="138" y2="19" opacity="0.4"/>
+        </svg>
+        <!-- V4 PLAN -->
+        <svg class="svg-variant plan v-plan" viewBox="0 0 160 110" aria-hidden="true">
+          <!-- Cote haut B -->
+          <line class="dim-line" x1="30" y1="8" x2="130" y2="8"/>
+          <line class="dim-tick" x1="30" y1="6" x2="30" y2="14"/>
+          <line class="dim-tick" x1="130" y1="6" x2="130" y2="14"/>
+          <text class="dim-label" x="80" y="6" text-anchor="middle">B = 200</text>
+          <!-- Cote gauche A -->
+          <line class="dim-line" x1="18" y1="22" x2="18" y2="78"/>
+          <line class="dim-tick" x1="14" y1="22" x2="22" y2="22"/>
+          <line class="dim-tick" x1="14" y1="78" x2="22" y2="78"/>
+          <text class="dim-label" x="14" y="52" text-anchor="middle" transform="rotate(-90 14 52)">A1 = 40</text>
+          <!-- Cote droite A -->
+          <line class="dim-line" x1="142" y1="22" x2="142" y2="78"/>
+          <line class="dim-tick" x1="138" y1="22" x2="146" y2="22"/>
+          <line class="dim-tick" x1="138" y1="78" x2="146" y2="78"/>
+          <text class="dim-label" x="146" y="52" text-anchor="middle" transform="rotate(90 146 52)">A2 = 40</text>
+          <!-- Le profil -->
+          <path class="sheet" d="M 30 22 L 30 78 L 130 78 L 130 22"/>
+          <!-- Angles 90° -->
+          <path class="angle-arc" d="M 36 78 A 6 6 0 0 0 30 72"/>
+          <path class="angle-arc" d="M 124 78 A 6 6 0 0 1 130 72"/>
+        </svg>
+      </div>
+      <div class="form-body">
+        <h3 class="form-name">Forme U</h3>
+        <span class="form-tag">Profil standard</span>
+      </div>
+    </article>
+
+    <!-- ═══════ FORME L ═══════ -->
+    <article class="form-card">
+      <div class="form-visual">
+        <!-- V1 TRAIT -->
+        <svg class="svg-variant trait v-trait" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet" d="M 30 18 L 38 18 L 38 78 L 138 78 L 138 86 L 30 86 Z"/>
+          <line class="dim-line" x1="38" y1="98" x2="138" y2="98"/>
+          <text class="dim-label" x="88" y="106" text-anchor="middle">B</text>
+          <line class="dim-line" x1="22" y1="18" x2="22" y2="86"/>
+          <text class="dim-label" x="19" y="55" text-anchor="middle" transform="rotate(-90 19 55)">A</text>
+        </svg>
+        <!-- V2 ISO -->
+        <svg class="svg-variant iso v-iso" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet-back" d="M 38 12 L 38 70 L 138 70"/>
+          <line class="sheet-depth" x1="28" y1="22" x2="38" y2="12"/>
+          <line class="sheet-depth" x1="28" y1="80" x2="38" y2="70"/>
+          <line class="sheet-depth" x1="128" y1="80" x2="138" y2="70"/>
+          <path class="sheet-front" d="M 28 22 L 28 80 L 128 80" fill="url(#grad-l-iso)"/>
+          <defs>
+            <linearGradient id="grad-l-iso" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,179,71,0.25)"/>
+              <stop offset="100%" stop-color="rgba(255,69,0,0.08)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <!-- V3 BRUSHED -->
+        <svg class="svg-variant brush v-brush" viewBox="0 0 160 110" aria-hidden="true">
+          <defs>
+            <pattern id="brush-l" x="0" y="0" width="3" height="60" patternUnits="userSpaceOnUse">
+              <line x1="1" y1="0" x2="1" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="0.4"/>
+              <line x1="2" y1="0" x2="2" y2="60" stroke="rgba(0,0,0,0.15)" stroke-width="0.3"/>
+            </pattern>
+            <linearGradient id="metal-l" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c0c0c0"/>
+              <stop offset="50%" stop-color="#7a7a7a"/>
+              <stop offset="100%" stop-color="#a0a0a0"/>
+            </linearGradient>
+          </defs>
+          <path d="M 30 18 L 38 18 L 38 78 L 138 78 L 138 86 L 30 86 Z" fill="url(#metal-l)" class="brushed-fill"/>
+          <path d="M 30 18 L 38 18 L 38 78 L 138 78 L 138 86 L 30 86 Z" fill="url(#brush-l)"/>
+          <path class="sheet" d="M 30 18 L 38 18 L 38 78 L 138 78 L 138 86 L 30 86 Z" fill="none"/>
+        </svg>
+        <!-- V4 PLAN -->
+        <svg class="svg-variant plan v-plan" viewBox="0 0 160 110" aria-hidden="true">
+          <line class="dim-line" x1="38" y1="8" x2="138" y2="8"/>
+          <line class="dim-tick" x1="38" y1="6" x2="38" y2="14"/>
+          <line class="dim-tick" x1="138" y1="6" x2="138" y2="14"/>
+          <text class="dim-label" x="88" y="6" text-anchor="middle">B = 150</text>
+          <line class="dim-line" x1="26" y1="22" x2="26" y2="78"/>
+          <line class="dim-tick" x1="22" y1="22" x2="30" y2="22"/>
+          <line class="dim-tick" x1="22" y1="78" x2="30" y2="78"/>
+          <text class="dim-label" x="22" y="52" text-anchor="middle" transform="rotate(-90 22 52)">A = 60</text>
+          <path class="sheet" d="M 38 22 L 38 78 L 138 78"/>
+          <path class="angle-arc" d="M 44 78 A 6 6 0 0 0 38 72"/>
+        </svg>
+      </div>
+      <div class="form-body">
+        <h3 class="form-name">Forme L</h3>
+        <span class="form-tag">Profil standard</span>
+      </div>
+    </article>
+
+    <!-- ═══════ FORME Z ═══════ -->
+    <article class="form-card">
+      <div class="form-visual">
+        <!-- V1 TRAIT -->
+        <svg class="svg-variant trait v-trait" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet" d="M 22 22 L 78 22 L 78 70 L 138 70 L 138 78 L 70 78 L 70 30 L 22 30 Z"/>
+          <line class="dim-line" x1="22" y1="14" x2="78" y2="14"/>
+          <text class="dim-label" x="50" y="12" text-anchor="middle">A</text>
+          <line class="dim-line" x1="86" y1="22" x2="86" y2="78"/>
+          <text class="dim-label" x="83" y="52" text-anchor="middle" transform="rotate(-90 83 52)">H</text>
+          <line class="dim-line" x1="78" y1="92" x2="138" y2="92"/>
+          <text class="dim-label" x="108" y="100" text-anchor="middle">B</text>
+        </svg>
+        <!-- V2 ISO -->
+        <svg class="svg-variant iso v-iso" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet-back" d="M 30 16 L 78 16 L 78 60 L 138 60"/>
+          <line class="sheet-depth" x1="22" y1="22" x2="30" y2="16"/>
+          <line class="sheet-depth" x1="78" y1="74" x2="78" y2="60"/>
+          <line class="sheet-depth" x1="128" y1="74" x2="138" y2="60"/>
+          <path class="sheet-front" d="M 22 22 L 70 22 L 70 74 L 128 74" fill="url(#grad-z-iso)"/>
+          <defs>
+            <linearGradient id="grad-z-iso" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,179,71,0.25)"/>
+              <stop offset="100%" stop-color="rgba(255,69,0,0.08)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <!-- V3 BRUSHED -->
+        <svg class="svg-variant brush v-brush" viewBox="0 0 160 110" aria-hidden="true">
+          <defs>
+            <pattern id="brush-z" x="0" y="0" width="3" height="60" patternUnits="userSpaceOnUse">
+              <line x1="1" y1="0" x2="1" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="0.4"/>
+              <line x1="2" y1="0" x2="2" y2="60" stroke="rgba(0,0,0,0.15)" stroke-width="0.3"/>
+            </pattern>
+            <linearGradient id="metal-z" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c0c0c0"/>
+              <stop offset="50%" stop-color="#7a7a7a"/>
+              <stop offset="100%" stop-color="#a0a0a0"/>
+            </linearGradient>
+          </defs>
+          <path d="M 22 22 L 78 22 L 78 70 L 138 70 L 138 78 L 70 78 L 70 30 L 22 30 Z" fill="url(#metal-z)" class="brushed-fill"/>
+          <path d="M 22 22 L 78 22 L 78 70 L 138 70 L 138 78 L 70 78 L 70 30 L 22 30 Z" fill="url(#brush-z)"/>
+          <path class="sheet" d="M 22 22 L 78 22 L 78 70 L 138 70 L 138 78 L 70 78 L 70 30 L 22 30 Z" fill="none"/>
+        </svg>
+        <!-- V4 PLAN -->
+        <svg class="svg-variant plan v-plan" viewBox="0 0 160 110" aria-hidden="true">
+          <line class="dim-line" x1="22" y1="14" x2="74" y2="14"/>
+          <line class="dim-tick" x1="22" y1="12" x2="22" y2="18"/>
+          <line class="dim-tick" x1="74" y1="12" x2="74" y2="18"/>
+          <text class="dim-label" x="48" y="12" text-anchor="middle">A = 60</text>
+          <line class="dim-line" x1="86" y1="22" x2="86" y2="74"/>
+          <line class="dim-tick" x1="82" y1="22" x2="90" y2="22"/>
+          <line class="dim-tick" x1="82" y1="74" x2="90" y2="74"/>
+          <text class="dim-label" x="82" y="50" text-anchor="middle" transform="rotate(-90 82 50)">H = 80</text>
+          <line class="dim-line" x1="78" y1="92" x2="138" y2="92"/>
+          <line class="dim-tick" x1="78" y1="86" x2="78" y2="94"/>
+          <line class="dim-tick" x1="138" y1="86" x2="138" y2="94"/>
+          <text class="dim-label" x="108" y="100" text-anchor="middle">B = 60</text>
+          <path class="sheet" d="M 22 22 L 74 22 L 74 74 L 138 74"/>
+          <path class="angle-arc" d="M 74 28 A 6 6 0 0 0 80 22"/>
+          <path class="angle-arc" d="M 74 68 A 6 6 0 0 1 80 74"/>
+        </svg>
+      </div>
+      <div class="form-body">
+        <h3 class="form-name">Forme Z</h3>
+        <span class="form-tag">Profil standard</span>
+      </div>
+    </article>
+
+    <!-- ═══════ APPUI DE FENÊTRE ═══════ -->
+    <article class="form-card">
+      <div class="form-visual">
+        <!-- V1 TRAIT -->
+        <svg class="svg-variant trait v-trait" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet" d="M 22 22 L 30 22 L 30 38 L 122 54 L 130 38 L 122 36 L 122 32 L 116 32 L 116 36 L 30 28 L 30 86 L 22 86 Z"/>
+          <line class="dim-line" x1="14" y1="22" x2="14" y2="86"/>
+          <text class="dim-label" x="11" y="55" text-anchor="middle" transform="rotate(-90 11 55)">A</text>
+          <line class="dim-line" x1="30" y1="96" x2="122" y2="96"/>
+          <text class="dim-label" x="76" y="104" text-anchor="middle">B</text>
+        </svg>
+        <!-- V2 ISO -->
+        <svg class="svg-variant iso v-iso" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet-front" d="M 22 22 L 22 80 L 30 80 L 30 36 L 120 50 L 128 36" fill="none" stroke="url(#grad-app-iso)"/>
+          <path class="sheet-front" d="M 22 22 L 22 80 L 30 80 L 30 36 L 120 50 L 128 36"/>
+          <defs>
+            <linearGradient id="grad-app-iso" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,179,71,0.25)"/>
+              <stop offset="100%" stop-color="rgba(255,69,0,0.08)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <!-- V3 BRUSHED -->
+        <svg class="svg-variant brush v-brush" viewBox="0 0 160 110" aria-hidden="true">
+          <defs>
+            <pattern id="brush-app" x="0" y="0" width="3" height="60" patternUnits="userSpaceOnUse">
+              <line x1="1" y1="0" x2="1" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="0.4"/>
+              <line x1="2" y1="0" x2="2" y2="60" stroke="rgba(0,0,0,0.15)" stroke-width="0.3"/>
+            </pattern>
+            <linearGradient id="metal-app" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c0c0c0"/>
+              <stop offset="50%" stop-color="#7a7a7a"/>
+              <stop offset="100%" stop-color="#a0a0a0"/>
+            </linearGradient>
+          </defs>
+          <path d="M 22 22 L 30 22 L 30 38 L 122 54 L 130 38 L 122 36 L 122 32 L 116 32 L 116 36 L 30 28 L 30 86 L 22 86 Z" fill="url(#metal-app)" class="brushed-fill"/>
+          <path d="M 22 22 L 30 22 L 30 38 L 122 54 L 130 38 L 122 36 L 122 32 L 116 32 L 116 36 L 30 28 L 30 86 L 22 86 Z" fill="url(#brush-app)"/>
+          <path class="sheet" d="M 22 22 L 30 22 L 30 38 L 122 54 L 130 38 L 122 36 L 122 32 L 116 32 L 116 36 L 30 28 L 30 86 L 22 86 Z" fill="none"/>
+        </svg>
+        <!-- V4 PLAN -->
+        <svg class="svg-variant plan v-plan" viewBox="0 0 160 110" aria-hidden="true">
+          <line class="dim-line" x1="18" y1="22" x2="18" y2="86"/>
+          <line class="dim-tick" x1="14" y1="22" x2="22" y2="22"/>
+          <line class="dim-tick" x1="14" y1="86" x2="22" y2="86"/>
+          <text class="dim-label" x="14" y="55" text-anchor="middle" transform="rotate(-90 14 55)">A = 40</text>
+          <line class="dim-line" x1="30" y1="96" x2="122" y2="96"/>
+          <line class="dim-tick" x1="30" y1="90" x2="30" y2="98"/>
+          <line class="dim-tick" x1="122" y1="90" x2="122" y2="98"/>
+          <text class="dim-label" x="76" y="104" text-anchor="middle">B = 200</text>
+          <path class="sheet" d="M 22 22 L 22 86 L 30 36 L 122 50 L 128 36 L 122 34"/>
+          <!-- Angle 10° annoté -->
+          <text class="angle-label" x="76" y="48" text-anchor="middle">10°</text>
+        </svg>
+      </div>
+      <div class="form-body">
+        <h3 class="form-name">Appui de fenêtre</h3>
+        <span class="form-tag">Profil standard</span>
+      </div>
+    </article>
+
+    <!-- ═══════ FORME LIBRE ═══════ -->
+    <article class="form-card">
+      <div class="form-visual">
+        <!-- V1 TRAIT -->
+        <svg class="svg-variant trait v-trait" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet" d="M 18 82 L 26 82 L 26 50 L 58 50 L 58 28 L 92 28 L 92 64 L 132 64 L 132 72 L 84 72 L 84 36 L 34 36 L 34 90 L 18 90 Z"/>
+          <text class="dim-label" x="80" y="106" text-anchor="middle">jusqu'à 10 plis</text>
+        </svg>
+        <!-- V2 ISO -->
+        <svg class="svg-variant iso v-iso" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet-back" d="M 26 76 L 26 44 L 58 44 L 58 22 L 92 22 L 92 58 L 132 58"/>
+          <path class="sheet-front" d="M 18 82 L 18 50 L 50 50 L 50 28 L 84 28 L 84 64 L 124 64" fill="url(#grad-free-iso)"/>
+          <defs>
+            <linearGradient id="grad-free-iso" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="rgba(255,179,71,0.25)"/>
+              <stop offset="100%" stop-color="rgba(255,69,0,0.08)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <!-- V3 BRUSHED -->
+        <svg class="svg-variant brush v-brush" viewBox="0 0 160 110" aria-hidden="true">
+          <defs>
+            <pattern id="brush-free" x="0" y="0" width="3" height="60" patternUnits="userSpaceOnUse">
+              <line x1="1" y1="0" x2="1" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="0.4"/>
+              <line x1="2" y1="0" x2="2" y2="60" stroke="rgba(0,0,0,0.15)" stroke-width="0.3"/>
+            </pattern>
+            <linearGradient id="metal-free" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c0c0c0"/>
+              <stop offset="50%" stop-color="#7a7a7a"/>
+              <stop offset="100%" stop-color="#a0a0a0"/>
+            </linearGradient>
+          </defs>
+          <path d="M 18 82 L 26 82 L 26 50 L 58 50 L 58 28 L 92 28 L 92 64 L 132 64 L 132 72 L 84 72 L 84 36 L 34 36 L 34 90 L 18 90 Z" fill="url(#metal-free)" class="brushed-fill"/>
+          <path d="M 18 82 L 26 82 L 26 50 L 58 50 L 58 28 L 92 28 L 92 64 L 132 64 L 132 72 L 84 72 L 84 36 L 34 36 L 34 90 L 18 90 Z" fill="url(#brush-free)"/>
+          <path class="sheet" d="M 18 82 L 26 82 L 26 50 L 58 50 L 58 28 L 92 28 L 92 64 L 132 64 L 132 72 L 84 72 L 84 36 L 34 36 L 34 90 L 18 90 Z" fill="none"/>
+        </svg>
+        <!-- V4 PLAN -->
+        <svg class="svg-variant plan v-plan" viewBox="0 0 160 110" aria-hidden="true">
+          <path class="sheet" d="M 18 82 L 26 50 L 58 50 L 58 28 L 92 28 L 92 64 L 132 64"/>
+          <text class="dim-label" x="14" y="42" text-anchor="middle">A</text>
+          <text class="dim-label" x="44" y="42" text-anchor="middle">B</text>
+          <text class="dim-label" x="74" y="20" text-anchor="middle">C</text>
+          <text class="dim-label" x="112" y="58" text-anchor="middle">D</text>
+          <text class="dim-label" x="80" y="100" text-anchor="middle">…10 plis</text>
+          <circle cx="26" cy="50" r="2" fill="#FF4500"/>
+          <circle cx="58" cy="50" r="2" fill="#FF4500"/>
+          <circle cx="58" cy="28" r="2" fill="#FF4500"/>
+          <circle cx="92" cy="28" r="2" fill="#FF4500"/>
+          <circle cx="92" cy="64" r="2" fill="#FF4500"/>
+        </svg>
+      </div>
+      <div class="form-body">
+        <h3 class="form-name">Forme libre</h3>
+        <span class="form-tag">Sur cahier des charges</span>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="info-banner" id="info"></div>
+
+  <script>
+    const infos = {
+      trait: '<strong>Trait épais + cotes</strong> — La tôle a une vraie épaisseur, fond orange transparent, lettres A/B/H indicatives<em>Net, pédagogique, lisible — le plus proche du métier "plan technique simplifié"</em>',
+      iso:   '<strong>3D isométrique</strong> — Légère perspective avec gradient orange et lignes de profondeur arrière<em>Sensation de volume, look "rendu CAO premium"</em>',
+      brush: '<strong>Métal brossé réaliste</strong> — La tôle remplie de gris métallique brossé avec contour orange<em>Le plus photographique, montre la matière, sensation "produit réel"</em>',
+      plan:  '<strong>Plan technique annoté</strong> — Cotes chiffrées (A=40, B=200, H=80…), angles 90°/10°, points de pli marqués<em>Le plus pro / atelier — rassure le client technique, montre la précision</em>'
+    };
+    const btns = document.querySelectorAll('.v-btn');
+    const info = document.getElementById('info');
+    function setView(v) {
+      document.body.dataset.v = v;
+      btns.forEach(x => x.classList.toggle('active', x.dataset.v === v));
+      info.innerHTML = 'Style : ' + infos[v];
+    }
+    btns.forEach(b => b.addEventListener('click', () => setView(b.dataset.v)));
+    setView('trait');
+  </script>
+</body>
+</html>

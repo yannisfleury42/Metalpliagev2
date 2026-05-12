@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Effets métal — démo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#0d0d0d;color:#eee;padding:32px;min-height:100vh}
+  h1{font-size:22px;margin-bottom:8px}
+  .intro{color:#888;font-size:14px;margin-bottom:32px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:20px}
+  .card{background:#1a1a1a;border-radius:12px;padding:28px;border:1px solid #2a2a2a;text-align:center}
+  .card .label{display:inline-block;font-size:11px;letter-spacing:.25em;color:#FF8040;background:rgba(255,128,64,.1);padding:4px 10px;border-radius:20px;margin-bottom:18px}
+  .card .demo{font-size:64px;font-weight:800;letter-spacing:-.02em;line-height:1;margin:18px 0}
+  .card .sub{font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:300;margin-top:8px}
+  .card .name{font-size:13px;color:#aaa;margin-top:18px;font-weight:600}
+  .card .desc{font-size:12px;color:#666;margin-top:4px}
+
+  /* ─── 1. Aluminium brossé (actuel) ─── */
+  .fx-1{
+    background:
+      repeating-linear-gradient(180deg,rgba(255,255,255,.10) 0,rgba(255,255,255,.10) 1px,rgba(0,0,0,.10) 1px,rgba(0,0,0,.10) 2px),
+      linear-gradient(180deg,#fafafa 0%,#d8d8d8 22%,#f0f0f0 38%,#a8a8a8 55%,#e6e6e6 72%,#b8b8b8 88%,#dcdcdc 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.55));
+  }
+
+  /* ─── 2. Chrome poli ─── */
+  .fx-2{
+    background:linear-gradient(180deg,#fff 0%,#c4c4c4 35%,#2c2c2c 50%,#9a9a9a 60%,#f5f5f5 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.6));
+  }
+
+  /* ─── 3. Inox satiné (mat) ─── */
+  .fx-3{
+    background:
+      repeating-linear-gradient(180deg,rgba(255,255,255,.04) 0,rgba(255,255,255,.04) 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px),
+      linear-gradient(180deg,#bcbcbc 0%,#909090 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));
+  }
+
+  /* ─── 4. Acier bleuté ─── */
+  .fx-4{
+    background:linear-gradient(180deg,#e8eef5 0%,#7d92a8 30%,#3a4d63 55%,#8aa0b8 75%,#d4dde8 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(20,40,70,.6));
+  }
+
+  /* ─── 5. Or / Doré ─── */
+  .fx-5{
+    background:linear-gradient(180deg,#fff4c4 0%,#e8c060 25%,#8a6620 55%,#e8b450 75%,#fff0b8 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(120,80,0,.5));
+  }
+
+  /* ─── 6. Cuivre / Bronze ─── */
+  .fx-6{
+    background:linear-gradient(180deg,#f5d4b0 0%,#c87838 30%,#6a3818 55%,#b86d34 75%,#f0c498 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(80,40,0,.55));
+  }
+
+  /* ─── 7. Acier Corten (rouille) ─── */
+  .fx-7{
+    background:
+      repeating-linear-gradient(180deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 1px,transparent 1px,transparent 3px),
+      linear-gradient(180deg,#c87850 0%,#8a3820 40%,#5a2010 65%,#a04830 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(60,20,0,.6));
+  }
+
+  /* ─── 8. Titane anodisé (irisé) ─── */
+  .fx-8{
+    background:linear-gradient(135deg,#7090c0 0%,#9070b0 20%,#c060a0 40%,#d09060 60%,#80c0a0 80%,#5080b0 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));
+  }
+
+  /* ─── 9. Métal liquide animé (reflet qui balaie) ─── */
+  .fx-9{
+    background:linear-gradient(90deg,#888 0%,#888 35%,#fff 50%,#888 65%,#888 100%);
+    background-size:300% 100%;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    animation:sweep 3s linear infinite;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));
+  }
+  @keyframes sweep{0%{background-position:200% 0}100%{background-position:-100% 0}}
+
+  /* ─── 10. Métal gravé (relief inset) ─── */
+  .fx-10{
+    color:#1a1a1a;
+    text-shadow:
+      0 -1px 0 rgba(255,255,255,.4),
+      0 1px 0 rgba(0,0,0,.8),
+      0 2px 3px rgba(0,0,0,.6),
+      0 0 0 #000;
+  }
+  .card.dark-bg{background:#3a3a3a}
+  .card.dark-bg .demo{color:#2a2a2a}
+
+  /* ─── 11. Métal embossé (relief outset) ─── */
+  .fx-11{
+    color:#c8c8c8;
+    text-shadow:
+      0 1px 0 #fff,
+      0 2px 0 #d0d0d0,
+      0 3px 0 #b0b0b0,
+      0 4px 0 #909090,
+      0 5px 6px rgba(0,0,0,.5);
+  }
+
+  /* ─── 12. Argent liquide (très brillant) ─── */
+  .fx-12{
+    background:linear-gradient(180deg,#ffffff 0%,#e0e8f0 15%,#a0b0c0 35%,#404858 50%,#a8b8c8 65%,#e8efff 85%,#ffffff 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,.7)) drop-shadow(0 0 2px rgba(255,255,255,.4));
+  }
+</style>
+</head>
+<body>
+
+<h1>Effets métal — comparatif</h1>
+<p class="intro">Choisis ton préféré (numéro) et je l'applique sur le hero de la page d'accueil. L'effet actuel = #1 (Aluminium brossé).</p>
+
+<div class="grid">
+
+  <div class="card">
+    <span class="label">ACTUEL</span>
+    <div class="demo fx-1">METAL</div>
+    <div class="sub fx-1">PLIAGE SUR MESURE</div>
+    <div class="name">1. Aluminium brossé</div>
+    <div class="desc">Gris clair / stries fines — sobre, industriel</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-2">METAL</div>
+    <div class="sub fx-2">PLIAGE SUR MESURE</div>
+    <div class="name">2. Chrome poli</div>
+    <div class="desc">Bande sombre médiane — effet miroir, très contrasté</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-3">METAL</div>
+    <div class="sub fx-3">PLIAGE SUR MESURE</div>
+    <div class="name">3. Inox satiné</div>
+    <div class="desc">Gris mat uniforme — discret, premium</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-4">METAL</div>
+    <div class="sub fx-4">PLIAGE SUR MESURE</div>
+    <div class="name">4. Acier bleuté</div>
+    <div class="desc">Reflets bleus — moderne, technique</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-5">METAL</div>
+    <div class="sub fx-5">PLIAGE SUR MESURE</div>
+    <div class="name">5. Or / Doré</div>
+    <div class="desc">Premium / luxe</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-6">METAL</div>
+    <div class="sub fx-6">PLIAGE SUR MESURE</div>
+    <div class="name">6. Cuivre / Bronze</div>
+    <div class="desc">Chaleureux, artisanal</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-7">METAL</div>
+    <div class="sub fx-7">PLIAGE SUR MESURE</div>
+    <div class="name">7. Acier Corten (rouille)</div>
+    <div class="desc">Tons rouille / architecture contemporaine</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-8">METAL</div>
+    <div class="sub fx-8">PLIAGE SUR MESURE</div>
+    <div class="name">8. Titane anodisé</div>
+    <div class="desc">Irisé multicolore — original</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-9">METAL</div>
+    <div class="sub fx-9">PLIAGE SUR MESURE</div>
+    <div class="name">9. Métal liquide animé</div>
+    <div class="desc">Reflet qui balaie le texte — dynamique</div>
+  </div>
+
+  <div class="card dark-bg">
+    <div class="demo fx-10">METAL</div>
+    <div class="sub fx-10">PLIAGE SUR MESURE</div>
+    <div class="name">10. Métal gravé (relief inset)</div>
+    <div class="desc">Texte enfoncé dans la matière</div>
+  </div>
+
+  <div class="card dark-bg">
+    <div class="demo fx-11">METAL</div>
+    <div class="sub fx-11">PLIAGE SUR MESURE</div>
+    <div class="name">11. Métal embossé (relief outset)</div>
+    <div class="desc">Texte en relief 3D</div>
+  </div>
+
+  <div class="card">
+    <div class="demo fx-12">METAL</div>
+    <div class="sub fx-12">PLIAGE SUR MESURE</div>
+    <div class="name">12. Argent liquide</div>
+    <div class="desc">Très brillant, contrasté — proche du chrome</div>
+  </div>
+
+</div>
+
+</body>
+</html>

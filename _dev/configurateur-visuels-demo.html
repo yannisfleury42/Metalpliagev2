@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Configurateur — Variantes visuelles module Dimensions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0d0d0d;color:#e8e8e8;font-family:'Inter',sans-serif}
+  body{padding:32px;min-height:100vh}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .intro{color:#888;font-size:13px;max-width:780px;line-height:1.6;margin-bottom:28px}
+  .intro strong{color:#FF7040}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  @media(max-width:1100px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    background:#141414;border:1px solid #222;border-radius:14px;
+    padding:20px;position:relative;
+  }
+  .card .badge{
+    position:absolute;top:14px;right:18px;
+    font-size:10px;letter-spacing:0.22em;color:#FF7040;
+    background:rgba(255,128,64,0.08);padding:4px 10px;border-radius:20px;
+    font-weight:700;
+  }
+  .card h2{
+    font-size:15px;font-weight:700;letter-spacing:-.01em;
+    margin-bottom:4px;color:#fff;
+  }
+  .card .sub{
+    font-size:11.5px;color:#888;letter-spacing:.05em;
+    margin-bottom:14px;line-height:1.5;
+  }
+  .stage{
+    background:#0a0a0a;border:1px solid #1a1a1a;
+    padding:18px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    min-height:340px;
+  }
+  .stage svg{display:block;width:100%;height:auto;max-height:340px}
+  .features{
+    margin-top:14px;font-size:12px;line-height:1.7;color:#aaa;
+  }
+  .features li{padding-left:14px;position:relative}
+  .features li:before{
+    content:"";position:absolute;left:0;top:9px;
+    width:6px;height:6px;background:#FF7040;border-radius:50%;
+  }
+  .features li b{color:#fff}
+
+  /* ═══ Variante D textures spécifiques ═══ */
+  .variant-d .stage{background:linear-gradient(135deg,#0a0d12 0%,#0d0a08 100%)}
+  .variant-c .stage{background:radial-gradient(ellipse at top,#101418,#0a0a0a)}
+
+  .legend-row{
+    display:flex;gap:12px;flex-wrap:wrap;
+    font-size:11px;color:#999;margin-top:10px;
+  }
+  .legend-row .l{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,0.04);padding:3px 9px;
+    border-radius:20px;border:1px solid #222;
+  }
+  .legend-row .l .sw{
+    width:10px;height:10px;border-radius:2px;display:block;
+  }
+</style>
+</head>
+<body>
+
+<h1>Configurateur — Module Dimensions : 4 variantes visuelles</h1>
+<p class="intro">
+  Toutes les variantes montrent les <strong>mêmes données</strong> :
+  muret B=200 mm · retour A=40 mm · tôle C=250 mm · rejet R=10 mm · débord 25 mm chaque côté.
+  Le muret reste modifiable dans toutes les variantes. Pick celle qui te plaît,
+  ou un mix d'éléments — j'intègre ensuite dans le configurateur.
+</p>
+
+<div class="grid">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VARIANTE A — Inspirée du guide module 4 (épuré + cotes claires)
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">VARIANTE A</span>
+    <h2>Style guide pose (Module 4)</h2>
+    <p class="sub">Couvertine outline pointillé clair + muret avec joints + cotes oranges en brackets. Lecture immédiate.</p>
+    <div class="stage">
+      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- Muret (modifiable via B) -->
+        <rect x="100" y="120" width="220" height="120" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
+        <!-- Joints horizontaux -->
+        <line x1="100" y1="150" x2="320" y2="150" stroke="#3A3A3A" stroke-width="0.6"/>
+        <line x1="100" y1="180" x2="320" y2="180" stroke="#3A3A3A" stroke-width="0.6"/>
+        <line x1="100" y1="210" x2="320" y2="210" stroke="#3A3A3A" stroke-width="0.6"/>
+        <!-- Joints verticaux -->
+        <line x1="160" y1="120" x2="160" y2="150" stroke="#3A3A3A" stroke-width="0.5"/>
+        <line x1="220" y1="120" x2="220" y2="150" stroke="#3A3A3A" stroke-width="0.5"/>
+        <line x1="280" y1="120" x2="280" y2="150" stroke="#3A3A3A" stroke-width="0.5"/>
+        <line x1="130" y1="150" x2="130" y2="180" stroke="#3A3A3A" stroke-width="0.5"/>
+        <line x1="190" y1="150" x2="190" y2="180" stroke="#3A3A3A" stroke-width="0.5"/>
+        <line x1="250" y1="150" x2="250" y2="180" stroke="#3A3A3A" stroke-width="0.5"/>
+
+        <!-- Couvertine outline (retours DESCENDENT, rejets 45°) -->
+        <path d="M85,150 L75,160 L75,120 L345,120 L345,160 L335,150"
+              fill="none" stroke="#DCE3EA" stroke-width="3"
+              stroke-linecap="round" stroke-linejoin="round"
+              stroke-dasharray="6,4"/>
+
+        <!-- Cote A (hauteur retour) - gauche -->
+        <line x1="40" y1="120" x2="40" y2="160" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="36" y1="120" x2="44" y2="120" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="36" y1="160" x2="44" y2="160" stroke="#FF7040" stroke-width="1.2"/>
+        <text x="40" y="144" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">A=40</text>
+
+        <!-- Cote B (largeur muret) - haut -->
+        <line x1="100" y1="100" x2="320" y2="100" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="100" y1="96" x2="100" y2="104" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="320" y1="96" x2="320" y2="104" stroke="#FF7040" stroke-width="1.2"/>
+        <text x="210" y="93" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">B=200 mm</text>
+
+        <!-- Cote débord gauche (25mm) -->
+        <line x1="75" y1="80" x2="100" y2="80" stroke="#FFB347" stroke-width="1"/>
+        <line x1="75" y1="76" x2="75" y2="84" stroke="#FFB347" stroke-width="1"/>
+        <line x1="100" y1="76" x2="100" y2="84" stroke="#FFB347" stroke-width="1"/>
+        <text x="87" y="73" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <!-- Cote débord droite -->
+        <line x1="320" y1="80" x2="345" y2="80" stroke="#FFB347" stroke-width="1"/>
+        <line x1="320" y1="76" x2="320" y2="84" stroke="#FFB347" stroke-width="1"/>
+        <line x1="345" y1="76" x2="345" y2="84" stroke="#FFB347" stroke-width="1"/>
+        <text x="333" y="73" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <!-- Cote C (largeur tôle) - tout en haut -->
+        <line x1="75" y1="52" x2="345" y2="52" stroke="#7BB8E8" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <line x1="75" y1="48" x2="75" y2="56" stroke="#7BB8E8" stroke-width="0.8"/>
+        <line x1="345" y1="48" x2="345" y2="56" stroke="#7BB8E8" stroke-width="0.8"/>
+        <text x="210" y="45" fill="#7BB8E8" font-family="Inter" font-size="10" font-weight="500" text-anchor="middle">C = 250 mm</text>
+
+        <!-- Cote R (rejet) - droite, indicateur -->
+        <line x1="345" y1="155" x2="365" y2="155" stroke="#FF7040" stroke-width="0.8"/>
+        <text x="370" y="158" fill="#FF7040" font-family="Inter" font-size="9.5" font-weight="600">R = 10</text>
+
+        <!-- Label MURET -->
+        <text x="210" y="195" fill="#888" font-family="Inter" font-size="10" font-weight="500" letter-spacing="2" text-anchor="middle">MURET</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Couvertine outline pointillé</b> · suggère le profil sans bloquer le muret</li>
+      <li><b>Cotes orange en brackets</b> · A (vertical), B (haut), C (au-dessus), débords 25 mm en orange clair</li>
+      <li><b>Muret texturé briques</b> · joints clairs, ambiance chantier</li>
+      <li><b>R = 10 mm</b> en hint discret à droite</li>
+    </ul>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VARIANTE B — Plan technique blueprint
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="card variant-b">
+    <span class="badge">VARIANTE B</span>
+    <h2>Plan technique blueprint</h2>
+    <p class="sub">Grille subtile, lignes fines bleues, cotes type plan d'atelier, tags arrondis pour les valeurs.</p>
+    <div class="stage">
+      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid-b" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(120,160,200,0.05)" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <!-- Grille -->
+        <rect x="0" y="0" width="420" height="260" fill="url(#grid-b)"/>
+
+        <!-- Muret (outline only, blueprint style) -->
+        <rect x="100" y="120" width="220" height="120" fill="rgba(180,200,220,0.04)" stroke="#7BB8E8" stroke-width="1"/>
+
+        <!-- Couvertine — solid outline blue avec léger fill -->
+        <path d="M85,150 L75,160 L75,120 L345,120 L345,160 L335,150"
+              fill="rgba(180,200,220,0.10)" stroke="#A0D0F0" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Cotes blueprint style avec arrows -->
+        <g stroke="#7BB8E8" stroke-width="0.7" fill="none">
+          <!-- A vertical gauche -->
+          <line x1="35" y1="120" x2="35" y2="160" marker-start="url(#arrB)" marker-end="url(#arrB)"/>
+          <!-- B horizontal haut -->
+          <line x1="100" y1="98" x2="320" y2="98" marker-start="url(#arrB)" marker-end="url(#arrB)"/>
+          <!-- C horizontal très haut -->
+          <line x1="75" y1="60" x2="345" y2="60" marker-start="url(#arrB)" marker-end="url(#arrB)"/>
+          <!-- Débord gauche -->
+          <line x1="75" y1="82" x2="100" y2="82" marker-start="url(#arrSmall)" marker-end="url(#arrSmall)"/>
+          <!-- Débord droite -->
+          <line x1="320" y1="82" x2="345" y2="82" marker-start="url(#arrSmall)" marker-end="url(#arrSmall)"/>
+        </g>
+        <defs>
+          <marker id="arrB" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#7BB8E8"/>
+          </marker>
+          <marker id="arrSmall" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#A0D0F0"/>
+          </marker>
+        </defs>
+
+        <!-- Tags valeurs avec fond -->
+        <g font-family="Inter,monospace" font-weight="700">
+          <!-- A -->
+          <rect x="22" y="132" width="26" height="14" rx="3" fill="rgba(4,12,20,0.92)" stroke="#7BB8E8" stroke-width="0.5"/>
+          <text x="35" y="142" fill="#A0D0F0" font-size="9" text-anchor="middle">A=40</text>
+          <!-- B -->
+          <rect x="190" y="89" width="40" height="14" rx="3" fill="rgba(4,12,20,0.92)" stroke="#7BB8E8" stroke-width="0.5"/>
+          <text x="210" y="99" fill="#A0D0F0" font-size="9" text-anchor="middle">B=200</text>
+          <!-- C -->
+          <rect x="188" y="51" width="44" height="14" rx="3" fill="rgba(4,12,20,0.92)" stroke="#7BB8E8" stroke-width="0.5"/>
+          <text x="210" y="61" fill="#A0D0F0" font-size="9" text-anchor="middle">C=250</text>
+        </g>
+
+        <!-- Débord labels -->
+        <text x="87" y="78" fill="#A0D0F0" font-family="Inter" font-size="8.5" font-weight="600" text-anchor="middle">25</text>
+        <text x="333" y="78" fill="#A0D0F0" font-family="Inter" font-size="8.5" font-weight="600" text-anchor="middle">25</text>
+
+        <!-- R indicator -->
+        <line x1="345" y1="156" x2="365" y2="156" stroke="#FF7040" stroke-width="0.8"/>
+        <text x="370" y="159" fill="#FF7040" font-family="Inter" font-size="9" font-weight="600">R=10</text>
+
+        <!-- Annotation "MURET" -->
+        <text x="210" y="200" fill="rgba(123,184,232,0.5)" font-family="Inter" font-size="9" font-weight="500" letter-spacing="3" text-anchor="middle">MURET</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Grille blueprint</b> en arrière-plan, ambiance plan d'atelier</li>
+      <li><b>Couvertine en bleu clair</b> avec léger fill semi-transparent</li>
+      <li><b>Tags rectangulaires</b> avec fond sombre pour chaque valeur</li>
+      <li><b>Flèches d'arrows</b> sur les cotes (style technique pro)</li>
+    </ul>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VARIANTE C — Couvertine pleine + ambiance "produit"
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="card variant-c">
+    <span class="badge">VARIANTE C</span>
+    <h2>Profil produit (couvertine pleine)</h2>
+    <p class="sub">Couvertine remplie avec gradient alu réaliste sur muret béton clair. Cotes oranges minimales. Style commercial.</p>
+    <div class="stage">
+      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="alu-c" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#EEF3F8"/>
+            <stop offset="45%" stop-color="#A8B6C4"/>
+            <stop offset="100%" stop-color="#5C6878"/>
+          </linearGradient>
+          <linearGradient id="alu-edge-c" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3E4A56"/>
+            <stop offset="100%" stop-color="#171D24"/>
+          </linearGradient>
+          <linearGradient id="wall-c" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8a857a"/>
+            <stop offset="100%" stop-color="#5a554a"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Muret béton -->
+        <rect x="100" y="120" width="220" height="120" fill="url(#wall-c)" stroke="#3A3A3A" stroke-width="0.5"/>
+        <g stroke="rgba(0,0,0,0.15)" stroke-width="0.5">
+          <line x1="100" y1="150" x2="320" y2="150"/>
+          <line x1="100" y1="180" x2="320" y2="180"/>
+          <line x1="100" y1="210" x2="320" y2="210"/>
+        </g>
+
+        <!-- Couvertine PLEINE avec dégradé alu -->
+        <!-- Dessus -->
+        <rect x="75" y="120" width="270" height="6" fill="url(#alu-c)"/>
+        <rect x="75" y="120" width="270" height="1.5" fill="rgba(255,255,255,0.55)"/>
+        <rect x="75" y="126" width="270" height="1.5" fill="url(#alu-edge-c)"/>
+        <!-- Retour gauche -->
+        <rect x="75" y="120" width="6" height="40" fill="url(#alu-c)"/>
+        <rect x="75" y="120" width="1.5" height="40" fill="rgba(255,255,255,0.55)"/>
+        <!-- Retour droit -->
+        <rect x="339" y="120" width="6" height="40" fill="url(#alu-c)"/>
+        <rect x="339" y="120" width="1.5" height="40" fill="rgba(255,255,255,0.55)"/>
+        <!-- Rejets 45° gauche -->
+        <polygon points="75,160 81,160 87,154 81,148" fill="url(#alu-c)"/>
+        <!-- Rejets 45° droit -->
+        <polygon points="345,160 339,160 333,154 339,148" fill="url(#alu-c)"/>
+
+        <!-- Cotes minimales orange -->
+        <!-- A (vertical, intérieur) -->
+        <line x1="50" y1="120" x2="50" y2="160" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="46" y1="120" x2="54" y2="120" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="46" y1="160" x2="54" y2="160" stroke="#FF7040" stroke-width="1.2"/>
+        <rect x="35" y="135" width="30" height="14" rx="3" fill="rgba(0,0,0,0.85)" stroke="#FF7040" stroke-width="0.6"/>
+        <text x="50" y="145" fill="#FF7040" font-family="Inter" font-size="9.5" font-weight="700" text-anchor="middle">A 40</text>
+
+        <!-- B (top, muret only) -->
+        <line x1="100" y1="100" x2="320" y2="100" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="100" y1="96" x2="100" y2="104" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="320" y1="96" x2="320" y2="104" stroke="#FF7040" stroke-width="1.2"/>
+        <rect x="190" y="87" width="40" height="14" rx="3" fill="rgba(0,0,0,0.85)" stroke="#FF7040" stroke-width="0.6"/>
+        <text x="210" y="97" fill="#FF7040" font-family="Inter" font-size="9.5" font-weight="700" text-anchor="middle">B 200</text>
+
+        <!-- C (total couvertine) -->
+        <line x1="75" y1="68" x2="345" y2="68" stroke="#9DB" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <line x1="75" y1="64" x2="75" y2="72" stroke="#9DB" stroke-width="0.8"/>
+        <line x1="345" y1="64" x2="345" y2="72" stroke="#9DB" stroke-width="0.8"/>
+        <text x="210" y="60" fill="#9DB" font-family="Inter" font-size="10" font-weight="500" text-anchor="middle">C = 250 mm</text>
+
+        <!-- Débords -->
+        <text x="87" y="113" fill="#FFB347" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle">25</text>
+        <text x="333" y="113" fill="#FFB347" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle">25</text>
+
+        <!-- R indicator -->
+        <line x1="354" y1="156" x2="372" y2="156" stroke="#FF7040" stroke-width="0.8"/>
+        <text x="376" y="159" fill="#FF7040" font-family="Inter" font-size="9" font-weight="600">R 10</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Couvertine pleine</b> avec dégradé alu lumière → ombre, plus tangible</li>
+      <li><b>Muret béton</b> avec ombrage propre, sans surcharge texturelle</li>
+      <li><b>Cotes en tags ronds</b> avec fond noir, lecture rapide</li>
+      <li><b>Pas de stries</b> dans la couvertine — finition lisse</li>
+    </ul>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VARIANTE D — Vue isométrique légère (axonométrique)
+  ═══════════════════════════════════════════════════════════ -->
+  <div class="card variant-d">
+    <span class="badge">VARIANTE D</span>
+    <h2>Vue axonométrique (3D légère)</h2>
+    <p class="sub">Couvertine en perspective douce pour visualiser l'enveloppement du muret. Profil + une face de profondeur.</p>
+    <div class="stage">
+      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="alu-d-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F0F5FA"/>
+            <stop offset="100%" stop-color="#A8B6C4"/>
+          </linearGradient>
+          <linearGradient id="alu-d-side" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7A8694"/>
+            <stop offset="100%" stop-color="#3E4A56"/>
+          </linearGradient>
+          <linearGradient id="wall-d-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7a766e"/>
+            <stop offset="100%" stop-color="#3a362e"/>
+          </linearGradient>
+          <linearGradient id="wall-d-side" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a554a"/>
+            <stop offset="100%" stop-color="#2a261c"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Décalage axonométrique : depth shift = (+30, -15) -->
+        <!-- Muret : face avant -->
+        <rect x="100" y="140" width="220" height="100" fill="url(#wall-d-front)"/>
+        <!-- Muret : face latérale droite (parallélogramme) -->
+        <polygon points="320,140 350,125 350,225 320,240" fill="url(#wall-d-side)"/>
+        <!-- Muret : face top -->
+        <polygon points="100,140 320,140 350,125 130,125" fill="#4a463e"/>
+        <!-- Joints muret -->
+        <line x1="100" y1="170" x2="320" y2="170" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+        <line x1="100" y1="200" x2="320" y2="200" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+        <line x1="320" y1="170" x2="350" y2="155" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+        <line x1="320" y1="200" x2="350" y2="185" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+
+        <!-- Couvertine : face top (parallélogramme) -->
+        <polygon points="75,140 345,140 375,125 105,125" fill="url(#alu-d-top)"/>
+        <!-- Highlight sur top -->
+        <polygon points="75,140 345,140 348,137 78,137" fill="rgba(255,255,255,0.5)"/>
+        <!-- Couvertine : retour gauche -->
+        <rect x="75" y="140" width="6" height="40" fill="url(#alu-d-side)"/>
+        <!-- Couvertine : retour droit -->
+        <polygon points="339,140 345,140 345,180 339,180" fill="url(#alu-d-side)"/>
+        <!-- Côté droit en perspective -->
+        <polygon points="345,140 375,125 375,165 345,180" fill="#5a6674"/>
+        <!-- Rejet 45° gauche -->
+        <polygon points="75,180 81,180 87,174 81,168" fill="url(#alu-d-top)"/>
+        <!-- Rejet 45° droit -->
+        <polygon points="345,180 339,180 345,174 351,180" fill="url(#alu-d-side)"/>
+
+        <!-- Cotes -->
+        <!-- A (vertical) -->
+        <line x1="50" y1="140" x2="50" y2="180" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="46" y1="140" x2="54" y2="140" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="46" y1="180" x2="54" y2="180" stroke="#FF7040" stroke-width="1.2"/>
+        <text x="50" y="164" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">A=40</text>
+
+        <!-- B horizontale -->
+        <line x1="100" y1="262" x2="320" y2="262" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="100" y1="258" x2="100" y2="266" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="320" y1="258" x2="320" y2="266" stroke="#FF7040" stroke-width="1.2"/>
+        <text x="210" y="277" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">B = 200 mm</text>
+
+        <!-- C tout en haut -->
+        <line x1="75" y1="92" x2="345" y2="92" stroke="#9DB" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <line x1="75" y1="88" x2="75" y2="96" stroke="#9DB" stroke-width="0.8"/>
+        <line x1="345" y1="88" x2="345" y2="96" stroke="#9DB" stroke-width="0.8"/>
+        <text x="210" y="84" fill="#9DB" font-family="Inter" font-size="10" font-weight="500" text-anchor="middle">C = 250 mm</text>
+
+        <!-- Débord cotes -->
+        <text x="87" y="115" fill="#FFB347" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle">25</text>
+        <text x="333" y="115" fill="#FFB347" font-family="Inter" font-size="9" font-weight="600" text-anchor="middle">25</text>
+
+        <!-- R -->
+        <line x1="358" y1="178" x2="378" y2="178" stroke="#FF7040" stroke-width="0.8"/>
+        <text x="382" y="181" fill="#FF7040" font-family="Inter" font-size="9.5" font-weight="600">R=10</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Vue axonométrique légère</b> : face avant + côté en perspective</li>
+      <li><b>Couvertine en 3 faces visibles</b> (dessus, façade, côté) avec dégradés cohérents</li>
+      <li><b>Visualisation enveloppante</b> : on voit comment la couvertine couvre le muret</li>
+      <li>Plus impactant visuellement, moins technique</li>
+    </ul>
+  </div>
+
+</div>
+
+<div style="margin-top:32px;padding:18px 22px;background:rgba(255,128,64,0.06);border-left:3px solid #FF7040;border-radius:6px;font-size:13px;color:#bbb;line-height:1.6">
+  <strong style="color:#FF8060">À toi :</strong>
+  choisis la variante préférée (ou un mix : ex "A pour les cotes + C pour la couvertine pleine"),
+  je l'intègre dans <code style="background:#1c1c1c;padding:2px 6px;border-radius:3px;color:#FF7040;font-family:monospace">configurateur.js</code>
+  → le SVG sera dynamique (les valeurs B, A, C, L des inputs mettront à jour le schéma en temps réel).
+</div>
+
+</body>
+</html>

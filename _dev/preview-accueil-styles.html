@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Aperçus accueil — 4 styles · Métal Pliage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    color: var(--text);
+    background: var(--bg-base);
+    line-height:1.6;
+    transition: background 0.4s;
+  }
+
+  /* ═══ PALETTE ORIGINALE ═══ */
+  :root {
+    --bg-base: #1A1A1A;
+    --bg-surface: #222222;
+    --bg-card: #2A2A2A;
+    --bg-elev: #333333;
+    --border: #2E2E2E;
+    --border-strong: #3E3E3E;
+    --text: #F5F5F5;
+    --text-soft: #BDBDBD;
+    --text-muted: #757575;
+    --accent: #FF4500;
+    --accent-warm: #FFB347;
+    --accent-glow: rgba(255,69,0,0.12);
+  }
+
+  /* ═══ TOPBAR SÉLECTEUR ═══ */
+  .topbar {
+    position:fixed; top:0; left:0; right:0;
+    padding:14px 24px;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    background: rgba(15,12,10,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    z-index:99999;
+  }
+  .topbar h1 {
+    font-size:11px; font-weight:600; letter-spacing:2px;
+    text-transform:uppercase;
+    background: linear-gradient(135deg, #FFB347, #FF4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right:14px;
+  }
+  .v-btn {
+    padding:8px 14px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,69,0,0.3);
+    color:#eee;
+    border-radius:6px;
+    font-size:11px; font-weight:500;
+    transition: all 0.2s;
+  }
+  .v-btn:hover {
+    background: rgba(255,69,0,0.15);
+    border-color: rgba(255,69,0,0.6);
+  }
+  .v-btn.active {
+    background: linear-gradient(135deg, #FF6F00, #FF4500);
+    border-color: #FF4500;
+    color:#fff;
+    box-shadow: 0 4px 16px rgba(255,69,0,0.4);
+  }
+  body { padding-top: 56px; }
+
+  /* ═══ HERO COMMUN ═══ */
+  .hero {
+    min-height: 90vh;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background: url('assets/photos/slide-01.jpg') center/cover;
+    filter: brightness(0.4);
+  }
+  .hero-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(26,26,26,0.4) 0%, rgba(26,26,26,0.9) 100%);
+  }
+  .hero-content {
+    position:relative; z-index:2;
+    text-align:center;
+    max-width:900px;
+    padding: 0 40px;
+  }
+  .hero-eyebrow {
+    font-size:11px; letter-spacing:5px; font-weight:600;
+    color: var(--accent);
+    text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-soft);
+    margin-bottom: 36px;
+    letter-spacing: 1px;
+  }
+  .hero-cta { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  .btn {
+    padding: 16px 32px;
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor:pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s;
+    display:inline-flex; align-items:center; gap:8px;
+    text-decoration:none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #FF6030; transform: translateY(-2px); }
+  .btn-outline {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ═══ SECTIONS COMMUNES ═══ */
+  section.zone {
+    padding: 120px 40px;
+    position:relative;
+  }
+  .inner { max-width: 1280px; margin: 0 auto; }
+  .header-c { text-align:center; margin-bottom: 70px; }
+  .label-c {
+    display:inline-block;
+    font-size:11px; letter-spacing:5px; font-weight:600;
+    color: var(--accent);
+    text-transform:uppercase;
+    margin-bottom: 18px;
+  }
+  .title-c {
+    font-size: clamp(36px, 5vw, 56px);
+    color: var(--text);
+    margin-bottom: 18px;
+    line-height: 1.05;
+  }
+  .desc-c {
+    max-width:600px; margin: 0 auto;
+    color: var(--text-soft);
+    font-size: 16px;
+  }
+
+  .grid-4 {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .grid-products {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .featured {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--bg-card);
+    overflow:hidden;
+  }
+  .featured-img-c {
+    min-height: 440px;
+    background: url('assets/couvertine-photo/couvertine plate.jpg') center/cover;
+  }
+  .featured-body-c {
+    padding: 60px 50px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .featured-body-c .tag {
+    font-size:10px; letter-spacing:4px; font-weight:700;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .featured-body-c h3 {
+    font-size: 40px;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .featured-body-c p {
+    color: var(--text-soft);
+    margin-bottom: 24px;
+    font-size:15px;
+  }
+  .swatches { display:flex; gap:10px; margin-bottom: 28px; }
+  .swatch {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .sw-1 { background:#383E42; } .sw-2 { background:#1B1B1B; }
+  .sw-3 { background:#F1ECE1; } .sw-4 { background:#4C2F1F; }
+  .sw-5 { background:#A5A8A6; }
+
+  .stats-zone {
+    background: var(--bg-surface);
+    padding: 80px 40px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-grid-c {
+    max-width:1100px; margin: 0 auto;
+    display:grid; grid-template-columns: repeat(4, 1fr); gap:30px;
+    text-align:center;
+  }
+  .stat-n-c { font-size: 64px; color: var(--accent-warm); line-height:1; font-weight:300; }
+  .stat-l-c { font-size: 11px; letter-spacing:3px; color: var(--text-muted); text-transform:uppercase; margin-top:10px; }
+
+  /* ═══ INFO BANNER ═══ */
+  .info-banner {
+    position:fixed;
+    bottom:20px; left:50%;
+    transform:translateX(-50%);
+    padding:14px 26px;
+    background: rgba(15,12,10,0.95);
+    border:1px solid rgba(255,69,0,0.4);
+    border-radius:30px;
+    font-size:12px;
+    color: #f5f5f5;
+    backdrop-filter: blur(10px);
+    z-index:99998;
+    max-width:760px;
+    text-align:center;
+  }
+  .info-banner strong { color: #FFB347; }
+  .info-banner em { color: rgba(255,255,255,0.55); font-style:normal; font-size:10px; display:block; margin-top:3px; }
+
+  /* ════════════════════════════════════════════════════════════
+     STYLE 1 — CINÉMA IMMERSIF (silence, espace, photo XXL)
+  ════════════════════════════════════════════════════════════ */
+  [data-v="cinema"] section.zone { padding: 180px 60px; }
+  [data-v="cinema"] .hero { min-height: 100vh; }
+  [data-v="cinema"] .hero-bg { filter: brightness(0.55) contrast(1.1); }
+  [data-v="cinema"] .hero-content h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: clamp(70px, 12vw, 160px);
+    letter-spacing: -3px;
+    line-height: 0.95;
+    margin-bottom: 18px;
+  }
+  [data-v="cinema"] .hero-content h1 .b { font-weight: 500; color: var(--accent-warm); }
+  [data-v="cinema"] .header-c { margin-bottom: 100px; }
+  [data-v="cinema"] .title-c {
+    font-weight: 200; letter-spacing: -1px;
+    font-size: clamp(48px, 6vw, 80px);
+  }
+  [data-v="cinema"] .title-c em { font-style: normal; color: var(--accent-warm); font-weight: 400; }
+  [data-v="cinema"] .process-card {
+    background: transparent;
+    padding: 0;
+    text-align: center;
+  }
+  [data-v="cinema"] .process-num {
+    font-size: 80px; font-weight: 100;
+    color: var(--accent);
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  [data-v="cinema"] .process-card h4 {
+    font-size: 22px; font-weight: 300;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  [data-v="cinema"] .process-card p { color: var(--text-muted); font-size:14px; max-width: 240px; margin:0 auto; }
+  [data-v="cinema"] .featured { background: transparent; gap:60px; padding: 40px 0; grid-template-columns: 1fr 1fr; }
+  [data-v="cinema"] .featured-img-c { min-height: 540px; }
+  [data-v="cinema"] .featured-body-c { padding: 0; }
+  [data-v="cinema"] .featured-body-c h3 { font-size: 56px; font-weight: 200; letter-spacing: -1px; }
+  [data-v="cinema"] .product-card {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  [data-v="cinema"] .product-img {
+    aspect-ratio: 4/3;
+    background: var(--bg-card);
+    margin-bottom: 18px;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  [data-v="cinema"] .product-card h4 { font-size: 20px; font-weight: 300; margin-bottom: 4px; }
+  [data-v="cinema"] .product-card .meta { display:flex; justify-content:space-between; align-items:baseline; padding-top:8px; }
+  [data-v="cinema"] .product-card .price { color: var(--accent-warm); font-size: 20px; font-weight: 400; }
+  [data-v="cinema"] .stat-n-c { font-size: 88px; font-weight: 100; }
+  [data-v="cinema"] .btn { padding: 18px 36px; border-radius: 0; font-weight: 400; }
+
+  /* ════════════════════════════════════════════════════════════
+     STYLE 2 — MAGAZINE ÉDITORIAL (Cormorant italic, asymétrique)
+  ════════════════════════════════════════════════════════════ */
+  [data-v="mag"] .hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    font-size: clamp(80px, 13vw, 180px);
+    letter-spacing: -3px;
+    line-height: 0.92;
+    color: var(--text);
+  }
+  [data-v="mag"] .hero-content h1 .b { color: var(--accent-warm); }
+  [data-v="mag"] .title-c {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    font-size: clamp(48px, 6vw, 72px);
+  }
+  [data-v="mag"] .title-c em { color: var(--accent-warm); }
+  [data-v="mag"] .label-c {
+    position:relative; padding-left: 36px;
+  }
+  [data-v="mag"] .label-c::before {
+    content:''; position:absolute;
+    left: 0; top: 6px;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  [data-v="mag"] .header-c { text-align: left; max-width: 720px; }
+  [data-v="mag"] .desc-c { margin: 0; }
+  [data-v="mag"] .process-card {
+    background: var(--bg-card);
+    border-radius: 0;
+    padding: 36px 32px;
+    border-top: 1px solid var(--border);
+  }
+  [data-v="mag"] .process-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 64px;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  [data-v="mag"] .process-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    font-size: 26px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  [data-v="mag"] .featured {
+    grid-template-columns: 1.3fr 1fr;
+    background: var(--bg-card);
+    border-radius: 0;
+  }
+  [data-v="mag"] .featured-body-c h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    font-size: 52px;
+  }
+  [data-v="mag"] .product-card {
+    background: var(--bg-card);
+    border-radius: 0;
+    overflow:hidden;
+  }
+  [data-v="mag"] .product-img {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--bg-elev), var(--bg-surface));
+    display:flex; align-items:center; justify-content:center;
+  }
+  [data-v="mag"] .product-card .body { padding: 24px 28px; }
+  [data-v="mag"] .product-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    font-size: 26px; margin-bottom: 8px;
+  }
+  [data-v="mag"] .product-card .price {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent-warm);
+  }
+  [data-v="mag"] .stat-n-c {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 500;
+    font-size: 90px;
+  }
+  [data-v="mag"] .btn { border-radius: 100px; }
+
+  /* ════════════════════════════════════════════════════════════
+     STYLE 3 — BRUTALIST TECH (typo XXL, lignes orange, angulaire)
+  ════════════════════════════════════════════════════════════ */
+  [data-v="brutal"] body { font-family: 'Space Grotesk', sans-serif; }
+  [data-v="brutal"] .hero-content h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(80px, 14vw, 200px);
+    letter-spacing: -6px;
+    line-height: 0.85;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  [data-v="brutal"] .hero-content h1 .b {
+    color: var(--accent);
+    display:inline-block;
+    border-left: 8px solid var(--accent);
+    padding-left: 16px;
+  }
+  [data-v="brutal"] .title-c {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -1.5px;
+    font-size: clamp(48px, 6vw, 80px);
+  }
+  [data-v="brutal"] .title-c em { font-style: normal; color: var(--accent); }
+  [data-v="brutal"] .label-c {
+    border: 1px solid var(--accent);
+    padding: 6px 12px;
+    margin-bottom: 24px;
+  }
+  [data-v="brutal"] .header-c { text-align: left; }
+  [data-v="brutal"] .desc-c { margin: 0; max-width: 680px; }
+  [data-v="brutal"] .process-card {
+    background: transparent;
+    padding: 30px 0 0;
+    border-top: 3px solid var(--accent);
+  }
+  [data-v="brutal"] .process-num {
+    font-size: 18px; font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-family: 'Space Grotesk', monospace;
+  }
+  [data-v="brutal"] .process-num::before { content: '['; }
+  [data-v="brutal"] .process-num::after { content: ']'; }
+  [data-v="brutal"] .process-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  [data-v="brutal"] .process-card p { color: var(--text-soft); font-size:14px; }
+  [data-v="brutal"] .featured {
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+  }
+  [data-v="brutal"] .featured-body-c h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 48px;
+    letter-spacing: -1px;
+  }
+  [data-v="brutal"] .product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  [data-v="brutal"] .product-card:hover { border-color: var(--accent); transform: translate(-3px, -3px); box-shadow: 5px 5px 0 var(--accent); }
+  [data-v="brutal"] .product-img {
+    aspect-ratio: 4/3;
+    background: var(--bg-elev);
+    display:flex; align-items:center; justify-content:center;
+    border-bottom: 1px solid var(--border-strong);
+    position:relative;
+  }
+  [data-v="brutal"] .product-card .body { padding: 20px; }
+  [data-v="brutal"] .product-card h4 {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  [data-v="brutal"] .product-card .price {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 20px;
+    font-family: 'Space Grotesk', monospace;
+  }
+  [data-v="brutal"] .stat-n-c {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 80px;
+    color: var(--accent);
+    letter-spacing: -2px;
+  }
+  [data-v="brutal"] .btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    border-radius: 0;
+    text-transform: uppercase;
+  }
+  [data-v="brutal"] .stats-zone {
+    background: var(--bg-base);
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     STYLE 4 — SHOWROOM GALERIE (cartes en relief, hover sophistiqué)
+  ════════════════════════════════════════════════════════════ */
+  [data-v="show"] .hero-content h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(72px, 12vw, 160px);
+    letter-spacing: -4px;
+    line-height: 0.95;
+  }
+  [data-v="show"] .hero-content h1 .b {
+    color: var(--accent);
+    font-weight: 500;
+    position: relative;
+  }
+  [data-v="show"] .hero-content h1 .b::after {
+    content:'';
+    position:absolute;
+    bottom: -8px; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  [data-v="show"] .title-c {
+    font-weight: 300; letter-spacing: -1px;
+    font-size: clamp(42px, 5vw, 64px);
+  }
+  [data-v="show"] .title-c em { font-style: normal; color: var(--accent); }
+  [data-v="show"] .process-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 36px 28px;
+    border: 1px solid var(--border);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s, border-color 0.4s;
+    position:relative;
+    overflow:hidden;
+  }
+  [data-v="show"] .process-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  [data-v="show"] .process-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 24px 60px rgba(255,69,0,0.18), 0 8px 20px rgba(0,0,0,0.4);
+    border-color: rgba(255,69,0,0.3);
+  }
+  [data-v="show"] .process-card:hover::before { transform: scaleX(1); }
+  [data-v="show"] .process-num {
+    font-size: 72px; font-weight: 200;
+    background: linear-gradient(135deg, var(--accent-warm), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  [data-v="show"] .process-card h4 { font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+  [data-v="show"] .process-card p { color: var(--text-soft); font-size:14px; }
+  [data-v="show"] .featured {
+    background: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  [data-v="show"] .featured-img-c { border-radius: 20px 0 0 20px; }
+  [data-v="show"] .featured-body-c h3 { font-size: 44px; font-weight: 400; }
+  [data-v="show"] .product-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow:hidden;
+    border: 1px solid var(--border);
+    transition: all 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+    cursor:pointer;
+    position:relative;
+  }
+  [data-v="show"] .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,69,0,0.3);
+  }
+  [data-v="show"] .product-img {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--bg-elev), var(--bg-surface));
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+  [data-v="show"] .product-img::after {
+    content:'';
+    position:absolute;
+    inset:0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(255,69,0,0.06) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  [data-v="show"] .product-card:hover .product-img::after { opacity: 1; }
+  [data-v="show"] .product-card .body { padding: 24px 28px; }
+  [data-v="show"] .product-card h4 { font-size: 20px; font-weight: 500; margin-bottom: 8px; }
+  [data-v="show"] .product-card p { color: var(--text-soft); font-size: 13px; margin-bottom: 18px; }
+  [data-v="show"] .product-card .price {
+    font-size: 24px; font-weight: 500;
+    background: linear-gradient(135deg, var(--accent-warm), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  [data-v="show"] .stat-n-c {
+    font-size: 80px; font-weight: 200;
+    background: linear-gradient(135deg, var(--accent-warm), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  [data-v="show"] .btn { border-radius: 100px; }
+
+  @media (max-width: 800px) {
+    .featured { grid-template-columns: 1fr; }
+    .featured-img-c { min-height: 260px; }
+    .featured-body-c { padding: 36px 28px; }
+    .stats-grid-c { grid-template-columns: 1fr 1fr; }
+    section.zone { padding: 70px 24px !important; }
+  }
+</style>
+</head>
+<body data-v="cinema">
+
+  <div class="topbar">
+    <h1>◆ 4 styles · accueil</h1>
+    <button class="v-btn active" data-v="cinema">1 · Cinéma immersif</button>
+    <button class="v-btn" data-v="mag">2 · Magazine éditorial</button>
+    <button class="v-btn" data-v="brutal">3 · Brutalist tech</button>
+    <button class="v-btn" data-v="show">4 · Showroom galerie</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Précision métal · Fabriqué en France</div>
+      <h1>Métal<br><span class="b">Pliage</span></h1>
+      <p class="hero-sub">Couvertine · Pliage sur mesure · Fabrication française</p>
+      <div class="hero-cta">
+        <a href="#process" class="btn btn-primary">Configurer mon pliage</a>
+        <a href="#" class="btn btn-outline">Voir les produits</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="zone" id="process">
+    <div class="inner">
+      <div class="header-c">
+        <div class="label-c">Comment ça marche</div>
+        <h2 class="title-c">De la cote<br>à <em>la livraison</em></h2>
+        <p class="desc-c">Un processus simplifié, de votre premier clic jusqu'à la pièce entre vos mains.</p>
+      </div>
+      <div class="grid-4">
+        <div class="process-card">
+          <div class="process-num">01</div>
+          <h4>Configurez</h4>
+          <p>Forme, dimensions, matière et finition dans notre configurateur en ligne.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-num">02</div>
+          <h4>Validez</h4>
+          <p>Prix immédiat HT/TTC, panier, paiement sécurisé par carte via Stripe.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-num">03</div>
+          <h4>Fabrication</h4>
+          <p>Pliage CNC et laquage dans notre atelier en 5 à 10 jours ouvrés.</p>
+        </div>
+        <div class="process-card">
+          <div class="process-num">04</div>
+          <h4>Livraison</h4>
+          <p>Expédition sécurisée à domicile ou sur chantier partout en France.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUVERTINE FEATURED -->
+  <section class="zone" style="background: var(--bg-surface);">
+    <div class="inner">
+      <div class="header-c">
+        <div class="label-c">Couvertine</div>
+        <h2 class="title-c">Couvertine<br><em>sur mesure</em></h2>
+        <p class="desc-c">Couvertine plate avec retours et rejet d'eau — acier ou aluminium, fabriquée à vos dimensions exactes.</p>
+      </div>
+      <article class="featured">
+        <div class="featured-img-c"></div>
+        <div class="featured-body-c">
+          <div class="tag">Produit standard</div>
+          <h3>Couvertine avec Retour</h3>
+          <p>Profil plat avec retours et rejet d'eau à 45°. Dépassement de 25 mm. Acier 0,75 mm ou Aluminium 1,5 mm. Longueur jusqu'à 3 000 mm.</p>
+          <div class="swatches">
+            <span class="swatch sw-1"></span>
+            <span class="swatch sw-2"></span>
+            <span class="swatch sw-3"></span>
+            <span class="swatch sw-4"></span>
+            <span class="swatch sw-5"></span>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="#" class="btn btn-primary">Configurer ma couvertine</a>
+            <a href="#" class="btn btn-outline">Demander un devis</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="zone">
+    <div class="inner">
+      <div class="header-c">
+        <div class="label-c">Pliage sur mesure</div>
+        <h2 class="title-c">Formes prédéfinies<br>&amp; <em>libres</em></h2>
+        <p class="desc-c">Acier, aluminium ou inox. Choisissez parmi nos formes ou envoyez votre schéma.</p>
+      </div>
+      <div class="grid-products">
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none" style="width:80px;height:80px;color:var(--accent)"><polyline points="20,8 20,42 60,42 60,8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="body">
+            <h4>Forme U</h4>
+            <p>Pliage en U classique, habillage de poteau, encadrement.</p>
+            <div class="meta"><span class="price">42€<small style="font-size:14px;color:var(--text-muted)"> /m</small></span></div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none" style="width:80px;height:80px;color:var(--accent)"><polyline points="15,42 15,8 65,8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="body">
+            <h4>Forme L</h4>
+            <p>Cornière 90°, finitions de mur et plinthes métalliques.</p>
+            <div class="meta"><span class="price">28€<small style="font-size:14px;color:var(--text-muted)"> /m</small></span></div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none" style="width:80px;height:80px;color:var(--accent)"><polyline points="10,42 25,8 55,8 70,42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="body">
+            <h4>Forme Trapèze</h4>
+            <p>Couvre-mur, larmier, dosseret — protection sommet de muret.</p>
+            <div class="meta"><span class="price">52€<small style="font-size:14px;color:var(--text-muted)"> /m</small></span></div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none" style="width:80px;height:80px;color:var(--accent)"><polyline points="10,42 10,20 40,20 40,8 70,8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="body">
+            <h4>Forme libre</h4>
+            <p>Jusqu'à 10 plis personnalisés. Envoyez votre schéma.</p>
+            <div class="meta"><span class="price">Sur devis</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-zone">
+    <div class="stats-grid-c">
+      <div><div class="stat-n-c">12</div><div class="stat-l-c">Ans d'expérience</div></div>
+      <div><div class="stat-n-c">2500+</div><div class="stat-l-c">Pliages livrés</div></div>
+      <div><div class="stat-n-c">48h</div><div class="stat-l-c">Délai moyen</div></div>
+      <div><div class="stat-n-c">100%</div><div class="stat-l-c">Fabrication FR</div></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="zone">
+    <div class="inner">
+      <div class="header-c">
+        <div class="label-c">Devis gratuit</div>
+        <h2 class="title-c">Prêt à <em>commander</em> ?</h2>
+        <p class="desc-c">Configurateur en ligne — prix immédiat — fabrication France.</p>
+      </div>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="#" class="btn btn-primary">Démarrer mon devis</a>
+        <a href="#" class="btn btn-outline">Nous contacter</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="info-banner" id="info"></div>
+
+<script>
+  const infos = {
+    cinema: '<strong>Cinéma immersif</strong> — espace, silence, photographie XXL · typo Inter ultra-light · mood Apple/Bose',
+    mag:    '<strong>Magazine éditorial</strong> — Cormorant italique pour titres · grilles asymétriques · mood AD/Wallpaper',
+    brutal: '<strong>Brutalist tech</strong> — typo Space Grotesk XXL · lignes orange brutes · angulaire · mood Bauhaus/Wired',
+    show:   '<strong>Showroom galerie</strong> — cartes en relief avec hover sophistiqué · barres dégradées · mood Hermès/Off-White'
+  };
+  const btns = document.querySelectorAll('.v-btn');
+  const info = document.getElementById('info');
+  function setView(v) {
+    document.body.dataset.v = v;
+    btns.forEach(x => x.classList.toggle('active', x.dataset.v === v));
+    info.innerHTML = 'Style actif : ' + infos[v];
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  btns.forEach(b => b.addEventListener('click', () => setView(b.dataset.v)));
+  setView('cinema');
+</script>
+</body>
+</html>

@@ -1,15 +1,84 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Guides de pose des couvertines acier — pose à la colle MS polymère et pose sur supports de fixation. Instructions pas-à-pas illustrées. Metal Pliage.">
-  <title>Guides de Pose des Couvertines — Metal Pliage</title>
+  <meta name="description" content="Guide complet de pose des couvertines aluminium à la colle MS polymère. Étapes pas-à-pas illustrées, matériel nécessaire, conseils techniques. Metal Pliage.">
+  <meta name="keywords" content="pose couvertine, guide pose couvertine, couvertine aluminium, colle MS polymère, fixation couvertine, accessoires couvertine">
+  <title>Guide de Pose des Couvertines à la Colle — Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/preloader.css">
   <style>
+    /* ── HERO INDICATEURS ─────────────────────────────────── */
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+    .hero-stat .num {
+      font-family: var(--font-head); font-size: 1.6rem; font-weight: 700;
+      color: var(--accent); line-height: 1;
+      display: flex; align-items: baseline; gap: 0.25rem;
+    }
+    .hero-stat .num small {
+      font-size: 0.7rem; font-weight: 500; color: var(--text-secondary);
+      letter-spacing: 0;
+    }
+    .hero-stat .lbl {
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* ── QUICK NAV PILLS (sticky) ─────────────────────────── */
+    .quick-nav {
+      position: sticky;
+      top: var(--nav-h, 72px);
+      z-index: 50;
+      background: rgba(26,26,26,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .quick-nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0.9rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .quick-nav-inner::-webkit-scrollbar { display: none; }
+    .quick-nav a {
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--border);
+      font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    .quick-nav a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(255,69,0,0.04);
+    }
+
+    /* Décalage scroll pour les ancres (sous navbar + quick-nav) */
+    #guide-colle, #accessoires, #faq, #aide {
+      scroll-margin-top: calc(var(--nav-h, 72px) + 60px);
+    }
+
+    /* ── BLOC GUIDE ───────────────────────────────────────── */
     .guide-block {
       max-width: var(--max-w);
       margin: 0 auto;
@@ -19,85 +88,296 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
     .guide-num-circle {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
+      width: 56px; height: 56px; min-width: 56px;
       background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-family: var(--font-head);
-      font-size: 1.4rem;
-      font-weight: 200;
-      color: #fff;
+      font-size: 0.85rem; font-weight: 500; color: #fff;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-align: center; line-height: 1.1;
     }
-    .guide-title-row h2 {
-      font-size: clamp(1.6rem, 3vw, 2.8rem);
+    .guide-title-row h2 { font-size: clamp(1.6rem, 3vw, 2.8rem); }
+
+    /* ── MATÉRIEL NÉCESSAIRE (grid icônes) ────────────────── */
+    .materials-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.8rem 2rem;
+      margin-bottom: 2.5rem;
     }
-    .steps-grid {
+    .materials-wrap h3 {
+      font-size: 0.78rem; font-weight: 300;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.4rem;
+    }
+    .materials-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.9rem;
+    }
+    .material-item {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.55rem;
+      padding: 0.95rem 0.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: border-color var(--t);
+    }
+    .material-item:hover { border-color: var(--accent); }
+    .material-item svg { width: 26px; height: 26px; color: var(--accent); stroke-width: 1.5; }
+    .material-item span {
+      font-size: 11px; letter-spacing: 0.04em;
+      color: var(--text-secondary); line-height: 1.4;
+    }
+    @media (max-width: 1024px) { .materials-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px)  { .materials-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── STEPS — Layout 2 colonnes : index sticky + stack vertical ── */
+    .steps-wrapper {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.2rem;
+      align-items: start;
+    }
+    .steps-index {
+      position: sticky;
+      top: calc(var(--nav-h, 72px) + 80px);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.4rem 1.1rem;
+    }
+    .steps-index h3 {
+      font-size: 0.72rem; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .steps-index ol { list-style: none; padding: 0; margin: 0; }
+    .steps-index li { margin: 0 0 2px; }
+    .steps-index a {
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.5rem 0.7rem;
+      font-size: 12.5px; line-height: 1.3;
+      color: var(--text-secondary);
+      border-left: 2px solid transparent;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .steps-index a .num {
+      font-family: var(--font-head);
+      font-size: 0.68rem; font-weight: 700;
+      color: var(--accent);
+      background: rgba(255,69,0,0.08);
+      padding: 2px 0;
+      width: 22px; text-align: center;
+      border-radius: 3px; flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .steps-index a:hover {
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border-left-color: var(--accent);
+    }
+    .steps-index a:hover .num { background: var(--accent); color: #fff; }
+
+    /* Stack vertical des cartes étapes (cartes plus larges) */
+    .steps-grid {
+      display: flex;
+      flex-direction: column;
       gap: 1.5rem;
     }
     .step-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      padding: 1.8rem;
-      transition: border-color var(--t), transform var(--t);
-    }
-    .step-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-3px);
-    }
-    .step-header {
-      display: flex;
+      padding: 2rem 2.3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "illu header"
+        "illu body";
+      gap: 1.2rem 2.3rem;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
+      scroll-margin-top: calc(var(--nav-h, 72px) + 90px);
+      transition: border-color var(--t);
+    }
+    .step-card:hover { border-color: var(--border-hover); }
+    .step-header {
+      grid-area: header;
+      display: flex; align-items: center; gap: 0.9rem;
+      margin: 0;
     }
     .step-number {
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 40px; height: 40px; min-width: 40px;
+      background: var(--accent); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
       font-family: var(--font-head);
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: #fff;
+      font-size: 1rem; font-weight: 500; color: #fff;
     }
     .step-card h4 {
-      font-size: 0.9rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 1.05rem; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase;
       color: var(--text-primary);
     }
     .step-illustration {
+      grid-area: illu;
       background: #141414;
       border: 1px solid #2A2A2A;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      height: 110px;
+      margin: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.6rem;
+      min-height: 240px;
     }
-    .step-card p {
-      font-size: 13px;
-      line-height: 1.75;
+    .step-card > p {
+      grid-area: body;
+      font-size: 14.5px; line-height: 1.75;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    @media (max-width: 1080px) {
+      .steps-wrapper { grid-template-columns: 1fr; }
+      .steps-index { position: relative; top: 0; }
+    }
+    @media (max-width: 760px) {
+      .step-card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "header"
+          "illu"
+          "body";
+        padding: 1.6rem;
+      }
+      .step-illustration { min-height: 180px; }
+    }
+
+    /* ── ENCARTS CONSEIL / WARNING ────────────────────────── */
+    .callout {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 1.4rem 1.8rem;
+      margin: 2rem 0;
+      display: flex; gap: 1.2rem; align-items: flex-start;
+    }
+    .callout.warning { border-left-color: #FFB347; }
+    .callout.tip     { border-left-color: #3CB371; }
+    .callout svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--accent); margin-top: 2px; }
+    .callout.warning svg { color: #FFB347; }
+    .callout.tip svg     { color: #3CB371; }
+    .callout .body strong {
+      display: block;
+      font-size: 0.78rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-primary);
+      margin-bottom: 0.35rem; font-weight: 600;
+    }
+    .callout .body p {
+      font-size: 13px; line-height: 1.7;
+      color: var(--text-secondary); margin: 0;
+    }
+
+    /* ── ACCESSOIRES GRID ─────────────────────────────────── */
+    .acc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+    .acc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.4rem 1.2rem;
+      transition: border-color var(--t), transform var(--t);
+      text-align: center;
+    }
+    .acc-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .acc-illu {
+      background: #141414; border: 1px solid #2a2a2a;
+      padding: 0.8rem;
+      height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .acc-card h4 {
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .acc-card p {
+      font-size: 12px; line-height: 1.6;
       color: var(--text-secondary);
     }
-    @media (max-width: 1024px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .steps-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .acc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .acc-grid { grid-template-columns: 1fr; } }
+
+    /* ── FAQ ACCORDÉON ────────────────────────────────────── */
+    .faq-list {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.4rem 0;
+    }
+    .faq-item summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-family: var(--font-head);
+      font-size: 1rem; font-weight: 500;
+      letter-spacing: 0.01em;
+      list-style: none;
+      transition: color 0.2s;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-item summary .plus {
+      color: var(--accent); font-size: 1.6rem; line-height: 1;
+      flex-shrink: 0; margin-left: 1rem;
+      transition: transform 0.3s ease;
+    }
+    .faq-item[open] summary .plus { transform: rotate(45deg); }
+    .faq-item .answer { padding-top: 0.85rem; }
+    .faq-item .answer p {
+      font-size: 14px; line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    /* ── CTA FINAL ────────────────────────────────────────── */
+    .help-cta {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 3.5rem clamp(1.5rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .help-cta-inner {
+      background: linear-gradient(135deg, rgba(255,69,0,0.10), rgba(255,69,0,0.02));
+      border: 1px solid var(--accent);
+      padding: clamp(2rem, 5vw, 3.5rem);
+    }
+    .help-cta h3 {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      margin-bottom: 0.8rem;
+    }
+    .help-cta p {
+      font-size: 14px; max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .help-cta-actions {
+      display: flex; gap: 1rem;
+      justify-content: center; flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
@@ -118,323 +398,609 @@
       </button>
       <ul id="nav-links" role="list">
         <li class="nav-item"><a href="index.html#couvertine">Couvertine</a></li>
-        <li class="nav-item"><a href="index.html#pliage">Pliage</a></li>
+        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
       <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ════════════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════════════ -->
   <section class="page-hero">
     <div class="page-hero-inner">
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
         <a href="index.html">Accueil</a>
         <span aria-hidden="true">›</span>
-        <span aria-current="page">Guides de pose</span>
+        <span aria-current="page">Guide de pose</span>
       </nav>
       <p class="section-label">INSTALLATION</p>
-      <h1 class="animate-fadeup">GUIDES DE POSE<br>DES COUVERTINES</h1>
+      <h1 class="animate-fadeup">GUIDE DE POSE<br>À LA COLLE</h1>
       <div class="page-hero-accent"></div>
-      <p class="page-hero-desc animate-fadeup" style="--delay: 0.15s">Deux méthodes de pose illustrées pas-à-pas — pose à la colle MS polymère pour une fixation permanente, ou pose sur supports de fixation pour permettre la dilatation thermique.</p>
+      <p class="page-hero-desc animate-fadeup" style="--delay: 0.15s">Méthode pas-à-pas pour la pose d'une couvertine alu à la <strong>colle MS polymère</strong> sur la tête d'un muret. Préparation, mesure, découpe, collage, jonctions et finitions.</p>
+
+      <div class="hero-stats animate-fadeup" style="--delay: 0.3s">
+        <div class="hero-stat">
+          <span class="num">8</span>
+          <span class="lbl">Étapes détaillées</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">~30<small>min/m</small></span>
+          <span class="lbl">Temps de pose</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">24<small>h</small></span>
+          <span class="lbl">Séchage</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">●</span>
+          <span class="lbl">Niveau débutant</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- GUIDE 1 — POSE À LA COLLE -->
+  <!-- ════════════════════════════════════════════════════════════
+       QUICK NAV (sticky)
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="quick-nav" aria-label="Navigation rapide guide">
+    <div class="quick-nav-inner">
+      <a href="#guide-colle">Étapes</a>
+      <a href="#accessoires">Accessoires</a>
+      <a href="#faq">FAQ</a>
+      <a href="#aide">Aide</a>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       GUIDE — POSE À LA COLLE
+  ════════════════════════════════════════════════════════════ -->
   <section id="guide-colle" style="padding: var(--section-pad) 0; background: var(--bg-base);">
     <div class="guide-block">
+
       <div class="guide-title-row animate-fadeup">
-        <div class="guide-num-circle" aria-hidden="true">1</div>
+        <div class="guide-num-circle" aria-hidden="true">POSE</div>
         <div>
-          <span class="section-label">MÉTHODE 1</span>
+          <span class="section-label">MÉTHODE</span>
           <h2>Pose de couvertine à la colle</h2>
         </div>
       </div>
 
-      <div class="steps-grid">
+      <!-- Matériel nécessaire -->
+      <div class="materials-wrap animate-fadeup">
+        <h3>Matériel nécessaire</h3>
+        <div class="materials-grid">
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5 L19 5 L19 19 L5 19 Z"/><line x1="9" y1="5" x2="9" y2="9"/><line x1="13" y1="5" x2="13" y2="9"/><line x1="17" y1="5" x2="17" y2="9"/></svg>
+            <span>Mètre ruban<br>Crayon · Équerre</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="6" rx="0.5"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+            <span>Niveau à bulle</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 L19 4 L19 12 L13 12 L13 20 L11 20 L11 12 L5 12 Z"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+            <span>Scie sauteuse<br>Lame aluminium</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="11" height="6" rx="0.5"/><path d="M17 11 L21 9 L21 13 Z"/><line x1="8" y1="14" x2="8" y2="20"/><line x1="14" y1="14" x2="14" y2="20"/></svg>
+            <span>Pistolet à cartouche</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="8" height="14" rx="1"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="10" y1="17" x2="10" y2="21"/><line x1="14" y1="17" x2="14" y2="21"/></svg>
+            <span>Colle MS polymère<br>Cartouche 290 ml</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8 C 6 5, 9 4, 12 4 C 15 4, 18 5, 18 8 L18 18 L6 18 Z"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+            <span>Brosse métallique</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21 L4 18 L4 13 L9 8 L9 3 L15 3 L15 8 L20 13 L20 18 L17 21 Z"/></svg>
+            <span>Gants de protection</span>
+          </div>
+          <div class="material-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 11 3 17 12 21 21 17 21 11"/><polyline points="3 7 12 11 21 7 12 3 3 7"/></svg>
+            <span>Éclisses · Angles<br>Embouts CNC</span>
+          </div>
+        </div>
+      </div>
 
-        <article class="step-card animate-fadeup">
+      <!-- ═══ ÉTAPES (8) — Layout 2 colonnes : index + stack vertical ═══ -->
+      <div class="steps-wrapper">
+        <aside class="steps-index" aria-label="Sommaire des étapes">
+          <h3>Étapes</h3>
+          <ol>
+            <li><a href="#step-1"><span class="num">01</span>Préparation du support</a></li>
+            <li><a href="#step-2"><span class="num">02</span>Mesure et marquage</a></li>
+            <li><a href="#step-3"><span class="num">03</span>Découpe</a></li>
+            <li><a href="#step-4"><span class="num">04</span>Montage à blanc</a></li>
+            <li><a href="#step-5"><span class="num">05</span>Application colle</a></li>
+            <li><a href="#step-6"><span class="num">06</span>Pose et pressage</a></li>
+            <li><a href="#step-7"><span class="num">07</span>Éclisses</a></li>
+            <li><a href="#step-8"><span class="num">08</span>Angles &amp; embouts</a></li>
+          </ol>
+        </aside>
+
+        <div class="steps-grid">
+
+        <!-- ─── 1. Préparation du support ─── -->
+        <article id="step-1" class="step-card animate-fadeup">
           <div class="step-header">
             <div class="step-number" aria-hidden="true">1</div>
-            <h4>Nettoyage du support</h4>
+            <h4>Préparation du support</h4>
           </div>
           <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret -->
-              <rect x="10" y="40" width="140" height="40" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- Texture briques -->
-              <line x1="10" y1="60" x2="150" y2="60" stroke="#333" stroke-width="0.5"/>
-              <line x1="45" y1="40" x2="45" y2="80" stroke="#333" stroke-width="0.5"/>
-              <line x1="90" y1="40" x2="90" y2="80" stroke="#333" stroke-width="0.5"/>
-              <line x1="135" y1="40" x2="135" y2="80" stroke="#333" stroke-width="0.5"/>
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- Muret béton (sans couvertine encore) -->
+              <rect x="20" y="42" width="120" height="48" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+              <!-- Joints horizontaux -->
+              <line x1="20" y1="58" x2="140" y2="58" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="20" y1="74" x2="140" y2="74" stroke="#3A3A3A" stroke-width="0.5"/>
+              <!-- Joints verticaux décalés -->
+              <line x1="56" y1="42" x2="56" y2="58" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="98" y1="42" x2="98" y2="58" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="40" y1="58" x2="40" y2="74" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="80" y1="58" x2="80" y2="74" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="120" y1="58" x2="120" y2="74" stroke="#3A3A3A" stroke-width="0.5"/>
               <!-- Brosse / nettoyage -->
-              <rect x="55" y="25" width="50" height="18" rx="2" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <line x1="70" y1="25" x2="70" y2="43" stroke="#555" stroke-width="1"/>
-              <line x1="90" y1="25" x2="90" y2="43" stroke="#555" stroke-width="1"/>
-              <text x="80" y="37" fill="#FF4500" font-size="8" font-family="monospace" text-anchor="middle">NETTOYER</text>
+              <rect x="58" y="20" width="44" height="14" rx="1.5" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.4"/>
+              <line x1="70" y1="20" x2="70" y2="34" stroke="#555" stroke-width="0.8"/>
+              <line x1="80" y1="20" x2="80" y2="34" stroke="#555" stroke-width="0.8"/>
+              <line x1="90" y1="20" x2="90" y2="34" stroke="#555" stroke-width="0.8"/>
+              <text x="80" y="30" fill="#FF4500" font-size="7" font-family="monospace" font-weight="700" text-anchor="middle">NETTOYER</text>
               <!-- Poussières -->
-              <circle cx="30" cy="38" r="2" fill="#555"/>
-              <circle cx="120" cy="38" r="1.5" fill="#555"/>
-              <circle cx="75" cy="36" r="1" fill="#555"/>
+              <circle cx="34" cy="38" r="1.5" fill="#555"/>
+              <circle cx="126" cy="40" r="1" fill="#555"/>
+              <circle cx="50" cy="36" r="0.8" fill="#555"/>
             </svg>
           </div>
-          <p>Brosser et dépoussiérer soigneusement la tête de mur (muret). Éliminer tout résidu de mortier, de peinture ou de saleté. Le support doit être propre, sec et sain pour assurer l'adhérence optimale de la colle.</p>
+          <p>Brosser et dépoussiérer la tête de mur. Éliminer résidus de mortier, peinture ou saleté. Le support doit être <strong>propre, sec et sain</strong>. Combler les irrégularités à l'enduit si nécessaire.</p>
         </article>
 
-        <article class="step-card animate-fadeup" style="--delay: 0.05s">
+        <!-- ─── 2. Mesure et marquage ─── -->
+        <article id="step-2" class="step-card animate-fadeup" style="--delay: 0.05s">
           <div class="step-header">
             <div class="step-number" aria-hidden="true">2</div>
+            <h4>Mesure et marquage</h4>
+          </div>
+          <div class="step-illustration" aria-hidden="true">
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- Muret -->
+              <rect x="20" y="48" width="120" height="42" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+              <line x1="20" y1="64" x2="140" y2="64" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="20" y1="78" x2="140" y2="78" stroke="#3A3A3A" stroke-width="0.5"/>
+              <!-- Mètre ruban déroulé au-dessus -->
+              <rect x="22" y="34" width="116" height="8" fill="#3A3A3A" stroke="#FF4500" stroke-width="1"/>
+              <line x1="32" y1="34" x2="32" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="48" y1="34" x2="48" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="64" y1="34" x2="64" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="80" y1="34" x2="80" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="96" y1="34" x2="96" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="112" y1="34" x2="112" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="128" y1="34" x2="128" y2="42" stroke="#FF4500" stroke-width="0.8"/>
+              <text x="80" y="26" fill="#FF4500" font-size="9" font-family="monospace" font-weight="700" text-anchor="middle">2 000 mm</text>
+              <!-- Trait de coupe sur le muret -->
+              <line x1="125" y1="46" x2="125" y2="52" stroke="#FF4500" stroke-width="1.5"/>
+              <polygon points="125,52 122,48 128,48" fill="#FF4500"/>
+            </svg>
+          </div>
+          <p>Mesurer la longueur exacte du muret. Prévoir un <strong>dépassement de 25 mm</strong> à chaque extrémité pour les retours d'angle. Marquer au crayon avant la découpe. Vérifier la perpendicularité à l'équerre.</p>
+        </article>
+
+        <!-- ─── 3. Découpe ─── -->
+        <article id="step-3" class="step-card animate-fadeup" style="--delay: 0.1s">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">3</div>
+            <h4>Découpe de la couvertine</h4>
+          </div>
+          <div class="step-illustration" aria-hidden="true">
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- Label DÉCOUPE -->
+              <text x="80" y="14" fill="#FF4500" font-size="8" font-family="monospace" font-weight="700" letter-spacing="1.2" text-anchor="middle">DÉCOUPE</text>
+              <!-- Outils sous le label, AVANT la couvertine -->
+              <text x="80" y="26" fill="#8A8A8A" font-size="6.5" font-family="monospace" font-weight="600" letter-spacing="1.2" text-anchor="middle">MEULEUSE / SCIE SAUTEUSE</text>
+              <!-- Couvertine vue de dessus -->
+              <rect x="14" y="40" width="132" height="42" fill="#E8EFF5" stroke="#888" stroke-width="0.6"/>
+              <line x1="14" y1="48" x2="146" y2="48" stroke="#bbb" stroke-width="0.4"/>
+              <line x1="14" y1="74" x2="146" y2="74" stroke="#bbb" stroke-width="0.4"/>
+              <!-- Trait de coupe en pointillé -->
+              <line x1="80" y1="34" x2="80" y2="88" stroke="#FF4500" stroke-width="1.8" stroke-dasharray="5,3"/>
+            </svg>
+          </div>
+          <p>Découper la couvertine à la <strong>meuleuse (disque fin alu ou acier)</strong> ou à la <strong>scie sauteuse (lame fine aluminium)</strong>. Maintenir fermement la pièce, attaquer côté plat et non côté pli pour éviter la casse.</p>
+        </article>
+
+        <!-- ─── 4. Montage à blanc (pose sans colle pour vérifier) ─── -->
+        <article id="step-4" class="step-card animate-fadeup" style="--delay: 0.15s">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">4</div>
+            <h4>Montage à blanc</h4>
+          </div>
+          <div class="step-illustration" aria-hidden="true">
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- Muret (rétréci pour faire apparaître clairement le débordement) -->
+              <rect x="32" y="48" width="96" height="42" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+              <line x1="32" y1="64" x2="128" y2="64" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="32" y1="78" x2="128" y2="78" stroke="#3A3A3A" stroke-width="0.5"/>
+              <!-- Couvertine (retours DESCENDENT, rejet 45° remonte vers l'intérieur) — en pointillé pour "à blanc" — débordement visible de 12 unités à gauche et à droite -->
+              <path d="M22,58 L12,66 L12,48 L148,48 L148,66 L138,58"
+                    fill="none" stroke="#F0F0F0" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    stroke-dasharray="4,3"/>
+              <!-- Cotes débordement (bien dégagées du check au-dessus et de la couvertine en-dessous) -->
+              <line x1="12" y1="44" x2="32" y2="44" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="12" y1="42" x2="12" y2="46" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="32" y1="42" x2="32" y2="46" stroke="#FF4500" stroke-width="0.8"/>
+              <text x="22" y="40" fill="#FF4500" font-size="5.5" font-family="monospace" font-weight="600" text-anchor="middle">25mm</text>
+              <line x1="128" y1="44" x2="148" y2="44" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="128" y1="42" x2="128" y2="46" stroke="#FF4500" stroke-width="0.8"/>
+              <line x1="148" y1="42" x2="148" y2="46" stroke="#FF4500" stroke-width="0.8"/>
+              <text x="138" y="40" fill="#FF4500" font-size="5.5" font-family="monospace" font-weight="600" text-anchor="middle">25mm</text>
+              <!-- Check alignement (centré en haut, à l'écart des cotes) -->
+              <circle cx="80" cy="20" r="9" fill="none" stroke="#FF4500" stroke-width="1.4"/>
+              <text x="80" y="23" fill="#FF4500" font-size="6.5" font-family="monospace" font-weight="700" text-anchor="middle">CHECK</text>
+            </svg>
+          </div>
+          <p>Poser la couvertine <strong>à sec, sans colle</strong>, pour vérifier l'alignement, les jonctions et le <strong>débordement de 25 mm</strong> de chaque côté du mur. Ajuster les découpes si nécessaire avant le collage.</p>
+        </article>
+
+        <!-- ─── 5. Application de la colle ─── -->
+        <article id="step-5" class="step-card animate-fadeup" style="--delay: 0.2s">
+          <div class="step-header">
+            <div class="step-number" aria-hidden="true">5</div>
             <h4>Application de la colle</h4>
           </div>
           <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
+            <svg viewBox="0 0 160 100" width="100%">
               <!-- Muret -->
-              <rect x="10" y="50" width="140" height="30" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- Cordon de colle -->
-              <path d="M20 50 Q40 42 60 50 Q80 42 100 50 Q120 42 140 50" fill="none" stroke="#FF4500" stroke-width="3" stroke-linecap="round"/>
-              <!-- Pistolet -->
-              <rect x="100" y="20" width="40" height="18" rx="2" fill="#3A3A3A" stroke="#555" stroke-width="1"/>
-              <line x1="100" y1="29" x2="95" y2="40" stroke="#555" stroke-width="2"/>
-              <rect x="115" y="14" width="12" height="8" rx="1" fill="#2A2A2A" stroke="#555" stroke-width="1"/>
-              <text x="120" y="31" fill="#8A8A8A" font-size="7" font-family="monospace" text-anchor="middle">MS</text>
+              <rect x="20" y="48" width="120" height="42" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+              <line x1="20" y1="64" x2="140" y2="64" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="20" y1="78" x2="140" y2="78" stroke="#3A3A3A" stroke-width="0.5"/>
+              <!-- Cordon de colle en zigzag sur la tête de muret -->
+              <path d="M28 48 Q44 42 60 48 Q76 42 92 48 Q108 42 124 48 Q132 44 132 48"
+                    fill="none" stroke="#FF4500" stroke-width="3" stroke-linecap="round"/>
+              <!-- Pistolet à cartouche -->
+              <rect x="92" y="18" width="38" height="14" rx="1.5" fill="#3A3A3A" stroke="#555" stroke-width="0.8"/>
+              <line x1="92" y1="25" x2="86" y2="36" stroke="#555" stroke-width="2"/>
+              <rect x="104" y="13" width="10" height="6" rx="1" fill="#2A2A2A" stroke="#555" stroke-width="0.8"/>
+              <text x="111" y="27" fill="#8A8A8A" font-size="6" font-family="monospace" text-anchor="middle">MS</text>
             </svg>
           </div>
-          <p>Appliquer un cordon continu de colle MS polymère sur toute la largeur de la tête de mur, à l'aide d'un pistolet à cartouche. Déposer le cordon en zigzag pour maximiser la surface de contact.</p>
+          <p>Appliquer un cordon continu de <strong>colle MS polymère</strong> en zigzag sur toute la largeur de la tête de mur. Espacer le bord de 1 cm pour permettre la dilatation thermique du profilé.</p>
         </article>
 
-        <article class="step-card animate-fadeup" style="--delay: 0.1s">
+        <!-- ─── 6. Pose et pressage ─── -->
+        <article id="step-6" class="step-card animate-fadeup" style="--delay: 0.25s">
           <div class="step-header">
-            <div class="step-number" aria-hidden="true">3</div>
-            <h4>Positionnement</h4>
+            <div class="step-number" aria-hidden="true">6</div>
+            <h4>Pose et pressage</h4>
           </div>
           <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret -->
-              <rect x="10" y="55" width="140" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- Couvertine posée -->
-              <path d="M5,40 L5,55 L155,55 L155,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Flèches vers le bas (pose) -->
-              <line x1="80" y1="10" x2="80" y2="30" stroke="#FF4500" stroke-width="2"/>
-              <polygon points="80,35 75,25 85,25" fill="#FF4500"/>
-              <text x="80" y="8" fill="#FF4500" font-size="8" font-family="monospace" text-anchor="middle">POSER</text>
-            </svg>
-          </div>
-          <p>Positionner la couvertine sur le cordon de colle. Vérifier l'alignement et la perpendicularité avant d'appuyer. La couvertine doit légèrement dépasser de chaque côté pour les raccords.</p>
-        </article>
-
-        <article class="step-card animate-fadeup" style="--delay: 0.15s">
-          <div class="step-header">
-            <div class="step-number" aria-hidden="true">4</div>
-            <h4>Pressage et maintien</h4>
-          </div>
-          <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret + couvertine -->
-              <rect x="10" y="55" width="140" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <path d="M5,40 L5,55 L155,55 L155,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- Muret (rétréci pour faire apparaître le débordement) -->
+              <rect x="32" y="48" width="96" height="42" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+              <line x1="32" y1="64" x2="128" y2="64" stroke="#3A3A3A" stroke-width="0.5"/>
+              <line x1="32" y1="78" x2="128" y2="78" stroke="#3A3A3A" stroke-width="0.5"/>
+              <!-- Couvertine posée : retours descendent, rejets 45°, débordement 25mm -->
+              <path d="M22,58 L12,66 L12,48 L148,48 L148,66 L138,58"
+                    fill="none" stroke="#F0F0F0" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round"/>
               <!-- Mains qui appuient -->
-              <rect x="30" y="25" width="30" height="16" rx="8" fill="#3A3A3A" stroke="#555" stroke-width="1"/>
-              <rect x="100" y="25" width="30" height="16" rx="8" fill="#3A3A3A" stroke="#555" stroke-width="1"/>
-              <!-- Flèches d'appui -->
-              <line x1="45" y1="41" x2="45" y2="40" stroke="#FF4500" stroke-width="2"/>
-              <line x1="115" y1="41" x2="115" y2="40" stroke="#FF4500" stroke-width="2"/>
-              <!-- Temps -->
-              <text x="80" y="20" fill="#8A8A8A" font-size="8" font-family="monospace" text-anchor="middle">APPUYER 2 MIN.</text>
+              <rect x="32" y="22" width="28" height="14" rx="7" fill="#3A3A3A" stroke="#555" stroke-width="0.8"/>
+              <rect x="100" y="22" width="28" height="14" rx="7" fill="#3A3A3A" stroke="#555" stroke-width="0.8"/>
+              <!-- Flèches d'appui vers le bas -->
+              <line x1="46" y1="38" x2="46" y2="47" stroke="#FF4500" stroke-width="1.5"/>
+              <polygon points="46,48 43,44 49,44" fill="#FF4500"/>
+              <line x1="114" y1="38" x2="114" y2="47" stroke="#FF4500" stroke-width="1.5"/>
+              <polygon points="114,48 111,44 117,44" fill="#FF4500"/>
+              <text x="80" y="18" fill="#FF4500" font-size="8" font-family="monospace" font-weight="700" text-anchor="middle">APPUYER 2 MIN</text>
             </svg>
           </div>
-          <p>Appuyer fermement sur toute la longueur de la couvertine pendant 2 à 3 minutes. La colle MS polymère atteint sa résistance complète après 24h. Ne pas solliciter mécaniquement avant durcissement.</p>
+          <p>Poser la couvertine sur le cordon de colle. Vérifier l'alignement au niveau, puis <strong>appuyer fermement 2 à 3 minutes</strong> sur toute la longueur pour assurer la prise initiale de la colle.</p>
         </article>
 
-        <article class="step-card animate-fadeup" style="--delay: 0.2s">
+        <!-- ─── 7. Éclisses de jonction ─── -->
+        <article id="step-7" class="step-card animate-fadeup" style="--delay: 0.3s">
           <div class="step-header">
-            <div class="step-number" aria-hidden="true">5</div>
+            <div class="step-number" aria-hidden="true">7</div>
             <h4>Pose des éclisses</h4>
           </div>
           <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret -->
-              <rect x="10" y="55" width="140" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- Deux couvertines avec espace entre elles -->
-              <path d="M5,40 L5,55 L72,55 L72,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M88,40 L88,55 L155,55 L155,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Éclisse (manchon intérieur) -->
-              <rect x="66" y="44" width="28" height="9" fill="#FF4500" stroke="#FF4500" stroke-width="1" opacity="0.8"/>
-              <text x="80" y="52" fill="#fff" font-size="7" font-family="monospace" text-anchor="middle">ÉCLISSE</text>
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- VUE DE DESSUS — 2 couvertines bout à bout -->
+              <!-- Couvertine gauche -->
+              <rect x="10" y="40" width="70" height="32" fill="#E8EFF5" stroke="#888" stroke-width="0.5"/>
+              <line x1="10" y1="47" x2="80" y2="47" stroke="#bbb" stroke-width="0.3"/>
+              <line x1="10" y1="65" x2="80" y2="65" stroke="#bbb" stroke-width="0.3"/>
+              <!-- Couvertine droite -->
+              <rect x="80" y="40" width="70" height="32" fill="#E8EFF5" stroke="#888" stroke-width="0.5"/>
+              <line x1="80" y1="47" x2="150" y2="47" stroke="#bbb" stroke-width="0.3"/>
+              <line x1="80" y1="65" x2="150" y2="65" stroke="#bbb" stroke-width="0.3"/>
+              <!-- Trait de jonction entre les deux couvertines -->
+              <line x1="80" y1="40" x2="80" y2="72" stroke="#888" stroke-width="0.5" stroke-dasharray="1.5,1.5"/>
+              <!-- ÉCLISSE PAR-DESSUS — bande orange enveloppant les 2 couvertines -->
+              <rect x="58" y="36" width="44" height="40" fill="#FF4500" opacity="0.95" stroke="#E03A00" stroke-width="0.7"/>
+              <text x="80" y="58" fill="#fff" font-size="7" font-family="monospace" font-weight="700" text-anchor="middle">ÉCLISSE</text>
+              <text x="80" y="68" fill="#fff" font-size="5" font-family="monospace" font-weight="500" letter-spacing="0.3" text-anchor="middle">PAR-DESSUS</text>
+              <!-- Cote largeur éclisse -->
+              <line x1="58" y1="86" x2="102" y2="86" stroke="#FF4500" stroke-width="0.6"/>
+              <line x1="58" y1="84" x2="58" y2="88" stroke="#FF4500" stroke-width="0.6"/>
+              <line x1="102" y1="84" x2="102" y2="88" stroke="#FF4500" stroke-width="0.6"/>
+              <text x="80" y="95" fill="#FF4500" font-size="6.5" font-family="monospace" font-weight="600" text-anchor="middle">~ 150 mm</text>
+              <!-- Label vue -->
+              <text x="155" y="14" fill="#7A7A7A" font-size="6" font-family="monospace" letter-spacing="1.2" text-anchor="end">VUE DE DESSUS</text>
             </svg>
           </div>
-          <p>À chaque jonction entre deux longueurs de couvertine, insérer une éclisse de jonction à l'intérieur du profilé. Elle doit chevaucher d'au moins 150 mm de chaque côté pour assurer une liaison étanche.</p>
+          <p>Aligner les deux couvertines bout à bout, puis poser l'<strong>éclisse par-dessus</strong> à cheval sur la jonction&nbsp;: bande d'environ <strong>150 mm de large</strong> qui enveloppe les deux profilés. Joint d'étanchéité au préalable.</p>
         </article>
 
-        <article class="step-card animate-fadeup" style="--delay: 0.25s">
+        <!-- ─── 8. Angles et embouts ─── -->
+        <article id="step-8" class="step-card animate-fadeup" style="--delay: 0.35s">
           <div class="step-header">
-            <div class="step-number" aria-hidden="true">6</div>
-            <h4>Pose des angles</h4>
-          </div>
-          <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret en L -->
-              <rect x="10" y="50" width="60" height="30" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <rect x="70" y="20" width="80" height="30" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- Couvertines -->
-              <path d="M5,35 L5,50 L70,50 L70,20 L150,20 L150,5" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Angle CNC highlight -->
-              <circle cx="70" cy="37" r="8" fill="none" stroke="#FF4500" stroke-width="2"/>
-              <text x="70" y="40" fill="#FF4500" font-size="7" font-family="monospace" text-anchor="middle">CNC</text>
-            </svg>
-          </div>
-          <p>Poser les pièces d'angle fraisées CNC aux coins du muret — angle rentrant pour les angles intérieurs, angle sortant pour les saillants. Coller de la même manière que les longueurs droites.</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- GUIDE 2 — POSE SUR SUPPORT -->
-  <section id="guide-support" style="padding: var(--section-pad) 0; background: var(--bg-surface); border-top: 1px solid var(--border);">
-    <div class="guide-block">
-      <div class="guide-title-row animate-fadeup">
-        <div class="guide-num-circle" aria-hidden="true">2</div>
-        <div>
-          <span class="section-label">MÉTHODE 2</span>
-          <h2>Pose de couvertine sur support</h2>
-        </div>
-      </div>
-
-      <div class="steps-grid">
-
-        <article class="step-card animate-fadeup">
-          <div class="step-header">
-            <div class="step-number" aria-hidden="true">1</div>
-            <h4>Fixation des supports</h4>
-          </div>
-          <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret -->
-              <rect x="10" y="50" width="140" height="30" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- 3 supports fixés sur le muret -->
-              <rect x="28" y="38" width="8" height="14" rx="1" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <rect x="76" y="38" width="8" height="14" rx="1" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <rect x="124" y="38" width="8" height="14" rx="1" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <!-- Vis de fixation -->
-              <line x1="32" y1="50" x2="32" y2="56" stroke="#555" stroke-width="1.5"/>
-              <line x1="80" y1="50" x2="80" y2="56" stroke="#555" stroke-width="1.5"/>
-              <line x1="128" y1="50" x2="128" y2="56" stroke="#555" stroke-width="1.5"/>
-              <text x="80" y="20" fill="#8A8A8A" font-size="8" font-family="monospace" text-anchor="middle">TOUS LES 500mm</text>
-            </svg>
-          </div>
-          <p>Fixer les supports de pose sur le dessus du muret, tous les 400 à 500 mm. Utiliser des chevilles adaptées au support maçonné. Vérifier l'alignement horizontal avec un niveau à bulle.</p>
-        </article>
-
-        <article class="step-card animate-fadeup" style="--delay: 0.05s">
-          <div class="step-header">
-            <div class="step-number" aria-hidden="true">2</div>
-            <h4>Glissement de la couvertine</h4>
-          </div>
-          <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret -->
-              <rect x="10" y="55" width="140" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <!-- Supports -->
-              <rect x="28" y="43" width="8" height="14" rx="1" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <rect x="76" y="43" width="8" height="14" rx="1" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <rect x="124" y="43" width="8" height="14" rx="1" fill="#3A3A3A" stroke="#FF4500" stroke-width="1.5"/>
-              <!-- Couvertine qui glisse -->
-              <path d="M5,38 L5,55 L155,55 L155,38" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Flèche de glissement -->
-              <line x1="20" y1="30" x2="50" y2="30" stroke="#FF4500" stroke-width="1.5"/>
-              <polygon points="50,30 42,26 42,34" fill="#FF4500"/>
-            </svg>
-          </div>
-          <p>Glisser la couvertine sur les supports depuis l'extrémité. Les rebords latéraux de la couvertine s'emboîtent sur les pattes des supports. Ne pas forcer — le profilé doit coulisser librement.</p>
-        </article>
-
-        <article class="step-card animate-fadeup" style="--delay: 0.1s">
-          <div class="step-header">
-            <div class="step-number" aria-hidden="true">3</div>
-            <h4>Ajustement et visserie</h4>
-          </div>
-          <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <!-- Muret + couvertine -->
-              <rect x="10" y="55" width="140" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <path d="M5,40 L5,55 L155,55 L155,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Vis discrètes -->
-              <circle cx="32" cy="40" r="3" fill="none" stroke="#FF4500" stroke-width="1.5"/>
-              <line x1="30" y1="38" x2="34" y2="42" stroke="#FF4500" stroke-width="1"/>
-              <line x1="34" y1="38" x2="30" y2="42" stroke="#FF4500" stroke-width="1"/>
-              <circle cx="128" cy="40" r="3" fill="none" stroke="#FF4500" stroke-width="1.5"/>
-              <line x1="126" y1="38" x2="130" y2="42" stroke="#FF4500" stroke-width="1"/>
-              <line x1="130" y1="38" x2="126" y2="42" stroke="#FF4500" stroke-width="1"/>
-              <text x="80" y="28" fill="#8A8A8A" font-size="8" font-family="monospace" text-anchor="middle">VISSERIE LAQUÉE RAL</text>
-            </svg>
-          </div>
-          <p>Fixer les extrémités de la couvertine avec de la visserie laquée assortie à la couleur RAL. Ne visser qu'aux extrémités — laisser libre la zone centrale pour permettre la dilatation thermique.</p>
-        </article>
-
-        <article class="step-card animate-fadeup" style="--delay: 0.15s">
-          <div class="step-header">
-            <div class="step-number" aria-hidden="true">4</div>
-            <h4>Jonction par éclisses</h4>
-          </div>
-          <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <rect x="10" y="55" width="140" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <path d="M5,40 L5,55 L70,55 L70,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M90,40 L90,55 L155,55 L155,40" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Espace de dilatation -->
-              <line x1="70" y1="35" x2="90" y2="35" stroke="#FF4500" stroke-width="1" stroke-dasharray="2,2"/>
-              <text x="80" y="32" fill="#FF4500" font-size="7" font-family="monospace" text-anchor="middle">JEU DILA.</text>
-              <!-- Éclisse -->
-              <rect x="64" y="44" width="32" height="9" fill="#FF4500" stroke="#FF4500" stroke-width="1" opacity="0.8"/>
-            </svg>
-          </div>
-          <p>Insérer l'éclisse de jonction entre les deux couvertines, en conservant un jeu de dilatation de 3 à 5 mm entre les bords. Ce jeu est essentiel pour absorber les variations dimensionnelles dues à la chaleur.</p>
-        </article>
-
-        <article class="step-card animate-fadeup" style="--delay: 0.2s">
-          <div class="step-header">
-            <div class="step-number" aria-hidden="true">5</div>
+            <div class="step-number" aria-hidden="true">8</div>
             <h4>Angles et embouts</h4>
           </div>
           <div class="step-illustration" aria-hidden="true">
-            <svg viewBox="0 0 160 90" width="100%">
-              <rect x="10" y="50" width="55" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <rect x="65" y="25" width="85" height="25" fill="#252525" stroke="#3A3A3A" stroke-width="1"/>
-              <path d="M5,35 L5,50 L65,50 L65,25 L150,25 L150,10" fill="none" stroke="#F0F0F0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Angle CNC -->
-              <circle cx="65" cy="38" r="9" fill="none" stroke="#FF4500" stroke-width="2"/>
-              <!-- Embout -->
-              <rect x="145" y="10" width="10" height="14" fill="#FF4500" opacity="0.7"/>
-              <text x="150" y="29" fill="#FF4500" font-size="7" font-family="monospace" text-anchor="middle">EMB.</text>
+            <svg viewBox="0 0 160 100" width="100%">
+              <!-- VUE DE DESSUS — Muret en L symétrique (branches 40/40) -->
+              <path d="M 36 50 L 80 50 L 80 6 L 94 6 L 94 64 L 36 64 Z"
+                    fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+              <line x1="36" y1="57" x2="80" y2="57" stroke="#3A3A3A" stroke-width="0.3"/>
+              <line x1="87" y1="6" x2="87" y2="50" stroke="#3A3A3A" stroke-width="0.3"/>
+
+              <!-- Couvertine droite HORIZONTALE — s'arrête à l'angle, pas de recouvrement -->
+              <rect x="42" y="42" width="18" height="30" fill="#E8EFF5" stroke="#888" stroke-width="0.5"/>
+              <line x1="42" y1="50" x2="60" y2="50" stroke="#bbb" stroke-width="0.3"/>
+              <line x1="42" y1="64" x2="60" y2="64" stroke="#bbb" stroke-width="0.3"/>
+
+              <!-- Couvertine droite VERTICALE — s'arrête à l'angle, pas de recouvrement -->
+              <rect x="72" y="12" width="30" height="18" fill="#E8EFF5" stroke="#888" stroke-width="0.5"/>
+              <line x1="80" y1="12" x2="80" y2="30" stroke="#bbb" stroke-width="0.3"/>
+              <line x1="94" y1="12" x2="94" y2="30" stroke="#bbb" stroke-width="0.3"/>
+
+              <!-- ANGLE CNC : couvertine pré-pliée à 90° qui REMPLACE les couvertines au coin -->
+              <path d="M 102 72 L 102 30 L 72 30 L 72 42 L 60 42 L 60 72 Z"
+                    fill="#FF4500" opacity="0.95" stroke="#E03A00" stroke-width="0.6"/>
+              <text x="87" y="55" fill="#fff" font-size="6.5" font-family="monospace" font-weight="700" text-anchor="middle">ANGLE</text>
+              <text x="87" y="64" fill="#fff" font-size="6.5" font-family="monospace" font-weight="700" text-anchor="middle">90°</text>
+
+              <!-- Embout côté horizontal (gauche, en bout de couvertine) -->
+              <rect x="38" y="42" width="4" height="30" fill="#FF4500" opacity="0.95" stroke="#E03A00" stroke-width="0.4"/>
+
+              <!-- Embout côté vertical (haut, en bout de couvertine) -->
+              <rect x="72" y="8" width="30" height="4" fill="#FF4500" opacity="0.95" stroke="#E03A00" stroke-width="0.4"/>
+
+              <!-- Labels EMB. — bien dégagés des autres éléments -->
+              <text x="40" y="80" fill="#FF4500" font-size="5" font-family="monospace" font-weight="700" text-anchor="middle">EMB.</text>
+              <text x="110" y="11" fill="#FF4500" font-size="5" font-family="monospace" font-weight="700">EMB.</text>
+
+              <!-- Label vue -->
+              <text x="155" y="95" fill="#7A7A7A" font-size="6" font-family="monospace" letter-spacing="1.2" text-anchor="end">VUE DE DESSUS</text>
             </svg>
           </div>
-          <p>Poser les pièces d'angle CNC aux intersections et les embouts aux extrémités ouvertes. Fixer avec de la visserie laquée assortie ou de la colle MS pour les embouts. La pose est complète.</p>
+          <p>La <strong>pièce d'angle CNC</strong> est une couvertine <strong>pré-pliée à 90°</strong> qui <strong>remplace</strong> les couvertines droites au coin du muret. Les deux couvertines droites se raccordent de part et d'autre de l'angle (sans recouvrement). Joint d'étanchéité aux jonctions, embouts aux extrémités ouvertes.</p>
         </article>
 
+        </div>
       </div>
+
+      <!-- ─── ENCARTS CONSEIL / WARNING ─── -->
+      <div class="callout warning animate-fadeup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="body">
+          <strong>Important — séchage 24 h</strong>
+          <p>La colle MS polymère atteint sa résistance complète après 24 heures. Ne pas poser de garde-corps, barrière ou charge avant durcissement total. Éviter la pose par temps humide ou sous la pluie&nbsp;: risque de décollement.</p>
+        </div>
+      </div>
+
+      <div class="callout tip animate-fadeup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="body">
+          <strong>Astuce — dilatation</strong>
+          <p>Pour les longueurs supérieures à 3 m, prévoir un jeu de dilatation de <strong>3 à 5 mm</strong> entre deux couvertines au niveau de l'éclisse. L'aluminium se dilate de 2,4 mm par mètre pour une variation de 100 °C.</p>
+        </div>
+      </div>
+
+      <div class="callout animate-fadeup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>
+        <div class="body">
+          <strong>Conditions de pose</strong>
+          <p>Température idéale&nbsp;: <strong>+5 °C à +35 °C</strong>. Surface sèche, sans humidité ni condensation. Pose interdite sur support gelé ou en cours de séchage (béton frais &lt; 28 jours).</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- NOTE TECHNIQUE -->
-  <section style="padding: 3rem 0; background: var(--bg-base); border-top: 1px solid var(--border);">
+
+  <!-- ════════════════════════════════════════════════════════════
+       ACCESSOIRES DE FINITION
+  ════════════════════════════════════════════════════════════ -->
+  <section id="accessoires" style="padding: var(--section-pad) 0; background: var(--bg-surface); border-top: 1px solid var(--border);">
     <div class="section-inner">
-      <div style="background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 2rem 2.5rem;" class="animate-fadeup">
-        <h4 style="font-family: var(--font-head); font-size: 0.85rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;">Note technique — Choix de la méthode de pose</h4>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-          <div>
-            <p style="font-family: var(--font-head); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 0.5rem;">Pose à la colle</p>
-            <p style="font-size: 13px; line-height: 1.7;">Recommandée pour les longueurs inférieures à 2 m et les murets protégés des variations thermiques importantes. Plus rapide, moins de matériel nécessaire.</p>
-          </div>
-          <div>
-            <p style="font-family: var(--font-head); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 0.5rem;">Pose sur supports</p>
-            <p style="font-size: 13px; line-height: 1.7;">Recommandée pour les longueurs supérieures à 2 m et les expositions en plein soleil. Permet la dilatation libre du profilé et facilite le remplacement en cas de dommage.</p>
-          </div>
+      <header class="section-header animate-fadeup" style="text-align:center;margin-bottom:3rem;">
+        <span class="section-label">PIÈCES DE FINITION</span>
+        <h2 style="font-size:clamp(1.7rem,3vw,2.6rem);">ACCESSOIRES<br>NÉCESSAIRES</h2>
+        <p class="section-desc" style="max-width:620px;margin:1rem auto 0;">Les 4 pièces fraisées CNC à prévoir en complément des longueurs droites pour une pose étanche et finie.</p>
+      </header>
+    </div>
+
+    <div class="acc-grid animate-fadeup">
+
+      <!-- ─── Éclisse de jonction ─── -->
+      <article class="acc-card">
+        <div class="acc-illu">
+          <svg viewBox="0 0 120 80" width="100%">
+            <!-- Couvertines gauche et droite, retours descendants -->
+            <path d="M12,32 L8,36 L8,22 L52,22 L52,28"
+                  fill="none" stroke="#F0F0F0" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M68,28 L68,22 L112,22 L112,36 L108,32"
+                  fill="none" stroke="#F0F0F0" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Éclisse manchon intérieur -->
+            <rect x="46" y="18" width="28" height="6" fill="#FF4500" opacity="0.85"/>
+            <!-- Cote -->
+            <line x1="46" y1="56" x2="74" y2="56" stroke="#FF4500" stroke-width="0.8" stroke-dasharray="2,1.5"/>
+            <text x="60" y="68" fill="#FF4500" font-size="7" font-family="monospace" font-weight="600" text-anchor="middle">≥ 150 mm</text>
+          </svg>
+        </div>
+        <h4>Éclisse de jonction</h4>
+        <p>Manchon intérieur reliant deux longueurs. Chevauchement minimum 150 mm. Joint étanchéité obligatoire.</p>
+      </article>
+
+      <!-- ─── Angle 90° extérieur (sortant) ─── -->
+      <article class="acc-card">
+        <div class="acc-illu">
+          <svg viewBox="0 0 120 80" width="100%">
+            <!-- Muret en L (sortant) -->
+            <rect x="10" y="42" width="40" height="32" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+            <rect x="50" y="22" width="40" height="20" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+            <!-- Couvertine retours descendants en L -->
+            <path d="M8,52 L4,55 L4,42 L50,42 L50,22 L90,22 L90,30"
+                  fill="none" stroke="#F0F0F0" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Highlight angle -->
+            <circle cx="50" cy="42" r="9" fill="none" stroke="#FF4500" stroke-width="1.5"/>
+            <text x="50" y="45" fill="#FF4500" font-size="8" font-family="monospace" font-weight="700" text-anchor="middle">90°</text>
+          </svg>
+        </div>
+        <h4>Angle 90° extérieur</h4>
+        <p>Pièce d'angle sortant pour les coins saillants de muret (angle convexe). Fraisée CNC à 90° exact.</p>
+      </article>
+
+      <!-- ─── Angle 90° intérieur (rentrant) ─── -->
+      <article class="acc-card">
+        <div class="acc-illu">
+          <svg viewBox="0 0 120 80" width="100%">
+            <!-- Muret en L rentrant (concave) -->
+            <rect x="10" y="42" width="50" height="32" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+            <rect x="60" y="14" width="50" height="60" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+            <!-- Couvertine retours descendants en L rentrant -->
+            <path d="M8,52 L4,55 L4,42 L60,42 L60,14 L110,14 L110,8"
+                  fill="none" stroke="#F0F0F0" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="60" cy="42" r="9" fill="none" stroke="#FF4500" stroke-width="1.5"/>
+            <text x="60" y="45" fill="#FF4500" font-size="8" font-family="monospace" font-weight="700" text-anchor="middle">90°</text>
+          </svg>
+        </div>
+        <h4>Angle 90° intérieur</h4>
+        <p>Pièce d'angle rentrant pour les coins concaves (terrasses en L, retours de mur). Pose identique au sortant.</p>
+      </article>
+
+      <!-- ─── Embout d'extrémité ─── -->
+      <article class="acc-card">
+        <div class="acc-illu">
+          <svg viewBox="0 0 120 80" width="100%">
+            <!-- Muret -->
+            <rect x="10" y="36" width="92" height="38" fill="#252525" stroke="#3A3A3A" stroke-width="0.6"/>
+            <!-- Couvertine avec retours descendants ; tronquée à droite par l'embout -->
+            <path d="M8,46 L4,49 L4,36 L96,36 L96,46"
+                  fill="none" stroke="#F0F0F0" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Embout : pièce qui bouche l'extrémité -->
+            <polygon points="96,36 102,30 102,49 96,49 96,46" fill="#FF4500" opacity="0.9" stroke="#FF4500" stroke-width="0.6"/>
+            <text x="86" y="20" fill="#FF4500" font-size="6.5" font-family="monospace" font-weight="700" text-anchor="end">EMBOUT</text>
+          </svg>
+        </div>
+        <h4>Embout d'extrémité</h4>
+        <p>Bouchon plein refermant les extrémités ouvertes. Collé à la MS polymère, joint étanchéité sur la lèvre.</p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       FAQ
+  ════════════════════════════════════════════════════════════ -->
+  <section id="faq" style="padding: var(--section-pad) 0; background: var(--bg-base); border-top: 1px solid var(--border);">
+    <div class="section-inner">
+      <header class="section-header animate-fadeup" style="text-align:center;margin-bottom:3rem;">
+        <span class="section-label">QUESTIONS FRÉQUENTES</span>
+        <h2 style="font-size:clamp(1.7rem,3vw,2.6rem);">FAQ — POSE<br>À LA COLLE</h2>
+      </header>
+    </div>
+
+    <div class="faq-list animate-fadeup">
+
+      <details class="faq-item">
+        <summary>Combien de temps pour poser 10 mètres linéaires de couvertine&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p>En moyenne <strong>5 à 8 heures à deux personnes</strong> (préparation, mesure, découpe et collage compris). Ajoutez <strong>24 h de séchage</strong> avant exposition aux intempéries ou fixation d'éléments (garde-corps, barrière).</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Peut-on poser une couvertine en hiver&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p>Évitez la pose sous <strong>5 °C</strong> ou au-dessus de <strong>35 °C</strong>&nbsp;: la polymérisation MS est ralentie au froid et perturbée à la chaleur. Pose interdite sur support humide ou gelé. Consultez la fiche technique de la colle utilisée pour les températures précises.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Comment dimensionner la couvertine par rapport à la largeur du muret&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p>La largeur totale de la couvertine = largeur du muret + <strong>25 mm de dépassement par côté</strong>. Pour un muret de 200 mm de large, prévoir une couvertine de 250 mm. Le dépassement avec retours et goutte d'eau évacue l'eau de pluie loin de la façade et évite les coulures sur le mur.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Quel est le délai d'exposition aux intempéries après pose&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p><strong>24 heures minimum</strong> avant la première pluie pour que la colle MS polymère atteigne sa résistance complète. Idéalement 48 heures par temps frais (&lt; 15 °C). Ne pas solliciter mécaniquement (garde-corps, fixation de barrière, charge) avant ce délai.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Que faire en cas de fuite ou de défaut d'étanchéité&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p>Localiser la fuite (généralement au niveau d'une éclisse ou d'un embout mal jointé). Démonter la pièce concernée, nettoyer, appliquer un nouveau joint d'étanchéité sur la lèvre et reposer. Refaire un cordon de mastic d'étanchéité sur la jonction. En cas de doute, contacter notre support technique.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Pourquoi le rejet d'eau remonte-t-il sous le retour&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p>Le rejet à 45° remontant vers l'intérieur forme une <strong>goutte d'eau</strong>&nbsp;: l'eau qui ruisselle le long du retour ne peut pas remonter par capillarité jusqu'au mur — elle tombe au sol par effet de gravité. C'est ce qui protège durablement la façade des coulures et des infiltrations.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Quels accessoires CNC dois-je commander en complément des couvertines droites&nbsp;? <span class="plus">+</span></summary>
+        <div class="answer">
+          <p>Pour un muret rectangulaire&nbsp;: <strong>4 angles 90° sortants</strong> aux coins + <strong>0 angle rentrant</strong>. Pour une terrasse en L&nbsp;: prévoir aussi les rentrants. Les <strong>éclisses</strong> à chaque raccord de longueur (tous les 2-3 m). Les <strong>embouts</strong> aux extrémités ouvertes (départs et fins de muret). Tous fraisés CNC, laqués au même RAL.</p>
+        </div>
+      </details>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       CTA AIDE
+  ════════════════════════════════════════════════════════════ -->
+  <section id="aide" style="padding: var(--section-pad) 0 calc(var(--section-pad) * 0.6); background: var(--bg-surface); border-top: 1px solid var(--border);">
+    <div class="help-cta animate-fadeup">
+      <div class="help-cta-inner">
+        <span class="section-label" style="color:var(--accent);">CONSEIL TECHNIQUE</span>
+        <h3>BESOIN D'AIDE POUR<br>VOTRE PROJET&nbsp;?</h3>
+        <p>Notre équipe technique vous accompagne sur le dimensionnement, le choix des accessoires nécessaires et la cotation de vos pièces sur mesure.</p>
+        <div class="help-cta-actions">
+          <a href="contact.html" class="btn-primary">Demander un conseil →</a>
+          <a href="configurateur.html" class="btn-outline">Configurer ma couvertine</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TRUST SECTION -->
+
+  <!-- ════════════════════════════════════════════════════════════
+       TRUST SECTION
+  ════════════════════════════════════════════════════════════ -->
   <section class="trust-section" aria-label="Nos garanties">
     <div class="trust-grid">
       <article class="trust-card animate-fadeup">
@@ -468,7 +1034,10 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════════ -->
   <footer id="footer" role="contentinfo">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -480,13 +1049,13 @@
           <li><a href="couvertines.html">Couvertines</a></li>
           <li><a href="configurateur.html">Configurateur</a></li>
           <li><a href="accessoires.html">Accessoires</a></li>
-          <li><a href="guides.html">Guides de pose</a></li>
+          <li><a href="guides.html">Guide de pose</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
       </nav>
       <address class="footer-contact">
         <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
-        <p><a href="tel:+33100000000">+33 (0)1 00 00 00 00</a></p>
+        <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
         <p>France</p>
       </address>
     </div>
@@ -518,6 +1087,6 @@
   <script src="https://js.stripe.com/v3/"></script>
   <script src="js/main.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/preloader.js"></script>
 </body>
 </html>
-

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Configurateur de pliage sur mesure — Forme U, L, Z, Appui de fenêtre. Acier, aluminium, inox. Prix instantané.">
+  <title>Configurateur Pliage Sur Mesure — Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/configurateur.css">
+  <link rel="stylesheet" href="css/pliage.css">
+  <link rel="stylesheet" href="css/preloader.css">
+
+  <!-- ════════════════════════════════════════════════════
+       PREVIEW : COHÉRENCE VISUELLE "PLAN TECHNIQUE"
+       Aligne le configurateur sur le style de pliage.html
+  ════════════════════════════════════════════════════ -->
+  <style>
+    body::before {
+      content: "APERÇU COHÉRENCE — aucune modification du vrai configurateur";
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #FF6F00, #FF4500);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      text-align: center;
+      z-index: 999999;
+    }
+    body { padding-top: 32px !important; }
+    #navbar { top: 32px !important; }
+
+    /* ── EN-TÊTE DE PAGE harmonisé (style sobre centré) ── */
+    .cat-header {
+      text-align: center !important;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: calc(var(--nav-h) + 3rem) 1.5rem 2.5rem !important;
+    }
+    .cat-header .breadcrumb {
+      justify-content: center;
+    }
+    .cat-header h1 {
+      font-size: clamp(1.5rem, 3.2vw, 2.5rem) !important;
+      font-weight: 300 !important;
+      letter-spacing: 0.02em !important;
+      margin-bottom: 0.6rem !important;
+    }
+    .cat-header h1::before {
+      content: '— CONFIGURATEUR PLIAGE —';
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .cat-header-desc {
+      max-width: 620px;
+      margin: 0 auto !important;
+      font-size: 0.95rem;
+      color: #E0E0E0;
+    }
+
+    /* ── EN-TÊTES D'ÉTAPES harmonisés ── */
+    .step-section .step-header {
+      align-items: center;
+      gap: 1rem;
+    }
+    .step-section .step-num {
+      background: rgba(255, 69, 0, 0.12);
+      border: 1px solid rgba(255, 69, 0, 0.45);
+      color: var(--accent);
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+    .step-section .step-header-text h2 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.2rem;
+    }
+    .step-section .step-desc {
+      font-size: 0.92rem;
+      color: #E0E0E0 !important;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── ANNOTATIONS SVG style "plan technique" ── */
+    #profile-svg text[fill="#FF4500"],
+    #profile-svg text[fill="#ff4500"] {
+      fill: #F5F0E8 !important;
+    }
+
+    /* ── CARTES & PANELS — bordures plus lisibles ── */
+    .shape-card,
+    .material-card,
+    .accessory-row {
+      border-color: var(--border-hover) !important;
+    }
+    .shape-card[aria-pressed="true"],
+    .material-card.is-selected {
+      border-color: var(--accent) !important;
+      background: rgba(255, 69, 0, 0.04) !important;
+    }
+
+    /* ── SIDEBAR récap ── */
+    .config-sidebar .sidebar-head h3 {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .recap-row dt {
+      color: #C8C8C8 !important;
+      letter-spacing: 0.12em;
+    }
+    .recap-row dd {
+      color: var(--text-primary) !important;
+    }
+
+    /* ── BLOC PRIX ── */
+    .step5-price-block,
+    .sidebar-price-block {
+      background: linear-gradient(135deg, rgba(255,69,0,0.05) 0%, transparent 100%) !important;
+      border: 1px solid rgba(255,69,0,0.2) !important;
+      border-radius: 12px !important;
+    }
+
+    /* ── Note de comparaison ── */
+    .compare-note {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(15,12,10,0.95);
+      border: 1px solid rgba(255,69,0,0.4);
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 12px;
+      color: #f5f5f5;
+      backdrop-filter: blur(10px);
+      max-width: 280px;
+      z-index: 9998;
+      line-height: 1.5;
+    }
+    .compare-note strong { color: #FFB347; display: block; margin-bottom: 4px; }
+    .compare-note em { color: rgba(255,255,255,0.7); font-style: normal; font-size: 11px; }
+  </style>
+</head>
+<body class="page-configurateur">
+
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+      <div class="france-badge" aria-label="Fabriqué en France">
+        <div class="france-flag" aria-hidden="true">
+          <span class="f-blue"></span><span class="f-white"></span><span class="f-red"></span>
+        </div>
+        Fabriqué en France
+      </div>
+      <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="index.html#couvertine">Couvertine</a></li>
+        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+    </div>
+  </nav>
+
+  <header class="cfg-page-header">
+    <div class="cfg-page-header-inner">
+      <div class="cfg-page-header-badge">SUR MESURE</div>
+      <h1>CONFIGURATEUR PLIAGE</h1>
+      <p>Forme U · L · Z · Appui de fenêtre — Acier, Aluminium ou Inox, dimensions libres</p>
+    </div>
+  </header>
+
+  <div class="config-layout">
+
+    <!-- ── ÉTAPES ── -->
+    <div class="config-steps">
+
+      <!-- STEP 1 : FORME -->
+      <section class="step-section" id="step-1" aria-label="Étape 1 — Forme">
+        <div class="step-header">
+          <span class="step-num" aria-hidden="true">1</span>
+          <div class="step-header-text">
+            <h2>Forme</h2>
+            <p class="step-desc">Sélectionnez le profil de votre pièce</p>
+          </div>
+        </div>
+
+        <div class="shape-cards" role="group" aria-label="Choix de forme">
+
+          <button class="shape-card" data-shape="U" aria-pressed="false">
+            <div class="shape-card-svg" aria-hidden="true">
+              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="20,8 20,42 60,42 60,8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="32" y="48" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">B</text>
+                <text x="11" y="28" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">A</text>
+              </svg>
+            </div>
+            <strong>Forme U</strong>
+            <span>Canal · Habillage · Cornière</span>
+          </button>
+
+          <button class="shape-card" data-shape="L" aria-pressed="false">
+            <div class="shape-card-svg" aria-hidden="true">
+              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="15,8 15,42 68,42" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="5"  y="28" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">A</text>
+                <text x="38" y="49" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">B</text>
+              </svg>
+            </div>
+            <strong>Forme L</strong>
+            <span>Angle · Seuil · Appui</span>
+          </button>
+
+          <button class="shape-card" data-shape="Z" aria-pressed="false">
+            <div class="shape-card-svg" aria-hidden="true">
+              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="8,14 38,14 38,38 70,38" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="18" y="11" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">A</text>
+                <text x="41" y="29" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">H</text>
+                <text x="50" y="48" font-size="7" fill="currentColor" font-family="Inter,sans-serif" opacity="0.6">B</text>
+              </svg>
+            </div>
+            <strong>Forme Z</strong>
+            <span>Décalage · Recouvrement</span>
+          </button>
+
+          <button class="shape-card" data-shape="appui" aria-pressed="false">
+            <div class="shape-card-svg" aria-hidden="true">
+              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Profil 5 points : retour A · pente B (10°) · nez C (92°) · pince 12mm -->
+                <polyline points="9,4 9,17 71,28 67,46 64,46" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Arc indicateur de l'angle 92° à la jonction B-C -->
+                <path d="M 63,27 A 8,8 0 0 0 69,36" stroke="currentColor" stroke-width="1" fill="none" opacity="0.45"/>
+                <!-- Labels hors profil -->
+                <text x="1"  y="12" font-size="6" fill="currentColor" font-family="Inter,sans-serif" opacity="0.65">A</text>
+                <text x="36" y="11" font-size="6" fill="currentColor" font-family="Inter,sans-serif" opacity="0.65">B</text>
+                <text x="74" y="38" font-size="6" fill="currentColor" font-family="Inter,sans-serif" opacity="0.65">C</text>
+              </svg>
+            </div>
+            <strong>Appui de Fenêtre</strong>
+            <span>Retour · Pente 10° · Nez 92°</span>
+          </button>
+
+        </div>
+      </section>
+
+      <!-- STEP 2 : MATIÈRE & ÉPAISSEUR -->
+      <section class="step-section step-section--disabled" id="step-2" aria-label="Étape 2 — Matière">
+        <div class="step-header">
+          <span class="step-num" aria-hidden="true">2</span>
+          <div class="step-header-text">
+            <h2>Matière &amp; Épaisseur</h2>
+            <p class="step-desc">Choisissez le matériau et l'épaisseur de la tôle</p>
+          </div>
+        </div>
+
+        <div class="material-cards material-cards--3" role="group" aria-label="Choix de matière">
+          <button class="material-card" data-material="acier" aria-pressed="false">
+            <div class="material-card-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect x="3" y="14" width="26" height="4" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
+                <line x1="3" y1="14" x2="3" y2="18" stroke="#FF4500" stroke-width="2" stroke-linecap="round"/>
+                <line x1="29" y1="14" x2="29" y2="18" stroke="#FF4500" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="material-card-body">
+              <strong>Acier</strong>
+              <span class="material-epaisseur">0,75 mm</span>
+              <span class="material-desc">Résistance · Prix compétitif</span>
+            </div>
+            <div class="material-card-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </button>
+
+          <button class="material-card" data-material="alu" aria-pressed="false">
+            <div class="material-card-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect x="3" y="13" width="26" height="6" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
+                <line x1="3" y1="13" x2="3" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="29" y1="13" x2="29" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="material-card-body">
+              <strong>Aluminium</strong>
+              <span class="material-epaisseur" id="alu-epaisseur">1 ou 2 mm</span>
+              <span class="material-desc">Légèreté · Anticorrosion</span>
+            </div>
+            <div class="material-card-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </button>
+
+          <button class="material-card" data-material="inox" aria-pressed="false">
+            <div class="material-card-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect x="3" y="13" width="26" height="6" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
+                <line x1="3" y1="13" x2="3" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="29" y1="13" x2="29" y2="19" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="16" cy="16" r="2" fill="#FF4500" opacity="0.4"/>
+              </svg>
+            </div>
+            <div class="material-card-body">
+              <strong>Inox</strong>
+              <span class="material-epaisseur" id="inox-epaisseur">1 ou 2 mm</span>
+              <span class="material-desc">Brut · Haut de gamme</span>
+            </div>
+            <div class="material-card-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </button>
+        </div>
+
+        <!-- Sélecteur épaisseur (Alu/Inox) -->
+        <div class="thickness-selector" id="thickness-selector" hidden>
+          <p class="thickness-label">Épaisseur de la tôle</p>
+          <div class="thickness-btns" role="group" aria-label="Épaisseur">
+            <button class="thickness-btn" data-thickness="1" aria-pressed="false">1 mm</button>
+            <button class="thickness-btn" data-thickness="2" aria-pressed="false">2 mm</button>
+          </div>
+          <p class="thickness-note">Autre épaisseur → <a href="contact.html">Demander un devis</a></p>
+        </div>
+      </section>
+
+      <!-- STEP 3 : DIMENSIONS -->
+      <section class="step-section step-section--disabled" id="step-3" aria-label="Étape 3 — Dimensions">
+        <div class="step-header">
+          <span class="step-num" aria-hidden="true">3</span>
+          <div class="step-header-text">
+            <h2>Dimensions</h2>
+            <p class="step-desc">Saisissez les cotes en millimètres</p>
+          </div>
+        </div>
+
+        <!-- SVG dynamique -->
+        <div class="couvertine-preview" id="pliage-preview" aria-label="Aperçu du profil">
+          <svg id="profile-svg" viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profil de pliage"></svg>
+        </div>
+
+        <!-- Inputs dimensions (générés par JS) -->
+        <div class="dim-inputs" id="dim-inputs"></div>
+
+        <!-- Longueur (toujours présente) -->
+        <div class="dim-inputs" style="margin-top:.5rem">
+          <div class="dim-row">
+            <label class="dim-label" for="input-L">
+              <span class="dim-letter" style="background:rgba(255,69,0,.08);color:var(--text-secondary)">L</span>
+              Longueur de la tôle
+            </label>
+            <div class="dim-input-wrap">
+              <input type="number" id="input-L" class="dim-input" value="2000" min="100" max="6000" step="50">
+              <span class="dim-unit">mm</span>
+            </div>
+            <span class="dim-hint">min 100 — max 6 000</span>
+          </div>
+        </div>
+
+        <!-- Barre d'info -->
+        <div class="info-bar" id="info-bar">
+          <span id="info-dev">Développé : — mm</span>
+          <span class="info-sep">|</span>
+          <span id="info-len">Longueur : — mm</span>
+          <span class="info-sep">|</span>
+          <span id="info-surf">Surface : — m²</span>
+        </div>
+      </section>
+
+      <!-- STEP 4 : COULEUR / FINITION -->
+      <section class="step-section step-section--disabled" id="step-4" aria-label="Étape 4 — Couleur">
+        <div class="step-header">
+          <span class="step-num" aria-hidden="true">4</span>
+          <div class="step-header-text">
+            <h2>Couleur &amp; Finition</h2>
+            <p class="step-desc" id="color-step-desc">5 coloris RAL standard</p>
+          </div>
+        </div>
+
+        <!-- RAL (Acier/Alu) -->
+        <div id="color-ral-panel">
+          <div class="ral-grid" id="ral-grid" role="group" aria-label="Choix de couleur RAL"></div>
+          <a href="contact.html" class="btn-autre-ral">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+            Autre RAL — Demander un devis
+          </a>
+        </div>
+
+        <!-- Inox brut (affiché si Inox) -->
+        <div id="color-inox-panel" hidden>
+          <div class="inox-brut-card">
+            <div class="inox-brut-swatch" aria-hidden="true"></div>
+            <div>
+              <strong>Inox Brut</strong>
+              <p>L'inox est livré en finition naturelle brossée — aucun revêtement, aucune couleur RAL. Aspect métallique premium, résistance à la corrosion naturelle.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 5 : ACCESSOIRES (optionnels) -->
+      <section class="step-section step-section--disabled" id="step-5" aria-label="Étape 5 — Accessoires">
+        <div class="step-header">
+          <span class="step-num" aria-hidden="true">5</span>
+          <div class="step-header-text">
+            <h2>Accessoires <em style="color:var(--text-muted); font-style:normal; font-weight:400; font-size:0.85em;">(optionnels)</em></h2>
+            <p class="step-desc">Visserie et étanchéité pour la pose</p>
+          </div>
+        </div>
+
+        <div class="accessories-list">
+
+          <!-- Visserie inox -->
+          <div class="accessory-row" id="acc-vis">
+            <div class="accessory-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <circle cx="10" cy="10" r="3" stroke="#FF4500" stroke-width="1.5" fill="none"/>
+                <line x1="10" y1="13" x2="10" y2="26" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="7" y1="16" x2="13" y2="16" stroke="#FF4500" stroke-width="1" opacity="0.6"/>
+                <line x1="7" y1="19" x2="13" y2="19" stroke="#FF4500" stroke-width="1" opacity="0.6"/>
+                <line x1="7" y1="22" x2="13" y2="22" stroke="#FF4500" stroke-width="1" opacity="0.6"/>
+                <path d="M8 27 L10 29 L12 27" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <text x="20" y="15" font-size="8" fill="#FF4500" font-family="Inter, sans-serif" font-weight="600">×10</text>
+              </svg>
+            </div>
+            <div class="accessory-info">
+              <strong>Vis inox auto-perceuses</strong>
+              <p style="font-size:0.78rem; color:var(--text-muted); margin:2px 0 4px;">Lot de 10 vis tête bombée — tête couleur assortie au RAL choisi (acier/alu).</p>
+              <span class="accessory-price">4,20 € HT / lot de 10</span>
+            </div>
+            <div class="accessory-qty">
+              <button class="qty-btn" data-acc="vis" data-dir="-1" aria-label="Retirer un lot">−</button>
+              <input type="number" class="qty-input" id="qty-vis" value="0" min="0" max="50" aria-label="Quantité lots de vis" readonly>
+              <button class="qty-btn" data-acc="vis" data-dir="1" aria-label="Ajouter un lot">+</button>
+            </div>
+          </div>
+
+          <!-- Joint d'étanchéité butyle -->
+          <div class="accessory-row" id="acc-joint">
+            <div class="accessory-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect x="4" y="14" width="24" height="5" rx="1" stroke="#FF4500" stroke-width="1.5" fill="none"/>
+                <path d="M4 14 L4 9 L8 7 L12 9 L16 7 L20 9 L24 7 L28 9 L28 14" stroke="#FF4500" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.6"/>
+                <text x="13" y="24" font-size="6" fill="#FF4500" font-family="Inter, sans-serif" font-weight="600">10m</text>
+              </svg>
+            </div>
+            <div class="accessory-info">
+              <strong>Bande butyle d'étanchéité</strong>
+              <p style="font-size:0.78rem; color:var(--text-muted); margin:2px 0 4px;">Rouleau de 10 m × 50 mm — pose sous le pliage pour étanchéité durable (toiture, jonctions, appuis).</p>
+              <span class="accessory-price">12,50 € HT / rouleau 10 m</span>
+            </div>
+            <div class="accessory-qty">
+              <button class="qty-btn" data-acc="joint" data-dir="-1" aria-label="Retirer un rouleau">−</button>
+              <input type="number" class="qty-input" id="qty-joint" value="0" min="0" max="50" aria-label="Quantité rouleaux" readonly>
+              <button class="qty-btn" data-acc="joint" data-dir="1" aria-label="Ajouter un rouleau">+</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- STEP 6 : QUANTITÉ & CTA -->
+      <section class="step-section step-section--disabled" id="step-6" aria-label="Étape 6 — Quantité">
+        <div class="step-header">
+          <span class="step-num" aria-hidden="true">6</span>
+          <div class="step-header-text">
+            <h2>Quantité &amp; Commande</h2>
+            <p class="step-desc">Nombre de pièces identiques souhaitées</p>
+          </div>
+        </div>
+
+        <div class="qty-row-main">
+          <label class="qty-label" for="main-qty">Quantité</label>
+          <div class="qty-controls">
+            <button class="qty-btn qty-btn--lg" id="main-qty-minus" aria-label="Diminuer">−</button>
+            <input type="number" id="main-qty" class="qty-input qty-input--lg" value="1" min="1" max="999">
+            <button class="qty-btn qty-btn--lg" id="main-qty-plus" aria-label="Augmenter">+</button>
+          </div>
+        </div>
+
+        <div class="step5-price-block">
+          <div class="step5-price-ht"><span id="step5-ht">—</span> <em>€ HT</em></div>
+          <div class="step5-price-ttc">soit <span id="step5-ttc">—</span> € TTC</div>
+        </div>
+
+        <div class="step5-ctas">
+          <button class="btn-primary btn-full" id="btn-cart" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Ajouter au panier
+          </button>
+          <a href="contact.html" class="btn-outline btn-full">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Demander un devis
+          </a>
+        </div>
+      </section>
+
+    </div><!-- /config-steps -->
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="config-sidebar" aria-label="Récapitulatif">
+      <div class="sidebar-head"><h3>Votre configuration</h3></div>
+
+      <div class="sidebar-svg-mini" id="sidebar-svg-mini" aria-hidden="true">
+        <svg id="mini-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+
+      <dl class="sidebar-recap" id="sidebar-recap">
+        <div class="recap-row"><dt>Forme</dt><dd id="recap-shape">—</dd></div>
+        <div class="recap-row"><dt>Matière</dt><dd id="recap-material">—</dd></div>
+        <div class="recap-row"><dt>Dimensions</dt><dd id="recap-dims">—</dd></div>
+        <div class="recap-row"><dt>Développé</dt><dd id="recap-dev">—</dd></div>
+        <div class="recap-row"><dt>Couleur</dt><dd id="recap-color">—</dd></div>
+        <div class="recap-row"><dt>Quantité</dt><dd id="recap-qty">1</dd></div>
+      </dl>
+
+      <div class="sidebar-price-block">
+        <div class="sidebar-price-ht"><span id="price-ht">—</span> <em>€ HT</em></div>
+        <div class="sidebar-price-ttc">soit <span id="price-ttc">—</span> € TTC</div>
+      </div>
+
+      <div class="sidebar-ctas">
+        <button class="btn-primary btn-full" id="sidebar-btn-cart" disabled>Ajouter au panier</button>
+        <a href="contact.html" class="btn-outline btn-full">Demander un devis</a>
+      </div>
+
+      <p class="sidebar-note">Prix indicatif HT, hors livraison. Devis sous 24h pour toute demande spécifique.</p>
+    </aside>
+
+  </div><!-- /config-layout -->
+
+  <!-- Cart drawer -->
+  <div id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" hidden>
+    <div class="cart-drawer-header">
+      <h2>Votre panier</h2>
+      <button id="cart-close-btn" class="cart-close" aria-label="Fermer">×</button>
+    </div>
+    <div class="cart-drawer-body">
+      <div id="cart-empty" class="cart-empty">Votre panier est vide.</div>
+      <ul id="cart-items-list" class="cart-items"></ul>
+    </div>
+    <div id="cart-footer" class="cart-footer" hidden>
+      <div class="cart-total">Total : <strong id="cart-total-display">0,00 €</strong></div>
+      <button id="btn-checkout" class="btn-primary btn-full">Passer la commande</button>
+    </div>
+  </div>
+  <div id="cart-backdrop" class="cart-backdrop" hidden></div>
+
+  <button id="cart-open-btn" class="cart-fab" aria-label="Panier (0 article)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span id="cart-count-badge" class="cart-badge">0</span>
+  </button>
+
+  <div class="compare-note">
+    <strong>◆ Ce qui change</strong>
+    Header centré avec eyebrow orange · Numéros d'étapes en pastilles · Cotes SVG en blanc cassé · Textes étapes plus clairs · Bloc prix avec gradient orange subtil
+    <em>Le JS reste identique — interactions inchangées</em>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/pliage.js"></script>
+  <script src="js/preloader.js"></script>
+</body>
+</html>

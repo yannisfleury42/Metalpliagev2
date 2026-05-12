@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Configurateur — Variante A1 améliorée</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0d0d0d;color:#e8e8e8;font-family:'Inter',sans-serif}
+  body{padding:32px;min-height:100vh}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .intro{color:#888;font-size:13px;max-width:820px;line-height:1.6;margin-bottom:28px}
+  .intro strong{color:#FF7040}
+  .stack{display:flex;flex-direction:column;gap:24px}
+  .card{background:#141414;border:1px solid #222;border-radius:14px;padding:22px;position:relative}
+  .card .badge{position:absolute;top:14px;right:18px;font-size:10px;letter-spacing:0.22em;color:#FF7040;background:rgba(255,128,64,0.08);padding:4px 10px;border-radius:20px;font-weight:700}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:4px;color:#fff;letter-spacing:-.01em}
+  .card .sub{font-size:11.5px;color:#888;letter-spacing:.05em;margin-bottom:14px;line-height:1.5;max-width:820px}
+  .stage{background:radial-gradient(ellipse at 30% 30%,#15171c 0%,#08090c 80%);border:1px solid #1a1a1a;padding:18px;border-radius:10px;display:flex;align-items:center;justify-content:center;min-height:340px}
+  .stage svg{display:block;width:100%;height:auto;max-height:400px}
+  .features{margin-top:14px;font-size:12px;line-height:1.7;color:#aaa;display:flex;gap:20px;flex-wrap:wrap}
+  .features li{padding-left:14px;position:relative;list-style:none}
+  .features li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:#FF7040;border-radius:50%}
+  .features li b{color:#fff}
+</style>
+</head>
+<body>
+
+<h1>Configurateur — A1 corrigée (couvertine en une seule pièce)</h1>
+<p class="intro">
+  Corrections sur la variante A1 :
+  <strong>1)</strong> couvertine dessinée comme <strong>un seul path continu</strong> — plus de seams visibles aux plis, on voit bien que c'est une tôle pliée d'une seule pièce.
+  <strong>2)</strong> rejet droit corrigé par <strong>vrai mirror</strong> du rejet gauche.
+  Cotes : B = 200 · A = 40 · C = 250 · R = 10 · débord 25 mm.
+</p>
+
+<div class="stack">
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE A1 — Final (single path, mirror rejet, fold highlights subtle)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">A1 — FINALE</span>
+    <h2>Couvertine en une seule pièce + rejets miroirs</h2>
+    <p class="sub">Le profil couvertine est un seul path SVG fermé. Aucun trait de séparation aux plis. Les bends sont juste suggérés par les ombres du gradient alu.</p>
+    <div class="stage">
+      <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="alu-f1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F4F7FB"/>
+            <stop offset="55%" stop-color="#B8C4D2"/>
+            <stop offset="100%" stop-color="#7A8694"/>
+          </linearGradient>
+          <linearGradient id="wall-f1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7e7a72"/>
+            <stop offset="100%" stop-color="#3a3630"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse cx="260" cy="293" rx="170" ry="5" fill="rgba(0,0,0,0.5)"/>
+
+        <!-- ═══ MURET ═══ -->
+        <rect x="130" y="110" width="240" height="170" fill="url(#wall-f1)" stroke="#222" stroke-width="0.6"/>
+        <line x1="130" y1="150" x2="370" y2="150" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="130" y1="190" x2="370" y2="190" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="130" y1="230" x2="370" y2="230" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="190" y1="110" x2="190" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="250" y1="110" x2="250" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="310" y1="110" x2="310" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="160" y1="150" x2="160" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="220" y1="150" x2="220" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="280" y1="150" x2="280" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="340" y1="150" x2="340" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+
+        <!-- ═══ COUVERTINE — UNE SEULE LIGNE CONTINUE (comme schéma voulu) ═══
+             La tôle est tracée comme un SEUL stroke épais, du rejet gauche au
+             rejet droit en passant par retour-gauche / top / retour-droit.
+             stroke-linejoin="round" → les plis sont arrondis comme une vraie tôle.
+             Aucune séparation possible : c'est une seule ligne géométrique.
+        ═══ -->
+        <path d="
+          M 109 146
+          L 95 160
+          L 95 110
+          L 405 110
+          L 405 160
+          L 391 146"
+          stroke="url(#alu-f1)"
+          stroke-width="7"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+        <!-- Highlight haut (lumière sur l'arête du dessus) -->
+        <line x1="95" y1="102" x2="405" y2="102" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+
+        <!-- ═══ COTES ═══ -->
+        <line x1="130" y1="78" x2="370" y2="78" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="130" y1="73" x2="130" y2="83" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="370" y1="73" x2="370" y2="83" stroke="#FF7040" stroke-width="1.4"/>
+        <rect x="220" y="62" width="60" height="16" rx="3" fill="#0a0a0a"/>
+        <text x="250" y="74" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">B = 200 mm</text>
+
+        <line x1="95" y1="42" x2="405" y2="42" stroke="#7BB8E8" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="95" y1="37" x2="95" y2="47" stroke="#7BB8E8" stroke-width="1"/>
+        <line x1="405" y1="37" x2="405" y2="47" stroke="#7BB8E8" stroke-width="1"/>
+        <rect x="215" y="26" width="70" height="15" rx="3" fill="#0a0a0a"/>
+        <text x="250" y="37" fill="#7BB8E8" font-family="Inter" font-size="11" font-weight="500" text-anchor="middle">C = 250 mm</text>
+
+        <line x1="95" y1="95" x2="130" y2="95" stroke="#FFB347" stroke-width="1"/>
+        <line x1="95" y1="91" x2="95" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <line x1="130" y1="91" x2="130" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <text x="112.5" y="91" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <line x1="370" y1="95" x2="405" y2="95" stroke="#FFB347" stroke-width="1"/>
+        <line x1="370" y1="91" x2="370" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <line x1="405" y1="91" x2="405" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <text x="387.5" y="91" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <line x1="62" y1="110" x2="62" y2="160" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="58" y1="110" x2="66" y2="110" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="58" y1="160" x2="66" y2="160" stroke="#FF7040" stroke-width="1.4"/>
+        <text x="62" y="138" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">A=40</text>
+
+        <!-- Annotation R sur le rejet GAUCHE (flèche pointant le rejet) -->
+        <line x1="125" y1="148" x2="146" y2="146" stroke="#FF7040" stroke-width="1"/>
+        <polygon points="125,148 130,146 130,150" fill="#FF7040"/>
+        <text x="150" y="149" fill="#FF7040" font-family="Inter" font-size="10" font-weight="600">R=10mm — goutte d'eau</text>
+
+        <text x="250" y="205" fill="rgba(255,255,255,0.2)" font-family="Inter" font-size="13" font-weight="600" letter-spacing="5" text-anchor="middle">MURET</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Couvertine = 1 seul path SVG</b> — aucun seam interne, look "tôle pliée 1 pièce"</li>
+      <li><b>Rejet droit corrigé</b> par mirror exact du rejet gauche</li>
+      <li><b>Bends suggérés par le gradient</b> alu (pas de traits artificiels)</li>
+      <li><b>Highlight uniquement sur l'arête du dessus</b> (lumière naturelle)</li>
+    </ul>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE A1-BIS — Même path + highlights subtils aux plis (sans seams)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">A1-BIS</span>
+    <h2>Avec highlights de pli (sans seams)</h2>
+    <p class="sub">Identique à A1-finale mais avec des reflets blancs très discrets sur les arêtes de pli (sans tracer de séparation). Donne plus de matière à la tôle.</p>
+    <div class="stage">
+      <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="alu-f2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F4F7FB"/>
+            <stop offset="55%" stop-color="#B8C4D2"/>
+            <stop offset="100%" stop-color="#7A8694"/>
+          </linearGradient>
+          <linearGradient id="wall-f2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7e7a72"/>
+            <stop offset="100%" stop-color="#3a3630"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse cx="260" cy="293" rx="170" ry="5" fill="rgba(0,0,0,0.5)"/>
+
+        <rect x="130" y="110" width="240" height="170" fill="url(#wall-f2)" stroke="#222" stroke-width="0.6"/>
+        <line x1="130" y1="150" x2="370" y2="150" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="130" y1="190" x2="370" y2="190" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="130" y1="230" x2="370" y2="230" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="190" y1="110" x2="190" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="250" y1="110" x2="250" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="310" y1="110" x2="310" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="160" y1="150" x2="160" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="220" y1="150" x2="220" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="280" y1="150" x2="280" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="340" y1="150" x2="340" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+
+        <!-- COUVERTINE en 1 path -->
+        <path d="
+          M 95 102
+          L 405 102
+          L 405 160
+          L 385 142
+          L 379 142
+          L 397 160
+          L 397 110
+          L 103 110
+          L 103 160
+          L 121 142
+          L 115 142
+          L 95 160
+          Z"
+          fill="url(#alu-f2)"
+          stroke="#3a3a3a"
+          stroke-width="0.7"
+          stroke-linejoin="round"/>
+
+        <!-- Highlights subtils sur les arêtes de pli (donnent l'effet "pli métal" sans seam) -->
+        <!-- Arête haut -->
+        <line x1="95" y1="102" x2="405" y2="102" stroke="rgba(255,255,255,0.65)" stroke-width="1.2"/>
+        <!-- Arête pli gauche extérieur (où le retour rencontre le top) -->
+        <line x1="95" y1="103" x2="95" y2="159" stroke="rgba(255,255,255,0.35)" stroke-width="0.5"/>
+        <!-- Pli rejet gauche (subtil) -->
+        <line x1="96" y1="159" x2="114" y2="142" stroke="rgba(255,255,255,0.3)" stroke-width="0.4"/>
+        <!-- Le côté droit reste sans highlight (zone d'ombre du gradient) -->
+
+        <!-- COTES (identiques) -->
+        <line x1="130" y1="78" x2="370" y2="78" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="130" y1="73" x2="130" y2="83" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="370" y1="73" x2="370" y2="83" stroke="#FF7040" stroke-width="1.4"/>
+        <rect x="220" y="62" width="60" height="16" rx="3" fill="#0a0a0a"/>
+        <text x="250" y="74" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">B = 200 mm</text>
+
+        <line x1="95" y1="42" x2="405" y2="42" stroke="#7BB8E8" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="95" y1="37" x2="95" y2="47" stroke="#7BB8E8" stroke-width="1"/>
+        <line x1="405" y1="37" x2="405" y2="47" stroke="#7BB8E8" stroke-width="1"/>
+        <rect x="215" y="26" width="70" height="15" rx="3" fill="#0a0a0a"/>
+        <text x="250" y="37" fill="#7BB8E8" font-family="Inter" font-size="11" font-weight="500" text-anchor="middle">C = 250 mm</text>
+
+        <line x1="95" y1="95" x2="130" y2="95" stroke="#FFB347" stroke-width="1"/>
+        <line x1="95" y1="91" x2="95" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <line x1="130" y1="91" x2="130" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <text x="112.5" y="91" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <line x1="370" y1="95" x2="405" y2="95" stroke="#FFB347" stroke-width="1"/>
+        <line x1="370" y1="91" x2="370" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <line x1="405" y1="91" x2="405" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <text x="387.5" y="91" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <line x1="62" y1="110" x2="62" y2="160" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="58" y1="110" x2="66" y2="110" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="58" y1="160" x2="66" y2="160" stroke="#FF7040" stroke-width="1.4"/>
+        <text x="62" y="138" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">A=40</text>
+
+        <line x1="125" y1="148" x2="146" y2="146" stroke="#FF7040" stroke-width="1"/>
+        <polygon points="125,148 130,146 130,150" fill="#FF7040"/>
+        <text x="150" y="149" fill="#FF7040" font-family="Inter" font-size="10" font-weight="600">R=10mm — goutte d'eau</text>
+
+        <text x="250" y="205" fill="rgba(255,255,255,0.2)" font-family="Inter" font-size="13" font-weight="600" letter-spacing="5" text-anchor="middle">MURET</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Couvertine 1 path</b> + reflets blancs subtils sur les plis du côté éclairé (gauche)</li>
+      <li><b>Pas de seams</b> — les reflets ne tracent pas de "ligne d'assemblage"</li>
+      <li><b>Côté droit dans l'ombre</b> — pas de highlight, juste le gradient</li>
+      <li><b>Effet matière tôle pliée</b> plus tangible</li>
+    </ul>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE A1-TER — Rejets agrandis pour visibilité maximale
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">A1-TER</span>
+    <h2>Rejets agrandis pour visibilité maximale</h2>
+    <p class="sub">Rejets dessinés un peu plus longs et plus visibles (exagération pédagogique). Couvertine en 1 path. Idéal pour expliquer la fonction goutte d'eau à des clients néophytes.</p>
+    <div class="stage">
+      <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="alu-f3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F4F7FB"/>
+            <stop offset="55%" stop-color="#B8C4D2"/>
+            <stop offset="100%" stop-color="#7A8694"/>
+          </linearGradient>
+          <linearGradient id="wall-f3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7e7a72"/>
+            <stop offset="100%" stop-color="#3a3630"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse cx="260" cy="293" rx="170" ry="5" fill="rgba(0,0,0,0.5)"/>
+
+        <rect x="130" y="110" width="240" height="170" fill="url(#wall-f3)" stroke="#222" stroke-width="0.6"/>
+        <line x1="130" y1="150" x2="370" y2="150" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="130" y1="190" x2="370" y2="190" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="130" y1="230" x2="370" y2="230" stroke="rgba(0,0,0,0.35)" stroke-width="0.6"/>
+        <line x1="190" y1="110" x2="190" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="250" y1="110" x2="250" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="310" y1="110" x2="310" y2="150" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="160" y1="150" x2="160" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="220" y1="150" x2="220" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="280" y1="150" x2="280" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+        <line x1="340" y1="150" x2="340" y2="190" stroke="rgba(0,0,0,0.28)" stroke-width="0.5"/>
+
+        <!-- COUVERTINE en 1 path — rejets agrandis (tip à y=135 au lieu de y=142, 5 pixels plus visibles) -->
+        <path d="
+          M 95 102
+          L 405 102
+          L 405 160
+          L 380 135
+          L 374 135
+          L 397 160
+          L 397 110
+          L 103 110
+          L 103 160
+          L 126 135
+          L 120 135
+          L 95 160
+          Z"
+          fill="url(#alu-f3)"
+          stroke="#3a3a3a"
+          stroke-width="0.7"
+          stroke-linejoin="round"/>
+
+        <!-- Highlight haut -->
+        <line x1="95" y1="102" x2="405" y2="102" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+
+        <!-- COTES -->
+        <line x1="130" y1="78" x2="370" y2="78" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="130" y1="73" x2="130" y2="83" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="370" y1="73" x2="370" y2="83" stroke="#FF7040" stroke-width="1.4"/>
+        <rect x="220" y="62" width="60" height="16" rx="3" fill="#0a0a0a"/>
+        <text x="250" y="74" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">B = 200 mm</text>
+
+        <line x1="95" y1="42" x2="405" y2="42" stroke="#7BB8E8" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="95" y1="37" x2="95" y2="47" stroke="#7BB8E8" stroke-width="1"/>
+        <line x1="405" y1="37" x2="405" y2="47" stroke="#7BB8E8" stroke-width="1"/>
+        <rect x="215" y="26" width="70" height="15" rx="3" fill="#0a0a0a"/>
+        <text x="250" y="37" fill="#7BB8E8" font-family="Inter" font-size="11" font-weight="500" text-anchor="middle">C = 250 mm</text>
+
+        <line x1="95" y1="95" x2="130" y2="95" stroke="#FFB347" stroke-width="1"/>
+        <line x1="95" y1="91" x2="95" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <line x1="130" y1="91" x2="130" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <text x="112.5" y="91" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <line x1="370" y1="95" x2="405" y2="95" stroke="#FFB347" stroke-width="1"/>
+        <line x1="370" y1="91" x2="370" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <line x1="405" y1="91" x2="405" y2="99" stroke="#FFB347" stroke-width="1"/>
+        <text x="387.5" y="91" fill="#FFB347" font-family="Inter" font-size="9.5" font-weight="600" text-anchor="middle">25</text>
+
+        <line x1="62" y1="110" x2="62" y2="160" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="58" y1="110" x2="66" y2="110" stroke="#FF7040" stroke-width="1.4"/>
+        <line x1="58" y1="160" x2="66" y2="160" stroke="#FF7040" stroke-width="1.4"/>
+        <text x="62" y="138" fill="#FF7040" font-family="Inter" font-size="11" font-weight="700" text-anchor="middle">A=40</text>
+
+        <!-- Annotation R agrandie -->
+        <line x1="130" y1="142" x2="150" y2="140" stroke="#FF7040" stroke-width="1.2"/>
+        <polygon points="130,142 135,140 135,144" fill="#FF7040"/>
+        <text x="154" y="143" fill="#FF7040" font-family="Inter" font-size="10" font-weight="700">REJET R = 10 mm</text>
+        <text x="154" y="155" fill="#FFB347" font-family="Inter" font-size="9" font-weight="500">(goutte d'eau 45°)</text>
+
+        <text x="250" y="205" fill="rgba(255,255,255,0.2)" font-family="Inter" font-size="13" font-weight="600" letter-spacing="5" text-anchor="middle">MURET</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Rejets agrandis</b> : tip à y=135 au lieu de y=142 (≈8 px plus visibles)</li>
+      <li><b>Annotation REJET R = 10 mm + (goutte d'eau 45°)</b> claire</li>
+      <li><b>Idéal pour pédagogie client</b> : la fonction du rejet saute aux yeux</li>
+      <li>Léger « zoom visuel » sur les détails techniques importants</li>
+    </ul>
+  </div>
+
+</div>
+
+<div style="margin-top:32px;padding:18px 22px;background:rgba(255,128,64,0.06);border-left:3px solid #FF7040;border-radius:6px;font-size:13px;color:#bbb;line-height:1.6">
+  <strong style="color:#FF8060">À toi :</strong>
+  3 variantes corrigées partant de A1.
+  <strong>A1-FINALE</strong> = clean, 1 seul path, juste le highlight du dessus.
+  <strong>A1-BIS</strong> = avec reflets subtils sur les plis du côté éclairé.
+  <strong>A1-TER</strong> = rejets agrandis pour pédagogie.
+  Dis-moi celle à intégrer dans <code style="background:#1c1c1c;padding:2px 6px;border-radius:3px;color:#FF7040;font-family:monospace">configurateur.js</code>.
+</div>
+
+</body>
+</html>

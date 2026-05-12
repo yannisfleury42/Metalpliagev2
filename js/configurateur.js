@@ -27,9 +27,10 @@
   ];
 
   const ACCESSORIES = [
-    { id: 'angle',  name: 'Angle 90°', price: 8 },
-    { id: 'clisse', name: 'Éclisse',   price: 6 },
-    { id: 'talon',  name: 'Talon',     price: 5 },
+    { id: 'angle',    name: 'Angle 90°',          price: 8 },
+    { id: 'clisse',   name: 'Éclisse',            price: 6 },
+    { id: 'corniere', name: 'Cornière de départ', price: 7 },
+    { id: 'talon',    name: 'Talon',              price: 5 },
   ];
 
   /* ────────────────────────────────────────────────────────────
@@ -40,14 +41,15 @@
     material: null,
     B: 200,
     A: 40,
-    C: 250,   // largeur totale de tôle (B+50 par défaut, modifiable jusqu'à 350 mm)
+    C: 250,   // largeur totale de tôle (B+50 par défaut, modifiable jusqu'à 400 mm)
     L: 2000,
     R: 10,
     color: null,
     accessories: {
-      angle:  { qty: 0, color: null },
-      clisse: { qty: 0, color: null },
-      talon:  { qty: 0, color: null },
+      angle:    { qty: 0, color: null },
+      clisse:   { qty: 0, color: null },
+      corniere: { qty: 0, color: null },
+      talon:    { qty: 0, color: null },
     },
     qty: 1,
   };
@@ -334,7 +336,7 @@
     /* ── Muret text ── */
     const muretLabel = !mini ? `
       <text x="${f(xMuretLeft + B * scale / 2)}" y="${f(yTop + MURET_H - 8)}" text-anchor="middle"
-            font-size="10" fill="#4A5260" font-family="Inter,sans-serif" letter-spacing="0.1em">MURET BÉTON</text>
+            font-size="10" fill="#4A5260" font-family="Inter,sans-serif" letter-spacing="0.1em">SUPPORT</text>
     ` : '';
 
     /* ── Ombres overhangs sur le dessus du muret ── */
@@ -355,40 +357,29 @@
             fill="#000" opacity="0.28" rx="1"/>
     `;
 
-    /* ── Face dessus de la couvertine (metallic flat top) ── */
-    const covW = xCovRight - xCovLeft;
-    const specX = xCovLeft + covW * 0.18;
-    const specW = covW * 0.22;
-    const topFace = `
-      <rect x="${f(xCovLeft)}" y="${f(yTop)}" width="${f(covW)}" height="${f(THICK)}"
-            fill="url(#${covGradId})" filter="url(#shadow-${uid})"/>
-      <!-- Reflet spéculaire (bande lumineuse) -->
-      <rect x="${f(specX)}" y="${f(yTop)}" width="${f(specW)}" height="${f(THICK)}"
-            fill="rgba(255,255,255,${isLight ? 0.22 : 0.12})" rx="0"/>
-    `;
-
-    /* ── Retour gauche ── */
-    const retourGauche = `
-      <polygon points="${f(xCovLeft)},${f(yTop)} ${f(xCovLeft)},${f(yBot)} ${f(xTipL)},${f(yTip)} ${f(xCovLeft + THICK)},${f(yBotIn)} ${f(xCovLeft + THICK)},${f(yTopIn)}"
-               fill="url(#${sideGradId})"/>
-      <line x1="${f(xCovLeft)}" y1="${f(yTop)}" x2="${f(xCovLeft)}" y2="${f(yBot)}" stroke="${edgeColor}" stroke-width="${mini ? 1 : 1.5}" stroke-linecap="round"/>
-      <line x1="${f(xCovLeft)}" y1="${f(yBot)}" x2="${f(xTipL)}" y2="${f(yTip)}" stroke="${edgeColor}" stroke-width="${mini ? 1 : 1.5}" stroke-linecap="round"/>
-    `;
-
-    /* ── Retour droit ── */
-    const retourDroit = `
-      <polygon points="${f(xCovRight)},${f(yTop)} ${f(xCovRight)},${f(yBot)} ${f(xTipR)},${f(yTip)} ${f(xCovRight - THICK)},${f(yBotIn)} ${f(xCovRight - THICK)},${f(yTopIn)}"
-               fill="url(#${sideGradId})"/>
-      <line x1="${f(xCovRight)}" y1="${f(yTop)}" x2="${f(xCovRight)}" y2="${f(yBot)}" stroke="${edgeColor}" stroke-width="${mini ? 1 : 1.5}" stroke-linecap="round"/>
-      <line x1="${f(xCovRight)}" y1="${f(yBot)}" x2="${f(xTipR)}" y2="${f(yTip)}" stroke="${edgeColor}" stroke-width="${mini ? 1 : 1.5}" stroke-linecap="round"/>
-    `;
-
-    /* ── Arête supérieure couvertine (reflet vif) ── */
-    const topEdge = `
-      <line x1="${f(xCovLeft)}" y1="${f(yTop)}" x2="${f(xCovRight)}" y2="${f(yTop)}"
-            stroke="${lighten(topColor, 55)}" stroke-width="${mini ? 1 : 2}"/>
-      <line x1="${f(xCovLeft)}" y1="${f(yTopIn)}" x2="${f(xCovRight)}" y2="${f(yTopIn)}"
-            stroke="${darken(baseColor, 25)}" stroke-width="${mini ? 0.5 : 1}"/>
+    /* ── COUVERTINE : un seul stroke continu, du rejet gauche au rejet droit
+           en passant par retour-gauche → top → retour-droit.
+           stroke-linejoin="round" donne la courbure naturelle des plis.
+           Plus de seam entre retour et rejet : c'est une seule ligne. ── */
+    const strokeW = mini ? 4 : 7;
+    const couvertinePath = `
+      <path d="M ${f(xTipL)},${f(yTip)}
+               L ${f(xCovLeft)},${f(yBot)}
+               L ${f(xCovLeft)},${f(yTop)}
+               L ${f(xCovRight)},${f(yTop)}
+               L ${f(xCovRight)},${f(yBot)}
+               L ${f(xTipR)},${f(yTip)}"
+            stroke="url(#${covGradId})"
+            stroke-width="${strokeW}"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            filter="url(#shadow-${uid})"/>
+      <!-- Reflet vif sur l'arête supérieure (côté éclairé) -->
+      <line x1="${f(xCovLeft)}" y1="${f(yTop - strokeW/2 + 0.6)}"
+            x2="${f(xCovRight)}" y2="${f(yTop - strokeW/2 + 0.6)}"
+            stroke="${lighten(topColor, 55)}" stroke-width="${mini ? 0.8 : 1.2}"
+            stroke-linecap="round" opacity="0.85"/>
     `;
 
     return {
@@ -405,19 +396,13 @@
         <!-- Espace intérieur sous la couvertine (ombre semi-transparente) -->
         ${innerBg}
 
-        <!-- Ombre couvertine sur muret -->
-        ${dropShadow}
+        <!-- Ombres overhangs sur le dessus du muret -->
         ${overhangShadows}
 
-        <!-- Retours latéraux -->
-        ${retourGauche}
-        ${retourDroit}
+        <!-- Couvertine — un seul stroke continu (tôle pliée d'une pièce) -->
+        ${couvertinePath}
 
-        <!-- Dessus couvertine -->
-        ${topFace}
-        ${topEdge}
-
-        <!-- Labels -->
+        <!-- Labels dimensions -->
         ${labels}
       `,
     };
@@ -558,7 +543,7 @@
     }
     if (e.target.id === 'input-A') state.A = clamp(val, 20, 150);
     if (e.target.id === 'input-C') {
-      state.C = clamp(val, state.B + 10, 350);
+      state.C = clamp(val, state.B + 10, 400);
       e.target.value = state.C;
     }
     if (e.target.id === 'input-L') state.L = clamp(val, 200, 3000);
@@ -618,7 +603,17 @@
     });
   }
 
+  function pulseSvg() {
+    [profileSvg, miniSvg].forEach((el) => {
+      if (!el) return;
+      el.classList.remove('color-changing');
+      void el.offsetWidth;
+      el.classList.add('color-changing');
+    });
+  }
+
   function selectColor(code) {
+    const isNewColor = state.color !== code;
     state.color = code;
     highlightSwatch(ralGrid, code);
     // Sync automatique vers les accessoires
@@ -630,6 +625,7 @@
     unlockStep(4);
     unlockStep(5);
     updateUI();
+    if (isNewColor) pulseSvg();
   }
 
   if (ralGrid) {
@@ -702,10 +698,16 @@
     const face = base;
     const back = darken(base, 20);
 
-    // Talon diagram
+    // Talon diagram (ITER 7 V3) — couvertine + creux + fantôme + pièce talon
     document.getElementById('diag-talon-cov-top')?.setAttribute('fill', top);
     document.getElementById('diag-talon-cov-face')?.setAttribute('fill', face);
-    document.getElementById('diag-talon-cov-back')?.setAttribute('fill', back);
+    document.getElementById('diag-talon-creux-1')?.setAttribute('fill', back);
+    document.getElementById('diag-talon-creux-2')?.setAttribute('fill', back);
+    document.getElementById('diag-talon-ghost')?.setAttribute('fill', face);
+    document.getElementById('diag-talon-piece-top')?.setAttribute('fill', top);
+    document.getElementById('diag-talon-piece-front')?.setAttribute('fill', face);
+    document.getElementById('diag-talon-piece-vert')?.setAttribute('fill', top);
+    document.getElementById('diag-talon-piece-side')?.setAttribute('fill', back);
 
     // Éclisse diagram — toutes les pièces en couleur RAL (même matériau)
     document.getElementById('diag-clisse-cov-top-l')?.setAttribute('fill', top);
@@ -718,6 +720,13 @@
     // Angle diagram
     document.getElementById('diag-angle-cov-main')?.setAttribute('fill', top);
     document.getElementById('diag-angle-cov-perp')?.setAttribute('fill', top);
+
+    // Cornière de départ diagram — couleurs RAL dynamiques
+    document.getElementById('diag-corniere-v-front')?.setAttribute('fill', top);
+    document.getElementById('diag-corniere-v-top')?.setAttribute('fill', top);
+    document.getElementById('diag-corniere-v-side')?.setAttribute('fill', face);
+    document.getElementById('diag-corniere-h-top')?.setAttribute('fill', top);
+    document.getElementById('diag-corniere-h-front')?.setAttribute('fill', face);
   }
 
   /* ────────────────────────────────────────────────────────────

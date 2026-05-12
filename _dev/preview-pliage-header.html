@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aperçu en-tête page Pliage — 4 variantes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/futuriste.css">
+  <style>
+    /* ═══ TOPBAR SÉLECTEUR ═══ */
+    .selector {
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 14px 24px;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      background: rgba(15,12,10,0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 999999;
+    }
+    .selector h1 {
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FFB347, #FF4500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-right: 14px;
+    }
+    .v-btn {
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,69,0,0.3);
+      color: #eee;
+      border-radius: 6px;
+      font-size: 11px; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .v-btn:hover { background: rgba(255,69,0,0.15); border-color: rgba(255,69,0,0.6); }
+    .v-btn.active {
+      background: linear-gradient(135deg, #FF6F00, #FF4500);
+      border-color: #FF4500;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(255,69,0,0.4);
+    }
+    body { padding-top: 56px; }
+
+    /* Navbar identique au site */
+    #navbar { top: 56px !important; }
+
+    /* Cacher les variantes par défaut */
+    .header-variant { display: none; }
+    body[data-v="sobre"]    .header-variant.sobre,
+    body[data-v="minimal"]  .header-variant.minimal,
+    body[data-v="editorial"] .header-variant.editorial,
+    body[data-v="bandeau"]  .header-variant.bandeau {
+      display: block;
+    }
+
+    /* Espace vide pour visualiser le reste */
+    .demo-rest {
+      min-height: 800px;
+      background: var(--bg-base);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .demo-rest .ghost {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .demo-rest .ghost-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════════════════════
+       V1 — SOBRE CENTRÉ (titre moyen + desc directement dessous)
+    ════════════════════════════════════════════════════ */
+    .v1-header {
+      padding: calc(var(--nav-h) + 3.5rem) 1.5rem 3rem;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .v1-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .v1-title {
+      font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: 0.9rem;
+    }
+    .v1-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .v1-desc strong { color: var(--accent); font-weight: 500; }
+
+    /* ════════════════════════════════════════════════════
+       V2 — MINIMAL (juste un titre fin + question directe)
+    ════════════════════════════════════════════════════ */
+    .v2-header {
+      padding: calc(var(--nav-h) + 4.5rem) 1.5rem 3.5rem;
+      text-align: center;
+    }
+    .v2-title {
+      font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .v2-title strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .v2-question {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .v2-question::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto 1.2rem;
+    }
+
+    /* ════════════════════════════════════════════════════
+       V3 — ÉDITORIAL (label décoratif + titre + question)
+    ════════════════════════════════════════════════════ */
+    .v3-header {
+      padding: calc(var(--nav-h) + 4rem) 1.5rem 3rem;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+    }
+    .v3-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 1.4rem;
+    }
+    .v3-label::before, .v3-label::after {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .v3-title {
+      font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .v3-title em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .v3-question {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .v3-question strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ════════════════════════════════════════════════════
+       V4 — BANDEAU FIN (très compact, look haut de page)
+    ════════════════════════════════════════════════════ */
+    .v4-header {
+      padding: calc(var(--nav-h) + 2.5rem) 1.5rem 2rem;
+      text-align: center;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .v4-breadcrumb {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .v4-breadcrumb a {
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .v4-breadcrumb a:hover { color: var(--accent); }
+    .v4-breadcrumb span[aria-current] { color: var(--accent); }
+    .v4-title {
+      font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .v4-title strong { color: var(--accent); font-weight: 500; }
+    .v4-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ═══ INFO BANNER ═══ */
+    .info-banner {
+      position: fixed;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 26px;
+      background: rgba(15,12,10,0.95);
+      border: 1px solid rgba(255,69,0,0.4);
+      border-radius: 30px;
+      font-size: 12px;
+      color: #f5f5f5;
+      backdrop-filter: blur(10px);
+      z-index: 99998;
+      text-align: center;
+      max-width: 700px;
+    }
+    .info-banner strong { color: #FFB347; }
+    .info-banner em { color: rgba(255,255,255,0.55); font-style: normal; font-size: 10px; display: block; margin-top: 3px; }
+  </style>
+</head>
+<body data-v="sobre">
+
+  <div class="selector">
+    <h1>◆ En-tête page Pliage · 4 variantes</h1>
+    <button class="v-btn active" data-v="sobre">1 · Sobre centré</button>
+    <button class="v-btn" data-v="minimal">2 · Minimal pur</button>
+    <button class="v-btn" data-v="editorial">3 · Éditorial décoré</button>
+    <button class="v-btn" data-v="bandeau">4 · Bandeau compact</button>
+  </div>
+
+  <!-- NAVBAR identique au site -->
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="index.html" class="logo">METAL <span>PLIAGE</span></a>
+        <div class="france-badge">
+          <div class="france-flag" aria-hidden="true">
+            <span class="f-blue"></span><span class="f-white"></span><span class="f-red"></span>
+          </div>
+          Fabriqué en France
+        </div>
+      </div>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
+        <li class="nav-item"><a href="pliage.html" class="active">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ VARIANTE 1 — SOBRE CENTRÉ ════ -->
+  <header class="header-variant sobre v1-header">
+    <div class="v1-eyebrow">— PLIAGE SUR MESURE —</div>
+    <h1 class="v1-title">Quelle <strong>forme</strong> choisir ?</h1>
+    <p class="v1-desc">Notre configurateur calcule le prix de votre pièce en temps réel. Choisissez d'abord la forme la plus proche de votre besoin parmi nos profils standards, ou optez pour la forme libre.</p>
+  </header>
+
+  <!-- ════ VARIANTE 2 — MINIMAL PUR ════ -->
+  <header class="header-variant minimal v2-header">
+    <h1 class="v2-title">Quelle <strong>forme</strong> de pliage<br>choisir ?</h1>
+    <p class="v2-question">Acier, aluminium ou inox plié à vos cotes — 4 profils standards ou forme libre jusqu'à 10 plis personnalisés.</p>
+  </header>
+
+  <!-- ════ VARIANTE 3 — ÉDITORIAL DÉCORÉ ════ -->
+  <header class="header-variant editorial v3-header">
+    <div class="v3-label">Pliage sur mesure</div>
+    <h1 class="v3-title">Quelle forme <em>choisir</em> ?</h1>
+    <p class="v3-question">Notre configurateur calcule le prix en temps réel à partir de vos dimensions exactes. Découvrez ci-dessous <strong>les 5 profils disponibles</strong> et leurs cas d'usage typiques.</p>
+  </header>
+
+  <!-- ════ VARIANTE 4 — BANDEAU COMPACT ════ -->
+  <header class="header-variant bandeau v4-header">
+    <nav class="v4-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="index.html">Accueil</a> &rsaquo;
+      <span aria-current="page">Pliage sur mesure</span>
+    </nav>
+    <h1 class="v4-title">Quelle <strong>forme</strong> de pliage choisir ?</h1>
+    <p class="v4-desc">Acier · aluminium · inox — 5 profils standards ou forme libre, fabrication française.</p>
+  </header>
+
+  <!-- Reste de la page (placeholder pour visualiser le rendu global) -->
+  <section class="demo-rest">
+    <div class="ghost">
+      <div class="ghost-card">Forme U</div>
+      <div class="ghost-card">Forme L</div>
+      <div class="ghost-card">Forme Z</div>
+      <div class="ghost-card">Appui</div>
+      <div class="ghost-card">Libre</div>
+    </div>
+  </section>
+
+  <div class="info-banner" id="info"></div>
+
+  <script>
+    const infos = {
+      sobre:     '<strong>Sobre centré</strong> — Eyebrow décoratif + titre moyen + description claire<em>Plus institutionnel, le plus lisible, garde le côté pro</em>',
+      minimal:   '<strong>Minimal pur</strong> — Titre direct + ligne orange + sous-titre court<em>Le plus aéré, focus sur la question, moins de texte</em>',
+      editorial: '<strong>Éditorial décoré</strong> — Label avec traits orange + titre + paragraphe enrichi<em>Plus haut de gamme, texte plus présent, mood "magazine"</em>',
+      bandeau:   '<strong>Bandeau compact</strong> — Breadcrumb + petit titre + ligne courte<em>Le plus discret, gain de place, look "catalogue produit"</em>'
+    };
+    const btns = document.querySelectorAll('.v-btn');
+    const info = document.getElementById('info');
+    function setView(v) {
+      document.body.dataset.v = v;
+      btns.forEach(x => x.classList.toggle('active', x.dataset.v === v));
+      info.innerHTML = 'Variante : ' + infos[v];
+    }
+    btns.forEach(b => b.addEventListener('click', () => setView(b.dataset.v)));
+    setView('sobre');
+  </script>
+</body>
+</html>

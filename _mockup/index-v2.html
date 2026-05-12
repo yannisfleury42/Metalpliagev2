@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAQUETTE V2 — Metal Pliage</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- On réutilise le design system existant -->
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <style>
+    /* ════════════════════════════════════════════════════════
+       MAQUETTE V2 — OVERRIDES & NOUVEAUX COMPOSANTS
+       Tout ce CSS est local à la maquette, n'affecte pas le site.
+    ════════════════════════════════════════════════════════ */
+
+    /* Bandeau maquette en haut */
+    .mockup-banner {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 9999;
+      background: #FF4500;
+      color: #fff;
+      text-align: center;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    body { padding-top: 28px; }
+
+    /* ── TOPBAR (au-dessus du navbar) ── */
+    .topbar {
+      position: fixed;
+      top: 28px;
+      left: 0; right: 0;
+      z-index: 998;
+      background: #1a1a1a;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 12.5px;
+    }
+    .topbar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 8px clamp(1.5rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .topbar-tel, .topbar-link {
+      color: var(--text-secondary);
+      transition: color var(--t) var(--ease);
+    }
+    .topbar-tel:hover, .topbar-link:hover { color: var(--accent); }
+    .topbar-tel strong { color: var(--text-primary); }
+
+    /* Switch HT/TTC */
+    .price-mode-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      background: #2a2a2a;
+      border-radius: 999px;
+      padding: 2px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .price-mode-switch button {
+      padding: 4px 14px;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      border-radius: 999px;
+      transition: all var(--t) var(--ease);
+    }
+    .price-mode-switch button.is-active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* Navbar : décaler de la topbar */
+    #navbar { top: 64px !important; }
+
+    /* ── HERO REVU ── */
+    .hero-v2 {
+      position: relative;
+      min-height: calc(100vh - 64px);
+      margin-top: 100px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(36,36,36,0.95) 0%, rgba(36,36,36,0.7) 60%, rgba(36,36,36,0.4) 100%),
+        url('../assets/photos/slide-01.jpg') center/cover;
+    }
+    .hero-v2-inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4rem clamp(1.5rem, 5vw, 4rem);
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-v2-content h1 {
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      line-height: 1.02;
+      margin-bottom: 1.4rem;
+      color: var(--text-primary);
+    }
+    .hero-v2-content h1 .accent-word {
+      color: var(--accent);
+      display: block;
+    }
+    .hero-v2-tagline {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+    .hero-v2-audience {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 1.6rem;
+    }
+    .hero-v2-audience strong { color: #fff; font-weight: 600; }
+
+    .hero-v2-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 2.4rem;
+    }
+    .btn-hero-v2 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 1rem 1.8rem;
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: all var(--t) var(--ease);
+      border: 1.5px solid transparent;
+    }
+    .btn-hero-v2-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-hero-v2-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255,69,0,0.35);
+    }
+    .btn-hero-v2-secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      border-color: rgba(255,255,255,0.18);
+    }
+    .btn-hero-v2-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-v2-trust {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-v2-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .hero-v2-trust-item svg {
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .hero-v2-card {
+      background: rgba(26,26,26,0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .hero-v2-card-title {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .hero-v2-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: var(--text-primary);
+    }
+    .hero-v2-card-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+    .hero-v2-card-row:last-of-type { border: none; }
+    .hero-v2-card-row strong { color: var(--text-primary); }
+    .hero-v2-card-row span { color: var(--text-muted); }
+    .hero-v2-card-cta {
+      display: block;
+      margin-top: 1.4rem;
+      padding: 0.8rem;
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      font-family: var(--font-head);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: background var(--t);
+    }
+    .hero-v2-card-cta:hover { background: var(--accent-hover); }
+
+    /* ── PERSONA SWITCH SECTION ── */
+    .persona-section {
+      padding: clamp(60px, 8vw, 100px) 0;
+      background: var(--bg-base);
+    }
+    .persona-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+    .persona-header h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      margin-bottom: 0.8rem;
+    }
+    .persona-header p { color: var(--text-secondary); }
+
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+    .persona-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.4rem 2rem;
+      transition: all var(--t) var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .persona-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .persona-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+    .persona-card:hover::before { transform: scaleX(1); }
+
+    .persona-card-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,69,0,0.12);
+      display: flex;
+      align-items: center; justify-content: center;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+    }
+    .persona-card-tag {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .persona-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .persona-card-desc {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      margin-bottom: 1.4rem;
+      line-height: 1.6;
+    }
+    .persona-card-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 1.8rem;
+    }
+    .persona-card-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .persona-card-feature svg {
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .persona-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0.9rem 1.6rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 4px;
+      transition: all var(--t) var(--ease);
+    }
+    .persona-card-cta:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── PRODUCT GRID V2 (avec photos en placeholder + prix visibles) ── */
+    .products-v2 {
+      padding: clamp(60px, 8vw, 100px) 0;
+      background: var(--bg-surface);
+    }
+    .products-v2-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.6rem;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+    }
+    .product-card-v2 {
+      background: var(--bg-card);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all var(--t) var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card-v2:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .product-card-v2-img {
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .product-card-v2-img svg { color: var(--accent); }
+    .product-card-v2-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(0,0,0,0.7);
+      color: var(--text-primary);
+      font-family: var(--font-head);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 3px;
+    }
+    .product-card-v2-badge--pro { background: #0F4C81; }
+    .product-card-v2-badge--particulier { background: #6B4423; }
+
+    .product-card-v2-body { padding: 1.4rem 1.6rem 1.6rem; }
+    .product-card-v2-body h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+    .product-card-v2-body p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.55;
+    }
+    .product-card-v2-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 1rem;
+      padding: 10px 12px;
+      background: rgba(255,69,0,0.06);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+    .product-card-v2-price .from {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .product-card-v2-price .amount {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .product-card-v2-price .unit {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .product-card-v2-price .ht-note {
+      margin-left: auto;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .product-card-v2-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .product-card-v2-actions a {
+      flex: 1;
+      text-align: center;
+      padding: 0.7rem 0.8rem;
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: all var(--t) var(--ease);
+    }
+    .product-card-v2-actions .btn-detail {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .product-card-v2-actions .btn-detail:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .product-card-v2-actions .btn-config {
+      background: var(--accent);
+      color: #fff;
+    }
+    .product-card-v2-actions .btn-config:hover {
+      background: var(--accent-hover);
+    }
+
+    /* ── REASSURANCE BAR ── */
+    .reassurance-bar {
+      background: linear-gradient(90deg, #0F4C81 0%, #1a5a92 100%);
+      padding: 1.6rem 0;
+    }
+    .reassurance-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .reassurance-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #fff;
+    }
+    .reassurance-item svg { flex-shrink: 0; }
+    .reassurance-item strong {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .reassurance-item span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* ── PRO SECTION (B2B specifique) ── */
+    .pro-section {
+      padding: clamp(60px, 8vw, 100px) 0;
+      background: var(--bg-base);
+    }
+    .pro-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .pro-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 1.4rem;
+    }
+    .pro-content h2 span { color: var(--accent); }
+    .pro-content p {
+      color: var(--text-secondary);
+      margin-bottom: 1.6rem;
+      font-size: 15.5px;
+    }
+    .pro-benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 2rem;
+    }
+    .pro-benefit {
+      display: flex;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+    }
+    .pro-benefit-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,69,0,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .pro-benefit-text strong {
+      display: block;
+      font-size: 14.5px;
+      margin-bottom: 3px;
+      color: var(--text-primary);
+    }
+    .pro-benefit-text span {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+    .pro-visual {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+    .pro-visual-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+    .pro-visual-row:last-of-type { border: none; }
+    .pro-visual-row strong { color: var(--text-primary); }
+    .pro-visual-row .badge-pro {
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 920px) {
+      .hero-v2-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-v2-card { max-width: 480px; }
+      .persona-grid { grid-template-columns: 1fr; }
+      .reassurance-inner { grid-template-columns: repeat(2, 1fr); }
+      .pro-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 580px) {
+      .topbar-inner { gap: 10px; flex-wrap: wrap; }
+      .topbar-tel { display: none; }
+      .reassurance-inner { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body class="page-mockup">
+
+  <!-- Bandeau maquette -->
+  <div class="mockup-banner">⚠️ Maquette V2 — Aperçu avant validation · Ne remplace pas le site actuel</div>
+
+  <!-- ═══════════════════════════════════════════
+       TOPBAR — switch HT/TTC + tel + accès pro
+  ═══════════════════════════════════════════ -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="tel:+33643218201" class="topbar-tel">
+          <strong>06 43 21 82 01</strong> · Lun–Ven 9h–18h
+        </a>
+        <a href="#" class="topbar-link" style="display:none">Suivi commande</a>
+      </div>
+      <div class="topbar-right">
+        <div class="price-mode-switch" role="group" aria-label="Affichage des prix">
+          <button class="is-active" data-mode="ttc">TTC (Particulier)</button>
+          <button data-mode="ht">HT (Pro)</button>
+        </div>
+        <a href="#pro" class="topbar-link">→ Espace Pro</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGATION (simplifiée — accès direct config + tarifs)
+  ═══════════════════════════════════════════ -->
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="index-v2.html" class="logo">METAL <span>PLIAGE</span></a>
+        <div class="france-badge">
+          <div class="france-flag" aria-hidden="true">
+            <span class="f-blue"></span><span class="f-white"></span><span class="f-red"></span>
+          </div>
+          Fabriqué en France
+        </div>
+      </div>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="#products">Produits</a></li>
+        <li class="nav-item"><a href="#" >Configurateur</a></li>
+        <li class="nav-item"><a href="#" >Tarifs</a></li>
+        <li class="nav-item"><a href="#" >Guide de pose</a></li>
+        <li class="nav-item"><a href="#" >Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="#" class="nav-cta btn-outline">Devis pro</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO V2 — message clair Pro + Particulier
+  ═══════════════════════════════════════════ -->
+  <section class="hero-v2" aria-label="Présentation">
+    <div class="hero-v2-inner">
+      <div class="hero-v2-content">
+        <div class="hero-v2-audience">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Pour <strong>artisans, architectes</strong> &nbsp;et&nbsp; <strong>particuliers</strong>
+        </div>
+        <h1>
+          Couvertines &amp; pliages
+          <span class="accent-word">sur mesure</span>
+        </h1>
+        <p class="hero-v2-tagline">
+          Fabrication française d'acier, aluminium et inox. Configurez en ligne, prix immédiat, livraison sous 10 jours.
+        </p>
+
+        <div class="hero-v2-ctas">
+          <a href="#" class="btn-hero-v2 btn-hero-v2-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Configurer ma pièce
+          </a>
+          <a href="#" class="btn-hero-v2 btn-hero-v2-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Devis pro / gros volume
+          </a>
+        </div>
+
+        <div class="hero-v2-trust">
+          <div class="hero-v2-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Paiement 100% sécurisé Stripe
+          </div>
+          <div class="hero-v2-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Devis sous 24h ouvrées
+          </div>
+          <div class="hero-v2-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Garantie laquage 10 ans
+          </div>
+        </div>
+      </div>
+
+      <!-- Carte mise en avant : exemple concret de prix -->
+      <aside class="hero-v2-card" aria-label="Exemple de prix">
+        <div class="hero-v2-card-title">Exemple concret</div>
+        <h3>Couvertine standard 2 m</h3>
+        <div class="hero-v2-card-row">
+          <span>Matière</span><strong>Acier prélaqué 0,75 mm</strong>
+        </div>
+        <div class="hero-v2-card-row">
+          <span>Coloris</span><strong>RAL 7016 anthracite</strong>
+        </div>
+        <div class="hero-v2-card-row">
+          <span>Largeur muret</span><strong>200 mm</strong>
+        </div>
+        <div class="hero-v2-card-row">
+          <span>Prix TTC</span><strong style="color:var(--accent); font-size: 1.2rem;">67,20 €</strong>
+        </div>
+        <a href="#" class="hero-v2-card-cta">Configurer la mienne →</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       BANDEAU RÉASSURANCE (juste après hero, sticky-feel)
+  ═══════════════════════════════════════════ -->
+  <section class="reassurance-bar" aria-label="Garanties">
+    <div class="reassurance-inner">
+      <div class="reassurance-item">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div><strong>Fabrication française</strong><span>Atelier Pas-de-Calais</span></div>
+      </div>
+      <div class="reassurance-item">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <div><strong>Livraison 10 jours</strong><span>Franco dès 1 200 € HT</span></div>
+      </div>
+      <div class="reassurance-item">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <div><strong>Paiement sécurisé</strong><span>CB, virement, 3× sans frais</span></div>
+      </div>
+      <div class="reassurance-item">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div><strong>Conseil gratuit</strong><span>Métreurs au téléphone</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PERSONA SECTION — orienter pro & particulier
+  ═══════════════════════════════════════════ -->
+  <section class="persona-section" aria-label="Choix du parcours">
+    <div class="persona-header">
+      <span class="section-label">VOUS ÊTES…</span>
+      <h2 id="persona-title">Choisissez votre parcours</h2>
+      <p>Que vous rénoviez votre maison ou équipiez un chantier, on s'adapte à votre besoin.</p>
+    </div>
+    <div class="persona-grid">
+      <article class="persona-card">
+        <div class="persona-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <span class="persona-card-tag">PARTICULIER</span>
+        <h3>Je rénove ou je construis</h3>
+        <p class="persona-card-desc">
+          Couvertines de muret, appui de fenêtre, habillage bandeau… Achetez à la pièce, payez TTC, recevez chez vous.
+        </p>
+        <div class="persona-card-features">
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Prix affichés TTC, paiement CB sécurisé
+          </div>
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Livraison à domicile, créneau au choix
+          </div>
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Conseil par téléphone avant commande
+          </div>
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Guide de pose pas-à-pas inclus
+          </div>
+        </div>
+        <a href="#products" class="persona-card-cta">
+          Voir les produits →
+        </a>
+      </article>
+
+      <article class="persona-card">
+        <div class="persona-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+        </div>
+        <span class="persona-card-tag">PRO &amp; ARCHITECTE</span>
+        <h3>Je commande pour un chantier</h3>
+        <p class="persona-card-desc">
+          Gros volumes, profils complexes, prix HT négociés. Compte client, facturation 30j, devis détaillés sous 24h.
+        </p>
+        <div class="persona-card-features">
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Prix HT, TVA intracommunautaire
+          </div>
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Devis sur DXF/plan, sous 24h ouvrées
+          </div>
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Livraison sur chantier, palette filmée
+          </div>
+          <div class="persona-card-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Tarifs dégressifs &gt; 50 ml
+          </div>
+        </div>
+        <a href="#pro" class="persona-card-cta">
+          Accéder à l'espace pro →
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PRODUITS V2 — fiches détaillées avec prix + badge audience
+  ═══════════════════════════════════════════ -->
+  <section class="products-v2" id="products" aria-label="Produits">
+    <div class="persona-header">
+      <span class="section-label">NOS PRODUITS</span>
+      <h2>Tout ce qu'on fabrique</h2>
+      <p>Cliquez sur "Voir détail" pour la fiche complète, ou "Configurer" pour aller directement au prix instantané.</p>
+    </div>
+    <div class="products-v2-grid">
+
+      <article class="product-card-v2">
+        <div class="product-card-v2-img">
+          <span class="product-card-v2-badge product-card-v2-badge--particulier">Idéal particulier</span>
+          <svg width="60" height="60" viewBox="0 0 80 50" fill="none">
+            <path d="M 8 22 L 8 18 L 72 18 L 72 22 L 60 28 L 60 42 L 56 42 L 56 28 L 24 28 L 24 42 L 20 42 L 20 28 Z" stroke="currentColor" stroke-width="1.5" fill="rgba(255,69,0,0.08)"/>
+          </svg>
+        </div>
+        <div class="product-card-v2-body">
+          <h3>Couvertine avec retour</h3>
+          <p>Protection de muret avec rejet d'eau 45°. Acier prélaqué ou aluminium, RAL au choix.</p>
+          <div class="product-card-v2-price">
+            <span class="from">À partir de</span>
+            <span class="amount">33,60 €</span>
+            <span class="unit">/ ml</span>
+            <span class="ht-note">TTC</span>
+          </div>
+          <div class="product-card-v2-actions">
+            <a href="#" class="btn-detail">Voir détail</a>
+            <a href="#" class="btn-config">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card-v2">
+        <div class="product-card-v2-img">
+          <span class="product-card-v2-badge product-card-v2-badge--pro">Best-seller pro</span>
+          <svg width="60" height="60" viewBox="0 0 80 50" fill="none">
+            <polyline points="20,8 20,42 60,42 60,8" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-card-v2-body">
+          <h3>Forme U — habillage</h3>
+          <p>Habillage bandeau, cornière structurelle. 3 faces protégées, sur cotes exactes.</p>
+          <div class="product-card-v2-price">
+            <span class="from">À partir de</span>
+            <span class="amount">21,60 €</span>
+            <span class="unit">/ ml</span>
+            <span class="ht-note">TTC</span>
+          </div>
+          <div class="product-card-v2-actions">
+            <a href="#" class="btn-detail">Voir détail</a>
+            <a href="#" class="btn-config">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card-v2">
+        <div class="product-card-v2-img">
+          <svg width="60" height="60" viewBox="0 0 80 50" fill="none">
+            <polyline points="10,40 10,10 70,10" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-card-v2-body">
+          <h3>Forme L — angle</h3>
+          <p>Angle rentrant ou sortant, finition bords roulés. Idéal seuils et appuis.</p>
+          <div class="product-card-v2-price">
+            <span class="from">À partir de</span>
+            <span class="amount">18,00 €</span>
+            <span class="unit">/ ml</span>
+            <span class="ht-note">TTC</span>
+          </div>
+          <div class="product-card-v2-actions">
+            <a href="#" class="btn-detail">Voir détail</a>
+            <a href="#" class="btn-config">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card-v2">
+        <div class="product-card-v2-img">
+          <span class="product-card-v2-badge product-card-v2-badge--particulier">Rénovation</span>
+          <svg width="60" height="60" viewBox="0 0 80 50" fill="none">
+            <path d="M9 4 L9 17 L71 28 L67 46 L64 46" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="product-card-v2-body">
+          <h3>Appui de fenêtre</h3>
+          <p>Retour fenêtre, profondeur pentée, nez 92°. Évacuation eaux optimale.</p>
+          <div class="product-card-v2-price">
+            <span class="from">À partir de</span>
+            <span class="amount">38,40 €</span>
+            <span class="unit">/ ml</span>
+            <span class="ht-note">TTC</span>
+          </div>
+          <div class="product-card-v2-actions">
+            <a href="#" class="btn-detail">Voir détail</a>
+            <a href="#" class="btn-config">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card-v2">
+        <div class="product-card-v2-img">
+          <span class="product-card-v2-badge product-card-v2-badge--pro">Architecture</span>
+          <svg width="60" height="60" viewBox="0 0 80 50" fill="none">
+            <path d="M15 35 L 35 15 L 55 15 L 55 35" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-card-v2-body">
+          <h3>Chapeau de pilier</h3>
+          <p>Couvre-pilier 4 faces, fraisage CNC. Sections 80 à 500 mm.</p>
+          <div class="product-card-v2-price">
+            <span class="from">À partir de</span>
+            <span class="amount">42,00 €</span>
+            <span class="unit">/ pièce</span>
+            <span class="ht-note">TTC</span>
+          </div>
+          <div class="product-card-v2-actions">
+            <a href="#" class="btn-detail">Voir détail</a>
+            <a href="#" class="btn-config">Configurer →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product-card-v2">
+        <div class="product-card-v2-img">
+          <svg width="60" height="60" viewBox="0 0 80 50" fill="none">
+            <path d="M10 40 Q10 10 40 10 Q70 10 70 40" stroke="currentColor" stroke-width="2" stroke-dasharray="4,3" fill="none"/>
+          </svg>
+        </div>
+        <div class="product-card-v2-body">
+          <h3>Forme libre</h3>
+          <p>Profil entièrement personnalisé. Envoyez vos plans ou DXF — devis sous 24h.</p>
+          <div class="product-card-v2-price" style="border-left-color:#0F4C81;">
+            <span class="from">Tarif</span>
+            <span style="font-family:var(--font-head); font-size:1.1rem; font-weight:600; color:#5A9FD4;">Sur devis</span>
+            <span style="margin-left:auto; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; font-weight:600; color:#5A9FD4;">24h</span>
+          </div>
+          <div class="product-card-v2-actions">
+            <a href="#" class="btn-detail">Voir exemples</a>
+            <a href="#" class="btn-config">Demander →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PRO SECTION — argumentaire B2B dédié
+  ═══════════════════════════════════════════ -->
+  <section class="pro-section" id="pro" aria-labelledby="pro-title">
+    <div class="pro-inner">
+      <div class="pro-content">
+        <span class="section-label">ESPACE PROFESSIONNEL</span>
+        <h2 id="pro-title">Conçu pour les <span>chantiers exigeants</span></h2>
+        <p>Vous êtes artisan, entreprise du BTP ou maître d'œuvre ? Bénéficiez d'un parcours d'achat optimisé : tarifs HT négociés, facturation différée, support technique dédié.</p>
+        <div class="pro-benefits">
+          <div class="pro-benefit">
+            <div class="pro-benefit-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="pro-benefit-text">
+              <strong>Tarifs dégressifs dès 50 ml</strong>
+              <span>Jusqu'à -18% sur les commandes volume</span>
+            </div>
+          </div>
+          <div class="pro-benefit">
+            <div class="pro-benefit-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="pro-benefit-text">
+              <strong>Facturation 30 jours fin de mois</strong>
+              <span>Après ouverture de compte (SIRET requis)</span>
+            </div>
+          </div>
+          <div class="pro-benefit">
+            <div class="pro-benefit-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="pro-benefit-text">
+              <strong>Devis DXF / plan sous 24h ouvrées</strong>
+              <span>Métreur dédié, échange technique direct</span>
+            </div>
+          </div>
+          <div class="pro-benefit">
+            <div class="pro-benefit-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="pro-benefit-text">
+              <strong>Livraison sur chantier</strong>
+              <span>Palette filmée, hayon, créneau garanti</span>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn-primary">Ouvrir un compte pro</a>
+      </div>
+
+      <aside class="pro-visual">
+        <div class="hero-v2-card-title">Exemple commande pro</div>
+        <h3 style="margin-bottom: 1rem;">Lot de 80 couvertines</h3>
+        <div class="pro-visual-row">
+          <span>Profil U — 200×80 mm — RAL 7016</span>
+        </div>
+        <div class="pro-visual-row">
+          <span>Quantité</span><strong>80 pièces · 240 ml</strong>
+        </div>
+        <div class="pro-visual-row">
+          <span>Prix unitaire HT</span><strong>22,80 €</strong>
+        </div>
+        <div class="pro-visual-row">
+          <span>Remise volume</span><strong style="color:var(--accent);">−14%</strong>
+        </div>
+        <div class="pro-visual-row">
+          <span>Total HT</span><strong style="font-size:1.2rem;">4 706,88 €</strong>
+        </div>
+        <div class="pro-visual-row">
+          <span>Délai</span><strong>10 jours ouvrés</strong>
+        </div>
+        <div class="pro-visual-row">
+          <span class="badge-pro">Compte Pro</span>
+          <strong>Paiement 30j FdM</strong>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PROCESS (réutilisé tel quel — fonctionne bien)
+  ═══════════════════════════════════════════ -->
+  <section class="process-section" aria-labelledby="process-v2-title">
+    <div class="section-inner">
+      <header class="section-header">
+        <span class="section-label">COMMENT ÇA MARCHE</span>
+        <h2 id="process-v2-title">De la cote à la livraison</h2>
+        <p class="section-desc">4 étapes, transparence totale, prix instantané.</p>
+      </header>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <h4>Configurez</h4>
+        <p>Cotes, matière, finition RAL. Prix HT/TTC affichés en temps réel.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <h4>Validez</h4>
+        <p>CB Stripe ou virement. Particulier en TTC, pro en HT avec compte client.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <h4>Fabriqué chez nous</h4>
+        <p>Pliage CNC, laquage 80 microns, contrôle qualité individuel.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <h4>Livré 10 jours</h4>
+        <p>À domicile (particulier) ou chantier (pro), emballage filmé sur palette.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       NOTE : on retire les témoignages fake, on les remplacera par
+       avis Google Reviews vrais (widget) une fois en place.
+  ═══════════════════════════════════════════ -->
+  <section style="padding: 60px 0; background: var(--bg-surface); text-align: center;">
+    <div class="section-inner">
+      <span class="section-label">EMPLACEMENT RÉSERVÉ</span>
+      <h2 style="font-size: 1.6rem; margin-bottom: 1rem;">Avis Google Reviews</h2>
+      <p style="color: var(--text-secondary); max-width: 540px; margin: 0 auto;">
+        À intégrer une fois 5–10 avis Google obtenus. Plus crédible que les témoignages génériques actuels — preuves vérifiables d'un coup d'œil.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER ENRICHI (SIRET, mentions, vrai contenu légal)
+  ═══════════════════════════════════════════ -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index-v2.html" class="logo footer-logo">METAL <span>PLIAGE</span></a>
+        <p class="footer-tagline">Fabrication française · Acier de précision sur mesure</p>
+        <p style="font-size: 12px; color: var(--text-muted); margin-top: 1rem;">
+          SARL Metal Pliage · SIRET 000 000 000 00000<br>
+          Atelier : [Ville, Code postal]<br>
+          TVA intracom : FR00 000 000 000
+        </p>
+      </div>
+      <nav class="footer-nav">
+        <strong style="display:block; font-size:11px; letter-spacing:0.18em; color:var(--accent); margin-bottom:1rem;">PARTICULIER</strong>
+        <ul role="list">
+          <li><a href="#">Couvertines</a></li>
+          <li><a href="#">Pliage sur mesure</a></li>
+          <li><a href="#">Appuis de fenêtre</a></li>
+          <li><a href="#">Guide de pose</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-nav">
+        <strong style="display:block; font-size:11px; letter-spacing:0.18em; color:var(--accent); margin-bottom:1rem;">PRO &amp; ARCHITECTE</strong>
+        <ul role="list">
+          <li><a href="#">Compte pro</a></li>
+          <li><a href="#">Devis gros volume</a></li>
+          <li><a href="#">Forme libre / DXF</a></li>
+          <li><a href="#">Tarifs dégressifs</a></li>
+          <li><a href="#">Conditions B2B</a></li>
+        </ul>
+      </nav>
+      <address class="footer-contact">
+        <strong style="display:block; font-size:11px; letter-spacing:0.18em; color:var(--accent); margin-bottom:1rem;">CONTACT</strong>
+        <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
+        <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
+        <p>Lun–Ven · 9h–18h</p>
+      </address>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+      <div class="footer-legal-links">
+        <a href="#">CGV</a>
+        <a href="#">CGU</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Livraison &amp; Retours</a>
+        <a href="#">Cookies</a>
+      </div>
+      <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
+    </div>
+  </footer>
+
+  <!-- Switch HT/TTC interactif — démonstration -->
+  <script>
+    (function () {
+      // Capture les prix TTC d'origine (parse une seule fois)
+      document.querySelectorAll('.product-card-v2-price .amount').forEach(function (el) {
+        var txt = el.textContent.replace(/[^\d.,]/g, '').replace(',', '.');
+        var num = parseFloat(txt);
+        if (!isNaN(num)) el.dataset.baseTtc = num;
+      });
+
+      document.querySelectorAll('.price-mode-switch button').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.price-mode-switch button')
+            .forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+
+          var mode = btn.dataset.mode;
+          document.querySelectorAll('.product-card-v2-price .ht-note').forEach(function (el) {
+            el.textContent = mode === 'ht' ? 'HT' : 'TTC';
+          });
+          document.querySelectorAll('.product-card-v2-price .amount').forEach(function (el) {
+            var base = parseFloat(el.dataset.baseTtc);
+            if (isNaN(base)) return;
+            var price = mode === 'ht' ? base / 1.20 : base;
+            el.textContent = price.toFixed(2).replace('.', ',') + ' €';
+          });
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Demande de devis pour pliage métallique forme libre — jusqu'à 10 plis personnalisés. Acier, aluminium ou inox. Envoyez votre plan, nous répondons sous 24h.">
+  <title>Pliage Forme Libre — Devis 24h · Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/futuriste.css">
+  <link rel="stylesheet" href="css/preloader.css">
+  <style>
+    /* ═══ EN-TÊTE harmonisé style pliage.html ═══ */
+    .libre-header {
+      padding: calc(var(--nav-h) + 3.5rem) 1.5rem 3rem;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .libre-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .libre-title {
+      font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin: 0 0 0.9rem;
+    }
+    .libre-title strong { color: var(--accent); font-weight: 500; }
+    .libre-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ═══ LAYOUT 2 COLONNES ═══ */
+    .libre-layout {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 4rem clamp(1.5rem, 3vw, 2.5rem);
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ═══ COL GAUCHE — Exemples + Aide ═══ */
+    .libre-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+    .examples-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .examples-card h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .example {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 0.6rem 0.7rem;
+      text-align: center;
+    }
+    .example svg {
+      width: 100%; height: 50px;
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      filter: drop-shadow(0 2px 6px rgba(255,69,0,0.3));
+    }
+    .example-name {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .help-card {
+      background: linear-gradient(135deg, rgba(255,69,0,0.07) 0%, rgba(255,69,0,0.02) 100%);
+      border: 1px solid rgba(255,69,0,0.25);
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+    }
+    .help-card h4 {
+      font-size: 0.85rem;
+      color: var(--accent-warm);
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .help-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 0.4rem;
+    }
+    .help-card p:last-child { margin-bottom: 0; }
+    .help-card strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ═══ COL DROITE — Formulaire ═══ */
+    .libre-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem clamp(1.4rem, 2vw, 2.2rem);
+    }
+    .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 1rem;
+      padding-bottom: 0;
+    }
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .section-num span {
+      background: rgba(255, 69, 0, 0.12);
+      border: 1px solid rgba(255, 69, 0, 0.45);
+      color: var(--accent);
+      width: 30px; height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .section-num h2 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .form-row.full { grid-template-columns: 1fr; }
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #C8C8C8;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .field label .req { color: var(--accent); }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hover);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: border-color 0.2s;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .field .hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ═══ UPLOAD ═══ */
+    .upload-zone {
+      position: relative;
+      border: 2px dashed rgba(255,69,0,0.4);
+      border-radius: 10px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: rgba(255,69,0,0.03);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .upload-zone:hover,
+    .upload-zone.is-drag {
+      border-color: var(--accent);
+      background: rgba(255,69,0,0.07);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+    .upload-text {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .upload-sub {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+    .file-list {
+      list-style: none;
+      margin-top: 0.8rem;
+      padding: 0;
+    }
+    .file-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.7rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .file-list li::before {
+      content: '📄';
+      flex-shrink: 0;
+    }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* ═══ SUBMIT ═══ */
+    .submit-row {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .btn-submit {
+      flex: 1;
+      min-width: 200px;
+      padding: 1rem 1.4rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 6px 20px rgba(255,69,0,0.35);
+      transform: translateY(-1px);
+    }
+    .btn-submit svg { width: 18px; height: 18px; }
+    .submit-note {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 0.8rem;
+    }
+    .submit-note strong { color: var(--accent-warm); }
+
+    /* ═══ SUCCESS MESSAGE (caché par défaut) ═══ */
+    .success-msg {
+      display: none;
+      background: linear-gradient(135deg, rgba(76,175,80,0.15) 0%, rgba(76,175,80,0.05) 100%);
+      border: 1px solid rgba(76,175,80,0.4);
+      border-radius: 14px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .success-msg.is-visible { display: block; }
+    .success-msg h3 {
+      color: #66bb6a;
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .success-msg p { color: var(--text-secondary); }
+
+    @media (max-width: 800px) {
+      .libre-layout { grid-template-columns: 1fr; }
+      .libre-sidebar { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="page-forme-libre">
+
+  <!-- NAVIGATION -->
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <div class="france-badge" aria-label="Fabriqué en France">
+          <div class="france-flag" aria-hidden="true">
+            <span class="f-blue"></span>
+            <span class="f-white"></span>
+            <span class="f-red"></span>
+          </div>
+          Fabriqué en France
+        </div>
+      </div>
+      <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="index.html#couvertine">Couvertine</a></li>
+        <li class="nav-item"><a href="pliage.html" class="active">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- EN-TÊTE -->
+  <header class="libre-header">
+    <div class="libre-eyebrow">— PLIAGE FORME LIBRE —</div>
+    <h1 class="libre-title">Décrivez votre <strong>pliage sur mesure</strong></h1>
+    <p class="libre-desc">Jusqu'à 10 plis personnalisés. Envoyez votre plan (DXF, PDF, photo, croquis) — devis sous 24h ouvrées.</p>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="libre-layout">
+
+    <!-- SIDEBAR GAUCHE -->
+    <aside class="libre-sidebar">
+      <div class="examples-card">
+        <h3>Exemples de formes libres</h3>
+        <div class="examples-grid">
+          <div class="example">
+            <svg viewBox="0 0 80 40" aria-hidden="true">
+              <polyline points="10,30 10,15 30,15 30,5 50,5 50,25 70,25"/>
+            </svg>
+            <div class="example-name">5 plis</div>
+          </div>
+          <div class="example">
+            <svg viewBox="0 0 80 40" aria-hidden="true">
+              <polyline points="10,30 10,10 25,10 25,20 45,20 45,10 60,10 60,30"/>
+            </svg>
+            <div class="example-name">6 plis</div>
+          </div>
+          <div class="example">
+            <svg viewBox="0 0 80 40" aria-hidden="true">
+              <polyline points="5,30 15,5 35,5 45,30 55,5 70,5"/>
+            </svg>
+            <div class="example-name">Trapèzes</div>
+          </div>
+          <div class="example">
+            <svg viewBox="0 0 80 40" aria-hidden="true">
+              <polyline points="10,5 10,30 30,30 30,15 50,15 50,30 70,30 70,5"/>
+            </svg>
+            <div class="example-name">Profil complexe</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-card">
+        <h4>📐 Comment décrire ma forme ?</h4>
+        <p><strong>Le plus simple :</strong> envoyez un plan (DXF, PDF) ou un croquis main levée pris en photo.</p>
+        <p><strong>Sans plan :</strong> décrivez les plis dans l'ordre, avec leurs longueurs et angles. Notre équipe vous rappelle si besoin de précisions.</p>
+      </div>
+    </aside>
+
+    <!-- FORMULAIRE -->
+    <main>
+      <form class="libre-form" id="forme-libre-form"
+            action="https://formsubmit.co/contact@metalpliage.fr"
+            method="POST"
+            enctype="multipart/form-data">
+
+        <!-- Anti-spam + redirection (FormSubmit) -->
+        <input type="hidden" name="_subject" value="Demande devis — Pliage forme libre">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://metalpliage.fr/forme-libre.html?sent=1">
+
+        <!-- SECTION 1 : VOS COORDONNÉES -->
+        <div class="form-section">
+          <div class="section-num">
+            <span>1</span>
+            <h2>Vos coordonnées</h2>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Nom <span class="req">*</span></label>
+              <input type="text" name="Nom" required autocomplete="name" placeholder="Jean Dupont">
+            </div>
+            <div class="field">
+              <label>Société (optionnel)</label>
+              <input type="text" name="Société" autocomplete="organization" placeholder="Atelier Dupont">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="Email" required autocomplete="email" placeholder="jean@exemple.fr">
+            </div>
+            <div class="field">
+              <label>Téléphone</label>
+              <input type="tel" name="Téléphone" autocomplete="tel" placeholder="06 12 34 56 78">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2 : VOTRE PROJET -->
+        <div class="form-section">
+          <div class="section-num">
+            <span>2</span>
+            <h2>Votre projet</h2>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Matière <span class="req">*</span></label>
+              <select name="Matière" required>
+                <option value="">— Choisir —</option>
+                <option>Acier 0,75 mm laqué</option>
+                <option>Aluminium 1 mm</option>
+                <option>Aluminium 2 mm</option>
+                <option>Inox 1 mm (brut)</option>
+                <option>Inox 2 mm (brut)</option>
+                <option>À conseiller selon usage</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Quantité <span class="req">*</span></label>
+              <input type="number" name="Quantité" min="1" value="1" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Longueur unitaire (mm)</label>
+              <input type="number" name="Longueur" min="50" max="6000" placeholder="ex : 2000">
+              <div class="hint">min 50 — max 6 000 mm</div>
+            </div>
+            <div class="field">
+              <label>Nombre de plis estimé</label>
+              <input type="number" name="Nombre de plis" min="1" max="10" placeholder="ex : 6">
+              <div class="hint">jusqu'à 10 plis maximum</div>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>Coloris RAL souhaité</label>
+              <input type="text" name="Coloris RAL" placeholder="ex : RAL 7016 anthracite — ou laisser vide si non décidé">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3 : PLAN / SCHÉMA -->
+        <div class="form-section">
+          <div class="section-num">
+            <span>3</span>
+            <h2>Votre plan ou schéma</h2>
+          </div>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" name="Fichiers[]" id="file-input"
+                   multiple
+                   accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
+            <div class="upload-icon">↑</div>
+            <div class="upload-text">Glissez vos fichiers ici ou cliquez pour parcourir</div>
+            <div class="upload-sub">DXF, DWG, PDF, photo de croquis (JPG, PNG, HEIC) — jusqu'à 25 Mo total</div>
+          </div>
+          <ul class="file-list" id="file-list"></ul>
+        </div>
+
+        <!-- SECTION 4 : DESCRIPTION -->
+        <div class="form-section">
+          <div class="section-num">
+            <span>4</span>
+            <h2>Description complémentaire</h2>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>Détails du projet</label>
+              <textarea name="Description"
+                        placeholder="Décrivez votre besoin : usage final, contraintes de pose, échéance souhaitée, tolérances particulières, etc."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="submit-row">
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+            Envoyer ma demande de devis
+          </button>
+        </div>
+        <p class="submit-note">
+          <strong>Réponse sous 24h ouvrées</strong> · Sans engagement · Vos données restent confidentielles
+        </p>
+      </form>
+
+      <!-- Message succès (affiché si redirigé avec ?sent=1) -->
+      <div class="success-msg" id="success-msg">
+        <h3>✓ Demande envoyée avec succès</h3>
+        <p>Merci ! Nous avons bien reçu votre demande. Notre équipe vous répondra sous 24h ouvrées par email.</p>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- TRUST SECTION -->
+  <section class="trust-section" aria-label="Nos garanties">
+    <div class="trust-grid">
+      <article class="trust-card">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h4>Devis sous 24h ouvrées</h4>
+        <p>Étude technique de votre demande et chiffrage personnalisé par retour de mail.</p>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h4>Fabrication française</h4>
+        <p>Plieuses CNC haute précision dans notre atelier. Sans sous-traitance.</p>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h4>Accompagnement technique</h4>
+        <p>Notre équipe vous conseille sur les cotes, tolérances et finitions adaptées.</p>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h4>Livraison France entière</h4>
+        <p>5 à 10 jours après validation du devis. Franco de port dès 1 200 € HT.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo footer-logo">METAL <span>PLIAGE</span></a>
+        <p class="footer-tagline">Fabrication française &nbsp;·&nbsp; Acier de précision sur mesure</p>
+      </div>
+      <nav class="footer-nav" aria-label="Liens de bas de page">
+        <ul role="list">
+          <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="pliage.html">Pliage</a></li>
+          <li><a href="configurateur-pliage.html">Configurateur</a></li>
+          <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="contact.html">Contact / Devis</a></li>
+        </ul>
+      </nav>
+      <address class="footer-contact">
+        <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
+        <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
+        <p>France</p>
+      </address>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+      <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/futuriste.js"></script>
+  <script src="js/preloader.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // ═══ UPLOAD : drag & drop + listing fichiers ═══
+    (function() {
+      const zone = document.getElementById('upload-zone');
+      const input = document.getElementById('file-input');
+      const list = document.getElementById('file-list');
+      let files = [];
+
+      function fmt(b) {
+        return b < 1024 ? b + ' o'
+             : b < 1048576 ? (b/1024).toFixed(1) + ' Ko'
+             : (b/1048576).toFixed(2) + ' Mo';
+      }
+
+      function render() {
+        list.innerHTML = '';
+        files.forEach((f, i) => {
+          const li = document.createElement('li');
+          li.innerHTML = `${f.name}<span class="file-size">${fmt(f.size)}</span>`;
+          list.appendChild(li);
+        });
+      }
+
+      input.addEventListener('change', e => {
+        files = Array.from(e.target.files);
+        render();
+      });
+
+      ['dragover','dragenter'].forEach(ev => {
+        zone.addEventListener(ev, e => {
+          e.preventDefault();
+          zone.classList.add('is-drag');
+        });
+      });
+      ['dragleave','drop'].forEach(ev => {
+        zone.addEventListener(ev, e => {
+          e.preventDefault();
+          zone.classList.remove('is-drag');
+        });
+      });
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        if (e.dataTransfer.files.length) {
+          input.files = e.dataTransfer.files;
+          files = Array.from(e.dataTransfer.files);
+          render();
+        }
+      });
+    })();
+
+    // ═══ Message succès si ?sent=1 ═══
+    if (new URLSearchParams(location.search).get('sent') === '1') {
+      document.getElementById('forme-libre-form').style.display = 'none';
+      document.getElementById('success-msg').classList.add('is-visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
+  <link rel="stylesheet" href="css/preloader.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -26,7 +27,7 @@
     "name": "Metal Pliage",
     "description": "Fabricant français de tôles acier, inox, couvertines et profilés pliés sur mesure",
     "url": "https://metalpliage.fr",
-    "telephone": "+33100000000",
+    "telephone": "+33643218201",
     "email": "contact@metalpliage.fr",
     "address": { "@type": "PostalAddress", "addressCountry": "FR" },
     "priceRange": "€€",
@@ -45,180 +46,523 @@
   </script>
   <style>
     .hero-slideshow{position:absolute;inset:0;z-index:0;overflow:hidden}
-    .hs-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease-in-out;will-change:opacity}
+    .hs-slide{
+      position:absolute;inset:0;
+      background-size:cover;background-position:center;
+      opacity:0;transition:opacity 1.4s ease-in-out;
+      will-change:opacity;
+      /* Traitement homogène (réduit le rendu "IA générique" et lie les images entre elles) */
+      filter:
+        contrast(1.10)
+        saturate(0.85)
+        brightness(0.88)
+        sepia(0.06);
+    }
     .hs-slide.hs-active{opacity:1}
+    /* Vignettage cinéma + grain subtil pour effet photographique */
+    .hero-slideshow::after{
+      content:'';
+      position:absolute;inset:0;
+      pointer-events:none;
+      z-index:1;
+      box-shadow:
+        inset 0 0 220px 30px rgba(0,0,0,0.55),
+        inset 0 -120px 200px -40px rgba(0,0,0,0.45);
+      background:
+        radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.25) 100%);
+    }
+
+    /* ── Reflet panoramique — un seul passage au chargement (3.5s),
+           puis l'effet se fige sur sa position finale.
+           Palette acier brossé (gris foncé → argent) pour lisibilité. ── */
+    .brushed-aluminum{
+      background:
+        /* 1. Stries fines (texture brossage — statique) */
+        repeating-linear-gradient(180deg,
+          rgba(255,255,255,0.10) 0,
+          rgba(255,255,255,0.10) 1px,
+          rgba(0,0,0,0.10)       1px,
+          rgba(0,0,0,0.10)       2px),
+        /* 2. Reflet cylindrique vertical (statique) */
+        linear-gradient(180deg,
+          rgba(255,255,255,0.24) 0%,
+          rgba(255,255,255,0.06) 25%,
+          transparent            45%,
+          rgba(0,0,0,0.14)       55%,
+          rgba(255,255,255,0.06) 80%,
+          rgba(255,255,255,0.22) 100%),
+        /* 3. Gradient panoramique répété — palette acier brossé clair. */
+        linear-gradient(105deg,
+          #5a5a5a 0%,  #6a6a6a 4%,  #787878 9%,  #888888 14%,
+          #a4a4a4 20%, #b8b8b8 27%, #d4d4d4 30%, #b8b8b8 33%,
+          #9c9c9c 38%, #888888 45%, #787878 50%,
+          #6a6a6a 54%, #787878 59%, #888888 64%,
+          #9c9c9c 70%, #b8b8b8 77%, #d4d4d4 80%, #b8b8b8 83%,
+          #9c9c9c 88%, #888888 95%, #787878 100%);
+      background-size: auto, auto, 300% 100%;
+      background-position: 0 0, 0 0, 0% 50%;
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+              color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7))
+              drop-shadow(0 0 1px rgba(255,255,255,0.30));
+      animation: pan-reflect 3.5s ease-out 1 forwards;
+    }
+    @keyframes pan-reflect{
+      0%   { background-position: 0 0, 0 0,   0% 50%; }
+      100% { background-position: 0 0, 0 0, 200% 50%; }
+    }
+
+    /* Override : combine le fade-up d'entrée + un seul passage du reflet. */
+    .animate-fadeup.brushed-aluminum.in-view{
+      animation:
+        fadeUp 0.75s cubic-bezier(0,0,0.2,1) forwards,
+        pan-reflect 3.5s ease-out 1 forwards;
+    }
+
+    /* ── Acier Corten (rouille) ── */
+    .fx-corten{
+      background:
+        repeating-linear-gradient(180deg,
+          rgba(0,0,0,0.08) 0,
+          rgba(0,0,0,0.08) 1px,
+          transparent 1px,
+          transparent 3px),
+        linear-gradient(180deg,
+          #d68858 0%,
+          #a04828 35%,
+          #6a2810 60%,
+          #b85838 90%,
+          #d88a5c 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+              color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(80,30,0,0.65));
+    }
+
+    /* ── Inox satiné (mat, gris uniforme) ── */
+    .fx-inox{
+      background:
+        repeating-linear-gradient(180deg,
+          rgba(255,255,255,0.05) 0,
+          rgba(255,255,255,0.05) 2px,
+          rgba(0,0,0,0.05)       2px,
+          rgba(0,0,0,0.05)       4px),
+        linear-gradient(180deg,
+          #c8c8c8 0%,
+          #9a9a9a 50%,
+          #b4b4b4 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+              color: transparent;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.55));
+    }
+
+    /* Conteneur pour aligner les lettres avec effets séparés */
+    .multi-metal{
+      display: inline-block;
+      letter-spacing: -0.01em;
+    }
+    .multi-metal > span{ display: inline-block; }
+    /* La sous-ligne : reflet panoramique en un seul passage,
+       stries plus discrètes, palette acier brossé claire. */
+    .hero-sub.brushed-aluminum{
+      background:
+        repeating-linear-gradient(180deg,
+          rgba(255,255,255,0.07) 0,
+          rgba(255,255,255,0.07) 1px,
+          rgba(0,0,0,0.07)       1px,
+          rgba(0,0,0,0.07)       2px),
+        linear-gradient(105deg,
+          #5a5a5a 0%,  #6a6a6a 4%,  #787878 9%,  #888888 14%,
+          #a4a4a4 20%, #b8b8b8 27%, #d4d4d4 30%, #b8b8b8 33%,
+          #9c9c9c 38%, #888888 45%, #787878 50%,
+          #6a6a6a 54%, #787878 59%, #888888 64%,
+          #9c9c9c 70%, #b8b8b8 77%, #d4d4d4 80%, #b8b8b8 83%,
+          #9c9c9c 88%, #888888 95%, #787878 100%);
+      background-size: auto, 300% 100%;
+      background-position: 0 0, 0% 50%;
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+              color: transparent;
+      filter: drop-shadow(0 1px 4px rgba(0,0,0,0.55));
+      animation: pan-reflect-sub 3.5s ease-out 1 forwards;
+    }
+    @keyframes pan-reflect-sub{
+      0%   { background-position: 0 0,   0% 50%; }
+      100% { background-position: 0 0, 200% 50%; }
+    }
+
+    /* Idem pour la sous-ligne : fade-up + un seul passage du reflet. */
+    .hero-sub.animate-fadeup.brushed-aluminum.in-view{
+      animation:
+        fadeUp 0.75s cubic-bezier(0,0,0.2,1) forwards,
+        pan-reflect-sub 3.5s ease-out 1 forwards;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO V2 — module recentré (slideshow original conservé)
+    ═══════════════════════════════════════════ */
+    .hero-content.hero-content--split {
+      position: relative;
+      z-index: 2;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem clamp(1.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-content--split .hero-main { text-align: left; }
+    .hero-content--split h1 {
+      text-align: left;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.6rem, 7vw, 6rem);
+    }
+
+    .hero-sub-v2 {
+      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.55;
+      font-weight: 400;
+      margin-bottom: 1.8rem;
+    }
+    .hero-orange { color: var(--accent); font-weight: 600; }
+
+    .hero-content--split .hero-cta-group {
+      justify-content: flex-start;
+    }
+
+    /* Carte glassmorphism D3 (à droite du hero) */
+    .hero-glass-card {
+      position: relative;
+      padding: 1.6rem 1.8rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      max-width: 340px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .hero-glass-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 20px;
+      width: 36px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .hero-glass-eyebrow {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .hero-glass-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+    .hero-glass-line svg { color: var(--accent); flex-shrink: 0; }
+    .hero-glass-line strong { color: var(--text-primary); font-weight: 600; }
+
+    @media (max-width: 900px) {
+      .hero-content.hero-content--split {
+        grid-template-columns: 1fr;
+        gap: 2.2rem;
+        text-align: center;
+      }
+      .hero-content--split .hero-main { text-align: center; }
+      .hero-content--split h1 { text-align: center; }
+      .hero-content--split .hero-cta-group { justify-content: center; }
+      .hero-glass-card { max-width: 100%; }
+    }
+
+    /* ═══════════════════════════════════════════
+       DIPTYQUE 50/50
+    ═══════════════════════════════════════════ */
+    .diptyque-section {
+      background: #0f0f0f;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .diptyque-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(60px, 6vw, 90px) 1.5rem 2rem;
+      text-align: center;
+    }
+    .diptyque-header h2 {
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      margin-bottom: 0.8rem;
+    }
+    .diptyque-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+    .diptyque-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      min-height: 500px;
+    }
+    .diptyque-pane {
+      position: relative;
+      padding: 3.5rem clamp(1.5rem, 4vw, 3.8rem);
+      background: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.1rem;
+      overflow: hidden;
+      transition: background var(--t) var(--ease);
+      text-decoration: none;
+    }
+    .diptyque-pane::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.45;
+      transition: opacity var(--t) var(--ease);
+      z-index: 0;
+    }
+    .diptyque-pane--couvertine::before {
+      background:
+        linear-gradient(135deg, rgba(255,69,0,0.18), transparent 60%),
+        url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_41_55%20(3).png') center/cover;
+    }
+    .diptyque-pane--pliage::before {
+      background:
+        linear-gradient(135deg, rgba(255,69,0,0.14), transparent 60%),
+        url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_19%20(2).png') center/cover;
+    }
+    .diptyque-pane:hover::before { opacity: 0.72; }
+    .diptyque-pane > * { position: relative; z-index: 1; }
+    .diptyque-pane h3 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--text-primary);
+      letter-spacing: -0.015em;
+      font-weight: 700;
+    }
+    .diptyque-pane-desc {
+      font-size: 16.5px;
+      color: var(--text-secondary);
+      max-width: 460px;
+      line-height: 1.6;
+    }
+    .diptyque-pane-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0.5rem 0 1.4rem;
+    }
+    .diptyque-pane-feature {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+    .diptyque-pane-feature svg { color: var(--accent); flex-shrink: 0; }
+    .diptyque-pane-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      align-self: flex-start;
+      padding: 1.05rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: all var(--t) var(--ease);
+    }
+    .diptyque-pane:hover .diptyque-pane-cta {
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+    @media (max-width: 880px) {
+      .diptyque-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
   <div id="scroll-progress" aria-hidden="true"></div>
 
-  <!-- PRELOADER -->
-  <div id="preloader" aria-hidden="true">
-    <div class="pl-scene">
-
-      <!-- Animation pliage tôle -->
-      <svg class="pl-svg" viewBox="0 0 240 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <!-- Gradient face supérieure (métal éclairé) -->
-          <linearGradient id="plTop" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#C8D8E8"/>
-            <stop offset="35%"  stop-color="#8AAFC8"/>
-            <stop offset="100%" stop-color="#476878"/>
-          </linearGradient>
-          <!-- Gradient face latérale (ombre) -->
-          <linearGradient id="plSide" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#567282"/>
-            <stop offset="100%" stop-color="#263E4C"/>
-          </linearGradient>
-          <!-- Glow orange pour étincelles -->
-          <filter id="plGlow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <!-- Glow doux pour le métal -->
-          <filter id="plMetalGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        <!-- Ombre portée au sol -->
-        <ellipse class="pl-shadow" cx="120" cy="138" rx="66" ry="5" fill="rgba(0,0,0,0.38)"/>
-
-        <!-- BRAS GAUCHE (se plie vers le haut) -->
-        <g class="pl-arm-l">
-          <rect x="20"  y="78" width="54" height="9"  fill="url(#plTop)"/>
-          <rect x="20"  y="87" width="54" height="5"  fill="url(#plSide)"/>
-          <rect x="20"  y="78" width="54" height="2.5" fill="rgba(255,255,255,0.22)"/>
-        </g>
-
-        <!-- BASE (reste horizontale) -->
-        <rect x="74"  y="78" width="92" height="9"  fill="url(#plTop)" filter="url(#plMetalGlow)"/>
-        <rect x="74"  y="87" width="92" height="5"  fill="url(#plSide)"/>
-        <rect x="74"  y="78" width="92" height="2.5" fill="rgba(255,255,255,0.22)"/>
-
-        <!-- BRAS DROIT (se plie vers le haut) -->
-        <g class="pl-arm-r">
-          <rect x="166" y="78" width="54" height="9"  fill="url(#plTop)"/>
-          <rect x="166" y="87" width="54" height="5"  fill="url(#plSide)"/>
-          <rect x="166" y="78" width="54" height="2.5" fill="rgba(255,255,255,0.22)"/>
-        </g>
-
-        <!-- Étincelles aux lignes de pliage (s'allument à la fin du pliage) -->
-        <line class="pl-spark pl-spark-l" x1="74"  y1="68" x2="74"  y2="102"
-              stroke="#FF5520" stroke-width="2" stroke-linecap="round" opacity="0" filter="url(#plGlow)"/>
-        <line class="pl-spark pl-spark-r" x1="166" y1="68" x2="166" y2="102"
-              stroke="#FF5520" stroke-width="2" stroke-linecap="round" opacity="0" filter="url(#plGlow)"/>
-        <!-- Points d'étincelles secondaires -->
-        <circle class="pl-spark pl-spark-l" cx="74"  cy="78" r="3" fill="#FF7040" opacity="0" filter="url(#plGlow)"/>
-        <circle class="pl-spark pl-spark-r" cx="166" cy="78" r="3" fill="#FF7040" opacity="0" filter="url(#plGlow)"/>
-      </svg>
-
-      <!-- Label marque -->
-      <div class="pl-label">
-        <span class="pl-name">METAL</span><span class="pl-accent"> PLIAGE</span>
-      </div>
-
-      <!-- Barre de progression -->
-      <div class="preloader-bar-wrap">
-        <div class="preloader-bar-fill"></div>
-      </div>
-    </div>
-  </div>
+  <!-- PRELOADER : injecté par js/preloader.js -->
 
   <!-- ═══════════════════════════════════════════
        NAVIGATION
   ═══════════════════════════════════════════ -->
   <nav id="navbar" aria-label="Navigation principale">
     <div class="nav-inner">
-      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
-      <div class="france-badge" aria-label="Fabriqué en France">
-        <div class="france-flag" aria-hidden="true">
-          <span class="f-blue"></span>
-          <span class="f-white"></span>
-          <span class="f-red"></span>
+      <div class="nav-left">
+        <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <div class="france-badge" aria-label="Fabriqué en France">
+          <div class="france-flag" aria-hidden="true">
+            <span class="f-blue"></span>
+            <span class="f-white"></span>
+            <span class="f-red"></span>
+          </div>
+          Fabriqué en France
         </div>
-        Fabriqué en France
       </div>
       <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="#couvertine">Couvertine</a></li>
-        <li class="nav-item"><a href="#pliage">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
+        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
-      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      </div>
     </div>
   </nav>
 
   <!-- ═══════════════════════════════════════════
-       SECTION 1 — HERO
+       SECTION 1 — HERO (slideshow original + nouveau module)
   ═══════════════════════════════════════════ -->
   <section id="hero" aria-label="Présentation">
     <div class="hero-letterbox-top" aria-hidden="true"></div>
     <div class="hero-letterbox-bottom" aria-hidden="true"></div>
     <div class="hero-slideshow" aria-hidden="true">
       <div class="hs-slide hs-active" style="background-image:url('assets/photos/slide-01.jpg')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_41_54%20(1).png')"></div>
       <div class="hs-slide" style="background-image:url('assets/photos/slide-02.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-03.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-04.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-05.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-06.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-07.jpg')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_41_55%20(3).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_41_55%20(5).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_41_56%20(6).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_19%20(2).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_19%20(3).png')"></div>
       <div class="hs-slide" style="background-image:url('assets/photos/slide-08.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-09.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-10.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-11.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-12.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-13.jpg')"></div>
-      <div class="hs-slide" style="background-image:url('assets/photos/slide-14.jpg')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_20%20(4).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_20%20(5).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_20%20(7).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_46_23%20(8).png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_49_42.png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_49_50.png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_49_57.png')"></div>
       <div class="hs-slide" style="background-image:url('assets/photos/slide-15.jpg')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2011_50_07.png')"></div>
+      <div class="hs-slide" style="background-image:url('assets/photos/ChatGPT%20Image%2011%20mai%202026,%2012_05_07.png')"></div>
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-ambient-glow" aria-hidden="true"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow animate-fadeup">PRÉCISION MÉTAL · FABRIQUÉ EN FRANCE</p>
-      <h1 class="animate-fadeup" style="--delay: 0.15s">METAL<br><span class="text-gradient">PLIAGE</span></h1>
-      <p class="hero-sub animate-fadeup" style="--delay: 0.3s">Couvertine &nbsp;·&nbsp; Pliage sur mesure &nbsp;·&nbsp; Fabrication française</p>
-      <div class="hero-cta-group animate-fadeup" style="--delay: 0.45s">
-        <a href="configurateur.html" class="btn-hero-primary btn-magnetic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          Configurer ma couvertine
-        </a>
-        <a href="pliage.html" class="btn-hero-primary btn-magnetic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-          Configurer mon pliage
-        </a>
-        <a href="contact.html" class="btn-outline btn-magnetic">Demander un devis</a>
+    <div class="hero-content hero-content--split">
+      <div class="hero-main">
+        <h1 class="animate-fadeup brushed-aluminum" style="--delay: 0.15s">METAL PLIAGE</h1>
+        <p class="hero-sub-v2 animate-fadeup" style="--delay: 0.3s">
+          <span class="hero-orange">Couvertines</span> et <span class="hero-orange">pliages</span> sur mesure.<br>
+          Découvrez nos produits et configurez votre commande quand vous êtes prêt.
+        </p>
+        <div class="hero-cta-group animate-fadeup" style="--delay: 0.45s">
+          <a href="#diptyque" class="btn-hero-primary">
+            Accéder aux produits
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          </a>
+        </div>
       </div>
+      <aside class="hero-glass-card animate-fadeup" style="--delay: 0.6s" aria-label="À qui s'adresse ce site">
+        <span class="hero-glass-eyebrow">Sur mesure · sans engagement</span>
+        <div class="hero-glass-line">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Particulier</strong> — achat en ligne</span>
+        </div>
+        <div class="hero-glass-line">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Professionnel</strong> — gros volume B2B</span>
+        </div>
+        <div class="hero-glass-line">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Tarif dégressif</strong> selon quantité</span>
+        </div>
+      </aside>
     </div>
-    <a href="#products" class="hero-scroll-hint" aria-label="Découvrir les produits">
+    <a href="#diptyque" class="hero-scroll-hint" aria-label="Découvrir les produits">
       <span></span>
     </a>
   </section>
 
-  <!-- MARQUEE TICKER -->
-  <section class="marquee-section" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="marquee-item"><strong>FABRICATION FRANÇAISE</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item">ACIER SUR MESURE<span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>Couvertines alu et acier </strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>COUVERTINES</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item">RAL SUR MESURE<span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>DÉLAI 10 JOURS</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>FABRICATION FRANÇAISE</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item">ACIER SUR MESURE<span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>PLIAGE CNC</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item">RAL SUR MESURE<span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>DÉLAI 10 JOURS</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>FABRICATION FRANÇAISE</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item">ACIER SUR MESURE<span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>PLIAGE CNC</strong><span class="marquee-dot"></span></span>
-      <span class="marquee-item">PLIAGES DIVERS<span class="marquee-dot"></span></span>
-      <span class="marquee-item">RAL SUR MESURE<span class="marquee-dot"></span></span>
-      <span class="marquee-item"><strong>DÉLAI 10 JOURS</strong><span class="marquee-dot"></span></span>
+  <!-- ═══════════════════════════════════════════
+       SECTION — DIPTYQUE 50/50 (choix produit)
+  ═══════════════════════════════════════════ -->
+  <section class="diptyque-section" id="diptyque" aria-labelledby="diptyque-title">
+    <div class="diptyque-header">
+      <span class="section-label">CHOISISSEZ VOTRE PRODUIT</span>
+      <h2 id="diptyque-title">DEUX FAMILLES,<br>UN MÊME SAVOIR-FAIRE</h2>
+      <p>Découvrez nos produits, comparez les solutions et configurez votre commande quand vous êtes prêt.</p>
+    </div>
+    <div class="diptyque-grid">
+
+      <a href="couvertines.html" class="diptyque-pane diptyque-pane--couvertine">
+        <h3>Couvertine</h3>
+        <p class="diptyque-pane-desc">Protection de muret avec retours latéraux et rejet d'eau intégré. Acier prélaqué ou aluminium, longueurs jusqu'à 3 m, RAL au choix.</p>
+        <div class="diptyque-pane-features">
+          <span class="diptyque-pane-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Idéal terrasse, muret, jardin, copro
+          </span>
+          <span class="diptyque-pane-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            5 RAL standard ou personnalisé
+          </span>
+          <span class="diptyque-pane-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Achat direct en ligne ou devis sur plan
+          </span>
+        </div>
+        <span class="diptyque-pane-cta">
+          Découvrir les couvertines
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+
+      <a href="pliage.html" class="diptyque-pane diptyque-pane--pliage">
+        <h3>Pliage sur mesure</h3>
+        <p class="diptyque-pane-desc">Profils U, L, Z, appui de fenêtre ou forme libre sur plan. Acier, aluminium ou inox. Plusieurs épaisseurs disponibles.</p>
+        <div class="diptyque-pane-features">
+          <span class="diptyque-pane-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Idéal rénovation, chantier, bandeau
+          </span>
+          <span class="diptyque-pane-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            5 formes standard + appui fenêtre + forme libre DXF
+          </span>
+          <span class="diptyque-pane-feature">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Achat direct en ligne ou devis sur plan
+          </span>
+        </div>
+        <span class="diptyque-pane-cta">
+          Découvrir le pliage
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </a>
+
     </div>
   </section>
 
@@ -258,226 +602,6 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       SECTION 2 — COUVERTINE
-  ═══════════════════════════════════════════ -->
-  <section id="couvertine" aria-labelledby="couvertine-title">
-    <div class="section-inner">
-      <header class="section-header animate-fadeup">
-        <span class="section-label">COUVERTINE</span>
-        <h2 id="couvertine-title">COUVERTINE<br>SUR MESURE</h2>
-        <p class="section-desc">Couvertine plate avec retours et rejet d'eau — acier ou aluminium, fabriquée à vos dimensions exactes.</p>
-      </header>
-
-      <article class="couvertine-featured animate-fadeup">
-        <div class="couvertine-featured-img">
-          <img src="assets/couvertine-photo/couvertine plate.jpg" alt="Couvertine métallique sur muret béton — acier prélaqué RAL 7016" loading="lazy">
-          <div class="couvertine-featured-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Fabriquée en France
-          </div>
-        </div>
-        <div class="couvertine-featured-body">
-          <div class="couvertine-featured-tag">PRODUIT STANDARD</div>
-          <h3>Couvertine avec Retour</h3>
-          <p class="couvertine-featured-desc">Profil plat avec retours de chaque côté vers le bas et rejet d'eau à 45° vers l'intérieur. Dépassement de 25 mm de part et d'autre du muret. Protection renforcée contre les infiltrations.</p>
-
-          <ul class="couvertine-specs">
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Acier 0,75 mm ou Aluminium 1,5 mm
-            </li>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Rejet d'eau intégré à 45°
-            </li>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              Dimensions sur mesure, longueur jusqu'à 3 000 mm
-            </li>
-            <li>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              5 coloris RAL standard — autres sur devis
-            </li>
-          </ul>
-
-          <div class="swatches couvertine-featured-swatches" aria-label="Coloris disponibles">
-            <span class="swatch swatch--anthracite" title="Gris Anthracite RAL 7016"></span>
-            <span class="swatch swatch--black"      title="Noir Satiné RAL 9005"></span>
-            <span class="swatch swatch--white"      title="Blanc Pur RAL 9010"></span>
-            <span class="swatch swatch--choco"      title="Brun Chocolat RAL 8014"></span>
-            <span class="swatch swatch--light-grey" title="Gris Clair RAL 9006"></span>
-          </div>
-
-          <div class="couvertine-featured-ctas">
-            <a href="configurateur.html" class="btn-primary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-              Configurer ma couvertine
-            </a>
-            <a href="contact.html" class="btn-outline">Demander un devis</a>
-          </div>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       SECTION 3 — PLIAGE
-  ═══════════════════════════════════════════ -->
-  <section id="pliage" aria-labelledby="pliage-title">
-    <div class="section-inner">
-      <header class="section-header animate-fadeup">
-        <span class="section-label">PLIAGE SUR MESURE</span>
-        <h2 id="pliage-title">FORMES PRÉDÉFINIES<br>&amp; LIBRE</h2>
-        <p class="section-desc">Acier, aluminium ou inox. 5 couleurs standard ou RAL personnalisé sur devis.</p>
-      </header>
-
-      <div class="pliage-material-tabs animate-fadeup" role="group" aria-label="Sélection matière">
-        <button class="pliage-tab is-active" data-mat="acier" aria-pressed="true">
-          <span class="pliage-tab-dot" aria-hidden="true"></span>Acier
-        </button>
-        <button class="pliage-tab" data-mat="aluminium" aria-pressed="false">
-          <span class="pliage-tab-dot" aria-hidden="true"></span>Aluminium
-        </button>
-        <button class="pliage-tab" data-mat="inox" aria-pressed="false">
-          <span class="pliage-tab-dot" aria-hidden="true"></span>Inox
-        </button>
-      </div>
-
-      <div class="products-grid">
-
-        <article class="product-card animate-fadeup" style="--delay: 0s">
-          <div class="card-img-wrap">
-            <div class="pliage-shape-preview" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="20,8 20,42 60,42 60,8" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </svg>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3>Forme U</h3>
-            <p>Habillage bandeau, cornière structurelle. Largeur et hauteur sur vos cotes.</p>
-            <div class="swatches" aria-label="Couleurs standard disponibles">
-              <span class="swatch swatch--anthracite" title="Gris Anthracite RAL 7016" aria-label="Gris Anthracite RAL 7016"></span>
-              <span class="swatch swatch--black"      title="Noir Satiné RAL 9005"    aria-label="Noir Satiné RAL 9005"></span>
-              <span class="swatch swatch--white"      title="Blanc Pur RAL 9010"      aria-label="Blanc Pur RAL 9010"></span>
-              <span class="swatch swatch--choco"      title="Brun Chocolat RAL 8014"  aria-label="Brun Chocolat RAL 8014"></span>
-              <span class="swatch swatch--light-grey" title="Gris Clair RAL 9006"     aria-label="Gris Clair RAL 9006"></span>
-            </div>
-            <a href="pliage.html" class="card-link">Configurer mon pliage <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article class="product-card animate-fadeup" style="--delay: 0.1s">
-          <div class="card-img-wrap">
-            <div class="pliage-shape-preview" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="10,40 10,10 70,10" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </svg>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3>Forme L</h3>
-            <p>Angle rentrant ou sortant. Finition bords roulés sur demande. Idéal pour seuils et appuis.</p>
-            <div class="swatches" aria-label="Couleurs standard disponibles">
-              <span class="swatch swatch--anthracite" title="Gris Anthracite RAL 7016" aria-label="Gris Anthracite RAL 7016"></span>
-              <span class="swatch swatch--black"      title="Noir Satiné RAL 9005"    aria-label="Noir Satiné RAL 9005"></span>
-              <span class="swatch swatch--white"      title="Blanc Pur RAL 9010"      aria-label="Blanc Pur RAL 9010"></span>
-              <span class="swatch swatch--choco"      title="Brun Chocolat RAL 8014"  aria-label="Brun Chocolat RAL 8014"></span>
-              <span class="swatch swatch--light-grey" title="Gris Clair RAL 9006"     aria-label="Gris Clair RAL 9006"></span>
-            </div>
-            <a href="pliage.html" class="card-link">Configurer mon pliage <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article class="product-card animate-fadeup" style="--delay: 0.2s">
-          <div class="card-img-wrap">
-            <div class="pliage-shape-preview" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="8,14 42,14 42,38 74,38" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </svg>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3>Forme Z</h3>
-            <p>Décalage de niveau entre deux plans. Pour recouvrements, habillages de dalles et terrasses.</p>
-            <div class="swatches" aria-label="Couleurs standard disponibles">
-              <span class="swatch swatch--anthracite" title="Gris Anthracite RAL 7016" aria-label="Gris Anthracite RAL 7016"></span>
-              <span class="swatch swatch--black"      title="Noir Satiné RAL 9005"    aria-label="Noir Satiné RAL 9005"></span>
-              <span class="swatch swatch--white"      title="Blanc Pur RAL 9010"      aria-label="Blanc Pur RAL 9010"></span>
-              <span class="swatch swatch--choco"      title="Brun Chocolat RAL 8014"  aria-label="Brun Chocolat RAL 8014"></span>
-              <span class="swatch swatch--light-grey" title="Gris Clair RAL 9006"     aria-label="Gris Clair RAL 9006"></span>
-            </div>
-            <a href="pliage.html" class="card-link">Configurer mon pliage <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article class="product-card animate-fadeup" style="--delay: 0.1s">
-          <div class="card-img-wrap">
-            <div class="pliage-shape-preview" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Profil 5 points : retour A · pente B 10° · nez C 92° · pince 12mm -->
-                <polyline points="9,4 9,17 71,28 67,46 64,46"
-                  stroke="#FF4500" stroke-width="2.5"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Arc indicateur angle 92° jonction B-C -->
-                <path d="M 63,27 A 8,8 0 0 0 69,36"
-                  stroke="#FF4500" stroke-width="1" fill="none" opacity="0.45"/>
-                <!-- Labels hors profil -->
-                <text x="1"  y="12" font-size="5.5" fill="#FF4500" font-family="Inter,sans-serif" font-weight="600">A</text>
-                <text x="36" y="11" font-size="5.5" fill="#FF4500" font-family="Inter,sans-serif" font-weight="600">B</text>
-                <text x="74" y="38" font-size="5.5" fill="#FF4500" font-family="Inter,sans-serif" font-weight="600">C</text>
-                <text x="60" y="48" font-size="4"   fill="#FF4500" font-family="Inter,sans-serif" opacity="0.7">12mm</text>
-              </svg>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3>Appui de Fenêtre</h3>
-            <p>Retour fenêtre (A) · Profondeur pentée (B) · Nez 92° avec pince 12 mm (C). Évacuation optimale des eaux, sur mesure.</p>
-            <div class="swatches" aria-label="Couleurs standard disponibles">
-              <span class="swatch swatch--anthracite" title="Gris Anthracite RAL 7016" aria-label="Gris Anthracite RAL 7016"></span>
-              <span class="swatch swatch--black"      title="Noir Satiné RAL 9005"    aria-label="Noir Satiné RAL 9005"></span>
-              <span class="swatch swatch--white"      title="Blanc Pur RAL 9010"      aria-label="Blanc Pur RAL 9010"></span>
-              <span class="swatch swatch--choco"      title="Brun Chocolat RAL 8014"  aria-label="Brun Chocolat RAL 8014"></span>
-              <span class="swatch swatch--light-grey" title="Gris Clair RAL 9006"     aria-label="Gris Clair RAL 9006"></span>
-            </div>
-            <a href="pliage.html" class="card-link">Configurer mon pliage <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-        <article class="product-card animate-fadeup" style="--delay: 0.2s">
-          <div class="card-img-wrap">
-            <div class="pliage-shape-preview" aria-hidden="true">
-              <svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 40 Q10 10 40 10 Q70 10 70 40" stroke="#FF4500" stroke-width="2" stroke-dasharray="4,3" fill="none" stroke-linecap="round"/>
-                <text x="30" y="32" font-size="9" fill="#FF4500" font-family="Inter,sans-serif">LIBRE</text>
-              </svg>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3>Forme Libre</h3>
-            <p>Profil entièrement personnalisé. Envoyez vos plans ou DXF — devis sous 24 h.</p>
-            <div class="swatches" aria-label="Couleurs standard disponibles">
-              <span class="swatch swatch--anthracite" title="Gris Anthracite RAL 7016" aria-label="Gris Anthracite RAL 7016"></span>
-              <span class="swatch swatch--black"      title="Noir Satiné RAL 9005"    aria-label="Noir Satiné RAL 9005"></span>
-              <span class="swatch swatch--white"      title="Blanc Pur RAL 9010"      aria-label="Blanc Pur RAL 9010"></span>
-              <span class="swatch swatch--choco"      title="Brun Chocolat RAL 8014"  aria-label="Brun Chocolat RAL 8014"></span>
-              <span class="swatch swatch--light-grey" title="Gris Clair RAL 9006"     aria-label="Gris Clair RAL 9006"></span>
-            </div>
-            <a href="contact.html?sujet=forme-libre" class="card-link">Demander un devis <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="pliage-ral-note animate-fadeup">
-        <p>Autres couleurs RAL disponibles sur demande — <a href="contact.html?sujet=ral-specifique">Demander un RAL spécifique</a></p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
        SECTION 4 — FABRICATION / SAVOIR-FAIRE
   ═══════════════════════════════════════════ -->
   <section id="fabrication" aria-labelledby="fab-title">
@@ -506,390 +630,6 @@
 
 
   <!-- ═══════════════════════════════════════════
-       SECTION — STATS / COMPTEURS
-  ═══════════════════════════════════════════ -->
-  <section class="stats-section" aria-labelledby="stats-title">
-    <div class="stats-grid">
-      <div class="stat-item animate-fadeup">
-        <span class="stat-number" data-target="500" data-suffix="+">0</span>
-        <span class="stat-label">Projets réalisés</span>
-      </div>
-      <div class="stat-item animate-fadeup" style="--delay: 0.1s">
-        <span class="stat-number" data-target="15" data-suffix="">0</span>
-        <span class="stat-label">Années d'expérience</span>
-      </div>
-      <div class="stat-item animate-fadeup" style="--delay: 0.2s">
-        <span class="stat-number" data-target="32" data-suffix="">0</span>
-        <span class="stat-label">Finitions RAL disponibles</span>
-      </div>
-      <div class="stat-item animate-fadeup" style="--delay: 0.3s">
-        <span class="stat-number" data-target="10" data-prefix="&lt;">0</span>
-        <span class="stat-label">Jours de délai moyen</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       SECTION TRUST — GARANTIES
-  ═══════════════════════════════════════════ -->
-  <section class="trust-section" aria-labelledby="trust-title">
-    <div class="trust-grid">
-      <article class="trust-card animate-fadeup">
-        <div class="trust-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-        </div>
-        <h4>Fabrication française</h4>
-        <p>Toutes nos pièces sont fabriquées dans notre atelier en France, sur plieuses numériques haute précision.</p>
-      </article>
-      <article class="trust-card animate-fadeup" style="--delay: 0.1s">
-        <div class="trust-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h4>Laquage poudre Époxy 80 microns</h4>
-        <p>Résistance garantie aux UV, à la corrosion, aux intempéries et aux variations climatiques. Tenue des couleurs dans le temps.</p>
-      </article>
-      <article class="trust-card animate-fadeup" style="--delay: 0.2s">
-        <div class="trust-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
-        <h4>Livraison sous 10 jours ouvrés</h4>
-        <p>Franco de port dès 1 200 € HT. Livraison à domicile ou directement sur chantier.</p>
-      </article>
-      <article class="trust-card animate-fadeup" style="--delay: 0.3s">
-        <div class="trust-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <h4>Conseil technique disponible</h4>
-        <p>Notre équipe vous accompagne dans le choix de vos pièces, des cotes et des finitions adaptées à votre projet.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       SECTION — PORTFOLIO / RÉALISATIONS
-  ═══════════════════════════════════════════ -->
-  <section class="portfolio-section" aria-labelledby="portfolio-title">
-    <div class="section-inner">
-      <header class="section-header animate-fadeup">
-        <span class="section-label">RÉALISATIONS</span>
-        <h2 id="portfolio-title">NOS PROJETS<br>EN IMAGES</h2>
-        <p class="section-desc">Du projet architectural aux installations industrielles — découvrez l'étendue de notre savoir-faire.</p>
-      </header>
-    </div>
-    <div class="portfolio-grid">
-
-      <div class="portfolio-item portfolio-item--wide animate-fadeup">
-        <div class="portfolio-thumb portfolio-thumb--1"></div>
-        <div class="portfolio-label-default">
-          <span class="portfolio-tag">Couvertines</span>
-          <span class="portfolio-title" style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase">Façades contemporaines</span>
-        </div>
-        <div class="portfolio-overlay">
-          <div>
-            <span class="portfolio-tag">Couvertines acier</span>
-            <p class="portfolio-title">Façades contemporaines</p>
-          </div>
-        </div>
-        <span class="portfolio-corner">01 / 05</span>
-      </div>
-
-      <div class="portfolio-item animate-fadeup" style="--delay: 0.1s">
-        <div class="portfolio-thumb portfolio-thumb--2"></div>
-        <div class="portfolio-label-default">
-          <span class="portfolio-tag">Inox 304</span>
-          <span class="portfolio-title" style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase">Profils architecturaux</span>
-        </div>
-        <div class="portfolio-overlay">
-          <div>
-            <span class="portfolio-tag">Inox brossé</span>
-            <p class="portfolio-title">Profils architecturaux</p>
-          </div>
-        </div>
-        <span class="portfolio-corner">02 / 05</span>
-      </div>
-
-      <div class="portfolio-item portfolio-item--wide animate-fadeup" style="--delay: 0.05s">
-        <div class="portfolio-thumb portfolio-thumb--3"></div>
-        <div class="portfolio-label-default">
-          <span class="portfolio-tag">Pliage sur mesure</span>
-          <span class="portfolio-title" style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase">Installations industrielles</span>
-        </div>
-        <div class="portfolio-overlay">
-          <div>
-            <span class="portfolio-tag">Acier thermolaqué</span>
-            <p class="portfolio-title">Installations industrielles</p>
-          </div>
-        </div>
-        <span class="portfolio-corner">03 / 05</span>
-      </div>
-
-      <div class="portfolio-item animate-fadeup" style="--delay: 0.15s">
-        <div class="portfolio-thumb portfolio-thumb--4"></div>
-        <div class="portfolio-label-default">
-          <span class="portfolio-tag">Chapeaux de piliers</span>
-          <span class="portfolio-title" style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase">Aménagements extérieurs</span>
-        </div>
-        <div class="portfolio-overlay">
-          <div>
-            <span class="portfolio-tag">Acier RAL 7016</span>
-            <p class="portfolio-title">Aménagements extérieurs</p>
-          </div>
-        </div>
-        <span class="portfolio-corner">04 / 05</span>
-      </div>
-
-      <div class="portfolio-item animate-fadeup" style="--delay: 0.2s">
-        <div class="portfolio-thumb portfolio-thumb--5"></div>
-        <div class="portfolio-label-default">
-          <span class="portfolio-tag">Profilés spéciaux</span>
-          <span class="portfolio-title" style="font-family:var(--font-head);font-size:0.9rem;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase">Formes libres</span>
-        </div>
-        <div class="portfolio-overlay">
-          <div>
-            <span class="portfolio-tag">Forme libre 8 segments</span>
-            <p class="portfolio-title">Formes sur mesure</p>
-          </div>
-        </div>
-        <span class="portfolio-corner">05 / 05</span>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       SECTION — TÉMOIGNAGES
-  ═══════════════════════════════════════════ -->
-  <section class="testimonials-section" aria-labelledby="testimonials-title">
-    <div class="section-inner">
-      <header class="section-header animate-fadeup">
-        <span class="section-label">TÉMOIGNAGES</span>
-        <h2 id="testimonials-title">ILS NOUS FONT<br>CONFIANCE</h2>
-        <p class="section-desc">Architectes, entreprises du BTP et particuliers — leur expérience avec Metal Pliage.</p>
-      </header>
-    </div>
-    <div class="testimonials-grid">
-
-      <article class="testimonial-card animate-fadeup">
-        <span class="testimonial-quote-mark">"</span>
-        <div class="testimonial-stars" aria-label="5 étoiles">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <p class="testimonial-text">Nous travaillons avec Metal Pliage depuis 3 ans pour tous nos projets d'habillage de façade. La précision est irréprochable — chaque couvertine arrive exactement aux cotes demandées, sans jamais de retouche sur site.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">LD</div>
-          <div>
-            <p class="testimonial-name">Laurent Dubois</p>
-            <p class="testimonial-role">Architecte DPLG — Cabinet Dubois & Associés</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="testimonial-card animate-fadeup" style="--delay: 0.12s">
-        <span class="testimonial-quote-mark">"</span>
-        <div class="testimonial-stars" aria-label="5 étoiles">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <p class="testimonial-text">Le configurateur en ligne est un vrai gain de temps. On rentre nos cotes, on choisit le RAL et on commande directement. La livraison est toujours dans les délais annoncés, même en haute saison. Un partenaire de confiance.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">MB</div>
-          <div>
-            <p class="testimonial-name">Marc Bertrand</p>
-            <p class="testimonial-role">Directeur technique — BatiPro Construction</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="testimonial-card animate-fadeup" style="--delay: 0.24s">
-        <span class="testimonial-quote-mark">"</span>
-        <div class="testimonial-stars" aria-label="5 étoiles">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <p class="testimonial-text">J'ai commandé des couvertines sur mesure pour la rénovation de ma maison. La qualité de la finition RAL 7016 est exceptionnelle — identique aux échantillons. Le conseil par téléphone avant commande m'a vraiment aidée à faire le bon choix.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">SL</div>
-          <div>
-            <p class="testimonial-name">Sophie Laurent</p>
-            <p class="testimonial-role">Cliente particulière — Rénovation architecturale</p>
-          </div>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       SECTION — FAQ
-  ═══════════════════════════════════════════ -->
-  <section class="faq-section" aria-labelledby="faq-title">
-    <div class="section-inner">
-      <header class="section-header animate-fadeup">
-        <span class="section-label">FAQ</span>
-        <h2 id="faq-title">QUESTIONS<br>FRÉQUENTES</h2>
-        <p class="section-desc">Tout ce que vous devez savoir avant de passer commande.</p>
-      </header>
-    </div>
-    <div class="faq-list animate-fadeup" style="--delay: 0.1s">
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Quel est le délai de fabrication et de livraison ?
-          <span class="faq-icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-answer" hidden>
-          <div class="faq-answer-inner">Notre délai standard est de <strong>5 à 10 jours ouvrés</strong> à compter de la validation de votre commande. Ce délai comprend la fabrication en atelier (pliage CNC, laquage) et l'expédition. Pour les commandes urgentes, contactez-nous directement — nous étudions toujours les demandes de délais raccourcis.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Quelles épaisseurs de tôle sont disponibles ?
-          <span class="faq-icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-answer" hidden>
-          <div class="faq-answer-inner">Nous proposons principalement deux épaisseurs en acier prélaqué : <strong>10/10e (1 mm)</strong> pour les applications légères et courantes, et <strong>15/10e (1,5 mm)</strong> pour les zones exposées ou nécessitant une robustesse accrue. L'inox et l'acier nu sont disponibles de 0,5 mm à 4 mm selon les profils. L'épaisseur recommandée est indiquée dans le configurateur en fonction de votre forme.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Comment passer une commande sur mesure ?
-          <span class="faq-icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-answer" hidden>
-          <div class="faq-answer-inner">Utilisez notre <strong>configurateur en ligne</strong> : sélectionnez votre forme (couvertine, profil L, U, Z, appui fenêtre…), renseignez vos dimensions en mm, choisissez votre épaisseur et votre finition RAL, puis indiquez la longueur souhaitée. Le prix se calcule en temps réel. Vous pouvez aussi nous envoyer vos plans ou DXF via le formulaire de contact pour un devis manuel.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Livrez-vous partout en France ?
-          <span class="faq-icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-answer" hidden>
-          <div class="faq-answer-inner">Oui, nous livrons sur toute la France métropolitaine. Les frais de port sont offerts dès <strong>1 200 € HT</strong> de commande. En dessous de ce seuil, les frais de transport sont calculés en fonction du volume et du poids. La livraison peut se faire à domicile ou directement sur chantier — précisez-le lors de votre commande. Nous proposons également le retrait en atelier sur rendez-vous.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Les devis sont-ils gratuits et sans engagement ?
-          <span class="faq-icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-answer" hidden>
-          <div class="faq-answer-inner">Absolument. Nos devis sont <strong>entièrement gratuits et sans engagement</strong>. Vous pouvez utiliser le configurateur pour obtenir un prix indicatif immédiat, ou nous contacter via le formulaire pour un devis détaillé sur des projets complexes. Notre équipe technique vous répond sous 24h ouvrées.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          Quelles garanties offrez-vous sur vos produits ?
-          <span class="faq-icon" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </button>
-        <div class="faq-answer" hidden>
-          <div class="faq-answer-inner">Nos pièces sont garanties <strong>10 ans</strong> sur la tenue de la finition thermolaquée époxy 80 microns en conditions normales d'utilisation extérieure. En cas de défaut de fabrication (cote incorrecte, défaut de surface), nous nous engageons à refaire la pièce ou à vous rembourser intégralement. Toutes nos pièces sortent de notre atelier français après contrôle qualité individuel.</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
-       SECTION 6 — CONTACT / DEVIS
-  ═══════════════════════════════════════════ -->
-  <section id="contact" aria-labelledby="contact-title">
-    <div class="section-inner contact-inner">
-      <header class="section-header animate-fadeup">
-        <span class="section-label">DEVIS GRATUIT</span>
-        <h2 id="contact-title">PARLEZ-NOUS<br>DE VOTRE PROJET</h2>
-        <p class="section-desc">Réponse sous 24h ouvrées. Devis détaillé sans engagement.</p>
-      </header>
-
-      <form class="contact-form animate-fadeup" style="--delay: 0.15s" novalidate>
-        <div class="form-row form-row--2col">
-          <div class="form-group">
-            <label for="f-name">Nom *</label>
-            <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Jean Dupont" required aria-required="true">
-          </div>
-          <div class="form-group">
-            <label for="f-company">Société</label>
-            <input type="text" id="f-company" name="company" autocomplete="organization" placeholder="Entreprise SA">
-          </div>
-        </div>
-        <div class="form-row form-row--2col">
-          <div class="form-group">
-            <label for="f-email">Email *</label>
-            <input type="email" id="f-email" name="email" autocomplete="email" placeholder="contact@entreprise.fr" required aria-required="true">
-          </div>
-          <div class="form-group">
-            <label for="f-phone">Téléphone</label>
-            <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="+33 6 00 00 00 00">
-          </div>
-        </div>
-        <div class="form-row form-row--2col">
-          <div class="form-group">
-            <label for="f-product">Produit *</label>
-            <select id="f-product" name="product" required aria-required="true">
-              <option value="" disabled selected>Sélectionner un produit</option>
-              <option value="tole-acier">Tôle Acier Huilée</option>
-              <option value="inox-304">Inox 304 / 316L</option>
-              <option value="inox-brosse">Inox Brossé</option>
-              <option value="couvertine-std">Couvertines Standard</option>
-              <option value="couvertine-custom">Couvertines Sur Mesure</option>
-              <option value="pliage">Pliage Sur Mesure</option>
-              <option value="autre">Autre / Plusieurs produits</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="f-qty">Quantité / Linéaire</label>
-            <input type="text" id="f-qty" name="quantity" placeholder="Ex : 50 ml, 20 m², 100 pièces">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="f-dimensions">Dimensions / Cotes</label>
-          <input type="text" id="f-dimensions" name="dimensions" placeholder="Ex : 300 × 600 mm, épaisseur 1,5 mm, angle 90°">
-        </div>
-        <div class="form-group">
-          <label for="f-message">Message / Détails du projet</label>
-          <textarea id="f-message" name="message" rows="5" placeholder="Décrivez votre projet, vos contraintes, votre délai souhaité..."></textarea>
-        </div>
-        <div class="form-footer">
-          <p class="form-legal">* Champs obligatoires. Vos données ne sont pas transmises à des tiers.</p>
-          <button type="submit" class="btn-primary">Envoyer la demande</button>
-        </div>
-      </form>
-      <div class="form-success-msg" aria-live="polite" hidden>
-        <div class="success-icon" aria-hidden="true">✓</div>
-        <h3>Demande envoyée</h3>
-        <p>Nous vous répondrons sous 24h ouvrées.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════════ -->
   <footer id="footer" role="contentinfo">
@@ -900,15 +640,17 @@
       </div>
       <nav class="footer-nav" aria-label="Liens de bas de page">
         <ul role="list">
-          <li><a href="#products">Produits</a></li>
+          <li><a href="#diptyque">Produits</a></li>
+          <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="pliage.html">Pliage</a></li>
           <li><a href="#fabrication">Savoir-Faire</a></li>
-          <li><a href="#finishes">Finitions</a></li>
-          <li><a href="#contact">Devis</a></li>
+          <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="contact.html">Devis</a></li>
         </ul>
       </nav>
       <address class="footer-contact">
         <p><a href="mailto:contact@metalpliage.fr">contact@metalpliage.fr</a></p>
-        <p><a href="tel:+33100000000">+33 (0)1 00 00 00 00</a></p>
+        <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
         <p>France</p>
       </address>
     </div>
@@ -951,6 +693,7 @@
   <script>
   (function(){
     var slides = document.querySelectorAll('.hs-slide');
+    if (!slides.length) return;
     var cur = 0;
     setInterval(function(){
       slides[cur].classList.remove('hs-active');
@@ -963,5 +706,6 @@
   <script src="js/main.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/futuriste.js"></script>
+  <script src="js/preloader.js"></script>
 </body>
 </html>

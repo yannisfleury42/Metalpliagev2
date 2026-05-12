@@ -11,27 +11,7 @@
   const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
-  /* ── PRELOADER ──────────────────────────────────────────────── */
-  const preloader = document.getElementById('preloader');
-
-  if (preloader) {
-    document.body.classList.add('is-loading');
-
-    const removePreloder = () => {
-      preloader.classList.add('done');
-      document.body.classList.remove('is-loading');
-      setTimeout(() => preloader.remove(), 700);
-    };
-
-    // Attendre la fin de l'animation de la barre (1.1s + 0.3s delay = 1.4s) + petit buffer
-    const delay = prefersReducedMotion() ? 200 : 1600;
-    setTimeout(removePreloder, delay);
-
-    // Fallback si la page met trop longtemps
-    window.addEventListener('load', () => {
-      setTimeout(removePreloder, prefersReducedMotion() ? 100 : 400);
-    }, { once: true });
-  }
+  /* ── PRELOADER : géré par js/preloader.js (autonome) ── */
 
 
   /* ── SCROLL PROGRESS BAR ────────────────────────────────────── */
@@ -46,61 +26,6 @@
     };
     window.addEventListener('scroll', updateProgress, { passive: true });
     updateProgress();
-  }
-
-
-  /* ── CURSEUR CUSTOM ─────────────────────────────────────────── */
-  if (!isTouchDevice()) {
-    const dot  = document.createElement('div');
-    const ring = document.createElement('div');
-    dot.id  = 'cursor-dot';
-    ring.id = 'cursor-ring';
-    document.body.appendChild(dot);
-    document.body.appendChild(ring);
-
-    let mouseX = -100, mouseY = -100;
-    let ringX  = -100, ringY  = -100;
-    let raf;
-
-    const lerp = (a, b, n) => a + (b - a) * n;
-
-    const updateCursor = () => {
-      ringX = lerp(ringX, mouseX, 0.12);
-      ringY = lerp(ringY, mouseY, 0.12);
-
-      dot.style.left  = mouseX + 'px';
-      dot.style.top   = mouseY + 'px';
-      ring.style.left = ringX  + 'px';
-      ring.style.top  = ringY  + 'px';
-
-      raf = requestAnimationFrame(updateCursor);
-    };
-    raf = requestAnimationFrame(updateCursor);
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.classList.remove('is-hidden');
-      ring.classList.remove('is-hidden');
-    });
-
-    document.addEventListener('mouseleave', () => {
-      dot.classList.add('is-hidden');
-      ring.classList.add('is-hidden');
-    });
-
-    // Hover state sur éléments interactifs
-    const hoverEls = document.querySelectorAll('a, button, [role="button"], .faq-question, .portfolio-item, .finish-btn, .length-btn');
-    hoverEls.forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        dot.classList.add('is-hovering');
-        ring.classList.add('is-hovering');
-      });
-      el.addEventListener('mouseleave', () => {
-        dot.classList.remove('is-hovering');
-        ring.classList.remove('is-hovering');
-      });
-    });
   }
 
 

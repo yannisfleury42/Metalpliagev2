@@ -207,6 +207,26 @@
   width: 100%;
   height: auto;
   display: block;
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#profile-svg.color-changing {
+  animation: svgColorPulse 0.55s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+@keyframes svgColorPulse {
+  0%   { opacity: 0.35; transform: scale(0.985); filter: brightness(1.15); }
+  45%  { opacity: 0.85; transform: scale(1.005); filter: brightness(1.05); }
+  100% { opacity: 1;    transform: scale(1);     filter: brightness(1); }
+}
+#mini-svg {
+  transition: opacity 0.25s ease;
+}
+#mini-svg.color-changing {
+  animation: miniColorPulse 0.45s ease;
+}
+@keyframes miniColorPulse {
+  0%   { opacity: 0.5; }
+  50%  { opacity: 0.85; }
+  100% { opacity: 1; }
 }
 
 .dim-inputs {
@@ -877,7 +897,48 @@
 .cart-backdrop:not([hidden]) { opacity: 1; }
 
 
-/* ── Schémas accessoires (3 cartes) ─────────────────────────── */
+/* ── Blocs accessoires (schéma + ligne d'achat couplés) ─────── */
+.acc-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.acc-block {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+
+.acc-block:hover {
+  border-color: rgba(255,69,0,0.35);
+}
+
+/* schéma à l'intérieur d'un bloc — pas de bordure ni fond propre */
+.acc-block .acc-diag-card {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.acc-block .acc-diag-card:hover {
+  background: transparent;
+  border: none;
+}
+
+/* ligne d'achat à l'intérieur d'un bloc — séparée du schéma par un trait fin */
+.acc-block .accessory-row {
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: rgba(255,69,0,0.02);
+}
+
+/* ── Schémas accessoires (cartes — kept for backwards compat) ── */
 .acc-diagrams-grid {
   display: grid;
   grid-template-columns: 1fr;
