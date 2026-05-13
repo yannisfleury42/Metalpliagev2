@@ -153,11 +153,11 @@
 
 
   /* ── CONTACT FORM ─────────────────────────────────────────── */
-  const form = document.querySelector('#contact .contact-form');
-  const successMsg = document.querySelector('#contact .form-success-msg');
+  const form = document.querySelector('.contact-form');
+  const successMsg = document.querySelector('.form-success-msg');
 
   if (form && successMsg) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Basic validation
@@ -172,16 +172,30 @@
       });
       if (!valid) return;
 
-      // Simulate async send
       const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
       btn.textContent = 'Envoi en cours…';
       btn.disabled = true;
 
-      setTimeout(() => {
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) {
+          const errBody = await res.json().catch(() => ({}));
+          throw new Error(errBody.error || "Erreur d'envoi");
+        }
         form.hidden = true;
         successMsg.hidden = false;
         successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 900);
+      } catch (err) {
+        alert(err.message || "Erreur d'envoi du message. Réessayez plus tard.");
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
     });
 
     // Clear red border on focus
