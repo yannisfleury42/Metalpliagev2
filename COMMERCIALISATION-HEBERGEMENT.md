@@ -320,7 +320,7 @@ Tes produits sont **longs** (jusqu'à 3-4 m), **lourds** (kg/ml), parfois **frag
 ## 11. Service après-vente
 
 ### 11.1 Canaux à activer
-- [ ] Email pro : `contact@metalpliage.fr` (via OVH ou Brevo)
+- [ ] Email pro : `contact@metal-pliage.fr` (via OVH ou Brevo)
 - [ ] WhatsApp Business (gratuit, conversion forte)
 - [ ] Téléphone fixe géolocalisé (idéal : ligne dédiée)
 - [ ] Chat en direct sur le site : **Crisp.chat** (gratuit jusqu'à 2 agents) ou **Tawk.to** (100 % gratuit)

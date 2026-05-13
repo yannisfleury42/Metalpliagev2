@@ -92,7 +92,7 @@
 - [ ] Avis clients (Google / Trustpilot)
 - [ ] Mentions légales + CGV + politique cookies (obligatoire en France)
 - [ ] Comptes réseaux sociaux (Instagram, Pinterest, TikTok, LinkedIn, YouTube)
-- [ ] Adresse mail pro (`contact@metalpliage.fr`)
+- [ ] Adresse mail pro (`contact@metal-pliage.fr`)
 - [ ] Téléphone professionnel (idéalement numéro fixe géolocalisé)
 
 ---
