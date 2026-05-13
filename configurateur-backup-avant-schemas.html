@@ -37,6 +37,7 @@
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
+      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
     </div>
   </nav>
 
@@ -264,17 +265,17 @@
                 <!-- Ombre portée -->
                 <ellipse cx="220" cy="288" rx="220" ry="7" fill="url(#tal-ground-shadow)" opacity="0.7"/>
 
-                <!-- ═══ MURET — bord gauche aligné à x=60 (= bord gauche couvertine) ═══ -->
-                <rect x="60" y="160" width="320" height="120" fill="url(#tal-muret)" stroke="#4a5358" stroke-width="0.5"/>
+                <!-- ═══ MURET ═══ -->
+                <rect x="40" y="160" width="340" height="120" fill="url(#tal-muret)" stroke="#4a5358" stroke-width="0.5"/>
                 <polygon points="380,160 410,130 410,250 380,280" fill="url(#tal-muret-side)"/>
                 <line x1="380" y1="160" x2="380" y2="280" stroke="#4a5358" stroke-width="0.5"/>
                 <line x1="380" y1="160" x2="410" y2="130" stroke="#3e4448" stroke-width="0.4"/>
-                <line x1="60" y1="195" x2="380" y2="195" stroke="#5a6266" stroke-width="0.4"/>
-                <line x1="60" y1="235" x2="380" y2="235" stroke="#5a6266" stroke-width="0.4"/>
-                <line x1="120" y1="160" x2="120" y2="195" stroke="#5a6266" stroke-width="0.3"/>
-                <line x1="220" y1="160" x2="220" y2="195" stroke="#5a6266" stroke-width="0.3"/>
-                <line x1="320" y1="160" x2="320" y2="195" stroke="#5a6266" stroke-width="0.3"/>
-                <text x="220" y="263" text-anchor="middle" font-size="9.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.5)" letter-spacing="0.22em" font-weight="600">SUPPORT</text>
+                <line x1="40" y1="195" x2="380" y2="195" stroke="#5a6266" stroke-width="0.4"/>
+                <line x1="40" y1="235" x2="380" y2="235" stroke="#5a6266" stroke-width="0.4"/>
+                <line x1="100" y1="160" x2="100" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+                <line x1="200" y1="160" x2="200" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+                <line x1="300" y1="160" x2="300" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+                <text x="210" y="263" text-anchor="middle" font-size="9.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.5)" letter-spacing="0.22em" font-weight="600">SUPPORT</text>
 
                 <!-- ═══ COUVERTINE (couleurs RAL dynamiques) ═══ -->
                 <polygon id="diag-talon-cov-top" points="60,150 405,150 435,122 90,122" fill="#4A7090" filter="url(#tal-drop)"/>
@@ -284,35 +285,26 @@
                 <line x1="60" y1="150" x2="405" y2="150" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
                 <text x="200" y="180" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.92)" letter-spacing="0.18em" font-weight="700">COUVERTINE</text>
 
-                <!-- ═══ CREUX OUVERT : forme U inversé (pas un rectangle plein) ═══ -->
-                <!-- Fond du creux (vide intérieur visible entre les retours) -->
-                <polygon points="408,153 432,128 432,164 408,191" fill="#0d1218"/>
-                <!-- Sommet du U (épaisseur de la tôle, perspective) -->
-                <polygon id="diag-talon-creux-top" points="405,150 435,122 432,128 408,153" fill="#2A4858"/>
-                <!-- Retour gauche du U (épaisseur, face avant) -->
-                <polygon id="diag-talon-creux-left" points="405,150 408,153 408,191 405,194" fill="#2A4858"/>
-                <!-- Retour droit du U (épaisseur, face arrière en perspective) -->
-                <polygon id="diag-talon-creux-right" points="432,128 435,122 435,166 432,164" fill="#2A4858"/>
+                <!-- ═══ CREUX OUVERT (intérieurs sombres) ═══ -->
+                <polygon points="405,150 435,122 435,166 405,194" fill="#0d1218"/>
+                <polygon id="diag-talon-creux-1" points="405,150 435,122 433,124 408,153 408,191 405,194" fill="#2A4858" fill-opacity="0.9"/>
+                <polygon id="diag-talon-creux-2" points="435,166 433,164 408,191 408,164" fill="#2A4858" fill-opacity="0.5"/>
 
-                <!-- ═══ FANTÔME DU TALON : contour pointillé seul (laisse voir le U en arrière) ═══ -->
-                <polygon id="diag-talon-ghost" points="408,153 432,128 432,164 408,191" fill="none" stroke="#FF7040" stroke-width="1.6" stroke-dasharray="4 2"/>
-                <circle cx="408" cy="153" r="2.5" fill="#FF7040"/>
-                <circle cx="432" cy="128" r="2.5" fill="#FF7040"/>
-                <circle cx="432" cy="164" r="2.5" fill="#FF7040"/>
-                <circle cx="408" cy="191" r="2.5" fill="#FF7040"/>
+                <!-- ═══ FANTÔME DU TALON dans le creux ═══ -->
+                <polygon id="diag-talon-ghost" points="405,150 435,122 435,166 405,194" fill="#4A7090" fill-opacity="0.78"/>
+                <polygon points="405,150 435,122 435,166 405,194" fill="rgba(255,255,255,0.1)" pointer-events="none"/>
+                <polygon points="405,150 435,122 435,166 405,194" fill="none" stroke="#FF7040" stroke-width="1.6" stroke-dasharray="4 2"/>
+                <circle cx="405" cy="150" r="2.5" fill="#FF7040"/>
+                <circle cx="435" cy="122" r="2.5" fill="#FF7040"/>
+                <circle cx="435" cy="166" r="2.5" fill="#FF7040"/>
+                <circle cx="405" cy="194" r="2.5" fill="#FF7040"/>
 
                 <!-- ═══ TALON EN TRANSIT (couleurs RAL dynamiques) ═══ -->
-                <!-- Top de l'aile horizontale en perspective -->
                 <polygon id="diag-talon-piece-top" points="500,150 533,150 563,122 530,122" fill="#4A7090" filter="url(#tal-drop)"/>
                 <polygon points="500,150 533,150 563,122 530,122" fill="rgba(255,255,255,0.22)" pointer-events="none"/>
-                <!-- Face avant aile horizontale -->
                 <rect id="diag-talon-piece-front" x="500" y="150" width="33" height="3" fill="#2A4858"/>
-                <!-- Face avant aile verticale -->
                 <rect id="diag-talon-piece-vert" x="530" y="153" width="3" height="41" fill="#4A7090"/>
-                <!-- Face latérale droite (extérieur du L, perspective) — fill éclairci + stroke pour bien voir le volume -->
-                <polygon id="diag-talon-piece-side" points="533,150 563,122 563,166 533,194" fill="#3A5868" stroke="#1a2e38" stroke-width="0.8" stroke-linejoin="miter"/>
-                <!-- Brillance subtile sur le côté droit -->
-                <polygon points="533,150 563,122 563,166 533,194" fill="url(#tal-shine-front)" opacity="0.5" pointer-events="none"/>
+                <polygon id="diag-talon-piece-side" points="533,150 563,122 563,166 533,194" fill="#2A4858"/>
                 <path d="M 500 150 L 533 150 L 533 194 L 530 194 L 530 153 L 500 153 Z"
                       fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="miter" opacity="0.85"/>
 
@@ -336,6 +328,11 @@
                 <!-- Flèche d'insertion -->
                 <path d="M 498 172 L 445 172" stroke="#FF7040" stroke-width="2.5"/>
                 <polygon points="445,172 455,166 455,178" fill="#FF7040"/>
+
+                <!-- Bannière -->
+                <rect x="425" y="55" width="165" height="32" rx="4" fill="#FF7040"/>
+                <text x="507" y="71" text-anchor="middle" font-size="10.5" font-family="Inter,sans-serif" fill="#fff" font-weight="800" letter-spacing="0.06em">À INSÉRER DANS LA COUVERTINE</text>
+                <text x="507" y="82" text-anchor="middle" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.85)" letter-spacing="0.04em">cornière en L (talon embout)</text>
 
                 <text x="300" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">TALON EMBOUT</text>
                 <text x="300" y="48" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em" font-weight="600">cornière en L qui s'insère dans la couvertine</text>
@@ -527,6 +524,9 @@
                 <polygon points="286,208 280,214 288,216" fill="#FFB347"/>
                 <text x="215" y="222" text-anchor="end" font-size="9" font-family="Inter,sans-serif" fill="#FFB347" font-weight="700">rejet 90°</text>
 
+                <!-- Titre bas -->
+                <text x="300" y="294" text-anchor="middle" font-size="10" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.6)" letter-spacing="0.22em" font-weight="700">VUE 3/4 · ÉCLISSE PAR-DESSUS</text>
               </svg>
             </div>
             <div class="acc-diag-info">
@@ -580,44 +580,38 @@
                 <!-- Fond clair -->
                 <rect width="600" height="300" fill="#1e2630"/>
 
-                <!-- Sol (bande au sol pour ancrer le muret) -->
-                <rect x="0" y="263" width="600" height="37" fill="#0e1419" opacity="0.85"/>
-                <!-- Ombre douce sous le muret -->
-                <ellipse cx="270" cy="263" rx="230" ry="9" fill="#000" opacity="0.55"/>
+                <!-- Ombre au sol pour ancrer le muret -->
+                <ellipse cx="270" cy="245" rx="230" ry="14" fill="#0a1018" opacity="0.5"/>
 
-                <!-- ═══ MURET en L (vue 3D iso) — étendu jusqu'au sol ═══ -->
+                <!-- ═══ MURET en L (vue 3D iso) ═══ -->
 
-                <!-- Face droite (côté visible à droite) — descend jusqu'à y=263 -->
-                <polygon points="380,263 453.6,220.5 453.6,107.5 380,150"
+                <!-- Face droite (côté visible à droite) -->
+                <polygon points="380,220 453.6,177.5 453.6,107.5 380,150"
                          fill="#7a8388" stroke="#4a5358" stroke-width="0.6"/>
 
-                <!-- Face avant (front) — descend jusqu'à y=263 -->
-                <polygon points="40,263 380,263 380,150 40,150"
+                <!-- Face avant (front) -->
+                <polygon points="40,220 380,220 380,150 40,150"
                          fill="url(#muret-front-grad)" stroke="#4a5358" stroke-width="0.6"/>
 
-                <!-- Joints horizontaux face avant (parpaings, répartis sur toute la hauteur) -->
-                <line x1="40" y1="180" x2="380" y2="180" stroke="#5a6266" stroke-width="0.8"/>
-                <line x1="40" y1="210" x2="380" y2="210" stroke="#5a6266" stroke-width="0.8"/>
-                <line x1="40" y1="240" x2="380" y2="240" stroke="#5a6266" stroke-width="0.8"/>
+                <!-- Joints horizontaux face avant (parpaings) -->
+                <line x1="40" y1="173" x2="380" y2="173" stroke="#5a6266" stroke-width="0.8"/>
+                <line x1="40" y1="197" x2="380" y2="197" stroke="#5a6266" stroke-width="0.8"/>
 
                 <!-- Joints verticaux face avant (motif briques décalées) -->
-                <line x1="100" y1="150" x2="100" y2="180" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="220" y1="150" x2="220" y2="180" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="340" y1="150" x2="340" y2="180" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="160" y1="180" x2="160" y2="210" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="280" y1="180" x2="280" y2="210" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="100" y1="210" x2="100" y2="240" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="220" y1="210" x2="220" y2="240" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="340" y1="210" x2="340" y2="240" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="160" y1="240" x2="160" y2="263" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="280" y1="240" x2="280" y2="263" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="100" y1="150" x2="100" y2="173" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="220" y1="150" x2="220" y2="173" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="340" y1="150" x2="340" y2="173" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="160" y1="173" x2="160" y2="197" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="280" y1="173" x2="280" y2="197" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="100" y1="197" x2="100" y2="220" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="220" y1="197" x2="220" y2="220" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="340" y1="197" x2="340" y2="220" stroke="#5a6266" stroke-width="0.6"/>
 
                 <!-- Joints sur la face droite (parpaings vus de côté) -->
-                <line x1="380" y1="180" x2="453.6" y2="137.5" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="380" y1="210" x2="453.6" y2="167.5" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="380" y1="240" x2="453.6" y2="197.5" stroke="#5a6266" stroke-width="0.6"/>
-                <line x1="402" y1="159" x2="402" y2="240" stroke="#5a6266" stroke-width="0.5"/>
-                <line x1="425" y1="139" x2="425" y2="220" stroke="#5a6266" stroke-width="0.5"/>
+                <line x1="380" y1="173" x2="453.6" y2="130.5" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="380" y1="197" x2="453.6" y2="154.5" stroke="#5a6266" stroke-width="0.6"/>
+                <line x1="397" y1="159" x2="397" y2="220" stroke="#5a6266" stroke-width="0.5"/>
+                <line x1="430" y1="140" x2="430" y2="201" stroke="#5a6266" stroke-width="0.5"/>
 
                 <!-- Top face du muret en L (les portions visibles, hors couvertine) -->
                 <polygon points="40,150 380,150 453.6,107.5 403.6,107.5 351.65,137.5 61.65,137.5"
@@ -654,15 +648,37 @@
                 <!-- ═══ Annotations ═══ -->
 
                 <!-- Label SUPPORT (sur la portion visible du bras horizontal) -->
-                <text x="170" y="225" text-anchor="middle" font-size="14" font-family="Inter,sans-serif"
+                <text x="170" y="195" text-anchor="middle" font-size="14" font-family="Inter,sans-serif"
                       fill="rgba(255,255,255,0.85)" letter-spacing="0.25em" font-weight="700">SUPPORT</text>
 
-                <!-- Label COUVERTINE -->
+                <!-- Label COUVERTINE avec leader line vers la pièce -->
                 <text x="105" y="50" text-anchor="start" font-size="13" font-family="Inter,sans-serif"
                       fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">COUVERTINE PRÉ-PLIÉE 90°</text>
                 <text x="105" y="63" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
                       fill="rgba(255,140,90,0.85)" letter-spacing="0.16em" font-weight="600">UN SEUL TENANT — couvre uniquement le coin</text>
+                <line x1="305" y1="55" x2="350" y2="138" stroke="rgba(255,69,0,0.55)" stroke-width="1" stroke-dasharray="3,3"/>
+                <circle cx="350" cy="138" r="2.5" fill="rgba(255,69,0,0.85)"/>
 
+                <!-- Indication "couvertines droites suivent" à gauche du muret -->
+                <polygon points="6,185 16,180 16,190" fill="rgba(255,69,0,0.75)"/>
+                <text x="22" y="170" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">couvertines droites</text>
+                <text x="22" y="183" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">suivent ←</text>
+
+                <!-- Indication "couvertines droites suivent" à l'arrière (haut-droite, vers la profondeur) -->
+                <polygon points="475,75 470,85 480,85" fill="rgba(255,69,0,0.75)"/>
+                <line x1="475" y1="85" x2="450" y2="105" stroke="rgba(255,69,0,0.55)" stroke-width="1.2"/>
+                <text x="488" y="60" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">↑ couvertines</text>
+                <text x="488" y="73" text-anchor="start" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.65)" letter-spacing="0.1em">droites suivent</text>
+
+                <!-- Titre principal en bas -->
+                <text x="300" y="278" text-anchor="middle" font-size="11" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.7)" letter-spacing="0.22em" font-weight="700">ANGLE DE FINITION 90°</text>
+                <text x="300" y="291" text-anchor="middle" font-size="9" font-family="Inter,sans-serif"
+                      fill="rgba(255,255,255,0.45)" letter-spacing="0.14em">VUE 3D · COIN DE MURET EN L · COUVERTURE LOCALE</text>
               </svg>
             </div>
             <div class="acc-diag-info">
@@ -791,14 +807,15 @@
                 <text x="187" y="94" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700" letter-spacing="0.12em">cornière départ</text>
 
                 <!-- ② couvertine -->
-                <circle cx="420" cy="92" r="13" fill="#7BB8E8"/>
-                <text x="420" y="97" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="#fff" font-weight="800">2</text>
-                <line x1="420" y1="106" x2="430" y2="135" stroke="#7BB8E8" stroke-width="0.7"/>
-                <text x="437" y="96" font-size="9" font-family="Inter,sans-serif" fill="rgba(160,208,240,0.95)" font-weight="700" letter-spacing="0.12em">couvertine par-dessus</text>
+                <circle cx="480" cy="110" r="13" fill="#7BB8E8"/>
+                <text x="480" y="115" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="#fff" font-weight="800">2</text>
+                <line x1="468" y1="118" x2="450" y2="138" stroke="#7BB8E8" stroke-width="0.7"/>
+                <text x="497" y="114" font-size="9" font-family="Inter,sans-serif" fill="rgba(160,208,240,0.95)" font-weight="700" letter-spacing="0.12em">couvertine par-dessus</text>
 
                 <!-- Titre -->
                 <text x="300" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">CORNIÈRE DE DÉPART</text>
                 <text x="300" y="48" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em" font-weight="600">habillage angle perpendiculaire · profil L · couvertine par-dessus</text>
+                <text x="300" y="306" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.6)" letter-spacing="0.22em" font-weight="700">VUE 3/4 · ÉTAPES ① ②</text>
               </svg>
             </div>
             <div class="acc-diag-info">
