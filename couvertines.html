@@ -253,6 +253,290 @@
   </header>
 
   <!-- ═══════════════════════════════════════════
+       MODE DÉBUTANT — ASSISTANT 3 QUESTIONS
+       Pour les particuliers qui ne savent pas par où commencer.
+  ═══════════════════════════════════════════ -->
+  <section class="muret-wizard" aria-labelledby="wizard-title">
+    <div class="muret-wizard-inner">
+      <div class="muret-wizard-head">
+        <span class="muret-wizard-tag">MODE DÉBUTANT</span>
+        <h2 id="wizard-title">Je veux couvrir mon muret — 3 questions et c'est tout</h2>
+        <p>Vous n'êtes pas du métier ? Répondez en 30 secondes, on vous propose tout de suite la bonne couvertine et les accessoires nécessaires.</p>
+      </div>
+
+      <form class="muret-wizard-form" id="muret-wizard" onsubmit="return false;">
+        <!-- Q1 -->
+        <div class="muret-wizard-q">
+          <label for="wz-L">
+            <span class="wz-num">1</span>
+            Longueur de mon muret
+          </label>
+          <div class="wz-input">
+            <input type="number" id="wz-L" min="500" max="50000" step="100" placeholder="ex : 6000" inputmode="numeric">
+            <span class="wz-unit">mm</span>
+          </div>
+          <small class="wz-help">Du début à la fin du muret, en millimètres (ex : 6 m = 6000 mm)</small>
+        </div>
+
+        <!-- Q2 -->
+        <div class="muret-wizard-q">
+          <label for="wz-B">
+            <span class="wz-num">2</span>
+            Largeur (épaisseur) du muret
+          </label>
+          <div class="wz-input">
+            <input type="number" id="wz-B" min="80" max="600" step="5" placeholder="ex : 200" inputmode="numeric">
+            <span class="wz-unit">mm</span>
+          </div>
+          <small class="wz-help">Avec un mètre, mesurez la largeur du haut du muret (ex : un parpaing standard = 200 mm)</small>
+        </div>
+
+        <!-- Q3 -->
+        <div class="muret-wizard-q">
+          <label>
+            <span class="wz-num">3</span>
+            Couleur préférée
+          </label>
+          <div class="wz-rals" role="radiogroup" aria-label="Choix RAL">
+            <button type="button" class="wz-ral" data-ral="7016" style="background:#293133" aria-label="RAL 7016 Anthracite"><span>7016</span></button>
+            <button type="button" class="wz-ral" data-ral="9005" style="background:#0a0a0a" aria-label="RAL 9005 Noir"><span>9005</span></button>
+            <button type="button" class="wz-ral" data-ral="9010" style="background:#f0ead6;color:#222" aria-label="RAL 9010 Blanc"><span>9010</span></button>
+            <button type="button" class="wz-ral" data-ral="8019" style="background:#3b2b25" aria-label="RAL 8019 Brun"><span>8019</span></button>
+            <button type="button" class="wz-ral" data-ral="7035" style="background:#cbd0cc;color:#222" aria-label="RAL 7035 Gris clair"><span>7035</span></button>
+          </div>
+          <small class="wz-help">Choisissez la couleur la plus proche. Autres RAL disponibles sans surcoût (à demander au devis).</small>
+        </div>
+
+        <!-- Synthèse + CTA -->
+        <div class="muret-wizard-summary" id="wz-summary" hidden>
+          <p id="wz-summary-text"></p>
+        </div>
+
+        <button type="button" class="btn-primary muret-wizard-submit" id="wz-submit">
+          Calculer mon prix et mes accessoires →
+        </button>
+        <p class="muret-wizard-or">
+          Vous savez déjà ce que vous voulez ? <a href="configurateur.html">Aller au configurateur expert →</a>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <style>
+    .muret-wizard {
+      max-width: 940px;
+      margin: 0 auto 3rem;
+      padding: 0 clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .muret-wizard-inner {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid rgba(255, 69, 0, 0.25);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 2rem clamp(1.4rem, 3vw, 2.2rem);
+    }
+    .muret-wizard-head { margin-bottom: 1.6rem; }
+    .muret-wizard-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 0.6rem;
+    }
+    .muret-wizard-head h2 {
+      font-size: clamp(1.2rem, 2.6vw, 1.65rem);
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .muret-wizard-head p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .muret-wizard-q { margin-bottom: 1.4rem; }
+    .muret-wizard-q > label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .wz-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .wz-input {
+      display: inline-flex;
+      align-items: stretch;
+      background: var(--bg-base);
+      border: 1px solid var(--border-hover);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .wz-input:focus-within { border-color: var(--accent); }
+    .wz-input input {
+      width: 140px;
+      padding: 10px 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .wz-input input:focus { outline: none; }
+    .wz-unit {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-left: 1px solid var(--border-hover);
+    }
+    .wz-help {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .wz-rals { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .wz-ral {
+      width: 60px;
+      height: 60px;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 6px;
+    }
+    .wz-ral:hover { transform: translateY(-2px); }
+    .wz-ral.is-selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(255, 69, 0, 0.25);
+    }
+
+    .muret-wizard-summary {
+      margin: 1.2rem 0 1.4rem;
+      padding: 12px 16px;
+      background: rgba(34, 197, 94, 0.1);
+      border-left: 3px solid #22c55e;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .muret-wizard-summary strong { color: var(--text-primary); }
+
+    .muret-wizard-submit {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 0.95rem !important;
+      margin-top: 0.6rem;
+    }
+    .muret-wizard-or {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .muret-wizard-or a { color: var(--accent); font-weight: 600; }
+  </style>
+
+  <script>
+    (function () {
+      const form = document.getElementById('muret-wizard');
+      if (!form) return;
+      const inputL = document.getElementById('wz-L');
+      const inputB = document.getElementById('wz-B');
+      const rals = form.querySelectorAll('.wz-ral');
+      const summary = document.getElementById('wz-summary');
+      const summaryText = document.getElementById('wz-summary-text');
+      const submit = document.getElementById('wz-submit');
+
+      let selectedRal = null;
+
+      rals.forEach((r) => {
+        r.addEventListener('click', () => {
+          rals.forEach((x) => x.classList.remove('is-selected'));
+          r.classList.add('is-selected');
+          selectedRal = r.dataset.ral;
+          updateSummary();
+        });
+      });
+      [inputL, inputB].forEach((el) => el.addEventListener('input', updateSummary));
+
+      function updateSummary() {
+        const L = Number(inputL.value);
+        const B = Number(inputB.value);
+        if (!L || !B || !selectedRal) {
+          summary.hidden = true;
+          return;
+        }
+        // Calcul rapide : nb de pièces (max 3000 mm chacune) + éclisses
+        const nbPieces = Math.ceil(L / 3000);
+        const nbEclisses = Math.max(0, nbPieces - 1);
+        // Prix indicatif : 28 €/ml HT pour la couvertine + 6 €/éclisse + 5 €/talon (2 talons)
+        const prixCouv = (L / 1000) * 28;
+        const prixEclisses = nbEclisses * 6;
+        const prixTalons = 2 * 5;
+        const total = prixCouv + prixEclisses + prixTalons;
+        summary.hidden = false;
+        summaryText.innerHTML = `
+          Votre projet : <strong>${nbPieces} couvertine${nbPieces > 1 ? 's' : ''}</strong> de ${Math.min(3000, L)} mm
+          ${nbEclisses ? ` + <strong>${nbEclisses} éclisse${nbEclisses > 1 ? 's' : ''}</strong> de jonction` : ''}
+          + 2 talons d'extrémité<br>
+          Prix indicatif : <strong>environ ${total.toFixed(0)} € HT</strong> (${(total * 1.2).toFixed(0)} € TTC)
+        `;
+      }
+
+      submit.addEventListener('click', () => {
+        const L = Number(inputL.value);
+        const B = Number(inputB.value);
+        if (!L || !B || !selectedRal) {
+          summary.hidden = false;
+          summaryText.innerHTML = '<strong>⚠️ Complétez les 3 questions</strong> pour calculer votre prix.';
+          return;
+        }
+        // Redirection vers le configurateur avec params pré-remplis
+        const lengthPerPiece = Math.min(3000, L);
+        const params = new URLSearchParams({
+          B: B,
+          L: lengthPerPiece,
+          ral: selectedRal,
+          qty: Math.ceil(L / 3000),
+          from: 'wizard',
+        });
+        window.location.href = `configurateur.html?${params.toString()}`;
+      });
+    })();
+  </script>
+
+  <!-- ═══════════════════════════════════════════
        MODULE COUVERTINE FEATURED
   ═══════════════════════════════════════════ -->
   <section id="couvertine" aria-labelledby="couvertine-title">

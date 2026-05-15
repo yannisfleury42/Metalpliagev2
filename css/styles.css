@@ -123,6 +123,155 @@
 .dim-helper-proactive svg { flex-shrink: 0; margin-top: 2px; }
 .dim-helper-proactive strong { color: var(--accent); }
 
+/* ── STEPPER STICKY (configurateurs) ──────────────────────────────── */
+.config-stepper {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 50;
+  background: rgba(36, 36, 36, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+}
+.config-stepper-list {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 4px;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: var(--max-w);
+  scrollbar-width: none;
+}
+.config-stepper-list::-webkit-scrollbar { display: none; }
+.config-stepper-item { flex-shrink: 0; }
+.config-stepper-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 6px 14px 6px 6px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  white-space: nowrap;
+}
+.config-stepper-btn:hover {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+.config-stepper-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hover);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.config-stepper-item.is-active .config-stepper-btn {
+  background: rgba(255, 69, 0, 0.12);
+  color: var(--text-primary);
+}
+.config-stepper-item.is-active .config-stepper-num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.config-stepper-item.is-done .config-stepper-num {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #fff;
+}
+.config-stepper-item.is-done .config-stepper-num::before {
+  content: "✓";
+  font-size: 0.78rem;
+}
+.config-stepper-item.is-done .config-stepper-num {
+  font-size: 0;  /* cache le numéro, le ✓ prend la place */
+}
+.config-stepper-item.is-locked .config-stepper-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+@media (max-width: 640px) {
+  .config-stepper-label { display: none; }
+  .config-stepper-btn { padding: 6px; }
+}
+
+/* ── TOOLTIPS "?" CHAMPS JARGONNEUX ────────────────────────────── */
+.config-help-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s, background 0.2s;
+}
+.config-help-btn:hover,
+.config-help-btn:focus-visible,
+.config-help-btn.is-open {
+  color: var(--accent);
+  background: rgba(255, 69, 0, 0.12);
+}
+.config-help-pop {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  width: 260px;
+  padding: 12px 14px;
+  background: #1a1a1a;
+  color: #f5f5f5;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  white-space: normal;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  animation: helpPopIn 0.18s var(--ease-out);
+}
+.config-help-pop strong { color: var(--accent); }
+.config-help-pop::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.config-help-btn.is-open .config-help-pop { display: block; }
+@keyframes helpPopIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@media (max-width: 480px) {
+  .config-help-pop { width: 220px; }
+}
+
 /* ── TOOLTIP CTA DISABLED ─────────────────────────────────────────── */
 .btn-disabled-note {
   display: block;
