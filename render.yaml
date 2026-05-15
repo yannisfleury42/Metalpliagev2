@@ -1,0 +1,34 @@
+# Render Blueprint — déploiement automatique de l'API Metal Pliage
+# Documentation : https://render.com/docs/blueprint-spec
+#
+# Comment utiliser :
+# 1. Aller sur https://render.com/deploy?repo=https://github.com/yannisfleury42/Metalpliagev2
+# 2. Connecter ton GitHub (1 clic)
+# 3. Render détecte ce render.yaml et configure tout automatiquement
+# 4. Remplir uniquement la valeur BREVO_API_KEY (les autres sont pré-remplies)
+# 5. Cliquer "Apply" — déploiement en ~3 minutes
+# 6. L'URL finale sera : https://metal-pliage-api.onrender.com
+
+services:
+  - type: web
+    name: metal-pliage-api
+    runtime: node
+    plan: free
+    region: frankfurt          # Plus proche de la France que oregon
+    branch: main
+    rootDir: .
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true            # Redéploie automatiquement à chaque push sur main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FROM_EMAIL
+        value: contact@metal-pliage.fr
+      - key: FROM_NAME
+        value: Metal Pliage
+      - key: ADMIN_EMAIL
+        value: Metalpliage@gmail.com
+      - key: BREVO_API_KEY
+        sync: false             # ⚠️ À renseigner manuellement (visible dans .env local)

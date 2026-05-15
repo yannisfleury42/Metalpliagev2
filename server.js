@@ -18,6 +18,34 @@ if (!BREVO_API_KEY || !FROM_EMAIL || !ADMIN_EMAIL) {
 const app = express();
 app.use(express.json({ limit: '100kb' }));
 
+// CORS : autorise le front (metal-pliage.fr) à appeler l'API hébergée ailleurs (Render).
+// En dev local, on autorise aussi localhost et 127.0.0.1.
+const ALLOWED_ORIGINS = new Set([
+  'https://metal-pliage.fr',
+  'https://www.metal-pliage.fr',
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:3001',
+]);
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  }
+  if (req.method === 'OPTIONS') return res.status(204).end();
+  next();
+});
+
+// Endpoint de warmup : appelé par le frontend quand l'utilisateur arrive sur /contact
+// pour réveiller le free tier Render (cold start ~30s) avant la vraie soumission.
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, ts: Date.now() });
+});
+
 // Bloque l'accès direct aux fichiers sensibles
 app.use((req, res, next) => {
   const blocked = ['/.env', '/server.js', '/package.json', '/package-lock.json'];
@@ -27,7 +55,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Fichiers statiques (HTML, CSS, JS, images)
+// Fichiers statiques (HTML, CSS, JS, images) — utile uniquement en dev local.
+// En prod sur Render, le service n'a pas vocation à servir les pages HTML
+// (elles sont servies par GitHub Pages sur metal-pliage.fr).
 app.use(express.static(__dirname, {
   extensions: ['html'],
   setHeaders: (res) => {

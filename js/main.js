@@ -153,18 +153,29 @@
 
 
   /* ── CONTACT FORM ─────────────────────────────────────────── */
+  // URL de l'API backend (server.js sur Render). En dev local on cible localhost.
+  const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? ''  // server.js Express sert le même host en dev
+    : 'https://metal-pliage-api.onrender.com';  // À remplacer par l'URL Render après déploiement
+
   const form = document.querySelector('.contact-form');
   const successMsg = document.querySelector('.form-success-msg');
 
   if (form && successMsg) {
-    // Affiche le bloc succès si la page revient de FormSubmit (?sent=1)
-    if (new URLSearchParams(location.search).get('sent') === '1') {
-      form.hidden = true;
-      successMsg.hidden = false;
+    // Warmup : réveille le free tier Render (cold start ~30s) dès l'arrivée sur la page
+    // pour éviter l'attente au moment du submit.
+    if (API_BASE) {
+      fetch(`${API_BASE}/api/health`, { method: 'GET', mode: 'cors' }).catch(() => {});
     }
 
-    form.addEventListener('submit', (e) => {
-      // Validation côté client. Si invalide, on bloque le submit natif.
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Honeypot anti-spam : si le champ caché est rempli, c'est un bot.
+      const honey = form.querySelector('input[name="_honey"]');
+      if (honey && honey.value) return;
+
+      // Validation côté client
       const required = form.querySelectorAll('[required]');
       let valid = true;
       required.forEach((field) => {
@@ -174,18 +185,34 @@
           valid = false;
         }
       });
-      if (!valid) {
-        e.preventDefault();
-        return;
-      }
+      if (!valid) return;
 
-      // UX : feedback bouton avant redirection FormSubmit
       const btn = form.querySelector('button[type="submit"]');
-      if (btn) {
-        btn.textContent = 'Envoi en cours…';
-        btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Envoi en cours…';
+      btn.disabled = true;
+
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        delete data._honey;
+        const res = await fetch(`${API_BASE}/api/contact`, {
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) {
+          const errBody = await res.json().catch(() => ({}));
+          throw new Error(errBody.error || "Erreur d'envoi");
+        }
+        form.hidden = true;
+        successMsg.hidden = false;
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        alert(err.message || "Erreur d'envoi du message. Réessayez ou écrivez à contact@metal-pliage.fr");
+        btn.textContent = originalText;
+        btn.disabled = false;
       }
-      // On laisse le submit natif partir vers https://formsubmit.co/...
     });
 
     // Clear red border on focus

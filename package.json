@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Site e-commerce Metal Pliage — couvertines métalliques sur mesure",
   "main": "server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"browser-sync start --config bs-config.js\""
