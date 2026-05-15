@@ -15,3 +15,9 @@ _analyse-complete/
 *-old-*.html
 index-original.html
 js/pliage-backup-avant-patches.js
+
+# Images originales (PNG/JPG) remplacées par WebP — backups gardés en local
+assets/photos/_orig/
+assets/photos/*.png
+assets/photos/*.jpg
+assets/photos/*.jpeg

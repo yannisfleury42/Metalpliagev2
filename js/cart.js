@@ -223,6 +223,17 @@
         if (!res.ok) throw new Error(`Erreur serveur : ${res.status}`);
 
         const { id } = await res.json();
+        // Lazy-load Stripe.js seulement quand on en a besoin (sortir du chemin critique)
+        if (!window.Stripe) {
+          await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://js.stripe.com/v3/';
+            s.async = true;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Échec chargement Stripe'));
+            document.head.appendChild(s);
+          });
+        }
         const stripe = Stripe(STRIPE_PK);
         await stripe.redirectToCheckout({ sessionId: id });
       } catch (err) {
