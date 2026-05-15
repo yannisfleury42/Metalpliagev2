@@ -3,6 +3,8 @@ Allow: /
 
 Disallow: /_dev/
 Disallow: /_mockup/
+Disallow: /_analyse-complete/
+Disallow: /_analyse-visuelle/
 Disallow: /node_modules/
 Disallow: /*-backup-*
 Disallow: /*-old-*

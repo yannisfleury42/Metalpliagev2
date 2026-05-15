@@ -8,7 +8,8 @@ server.err
 # Dossiers de travail / itérations design — non déployés sur le site live
 _dev/
 _mockup/
-_analyse-complete/
+# _analyse-complete/ et _analyse-visuelle/ sont POUSSÉS sur GitHub
+# pour sauvegarde des audits, mais bloqués dans robots.txt (pas indexés par Google)
 
 # Fichiers de backup historiques (archives, ne pas indexer)
 *-backup-*.html

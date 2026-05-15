@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal Pliage — Couvertines & pliages acier sur mesure (mockup home refondue)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MOCKUP 1 — HOMEPAGE REFONDUE
+   Palette Metal Pliage : #1a1a1a / #242424 / #FF4500 / Inter
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#1a1a1a; --bg-2:#242424; --bg-card:#2e2e2e; --bg-soft:#383838;
+  --line:#2e2e2e; --line-2:#3a3a3a;
+  --accent:#FF4500; --accent-hover:#FF6030; --accent-glow:rgba(255,69,0,.25);
+  --text:#F5F5F5; --text-2:#E0E0E0; --text-3:#9c9c9c;
+  --green:#25D366; --gold:#FFC107;
+  --max:1320px; --pad:clamp(1.25rem,5vw,4rem); --nav-h:72px;
+  --ease:cubic-bezier(.25,.1,.25,1); --t:.3s;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Inter',sans-serif; font-weight:400; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+ul{list-style:none}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.05}
+h1{font-size:clamp(2.4rem,5.5vw,4.6rem)}
+h2{font-size:clamp(1.9rem,3.2vw,2.8rem); text-transform:uppercase}
+h3{font-size:1.15rem;font-weight:600}
+p{color:var(--text-2)}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.section-label{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.7rem;font-weight:600;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+}
+.section-label::before{content:'';width:22px;height:1.5px;background:var(--accent)}
+
+/* ── BUTTONS ── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:var(--accent);color:#fff;border:1px solid var(--accent);
+  padding:1rem 1.8rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 8px 32px var(--accent-glow);transform:translateY(-1px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.7rem;
+  border:1px solid var(--text);color:var(--text);
+  padding:1rem 1.8rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+}
+.btn-outline:hover{background:var(--text);color:var(--bg)}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;
+  background:rgba(26,26,26,.82);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:100%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:.7rem;font-weight:700;letter-spacing:.04em}
+.logo-mark{
+  width:34px;height:34px;border:1.5px solid var(--accent);
+  display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:.85rem;
+}
+.nav-links{display:none;gap:2.2rem;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
+.nav-links a{transition:color var(--t)}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{display:none;align-items:center;gap:1rem}
+.nav-phone{font-size:.85rem;color:var(--text-2)}
+.nav-phone strong{color:var(--text);display:block;font-weight:600}
+@media(min-width:900px){ .nav-links,.nav-cta{display:flex} }
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  padding:calc(var(--nav-h) + 4rem) 0 4rem;
+  display:flex;align-items:center;
+  background:
+    radial-gradient(ellipse at 20% 40%, rgba(255,69,0,.08), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(255,255,255,.03), transparent 60%),
+    linear-gradient(180deg, #1a1a1a 0%, #242424 100%);
+  overflow:hidden;
+}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:3rem;align-items:center}
+@media(min-width:900px){ .hero-grid{grid-template-columns:1.2fr 1fr;gap:5rem} }
+.hero h1{margin:1.2rem 0 1.5rem}
+.hero h1 .accent{color:var(--accent)}
+.hero-sub{font-size:clamp(1rem,1.5vw,1.18rem);color:var(--text-2);max-width:540px;margin-bottom:2rem}
+.hero-cta{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem}
+.hero-trust{display:flex;align-items:center;gap:1rem;font-size:.85rem;color:var(--text-3)}
+.hero-trust .stars{color:var(--gold);letter-spacing:.05em}
+.hero-visual{
+  position:relative;aspect-ratio:1/1.05;border-radius:8px;overflow:hidden;
+  background:linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%);
+  border:1px solid var(--line-2);
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+
+/* ── REASSURANCE BAR ── */
+.reassurance{
+  background:#0f0f0f;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:1.5rem 0;
+}
+.reassurance-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem 2rem;
+  align-items:center;text-align:center;
+}
+@media(min-width:700px){ .reassurance-grid{grid-template-columns:repeat(4,1fr)} }
+.reassurance-item{display:flex;align-items:center;justify-content:center;gap:.7rem}
+.reassurance-icon{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,69,0,.1);color:var(--accent);flex-shrink:0;
+}
+.reassurance-text{font-size:.85rem;text-align:left;line-height:1.3}
+.reassurance-text strong{display:block;color:var(--text);font-weight:600;font-size:.92rem}
+.reassurance-text span{color:var(--text-3)}
+
+/* ── SECTIONS ── */
+section{padding:clamp(4rem,8vw,7rem) 0}
+.section-head{text-align:center;max-width:640px;margin:0 auto 3.5rem}
+.section-head h2{margin-bottom:1rem}
+.section-head p{color:var(--text-2);font-size:1.02rem}
+
+/* ── TESTIMONIALS ── */
+.testimonials{background:#1f1f1f}
+.testi-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:800px){ .testi-grid{grid-template-columns:repeat(3,1fr)} }
+.testi{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:2rem;display:flex;flex-direction:column;gap:1.2rem;
+  transition:border-color var(--t),transform var(--t);
+}
+.testi:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.testi-stars{color:var(--gold);font-size:1rem;letter-spacing:.1em}
+.testi-quote{font-size:.98rem;color:var(--text-2);line-height:1.7;flex:1}
+.testi-author{display:flex;align-items:center;gap:1rem;padding-top:1rem;border-top:1px solid var(--line)}
+.testi-avatar{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#FF4500 0%,#7a2200 100%);
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:1rem;
+}
+.testi-meta strong{display:block;color:var(--text);font-size:.92rem}
+.testi-meta span{color:var(--text-3);font-size:.8rem}
+.google-badge{
+  margin-left:auto;display:flex;align-items:center;gap:.4rem;
+  font-size:.72rem;color:var(--text-3);letter-spacing:.05em;
+}
+.google-g{
+  width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  background:#fff;font-weight:700;font-size:.8rem;
+  background:conic-gradient(from 0deg,#4285F4 25%,#EA4335 25% 50%,#FBBC04 50% 75%,#34A853 75%);
+  color:transparent;position:relative;
+}
+.google-g::after{content:'G';position:absolute;inset:3px;background:#fff;border-radius:50%;display:grid;place-items:center;color:#4285F4;font-weight:700;font-size:.7rem}
+
+/* ── REALISATIONS ── */
+.realisations{background:var(--bg)}
+.real-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;
+}
+@media(min-width:700px){ .real-grid{grid-template-columns:repeat(3,1fr);gap:1.5rem} }
+.real-card{
+  position:relative;border-radius:6px;overflow:hidden;
+  background:var(--bg-card);border:1px solid var(--line);
+  aspect-ratio:4/3;cursor:pointer;
+  transition:transform var(--t) var(--ease),border-color var(--t);
+}
+.real-card:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.real-img{position:absolute;inset:0}
+.real-img svg{width:100%;height:100%}
+.real-overlay{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:1rem 1.1rem;
+  background:linear-gradient(0deg,rgba(0,0,0,.92) 30%,transparent);
+  color:#fff;
+}
+.real-overlay h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.real-overlay span{font-size:.75rem;color:var(--text-3);letter-spacing:.04em}
+.real-cta{text-align:center;margin-top:3rem}
+
+/* ── FOOTER ── */
+footer{background:#0f0f0f;border-top:1px solid var(--line);padding:4rem 0 2rem}
+.foot-grid{
+  display:grid;grid-template-columns:1fr;gap:2.5rem;
+  padding-bottom:2.5rem;border-bottom:1px solid var(--line);
+}
+@media(min-width:800px){ .foot-grid{grid-template-columns:1.4fr 1fr 1fr 1fr} }
+.foot-col h4{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.foot-col a,.foot-col p,.foot-col li{color:var(--text-3);font-size:.88rem;line-height:1.9}
+.foot-col a:hover{color:var(--text)}
+.foot-bottom{
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;
+  padding-top:2rem;font-size:.78rem;color:var(--text-3);
+}
+.legal-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+
+/* ── WHATSAPP STICKY ── */
+.wa-sticky{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:90;
+  display:flex;align-items:center;gap:.7rem;
+  background:var(--green);color:#fff;
+  padding:.85rem 1.2rem;border-radius:50px;
+  font-size:.88rem;font-weight:600;letter-spacing:.02em;
+  box-shadow:0 8px 24px rgba(37,211,102,.4);
+  transition:transform var(--t),box-shadow var(--t);
+  text-decoration:none;
+}
+.wa-sticky:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,.55)}
+.wa-sticky svg{width:22px;height:22px;flex-shrink:0}
+@media(max-width:600px){
+  .wa-sticky .wa-label{display:none}
+  .wa-sticky{padding:1rem;border-radius:50%}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo" aria-label="Metal Pliage">
+      <span class="logo-mark">MP</span>
+      <span>METAL PLIAGE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Couvertines</a></li>
+      <li><a href="#">Pliages</a></li>
+      <li><a href="#">Réalisations</a></li>
+      <li><a href="#">Pro</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <div class="nav-phone"><span>Devis express</span><strong>06 43 21 82 01</strong></div>
+      <a href="#" class="btn-primary" style="padding:.7rem 1.2rem;font-size:.72rem">Configurer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="section-label">Fabrication française · Acier sur mesure</span>
+      <h1>Couvertines &amp; pliages acier <span class="accent">sur mesure</span>, livrés en 10 jours</h1>
+      <p class="hero-sub">Configurateur en ligne, 32 couleurs RAL, fabrication française à partir de <strong style="color:var(--text)">28 € / ml HT</strong>. Devis instantané, paiement après validation.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Configurer ma pièce → prix en 30 s
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#realisations" class="btn-outline">Voir nos réalisations</a>
+      </div>
+      <div class="hero-trust">
+        <span class="stars">★★★★★</span>
+        <span><strong style="color:var(--text);font-weight:600">4.8/5</strong> · 87 avis Google · 500+ chantiers livrés</span>
+      </div>
+    </div>
+    <!-- Visual placeholder : couvertine en perspective + lumière atelier -->
+    <div class="hero-visual" aria-label="Couvertine acier RAL 7016 en perspective">
+      <svg viewBox="0 0 500 520" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="steel1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3a3a3a"/>
+            <stop offset=".5" stop-color="#6e6e6e"/>
+            <stop offset="1" stop-color="#1a1a1a"/>
+          </linearGradient>
+          <linearGradient id="steelTop" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#4a4a4a"/>
+            <stop offset=".3" stop-color="#8a8a8a"/>
+            <stop offset=".5" stop-color="#bcbcbc"/>
+            <stop offset=".7" stop-color="#8a8a8a"/>
+            <stop offset="1" stop-color="#3a3a3a"/>
+          </linearGradient>
+          <linearGradient id="warmLight" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FF4500" stop-opacity=".25"/>
+            <stop offset="1" stop-color="#FF4500" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect width="500" height="520" fill="#1a1a1a"/>
+        <rect width="500" height="280" fill="url(#warmLight)"/>
+        <!-- Couvertine 3D -->
+        <polygon points="60,300 440,260 460,290 80,330" fill="url(#steelTop)"/>
+        <polygon points="60,300 80,330 80,420 60,400" fill="#252525"/>
+        <polygon points="440,260 460,290 460,380 440,360" fill="#3a3a3a"/>
+        <polygon points="80,330 440,290 440,360 80,400" fill="url(#steel1)"/>
+        <!-- Détail : pli rejet d'eau -->
+        <line x1="80" y1="345" x2="440" y2="305" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+        <line x1="80" y1="360" x2="440" y2="320" stroke="rgba(0,0,0,.45)" stroke-width="1"/>
+        <!-- Label flottant -->
+        <g transform="translate(280,440)">
+          <rect x="-90" y="-22" width="180" height="44" rx="4" fill="#0f0f0f" stroke="#FF4500" stroke-width="1.5"/>
+          <text x="0" y="-2" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#FF4500" letter-spacing="1.5">RAL 7016 · 2 MM</text>
+          <text x="0" y="14" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#9c9c9c" letter-spacing=".5">ANTHRACITE MAT · 2,5 ML</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ── REASSURANCE BAR ── -->
+<section class="reassurance" style="padding:1.5rem 0">
+  <div class="wrap">
+    <div class="reassurance-grid">
+      <div class="reassurance-item">
+        <div class="reassurance-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="reassurance-text"><strong>Prix instantané</strong><span>Devis en 30 secondes</span></div>
+      </div>
+      <div class="reassurance-item">
+        <div class="reassurance-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <div class="reassurance-text"><strong>Atelier France</strong><span>Fabrication maison</span></div>
+      </div>
+      <div class="reassurance-item">
+        <div class="reassurance-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="reassurance-text"><strong>Livraison 10 j ouvrés</strong><span>Partout en France</span></div>
+      </div>
+      <div class="reassurance-item">
+        <div class="reassurance-icon" style="background:rgba(255,193,7,.15);color:var(--gold)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="reassurance-text"><strong>4.8 / 5 · 87 avis</strong><span>Sur Google Business</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Témoignages clients vérifiés</span>
+      <h2>Ils nous font confiance</h2>
+      <p>Particuliers, artisans, architectes : 500+ projets livrés depuis 2020.</p>
+    </div>
+    <div class="testi-grid">
+
+      <article class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Couvertines impeccables pour un mur de clôture de 28 ml. Devis en ligne en 5 minutes, livraison pile à la date annoncée. Mes clients sont ravis du rendu RAL 7016 mat."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MP</div>
+          <div class="testi-meta">
+            <strong>Marc P.</strong>
+            <span>Plombier-couvreur · Loire-Atlantique</span>
+          </div>
+          <div class="google-badge"><span class="google-g">G</span><span>Vérifié</span></div>
+        </div>
+      </article>
+
+      <article class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Excellente réactivité sur un projet d'habillage d'acrotère complexe. Côtes au mm près, finition irréprochable. Nous avons commandé 4 autres chantiers depuis."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#444,#1a1a1a)">CL</div>
+          <div class="testi-meta">
+            <strong>Cabinet Lemoine</strong>
+            <span>Architecture · Lyon</span>
+          </div>
+          <div class="google-badge"><span class="google-g">G</span><span>Vérifié</span></div>
+        </div>
+      </article>
+
+      <article class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Premier achat en ligne pour un muret de jardin de 6 m. Le configurateur est clair, on m'a rappelé pour valider mes côtes. Très satisfait, je recommande."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#5a7a3a,#1a1a1a)">PD</div>
+          <div class="testi-meta">
+            <strong>Pierre D.</strong>
+            <span>Particulier · Bordeaux</span>
+          </div>
+          <div class="google-badge"><span class="google-g">G</span><span>Vérifié</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── REALISATIONS ── -->
+<section class="realisations" id="realisations">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Portfolio</span>
+      <h2>Nos chantiers récents</h2>
+      <p>Six exemples parmi 500+ projets — particulier, pro, architecte.</p>
+    </div>
+
+    <div class="real-grid">
+
+      <!-- Carte 1 : jardinière design -->
+      <a href="#" class="real-card">
+        <div class="real-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="r1bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4a32"/><stop offset="1" stop-color="#1a1a1a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#r1bg)"/>
+            <rect x="80" y="130" width="240" height="130" fill="#1a1a1a" stroke="#3a3a3a"/>
+            <rect x="80" y="125" width="240" height="14" fill="#5a5a5a"/>
+            <!-- Plantes -->
+            <ellipse cx="140" cy="115" rx="22" ry="40" fill="#5a8a4a" opacity=".9"/>
+            <ellipse cx="180" cy="100" rx="18" ry="50" fill="#6a9a5a" opacity=".85"/>
+            <ellipse cx="220" cy="110" rx="20" ry="45" fill="#5a8a4a" opacity=".9"/>
+            <ellipse cx="260" cy="105" rx="16" ry="48" fill="#6a9a5a" opacity=".85"/>
+          </svg>
+        </div>
+        <div class="real-overlay">
+          <h4>Jardinière design · Villa contemporaine</h4>
+          <span>RAL 9005 · 1,8 ml · Particulier</span>
+        </div>
+      </a>
+
+      <!-- Carte 2 : Terrasse contemporaine -->
+      <a href="#" class="real-card">
+        <div class="real-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="r2bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#aab0b6"/><stop offset="1" stop-color="#3a3a3a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#r2bg)"/>
+            <rect x="0" y="180" width="400" height="120" fill="#5a4a3a"/>
+            <rect x="0" y="170" width="400" height="20" fill="#2a2a2a"/>
+            <rect x="0" y="60" width="400" height="110" fill="#FF4500" opacity=".05"/>
+            <!-- Garde-corps -->
+            <rect x="40" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="120" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="200" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="280" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="360" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="20" y="76" width="360" height="6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="real-overlay">
+          <h4>Acrotère terrasse · Maison contemporaine</h4>
+          <span>RAL 9007 · 22 ml · Architecte</span>
+        </div>
+      </a>
+
+      <!-- Carte 3 : Mur clôture -->
+      <a href="#" class="real-card">
+        <div class="real-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="r3bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a8a92"/><stop offset="1" stop-color="#2a2a2a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#r3bg)"/>
+            <rect x="0" y="200" width="400" height="100" fill="#5a5a5a"/>
+            <rect x="0" y="190" width="400" height="16" fill="#1a1a1a"/>
+            <!-- Briques -->
+            <g stroke="#3a3a3a" stroke-width=".5" fill="#6a6a6a">
+              <rect x="0" y="210" width="50" height="18"/><rect x="50" y="210" width="50" height="18"/><rect x="100" y="210" width="50" height="18"/><rect x="150" y="210" width="50" height="18"/>
+              <rect x="25" y="228" width="50" height="18"/><rect x="75" y="228" width="50" height="18"/><rect x="125" y="228" width="50" height="18"/>
+              <rect x="0" y="246" width="50" height="18"/><rect x="50" y="246" width="50" height="18"/><rect x="100" y="246" width="50" height="18"/>
+            </g>
+          </svg>
+        </div>
+        <div class="real-overlay">
+          <h4>Couvertine mur de clôture · 28 ml</h4>
+          <span>RAL 7016 · 2 mm · Pro plombier</span>
+        </div>
+      </a>
+
+      <!-- Carte 4 : Bâtiment moderne acrotère -->
+      <a href="#" class="real-card">
+        <div class="real-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="r4bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2a3a"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#r4bg)"/>
+            <rect x="40" y="80" width="320" height="220" fill="#2a2a2a"/>
+            <rect x="40" y="76" width="320" height="10" fill="#FF4500" opacity=".15"/>
+            <rect x="40" y="70" width="320" height="8" fill="#5a5a5a"/>
+            <!-- Fenêtres -->
+            <g fill="#FF6030" opacity=".4">
+              <rect x="60" y="100" width="40" height="50"/><rect x="120" y="100" width="40" height="50"/><rect x="180" y="100" width="40" height="50"/><rect x="240" y="100" width="40" height="50"/><rect x="300" y="100" width="40" height="50"/>
+              <rect x="60" y="170" width="40" height="50"/><rect x="120" y="170" width="40" height="50"/><rect x="180" y="170" width="40" height="50"/><rect x="240" y="170" width="40" height="50"/><rect x="300" y="170" width="40" height="50"/>
+            </g>
+          </svg>
+        </div>
+        <div class="real-overlay">
+          <h4>Habillage acrotère · Bâtiment tertiaire</h4>
+          <span>RAL 9006 · 86 ml · Architecte</span>
+        </div>
+      </a>
+
+      <!-- Carte 5 : Appui fenêtre rénovation -->
+      <a href="#" class="real-card">
+        <div class="real-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="r5bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8a890"/><stop offset="1" stop-color="#4a3a2a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#r5bg)"/>
+            <!-- Pierre apparente -->
+            <g fill="#9a8770" stroke="#3a2a1a" stroke-width="1">
+              <polygon points="0,0 130,0 100,80 0,80"/>
+              <polygon points="130,0 280,0 260,80 100,80"/>
+              <polygon points="280,0 400,0 400,80 260,80"/>
+              <polygon points="0,80 100,80 80,160 0,160"/>
+              <polygon points="100,80 260,80 240,160 80,160"/>
+              <polygon points="260,80 400,80 400,160 240,160"/>
+            </g>
+            <!-- Fenêtre -->
+            <rect x="120" y="100" width="160" height="120" fill="#1a1a2a"/>
+            <line x1="200" y1="100" x2="200" y2="220" stroke="#2a2a2a"/>
+            <!-- Appui -->
+            <rect x="100" y="215" width="200" height="14" fill="#3a3a3a"/>
+            <rect x="100" y="225" width="200" height="6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="real-overlay">
+          <h4>Appui fenêtre · Rénovation pierre</h4>
+          <span>RAL 7016 · 6 unités · Particulier</span>
+        </div>
+      </a>
+
+      <!-- Carte 6 : Jardinière urbaine -->
+      <a href="#" class="real-card">
+        <div class="real-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="r6bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a6a7a"/><stop offset="1" stop-color="#1a1a1a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#r6bg)"/>
+            <rect x="0" y="220" width="400" height="80" fill="#3a3a3a"/>
+            <rect x="40" y="140" width="320" height="80" fill="#7a4a2a"/>
+            <rect x="40" y="130" width="320" height="14" fill="#1a1a1a"/>
+            <!-- Plantes hautes -->
+            <ellipse cx="100" cy="110" rx="14" ry="50" fill="#3a5a3a"/>
+            <ellipse cx="140" cy="90" rx="16" ry="65" fill="#4a6a4a"/>
+            <ellipse cx="180" cy="100" rx="14" ry="55" fill="#3a5a3a"/>
+            <ellipse cx="220" cy="85" rx="18" ry="70" fill="#4a6a4a"/>
+            <ellipse cx="260" cy="100" rx="14" ry="55" fill="#3a5a3a"/>
+            <ellipse cx="300" cy="95" rx="16" ry="60" fill="#4a6a4a"/>
+          </svg>
+        </div>
+        <div class="real-overlay">
+          <h4>Jardinière urbaine · Aménagement paysager</h4>
+          <span>RAL 7016 · 4,2 ml · Paysagiste</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="real-cta">
+      <a href="#" class="btn-outline">Voir toutes les réalisations →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:1.2rem"><span class="logo-mark">MP</span><span>METAL PLIAGE</span></div>
+        <p style="margin-bottom:1rem">Fabricant français d'acier sur mesure. Couvertines, pliages, inox, appuis de fenêtre. Configurateur en ligne, livraison 10 jours.</p>
+        <address>
+          <strong style="color:var(--text);font-weight:600">Metal Pliage SAS</strong><br>
+          12 rue de l'Industrie<br>
+          44100 Nantes<br>
+          SIRET : 893 245 671 00018<br>
+          TVA : FR89 8932 4567 1
+        </address>
+      </div>
+      <div class="foot-col">
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="#">Couvertines</a></li>
+          <li><a href="#">Pliages sur mesure</a></li>
+          <li><a href="#">Inox 304 / 316L</a></li>
+          <li><a href="#">Appuis de fenêtre</a></li>
+          <li><a href="#">Habillage acrotère</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Société</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Réalisations</a></li>
+          <li><a href="#">Espace Pro</a></li>
+          <li><a href="#">Blog & guides</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <p><strong style="color:var(--text);font-weight:600">06 43 21 82 01</strong><br>contact@metal-pliage.fr</p>
+        <p style="margin-top:1rem"><strong style="color:var(--text);font-weight:600">Horaires atelier</strong><br>Lun–Ven : 8h–17h<br>Sam : sur RDV</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Metal Pliage SAS · Tous droits réservés</span>
+      <div class="legal-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD & cookies</a>
+        <a href="#">Politique de retour</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── WHATSAPP STICKY ── -->
+<a href="https://wa.me/33643218201" class="wa-sticky" aria-label="Discuter sur WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  <span class="wa-label">Discuter sur WhatsApp</span>
+</a>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', ()=>{ nav.classList.toggle('scrolled', window.scrollY > 20) });
+</script>
+
+</body>
+</html>

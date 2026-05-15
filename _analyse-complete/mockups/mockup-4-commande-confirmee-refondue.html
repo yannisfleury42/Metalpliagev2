@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commande confirmée · Metal Pliage (mockup refondu)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MOCKUP 4 — COMMANDE CONFIRMÉE (refonte)
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#1a1a1a; --bg-2:#242424; --bg-card:#2e2e2e; --bg-soft:#383838;
+  --line:#2e2e2e; --line-2:#3a3a3a;
+  --accent:#FF4500; --accent-hover:#FF6030; --accent-glow:rgba(255,69,0,.25);
+  --text:#F5F5F5; --text-2:#E0E0E0; --text-3:#9c9c9c;
+  --green:#25D366; --success:#34C759; --gold:#FFC107;
+  --max:1100px; --pad:clamp(1.25rem,5vw,3rem); --nav-h:72px;
+  --ease:cubic-bezier(.25,.1,.25,1); --t:.3s;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Inter',sans-serif; font-weight:400; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+ul{list-style:none}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(1.8rem,4vw,2.8rem)}
+h2{font-size:clamp(1.3rem,2.2vw,1.7rem);text-transform:uppercase}
+h3{font-size:1rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-3)}
+p{color:var(--text-2)}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:var(--accent);color:#fff;border:1px solid var(--accent);
+  padding:.85rem 1.4rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+  border-radius:4px;
+}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 8px 32px var(--accent-glow);transform:translateY(-1px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.7rem;
+  border:1px solid var(--line-2);color:var(--text);
+  padding:.85rem 1.4rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);background:var(--bg-card);
+  border-radius:4px;
+}
+.btn-outline:hover{background:var(--bg-soft);border-color:var(--text-3)}
+.btn-wa{background:var(--green);border-color:var(--green);color:#fff}
+.btn-wa:hover{background:#1ebd5a;border-color:#1ebd5a}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;
+  background:rgba(26,26,26,.92);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:100%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:.7rem;font-weight:700;letter-spacing:.04em}
+.logo-mark{width:34px;height:34px;border:1.5px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:.85rem}
+.nav-right{display:flex;align-items:center;gap:1rem;font-size:.85rem;color:var(--text-2)}
+.nav-phone strong{color:var(--text);font-weight:600}
+
+/* ── PAGE ── */
+main{padding:calc(var(--nav-h) + 2.5rem) 0 5rem}
+.breadcrumb{font-size:.78rem;color:var(--text-3);margin-bottom:2rem;letter-spacing:.05em}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{margin:0 .5rem;color:var(--line-2)}
+
+/* ── SUCCESS HERO ── */
+.success{
+  background:linear-gradient(135deg,rgba(52,199,89,.08) 0%,rgba(255,69,0,.04) 100%);
+  border:1px solid rgba(52,199,89,.2);
+  border-radius:8px;padding:clamp(2rem,4vw,3rem);
+  display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:center;
+  margin-bottom:2.5rem;
+}
+@media(min-width:700px){ .success{grid-template-columns:auto 1fr auto;gap:2rem} }
+.success-icon{
+  width:74px;height:74px;border-radius:50%;
+  background:var(--success);color:#fff;
+  display:grid;place-items:center;flex-shrink:0;
+  box-shadow:0 8px 28px rgba(52,199,89,.4);
+}
+.success-icon svg{width:38px;height:38px}
+.success-text h1{margin-bottom:.4rem;text-transform:none;letter-spacing:-.02em}
+.success-text h1 .check{color:var(--success)}
+.success-text p{color:var(--text-2);font-size:1rem}
+.order-num-box{
+  text-align:center;padding:1rem 1.5rem;
+  background:var(--bg-card);border:1px solid var(--line-2);border-radius:6px;
+}
+.order-num-box .label{font-size:.7rem;color:var(--text-3);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem}
+.order-num-box .num{font-size:1.4rem;font-weight:700;color:var(--accent);letter-spacing:.04em;font-feature-settings:'tnum'}
+
+/* ── TIMELINE ── */
+.timeline-wrap{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:8px;
+  padding:clamp(1.5rem,3vw,2.5rem);margin-bottom:2.5rem;
+}
+.timeline-wrap h2{margin-bottom:.4rem}
+.timeline-wrap > p{font-size:.92rem;margin-bottom:2.5rem}
+.timeline{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;
+  position:relative;
+}
+.timeline::before{
+  content:'';position:absolute;top:22px;left:11%;right:11%;height:3px;
+  background:var(--line-2);z-index:0;border-radius:2px;
+}
+.timeline::after{
+  content:'';position:absolute;top:22px;left:11%;width:30%;height:3px;
+  background:linear-gradient(90deg,var(--success) 0%,var(--accent) 100%);z-index:1;border-radius:2px;
+}
+.step{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.7rem}
+.step-dot{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--bg-card);border:3px solid var(--line-2);color:var(--text-3);
+  display:grid;place-items:center;font-weight:700;font-size:.9rem;
+  transition:all var(--t);
+}
+.step.done .step-dot{background:var(--success);border-color:var(--success);color:#fff}
+.step.active .step-dot{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 0 6px rgba(255,69,0,.15);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 6px rgba(255,69,0,.15)}50%{box-shadow:0 0 0 10px rgba(255,69,0,.05)}}
+.step h4{font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+.step.done h4,.step.active h4{color:var(--text)}
+.step span{font-size:.72rem;color:var(--text-3);line-height:1.4}
+.step.active span{color:var(--accent);font-weight:500}
+@media(max-width:600px){
+  .step h4{font-size:.7rem}
+  .step span{font-size:.65rem}
+  .step-dot{width:38px;height:38px;font-size:.8rem}
+}
+
+/* ── CARDS GRID ── */
+.cols{
+  display:grid;grid-template-columns:1fr;gap:1.5rem;margin-bottom:2.5rem;
+}
+@media(min-width:800px){ .cols{grid-template-columns:1.6fr 1fr} }
+.card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:8px;
+  padding:clamp(1.2rem,2.5vw,1.8rem);
+}
+.card h2{margin-bottom:1.5rem;font-size:1.15rem}
+
+/* ── TABLE ── */
+.items-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.items-table thead th{
+  text-align:left;font-size:.7rem;color:var(--text-3);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  padding:.6rem .7rem;border-bottom:1px solid var(--line-2);
+}
+.items-table tbody td{
+  padding:1rem .7rem;border-bottom:1px solid var(--line);vertical-align:top;
+}
+.items-table tbody tr:last-child td{border-bottom:0}
+.item-name{color:var(--text);font-weight:500;display:block;margin-bottom:.2rem}
+.item-meta{color:var(--text-3);font-size:.78rem;line-height:1.5}
+.item-swatch{display:inline-block;width:14px;height:14px;border-radius:50%;border:1px solid #555;vertical-align:-2px;margin-right:.3rem}
+.price{color:var(--text);font-weight:500;text-align:right;white-space:nowrap}
+.qty{color:var(--text-2);text-align:center}
+
+/* ── TOTALS ── */
+.totals{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--line-2)}
+.totals dl{display:grid;grid-template-columns:1fr auto;gap:.6rem 2rem;font-size:.92rem}
+.totals dt{color:var(--text-3)}
+.totals dd{color:var(--text-2);text-align:right;font-feature-settings:'tnum'}
+.totals .grand dt,.totals .grand dd{
+  color:var(--text);font-size:1.4rem;font-weight:700;
+  padding-top:.8rem;margin-top:.5rem;border-top:1px solid var(--line-2);
+}
+.totals .grand dd{color:var(--accent)}
+
+/* ── ADDRESSES ── */
+.addr-grid{display:grid;grid-template-columns:1fr;gap:1rem;font-size:.88rem}
+@media(min-width:500px){ .addr-grid{grid-template-columns:1fr 1fr} }
+.addr-block strong{color:var(--text);display:block;margin-bottom:.3rem;font-weight:600;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.addr-block p{color:var(--text-2);line-height:1.6}
+
+/* ── NEXT STEPS ── */
+.next-steps h2{margin-bottom:.4rem}
+.next-steps > p{font-size:.92rem;margin-bottom:2rem}
+.next-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:700px){ .next-grid{grid-template-columns:repeat(3,1fr)} }
+.next-card{
+  background:var(--bg-2);border:1px solid var(--line);border-radius:6px;
+  padding:1.3rem;display:flex;flex-direction:column;gap:.6rem;
+  transition:border-color var(--t);
+}
+.next-card:hover{border-color:var(--line-2)}
+.next-card .icon{
+  width:42px;height:42px;border-radius:6px;
+  background:rgba(255,69,0,.12);color:var(--accent);
+  display:grid;place-items:center;
+}
+.next-card .when{font-size:.7rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.next-card h4{font-size:.95rem;font-weight:600;color:var(--text)}
+.next-card p{font-size:.83rem;color:var(--text-2);line-height:1.55}
+
+/* ── ACTIONS BAR ── */
+.actions{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:8px;
+  padding:clamp(1.2rem,2.5vw,2rem);margin-bottom:2.5rem;
+}
+.actions h2{margin-bottom:.5rem}
+.actions > p{font-size:.92rem;margin-bottom:1.5rem}
+.action-list{display:flex;flex-wrap:wrap;gap:.7rem}
+
+/* ── PENDING ── */
+.pending{margin-bottom:2rem}
+.pending h2{margin-bottom:1.5rem}
+.pending-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:700px){ .pending-grid{grid-template-columns:repeat(3,1fr)} }
+.pending-card{
+  display:flex;gap:1rem;align-items:center;
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:1.2rem;transition:all var(--t);
+}
+.pending-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pending-img{
+  width:60px;height:60px;border-radius:6px;flex-shrink:0;
+  background:#0f0f0f;display:grid;place-items:center;color:var(--accent);
+}
+.pending-card h4{font-size:.92rem;color:var(--text);margin-bottom:.2rem;font-weight:600}
+.pending-card p{font-size:.78rem;color:var(--text-3);line-height:1.4}
+
+/* ── FOOTER ── */
+footer{background:#0f0f0f;border-top:1px solid var(--line);padding:2.5rem 0;margin-top:3rem}
+.foot-inner{
+  display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center;
+  font-size:.8rem;color:var(--text-3);
+}
+.foot-inner a:hover{color:var(--text)}
+.foot-legal{display:flex;gap:1.5rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">MP</span><span>METAL PLIAGE</span></a>
+    <div class="nav-right">
+      <span style="display:none">Mon compte</span>
+      <a href="https://wa.me/33643218201" class="btn-outline btn-wa" style="padding:.55rem .9rem;font-size:.72rem;display:none">WhatsApp</a>
+      <div class="nav-phone"><strong>06 43 21 82 01</strong></div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <nav class="breadcrumb"><a href="#">Accueil</a><span>›</span><a href="#">Mes commandes</a><span>›</span>MP-2026-0142</nav>
+
+    <!-- ── SUCCESS HERO ── -->
+    <div class="success" role="status" aria-label="Commande confirmée">
+      <div class="success-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 12 10 18 20 6"/>
+        </svg>
+      </div>
+      <div class="success-text">
+        <h1><span class="check">✓</span> Commande confirmée — Merci Pierre !</h1>
+        <p>Nous avons bien reçu votre commande. Vous recevrez sous quelques minutes un email de confirmation avec votre facture.</p>
+      </div>
+      <div class="order-num-box">
+        <div class="label">N° de commande</div>
+        <div class="num">MP-2026-0142</div>
+      </div>
+    </div>
+
+    <!-- ── TIMELINE ── -->
+    <section class="timeline-wrap">
+      <h2>Suivi de commande</h2>
+      <p>Voici les 4 étapes de votre commande. Vous serez notifié par email et SMS à chaque étape.</p>
+
+      <div class="timeline" role="list">
+        <div class="step done" role="listitem">
+          <div class="step-dot" aria-label="Étape 1 terminée">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></svg>
+          </div>
+          <h4>Commande reçue</h4>
+          <span>15 mai 2026 · 14h32</span>
+        </div>
+        <div class="step active" role="listitem">
+          <div class="step-dot" aria-label="Étape 2 en cours">2</div>
+          <h4>Fabrication</h4>
+          <span>En cours · ETA J+3</span>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-dot" aria-label="Étape 3 à venir">3</div>
+          <h4>Expédition</h4>
+          <span>Prévu J+5</span>
+        </div>
+        <div class="step" role="listitem">
+          <div class="step-dot" aria-label="Étape 4 à venir">4</div>
+          <h4>Livraison</h4>
+          <span>Prévu J+10 (24 mai)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COLS : RECAP ITEMS + ADDRESSES ── -->
+    <div class="cols">
+
+      <!-- Items -->
+      <div class="card">
+        <h2>Articles commandés</h2>
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th style="text-align:center">Qté</th>
+              <th style="text-align:right">Prix HT</th>
+              <th style="text-align:right">Prix TTC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="item-name">Couvertine acier galva prélaqué 2 mm</span>
+                <span class="item-meta"><span class="item-swatch" style="background:#293133"></span>RAL 7016 anthracite · L 2500 × A 280 × B 35 mm · pose collée</span>
+              </td>
+              <td class="qty">5</td>
+              <td class="price">350,00 €</td>
+              <td class="price">420,00 €</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="item-name">Éclisse de jonction discrète</span>
+                <span class="item-meta"><span class="item-swatch" style="background:#293133"></span>RAL 7016 · adaptée 280 mm</span>
+              </td>
+              <td class="qty">4</td>
+              <td class="price">36,00 €</td>
+              <td class="price">43,20 €</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="item-name">Angle 90° préformé</span>
+                <span class="item-meta"><span class="item-swatch" style="background:#293133"></span>RAL 7016 · entrant + sortant</span>
+              </td>
+              <td class="qty">2</td>
+              <td class="price">58,00 €</td>
+              <td class="price">69,60 €</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="item-name">Cartouche mastic-colle MS polymère</span>
+                <span class="item-meta">Anthracite · 290 ml · usage extérieur</span>
+              </td>
+              <td class="qty">3</td>
+              <td class="price">27,00 €</td>
+              <td class="price">32,40 €</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="totals">
+          <dl>
+            <dt>Sous-total HT</dt><dd>471,00 €</dd>
+            <dt>Livraison standard (10 j)</dt><dd>49,00 €</dd>
+            <dt>TVA 20 %</dt><dd>104,00 €</dd>
+            <div class="grand" style="display:contents">
+              <dt>Total TTC</dt><dd>624,00 €</dd>
+            </div>
+          </dl>
+          <p style="margin-top:1rem;font-size:.8rem;color:var(--text-3)">Payé par carte VISA •••• 4242 · 15 mai 2026 14h31</p>
+        </div>
+      </div>
+
+      <!-- Sidebar : addresses + actions -->
+      <div>
+        <div class="card" style="margin-bottom:1.5rem">
+          <h2>Adresses</h2>
+          <div class="addr-grid">
+            <div class="addr-block">
+              <strong>Livraison</strong>
+              <p>Pierre Durand<br>18 rue des Tilleuls<br>33000 Bordeaux<br>+33 6 12 34 56 78</p>
+            </div>
+            <div class="addr-block">
+              <strong>Facturation</strong>
+              <p>Pierre Durand<br>18 rue des Tilleuls<br>33000 Bordeaux</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 style="font-size:1rem">Vos documents</h2>
+          <p style="font-size:.85rem;margin-bottom:1.2rem">Facture, bon de commande et notice de pose.</p>
+          <div class="action-list" style="flex-direction:column;align-items:stretch">
+            <a href="#" class="btn-primary" style="justify-content:center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Télécharger ma facture (PDF)
+            </a>
+            <a href="#" class="btn-outline" style="justify-content:center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Suivre ma commande
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── ACTIONS BAR ── -->
+    <section class="actions">
+      <h2>Besoin de modifier ou contacter ?</h2>
+      <p>Vous avez 2 heures pour modifier votre commande sans frais. Ensuite, la fabrication démarre.</p>
+      <div class="action-list">
+        <a href="#" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Modifier ma commande <span style="color:var(--text-3);font-size:.7rem">(sous 2 h)</span>
+        </a>
+        <a href="https://wa.me/33643218201" class="btn-outline btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487 2.981 1.287 2.981.858 3.519.806.538-.052 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          WhatsApp service client
+        </a>
+        <a href="tel:+33643218201" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          06 43 21 82 01
+        </a>
+      </div>
+    </section>
+
+    <!-- ── NEXT STEPS ── -->
+    <section class="card next-steps" style="margin-bottom:2.5rem">
+      <h2>Que se passe-t-il ensuite ?</h2>
+      <p>Vous ne ratez rien : nous vous tenons informé à chaque étape.</p>
+      <div class="next-grid">
+
+        <div class="next-card">
+          <div class="icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+          </div>
+          <span class="when">J+1 · Demain</span>
+          <h4>Email "Fabrication lancée"</h4>
+          <p>Photo de votre lot de tôles dans notre atelier de Nantes, avant pliage.</p>
+        </div>
+
+        <div class="next-card">
+          <div class="icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <span class="when">J+5 · Vers le 20 mai</span>
+          <h4>Email "Expédition"</h4>
+          <p>Numéro de suivi transporteur + créneau de livraison choisi.</p>
+        </div>
+
+        <div class="next-card">
+          <div class="icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+          </div>
+          <span class="when">J+10 · Vers le 24 mai</span>
+          <h4>SMS "Livraison demain"</h4>
+          <p>Confirmation de la date et créneau horaire J-1 par SMS.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── PENDING ── -->
+    <section class="pending">
+      <h2 style="font-size:1.15rem;margin-bottom:.4rem;text-transform:uppercase">Pendant que vous attendez</h2>
+      <p style="font-size:.92rem;color:var(--text-2);margin-bottom:1.5rem">Préparez votre pose pour gagner du temps le jour J.</p>
+
+      <div class="pending-grid">
+
+        <a href="#" class="pending-card">
+          <div class="pending-img">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+          </div>
+          <div>
+            <h4>Guide de pose (PDF)</h4>
+            <p>Notice détaillée + vidéo de 8 minutes</p>
+          </div>
+        </a>
+
+        <a href="#" class="pending-card">
+          <div class="pending-img">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h4>Articles blog</h4>
+            <p>5 erreurs à éviter en pose de couvertine</p>
+          </div>
+        </a>
+
+        <a href="#" class="pending-card">
+          <div class="pending-img">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <h4>Parrainez vos voisins</h4>
+            <p>50 € de remise pour vous + 50 € pour eux</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <span>© 2026 Metal Pliage SAS · SIRET 893 245 671 00018 · TVA FR89 893245671</span>
+      <div class="foot-legal">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réalisations — 500+ projets livrés · Metal Pliage (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MOCKUP 3 — PAGE REALISATIONS (portfolio)
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#1a1a1a; --bg-2:#242424; --bg-card:#2e2e2e; --bg-soft:#383838;
+  --line:#2e2e2e; --line-2:#3a3a3a;
+  --accent:#FF4500; --accent-hover:#FF6030; --accent-glow:rgba(255,69,0,.25);
+  --text:#F5F5F5; --text-2:#E0E0E0; --text-3:#9c9c9c;
+  --green:#25D366; --gold:#FFC107;
+  --max:1400px; --pad:clamp(1.25rem,5vw,4rem); --nav-h:72px;
+  --ease:cubic-bezier(.25,.1,.25,1); --t:.3s;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Inter',sans-serif; font-weight:400; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+ul{list-style:none}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.05}
+h1{font-size:clamp(2.2rem,5vw,4rem);text-transform:uppercase}
+h2{font-size:clamp(1.6rem,3vw,2.4rem);text-transform:uppercase}
+h3{font-size:1.05rem;font-weight:600}
+p{color:var(--text-2)}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.section-label{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.7rem;font-weight:600;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+}
+.section-label::before{content:'';width:22px;height:1.5px;background:var(--accent)}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:var(--accent);color:#fff;border:1px solid var(--accent);
+  padding:1rem 1.8rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 8px 32px var(--accent-glow);transform:translateY(-1px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.7rem;
+  border:1px solid var(--text);color:var(--text);
+  padding:1rem 1.8rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+}
+.btn-outline:hover{background:var(--text);color:var(--bg)}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;
+  background:rgba(26,26,26,.82);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:100%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:.7rem;font-weight:700;letter-spacing:.04em}
+.logo-mark{width:34px;height:34px;border:1.5px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:.85rem}
+.nav-links{display:none;gap:2.2rem;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
+.nav-links a.active,.nav-links a:hover{color:var(--accent)}
+.nav-cta{display:none;align-items:center;gap:1rem}
+.nav-phone{font-size:.85rem;color:var(--text-2)}
+.nav-phone strong{color:var(--text);display:block;font-weight:600}
+@media(min-width:900px){ .nav-links,.nav-cta{display:flex} }
+
+/* ── PAGE HERO ── */
+.page-hero{
+  padding:calc(var(--nav-h) + 4rem) 0 3rem;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(255,69,0,.07), transparent 60%),
+    linear-gradient(180deg,#1a1a1a 0%,#242424 100%);
+  text-align:center;
+}
+.breadcrumb{font-size:.78rem;color:var(--text-3);margin-bottom:1.5rem;letter-spacing:.05em}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{margin:0 .5rem;color:var(--line-2)}
+.page-hero h1{margin:1rem 0 1.2rem}
+.page-hero h1 .accent{color:var(--accent)}
+.page-hero p{font-size:1.1rem;color:var(--text-2);max-width:640px;margin:0 auto}
+.hero-stats{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:2.5rem;
+  margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid var(--line);
+  max-width:800px;margin-left:auto;margin-right:auto;
+}
+.hero-stats div{text-align:center}
+.hero-stats strong{display:block;font-size:2rem;color:var(--accent);font-weight:700;letter-spacing:-.02em}
+.hero-stats span{font-size:.78rem;color:var(--text-3);letter-spacing:.15em;text-transform:uppercase}
+
+/* ── FILTRES ── */
+.filters{
+  background:#0f0f0f;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:1.5rem 0;position:sticky;top:var(--nav-h);z-index:50;
+  backdrop-filter:blur(12px);
+}
+.filters-grid{
+  display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;
+}
+.filter-group{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.filter-label{
+  font-size:.7rem;color:var(--text-3);letter-spacing:.18em;text-transform:uppercase;
+  font-weight:600;
+}
+.chip{
+  background:var(--bg-card);border:1px solid var(--line-2);
+  padding:.45rem 1rem;border-radius:30px;
+  font-size:.78rem;color:var(--text-2);letter-spacing:.04em;
+  cursor:pointer;transition:all var(--t);
+}
+.chip:hover{border-color:var(--accent);color:var(--text)}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip-dot{
+  display:inline-block;width:12px;height:12px;border-radius:50%;
+  margin-right:.4rem;vertical-align:-1px;
+}
+
+/* ── GALERIE ── */
+.gallery{padding:3.5rem 0 4rem}
+.gallery-featured{
+  display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:1.5rem;
+}
+@media(min-width:700px){ .gallery-featured{grid-template-columns:1.4fr 1fr;gap:1.5rem} }
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;
+}
+@media(min-width:700px){ .gallery-grid{grid-template-columns:repeat(3,1fr);gap:1.5rem} }
+@media(min-width:1100px){ .gallery-grid{grid-template-columns:repeat(4,1fr)} }
+.proj{
+  position:relative;border-radius:6px;overflow:hidden;
+  background:var(--bg-card);border:1px solid var(--line);
+  aspect-ratio:4/3;cursor:pointer;
+  transition:transform var(--t) var(--ease),border-color var(--t);
+}
+.proj.featured{aspect-ratio:16/10}
+.proj:hover{transform:translateY(-3px);border-color:var(--line-2)}
+.proj-img{position:absolute;inset:0}
+.proj-img svg{width:100%;height:100%}
+.proj-overlay{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:1rem 1.1rem;
+  background:linear-gradient(0deg,rgba(0,0,0,.95) 30%,transparent);
+  color:#fff;
+}
+.proj-overlay h3{font-size:.95rem;font-weight:600;margin-bottom:.4rem}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.2rem}
+.proj-tag{
+  font-size:.66rem;color:var(--text-3);letter-spacing:.04em;
+  background:rgba(255,255,255,.08);padding:.18rem .5rem;border-radius:3px;
+}
+.proj-hover{
+  position:absolute;inset:0;background:rgba(10,10,10,.75);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity var(--t);
+}
+.proj:hover .proj-hover{opacity:1}
+.proj-hover .btn-primary{padding:.7rem 1.4rem;font-size:.72rem}
+
+/* ── MID CTA ── */
+.mid-cta{
+  background:linear-gradient(135deg,#FF4500 0%,#8c2400 100%);
+  padding:3.5rem 0;text-align:center;color:#fff;margin:1rem 0;
+  border-radius:6px;
+}
+.mid-cta h2{color:#fff;margin-bottom:.6rem;font-size:clamp(1.6rem,3vw,2.2rem)}
+.mid-cta p{color:rgba(255,255,255,.9);font-size:1.05rem;margin-bottom:1.8rem;max-width:520px;margin-left:auto;margin-right:auto}
+.mid-cta .btn-primary{background:#1a1a1a;border-color:#1a1a1a}
+.mid-cta .btn-primary:hover{background:#0a0a0a;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+
+/* ── TESTIMONIALS LONGS ── */
+.testimonials-long{background:#1f1f1f;padding:clamp(4rem,7vw,6rem) 0}
+.section-head{text-align:center;max-width:680px;margin:0 auto 3.5rem}
+.section-head h2{margin-bottom:1rem}
+.section-head p{color:var(--text-2)}
+.t-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:800px){ .t-grid{grid-template-columns:repeat(3,1fr)} }
+.t-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:2.2rem 1.8rem;display:flex;flex-direction:column;gap:1.2rem;
+  transition:border-color var(--t),transform var(--t);
+}
+.t-card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.t-stars{color:var(--gold);font-size:1rem;letter-spacing:.1em}
+.t-quote{font-size:1rem;color:var(--text-2);line-height:1.75;flex:1;font-weight:300}
+.t-quote::before{content:'"';color:var(--accent);font-size:2.5rem;line-height:0;vertical-align:-.4em;margin-right:.2em}
+.t-author{display:flex;align-items:center;gap:1rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+.t-avatar{
+  width:54px;height:54px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:1.1rem;
+}
+.t-meta strong{display:block;color:var(--text);font-size:.95rem}
+.t-meta span{color:var(--text-3);font-size:.8rem}
+
+/* ── FOOTER ── */
+footer{background:#0f0f0f;border-top:1px solid var(--line);padding:4rem 0 2rem}
+.foot-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--line)}
+@media(min-width:800px){ .foot-grid{grid-template-columns:1.4fr 1fr 1fr 1fr} }
+.foot-col h4{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.foot-col a,.foot-col p,.foot-col li{color:var(--text-3);font-size:.88rem;line-height:1.9}
+.foot-col a:hover{color:var(--text)}
+.foot-bottom{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;padding-top:2rem;font-size:.78rem;color:var(--text-3)}
+.legal-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+
+/* ── WHATSAPP ── */
+.wa-sticky{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:90;
+  display:flex;align-items:center;gap:.7rem;background:var(--green);color:#fff;
+  padding:.85rem 1.2rem;border-radius:50px;font-size:.88rem;font-weight:600;
+  box-shadow:0 8px 24px rgba(37,211,102,.4);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.wa-sticky:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,.55)}
+.wa-sticky svg{width:22px;height:22px;flex-shrink:0}
+@media(max-width:600px){
+  .wa-sticky .wa-label{display:none}
+  .wa-sticky{padding:1rem;border-radius:50%}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">MP</span><span>METAL PLIAGE</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Couvertines</a></li>
+      <li><a href="#">Pliages</a></li>
+      <li><a href="#" class="active">Réalisations</a></li>
+      <li><a href="#">Pro</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <div class="nav-phone"><span>Devis express</span><strong>06 43 21 82 01</strong></div>
+      <a href="#" class="btn-primary" style="padding:.7rem 1.2rem;font-size:.72rem">Configurer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<header class="page-hero">
+  <div class="wrap">
+    <nav class="breadcrumb"><a href="#">Accueil</a><span>›</span>Réalisations</nav>
+    <span class="section-label">Portfolio</span>
+    <h1>Nos chantiers récents — <span class="accent">500+ projets</span> livrés depuis 2020</h1>
+    <p>Particuliers, artisans, architectes : explorez nos réalisations par produit, RAL ou typologie de client.</p>
+
+    <div class="hero-stats">
+      <div><strong>500+</strong><span>Projets livrés</span></div>
+      <div><strong>32</strong><span>RAL disponibles</span></div>
+      <div><strong>10 j</strong><span>Délai moyen</span></div>
+      <div><strong>4.8 / 5</strong><span>87 avis Google</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── FILTRES ── -->
+<section class="filters">
+  <div class="wrap">
+    <div class="filters-grid">
+      <div class="filter-group">
+        <span class="filter-label">Type</span>
+        <button class="chip active">Tous</button>
+        <button class="chip">Particulier</button>
+        <button class="chip">Pro</button>
+        <button class="chip">Architecte</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Produit</span>
+        <button class="chip">Couvertine</button>
+        <button class="chip">Pliage</button>
+        <button class="chip">Appui</button>
+        <button class="chip">Habillage</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">RAL</span>
+        <button class="chip"><span class="chip-dot" style="background:#293133"></span>7016</button>
+        <button class="chip"><span class="chip-dot" style="background:#0a0a0a"></span>9005</button>
+        <button class="chip"><span class="chip-dot" style="background:#A5A5A5"></span>9006</button>
+        <button class="chip"><span class="chip-dot" style="background:#FFFFFF;border:1px solid #555"></span>9010</button>
+        <button class="chip"><span class="chip-dot" style="background:#403A3A"></span>8019</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALERIE ── -->
+<section class="gallery">
+  <div class="wrap">
+
+    <!-- FEATURED -->
+    <div class="gallery-featured">
+
+      <a href="#" class="proj featured">
+        <div class="proj-img">
+          <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="g1bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2a3a"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+            <rect width="800" height="500" fill="url(#g1bg)"/>
+            <rect x="60" y="120" width="680" height="380" fill="#2a2a2a"/>
+            <rect x="60" y="112" width="680" height="14" fill="#5a5a5a"/>
+            <g fill="#FF6030" opacity=".35">
+              <rect x="100" y="160" width="100" height="80"/><rect x="220" y="160" width="100" height="80"/><rect x="340" y="160" width="100" height="80"/><rect x="460" y="160" width="100" height="80"/><rect x="580" y="160" width="100" height="80"/>
+              <rect x="100" y="260" width="100" height="80"/><rect x="220" y="260" width="100" height="80"/><rect x="340" y="260" width="100" height="80"/><rect x="460" y="260" width="100" height="80"/><rect x="580" y="260" width="100" height="80"/>
+            </g>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Bâtiment tertiaire neuf · Marseille</h3>
+          <div class="proj-tags">
+            <span class="proj-tag">RAL 9006</span><span class="proj-tag">86 ml</span><span class="proj-tag">Habillage acrotère</span>
+          </div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Voir le détail →</span></div>
+      </a>
+
+      <a href="#" class="proj featured">
+        <div class="proj-img">
+          <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="g2bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4a32"/><stop offset="1" stop-color="#1a1a1a"/></linearGradient></defs>
+            <rect width="800" height="500" fill="url(#g2bg)"/>
+            <rect x="100" y="280" width="600" height="200" fill="#1a1a1a" stroke="#3a3a3a"/>
+            <rect x="100" y="270" width="600" height="18" fill="#4a4a4a"/>
+            <ellipse cx="200" cy="220" rx="40" ry="80" fill="#5a8a4a" opacity=".9"/>
+            <ellipse cx="300" cy="180" rx="36" ry="110" fill="#6a9a5a" opacity=".85"/>
+            <ellipse cx="400" cy="200" rx="40" ry="100" fill="#5a8a4a" opacity=".9"/>
+            <ellipse cx="500" cy="170" rx="34" ry="120" fill="#6a9a5a" opacity=".85"/>
+            <ellipse cx="600" cy="210" rx="38" ry="95" fill="#5a8a4a" opacity=".9"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Jardinière design · Villa contemporaine, Aix</h3>
+          <div class="proj-tags">
+            <span class="proj-tag">RAL 9005</span><span class="proj-tag">1,8 ml</span><span class="proj-tag">Pliage sur mesure</span>
+          </div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Voir le détail →</span></div>
+      </a>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="gallery-grid">
+
+      <!-- 1 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p1bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a8a92"/><stop offset="1" stop-color="#2a2a2a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p1bg)"/>
+            <rect x="0" y="200" width="400" height="100" fill="#5a5a5a"/>
+            <rect x="0" y="190" width="400" height="16" fill="#1a1a1a"/>
+            <g stroke="#3a3a3a" stroke-width=".5" fill="#6a6a6a">
+              <rect x="0" y="210" width="50" height="18"/><rect x="50" y="210" width="50" height="18"/><rect x="100" y="210" width="50" height="18"/><rect x="150" y="210" width="50" height="18"/>
+              <rect x="25" y="228" width="50" height="18"/><rect x="75" y="228" width="50" height="18"/><rect x="125" y="228" width="50" height="18"/>
+            </g>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Mur de clôture maison · Nantes</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 7016</span><span class="proj-tag">28 ml</span><span class="proj-tag">Couvertine</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 2 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p2bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#aab0b6"/><stop offset="1" stop-color="#3a3a3a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p2bg)"/>
+            <rect x="0" y="180" width="400" height="120" fill="#5a4a3a"/>
+            <rect x="0" y="170" width="400" height="20" fill="#2a2a2a"/>
+            <rect x="40" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="120" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="200" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="280" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="360" y="80" width="3" height="100" fill="#1a1a1a"/>
+            <rect x="20" y="76" width="360" height="6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Terrasse contemporaine · Annecy</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 9007</span><span class="proj-tag">22 ml</span><span class="proj-tag">Acrotère</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 3 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p3bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8a890"/><stop offset="1" stop-color="#4a3a2a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p3bg)"/>
+            <g fill="#9a8770" stroke="#3a2a1a" stroke-width="1">
+              <polygon points="0,0 130,0 100,80 0,80"/>
+              <polygon points="130,0 280,0 260,80 100,80"/>
+              <polygon points="280,0 400,0 400,80 260,80"/>
+              <polygon points="0,80 100,80 80,160 0,160"/>
+              <polygon points="100,80 260,80 240,160 80,160"/>
+              <polygon points="260,80 400,80 400,160 240,160"/>
+            </g>
+            <rect x="120" y="100" width="160" height="120" fill="#1a1a2a"/>
+            <line x1="200" y1="100" x2="200" y2="220" stroke="#2a2a2a"/>
+            <rect x="100" y="215" width="200" height="14" fill="#3a3a3a"/>
+            <rect x="100" y="225" width="200" height="6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Appui de fenêtre · Rénovation</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 7016</span><span class="proj-tag">6 unités</span><span class="proj-tag">Appui</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 4 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p4bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a6a7a"/><stop offset="1" stop-color="#1a1a1a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p4bg)"/>
+            <rect x="0" y="220" width="400" height="80" fill="#3a3a3a"/>
+            <rect x="40" y="140" width="320" height="80" fill="#7a4a2a"/>
+            <rect x="40" y="130" width="320" height="14" fill="#1a1a1a"/>
+            <ellipse cx="100" cy="110" rx="14" ry="50" fill="#3a5a3a"/>
+            <ellipse cx="140" cy="90" rx="16" ry="65" fill="#4a6a4a"/>
+            <ellipse cx="180" cy="100" rx="14" ry="55" fill="#3a5a3a"/>
+            <ellipse cx="220" cy="85" rx="18" ry="70" fill="#4a6a4a"/>
+            <ellipse cx="260" cy="100" rx="14" ry="55" fill="#3a5a3a"/>
+            <ellipse cx="300" cy="95" rx="16" ry="60" fill="#4a6a4a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Jardinière urbaine · Place du marché</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 7016</span><span class="proj-tag">4,2 ml</span><span class="proj-tag">Pliage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 5 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p5bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a8a6a"/><stop offset="1" stop-color="#1a2a1a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p5bg)"/>
+            <rect x="60" y="180" width="280" height="120" fill="#5a4a3a"/>
+            <rect x="60" y="170" width="280" height="14" fill="#0a0a0a"/>
+            <!-- Garde-corps balcon -->
+            <rect x="60" y="100" width="280" height="80" fill="rgba(255,255,255,.05)"/>
+            <g stroke="#1a1a1a" stroke-width="2">
+              <line x1="80" y1="105" x2="80" y2="170"/><line x1="120" y1="105" x2="120" y2="170"/><line x1="160" y1="105" x2="160" y2="170"/>
+              <line x1="200" y1="105" x2="200" y2="170"/><line x1="240" y1="105" x2="240" y2="170"/><line x1="280" y1="105" x2="280" y2="170"/>
+              <line x1="320" y1="105" x2="320" y2="170"/>
+            </g>
+            <rect x="60" y="100" width="280" height="6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Garde-corps balcon · Immeuble années 70</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 9005</span><span class="proj-tag">18 ml</span><span class="proj-tag">Habillage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 6 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p6bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8c0b0"/><stop offset="1" stop-color="#3a3a3a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p6bg)"/>
+            <rect x="0" y="220" width="400" height="80" fill="#5a4a3a"/>
+            <!-- 3 murets en escalier -->
+            <rect x="0" y="160" width="130" height="60" fill="#6a6a6a"/>
+            <rect x="0" y="150" width="130" height="14" fill="#0a0a0a"/>
+            <rect x="130" y="130" width="140" height="90" fill="#6a6a6a"/>
+            <rect x="130" y="120" width="140" height="14" fill="#0a0a0a"/>
+            <rect x="270" y="100" width="130" height="120" fill="#6a6a6a"/>
+            <rect x="270" y="90" width="130" height="14" fill="#0a0a0a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Muret escalier · Jardin pavillon</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 9010</span><span class="proj-tag">14 ml</span><span class="proj-tag">Couvertine</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 7 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p7bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3a4a"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p7bg)"/>
+            <rect x="50" y="80" width="300" height="220" fill="#1a1a1a"/>
+            <rect x="50" y="74" width="300" height="10" fill="#FF4500" opacity=".15"/>
+            <rect x="50" y="68" width="300" height="8" fill="#7a7a7a"/>
+            <g fill="#FF6030" opacity=".5">
+              <rect x="70" y="120" width="60" height="40"/><rect x="170" y="120" width="60" height="40"/><rect x="270" y="120" width="60" height="40"/>
+              <rect x="70" y="190" width="60" height="40"/><rect x="170" y="190" width="60" height="40"/><rect x="270" y="190" width="60" height="40"/>
+            </g>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Habillage façade · Local commercial</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 9006</span><span class="proj-tag">36 ml</span><span class="proj-tag">Pliage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <!-- 8 -->
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p8bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a4a3a"/><stop offset="1" stop-color="#1a1a1a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p8bg)"/>
+            <rect x="0" y="240" width="400" height="60" fill="#3a2a1a"/>
+            <rect x="80" y="180" width="240" height="70" fill="#5a4a3a"/>
+            <rect x="80" y="170" width="240" height="14" fill="#0a0a0a"/>
+            <!-- Mobilier -->
+            <rect x="120" y="125" width="80" height="50" fill="#444" rx="4"/>
+            <rect x="220" y="125" width="80" height="50" fill="#666" rx="4"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Banc public · Aménagement urbain</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 7016</span><span class="proj-tag">2 unités</span><span class="proj-tag">Pliage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+    </div>
+
+    <!-- MID CTA -->
+    <div class="mid-cta" style="margin-top:3rem;margin-bottom:3rem">
+      <h2>Votre projet ressemble à ça ?</h2>
+      <p>Configurez votre pièce en 30 secondes ou envoyez-nous un plan : on revient vers vous sous 24 h.</p>
+      <a href="#" class="btn-primary">Demander mon devis →</a>
+    </div>
+
+    <!-- More projects -->
+    <div class="gallery-grid">
+
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p9bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#909a8a"/><stop offset="1" stop-color="#2a2a2a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p9bg)"/>
+            <rect x="0" y="210" width="400" height="90" fill="#5a5a5a"/>
+            <rect x="0" y="200" width="400" height="14" fill="#1a1a1a"/>
+            <!-- Portail -->
+            <rect x="120" y="100" width="160" height="100" fill="#2a2a2a"/>
+            <g stroke="#3a3a3a"><line x1="160" y1="100" x2="160" y2="200"/><line x1="200" y1="100" x2="200" y2="200"/><line x1="240" y1="100" x2="240" y2="200"/></g>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Pilier de portail · Maison neuve</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 7016</span><span class="proj-tag">2 unités</span><span class="proj-tag">Couvertine</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p10bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5a4a"/><stop offset="1" stop-color="#1a1a1a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p10bg)"/>
+            <rect x="0" y="200" width="400" height="100" fill="#5a4a3a"/>
+            <rect x="40" y="120" width="320" height="84" fill="#1a1a1a"/>
+            <rect x="40" y="112" width="320" height="14" fill="#5a5a5a"/>
+            <!-- Massif -->
+            <ellipse cx="120" cy="105" rx="20" ry="35" fill="#5a7a4a"/>
+            <ellipse cx="200" cy="100" rx="22" ry="40" fill="#6a8a5a"/>
+            <ellipse cx="280" cy="105" rx="20" ry="35" fill="#5a7a4a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Bordure massif jardin public</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 9005</span><span class="proj-tag">42 ml</span><span class="proj-tag">Pliage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p11bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#aaa"/><stop offset="1" stop-color="#3a3a3a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p11bg)"/>
+            <rect x="60" y="100" width="280" height="180" fill="#444"/>
+            <line x1="200" y1="100" x2="200" y2="280" stroke="#222"/>
+            <line x1="60" y1="190" x2="340" y2="190" stroke="#222"/>
+            <rect x="55" y="270" width="290" height="18" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Bardage métallique · Hangar agricole</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 9006</span><span class="proj-tag">125 m²</span><span class="proj-tag">Pliage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+      <a href="#" class="proj">
+        <div class="proj-img">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="p12bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a4a"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient></defs>
+            <rect width="400" height="300" fill="url(#p12bg)"/>
+            <!-- Escalier moderne -->
+            <polygon points="40,260 360,260 360,180 280,180 280,140 200,140 200,100 100,100 100,180 40,180" fill="#5a5a5a"/>
+            <g stroke="#1a1a1a" stroke-width="2" fill="none">
+              <polyline points="40,180 100,180 100,140 200,140 200,100"/>
+              <polyline points="200,100 280,100 280,140 360,140"/>
+            </g>
+            <rect x="34" y="174" width="6" height="90" fill="#1a1a1a"/>
+            <rect x="354" y="134" width="6" height="130" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="proj-overlay">
+          <h3>Habillage escalier extérieur · Loft</h3>
+          <div class="proj-tags"><span class="proj-tag">RAL 8019</span><span class="proj-tag">12 ml</span><span class="proj-tag">Habillage</span></div>
+        </div>
+        <div class="proj-hover"><span class="btn-primary">Détails</span></div>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS LONGS ── -->
+<section class="testimonials-long">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Ce qu'ils en disent</span>
+      <h2>Témoignages clients</h2>
+      <p>Trois clients récents nous racontent leur expérience, en détail.</p>
+    </div>
+
+    <div class="t-grid">
+      <article class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">Premier achat en ligne pour un mur de clôture de 28 ml. J'avais peur du résultat sans voir physiquement. Le configurateur m'a guidé, et surtout le SAV m'a rappelé pour valider mes côtes. Livraison à J+9, posé en un week-end avec un copain. Rendu nickel.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#FF4500,#7a2200)">MP</div>
+          <div class="t-meta"><strong>Marc P.</strong><span>Plombier-couvreur · Loire-Atlantique</span></div>
+        </div>
+      </article>
+
+      <article class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">Cabinet d'architecture, on travaille sur des chantiers haut de gamme. Metal Pliage nous a livré 86 ml d'habillage d'acrotère en RAL 9006 sur mesure, avec des angles spécifiques et des fichiers DXF acceptés. Côtes au millimètre, finition irréprochable. Nous avons signé 4 chantiers depuis.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#444,#1a1a1a)">CL</div>
+          <div class="t-meta"><strong>Cabinet Lemoine</strong><span>Architecture · Lyon</span></div>
+        </div>
+      </article>
+
+      <article class="t-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">À 52 ans, je n'avais jamais commandé d'acier en ligne. Le mode débutant est super clair, trois questions simples. On m'a appelé pour confirmer mes mesures. Couvertines posées sur mon muret de jardin de 6 m, RAL 7016, magnifique. Mes voisins veulent les mêmes.</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#5a7a3a,#1a1a1a)">PD</div>
+          <div class="t-meta"><strong>Pierre D.</strong><span>Particulier · Bordeaux</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:1.2rem"><span class="logo-mark">MP</span><span>METAL PLIAGE</span></div>
+        <p style="margin-bottom:1rem">Fabricant français d'acier sur mesure. Couvertines, pliages, inox, appuis. Configurateur en ligne, livraison 10 jours.</p>
+        <address>
+          <strong style="color:var(--text);font-weight:600">Metal Pliage SAS</strong><br>
+          12 rue de l'Industrie · 44100 Nantes<br>
+          SIRET : 893 245 671 00018<br>
+          TVA : FR89 8932 4567 1
+        </address>
+      </div>
+      <div class="foot-col">
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="#">Couvertines</a></li>
+          <li><a href="#">Pliages sur mesure</a></li>
+          <li><a href="#">Inox 304 / 316L</a></li>
+          <li><a href="#">Appuis de fenêtre</a></li>
+          <li><a href="#">Habillage acrotère</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Société</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Réalisations</a></li>
+          <li><a href="#">Espace Pro</a></li>
+          <li><a href="#">Blog & guides</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <p><strong style="color:var(--text);font-weight:600">06 43 21 82 01</strong><br>contact@metal-pliage.fr</p>
+        <p style="margin-top:1rem"><strong style="color:var(--text);font-weight:600">Horaires atelier</strong><br>Lun–Ven : 8h–17h<br>Sam : sur RDV</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Metal Pliage SAS · Tous droits réservés</span>
+      <div class="legal-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD & cookies</a>
+        <a href="#">Politique de retour</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/33643218201" class="wa-sticky" target="_blank" rel="noopener" aria-label="Discuter sur WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  <span class="wa-label">Discuter sur WhatsApp</span>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', ()=>{ nav.classList.toggle('scrolled', window.scrollY > 20) });
+  document.querySelectorAll('.filter-group').forEach(g=>{
+    g.querySelectorAll('.chip').forEach(c=>{
+      c.addEventListener('click', ()=>{
+        g.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+        c.classList.add('active');
+      });
+    });
+  });
+</script>
+</body>
+</html>

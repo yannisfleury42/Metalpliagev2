@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Couvertines acier sur mesure — Metal Pliage (mockup refondu)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   MOCKUP 2 — PAGE COUVERTINES (mode débutant en vedette)
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#1a1a1a; --bg-2:#242424; --bg-card:#2e2e2e; --bg-soft:#383838;
+  --line:#2e2e2e; --line-2:#3a3a3a;
+  --accent:#FF4500; --accent-hover:#FF6030; --accent-glow:rgba(255,69,0,.25);
+  --text:#F5F5F5; --text-2:#E0E0E0; --text-3:#9c9c9c;
+  --green:#25D366; --gold:#FFC107;
+  --max:1320px; --pad:clamp(1.25rem,5vw,4rem); --nav-h:72px;
+  --ease:cubic-bezier(.25,.1,.25,1); --t:.3s;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Inter',sans-serif; font-weight:400; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+ul{list-style:none}
+input,select{font:inherit;color:inherit}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(2rem,4.5vw,3.6rem)}
+h2{font-size:clamp(1.6rem,3vw,2.4rem); text-transform:uppercase}
+h3{font-size:1.15rem;font-weight:600}
+p{color:var(--text-2)}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.section-label{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.7rem;font-weight:600;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+}
+.section-label::before{content:'';width:22px;height:1.5px;background:var(--accent)}
+section{padding:clamp(3.5rem,7vw,6rem) 0}
+.section-head{text-align:center;max-width:680px;margin:0 auto 3rem}
+.section-head h2{margin-bottom:1rem}
+.section-head p{color:var(--text-2);font-size:1.02rem}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:var(--accent);color:#fff;border:1px solid var(--accent);
+  padding:1rem 1.8rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 8px 32px var(--accent-glow);transform:translateY(-1px)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.7rem;
+  border:1px solid var(--text);color:var(--text);
+  padding:1rem 1.8rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;transition:all var(--t) var(--ease);
+}
+.btn-outline:hover{background:var(--text);color:var(--bg)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:.5rem;
+  color:var(--text-2);font-size:.85rem;letter-spacing:.05em;
+  border-bottom:1px solid var(--line-2);padding-bottom:.2rem;
+}
+.btn-ghost:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ── NAV (identique mockup 1) ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;
+  background:rgba(26,26,26,.82);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:100%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:.7rem;font-weight:700;letter-spacing:.04em}
+.logo-mark{width:34px;height:34px;border:1.5px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:.85rem}
+.nav-links{display:none;gap:2.2rem;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
+.nav-links a{transition:color var(--t)}
+.nav-links a.active,.nav-links a:hover{color:var(--accent)}
+.nav-cta{display:none;align-items:center;gap:1rem}
+.nav-phone{font-size:.85rem;color:var(--text-2)}
+.nav-phone strong{color:var(--text);display:block;font-weight:600}
+@media(min-width:900px){ .nav-links,.nav-cta{display:flex} }
+
+/* ── HERO PRODUIT ── */
+.hero-prod{
+  padding-top:calc(var(--nav-h) + 3rem);padding-bottom:3.5rem;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(255,69,0,.07), transparent 60%),
+    linear-gradient(180deg,#1a1a1a 0%,#242424 100%);
+}
+.breadcrumb{font-size:.78rem;color:var(--text-3);margin-bottom:1.5rem;letter-spacing:.05em}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{margin:0 .5rem;color:var(--line-2)}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:3rem;align-items:center}
+@media(min-width:900px){ .hero-grid{grid-template-columns:1.1fr 1fr;gap:4rem} }
+.hero-prod h1{margin:.5rem 0 1.2rem}
+.hero-prod h1 .accent{color:var(--accent)}
+.hero-prod-sub{font-size:1.08rem;color:var(--text-2);max-width:520px;margin-bottom:1.8rem}
+.hero-cta{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.8rem}
+.hero-trust{display:flex;align-items:center;gap:.8rem;font-size:.85rem;color:var(--text-3)}
+.hero-trust .stars{color:var(--gold);letter-spacing:.05em}
+.product-visual{
+  aspect-ratio:4/3;border-radius:6px;overflow:hidden;
+  border:1px solid var(--line-2);background:#0f0f0f;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+
+/* ── MODE DEBUTANT ── */
+.beginner{
+  background:linear-gradient(180deg,#242424 0%,#1f1f1f 100%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.beginner-card{
+  background:linear-gradient(135deg,rgba(255,69,0,.05) 0%,rgba(255,69,0,0) 50%),var(--bg-card);
+  border:1px solid var(--line-2);border-radius:8px;
+  padding:clamp(1.5rem,3vw,3rem);
+  position:relative;overflow:hidden;
+}
+.beginner-card::before{
+  content:'';position:absolute;top:0;left:0;width:6px;height:100%;background:var(--accent);
+}
+.beginner-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,69,0,.15);color:var(--accent);
+  padding:.4rem .9rem;border-radius:30px;
+  font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.beginner-card > h2{margin-bottom:.6rem}
+.beginner-card > p{margin-bottom:2.5rem;font-size:1rem;color:var(--text-2);max-width:600px}
+
+.steps{display:grid;grid-template-columns:1fr;gap:1.2rem;margin-bottom:2rem}
+@media(min-width:800px){ .steps{grid-template-columns:repeat(3,1fr);gap:1.5rem} }
+.step{
+  background:var(--bg-2);border:1px solid var(--line);border-radius:6px;
+  padding:1.5rem;position:relative;
+}
+.step-num{
+  position:absolute;top:-12px;left:1.5rem;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-size:.85rem;font-weight:700;
+}
+.step-q{font-size:.78rem;color:var(--text-3);letter-spacing:.08em;text-transform:uppercase;margin:.6rem 0 1rem}
+.step-visual{aspect-ratio:5/3;margin:1rem 0;background:#0f0f0f;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.step-input{
+  display:flex;align-items:center;background:var(--bg);border:1px solid var(--line-2);
+  border-radius:4px;padding:0;overflow:hidden;
+}
+.step-input input{
+  flex:1;background:transparent;border:none;outline:none;
+  padding:.85rem 1rem;font-size:1rem;color:var(--text);font-weight:500;
+}
+.step-input .unit{
+  padding:.85rem 1rem;background:var(--bg-soft);color:var(--text-3);
+  font-size:.85rem;font-weight:500;letter-spacing:.05em;
+}
+.swatches{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
+.swatch{
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  border:2px solid var(--line-2);transition:transform var(--t),border-color var(--t);
+  position:relative;
+}
+.swatch.active{border-color:var(--accent);transform:scale(1.1)}
+.swatch:hover{transform:scale(1.05)}
+.swatch[data-ral="7016"]{background:#293133}
+.swatch[data-ral="9005"]{background:#0a0a0a}
+.swatch[data-ral="9010"]{background:#FFFFFF}
+.swatch[data-ral="9006"]{background:#A5A5A5}
+.swatch[data-ral="8019"]{background:#403A3A}
+.swatch-more{
+  width:36px;height:36px;border-radius:50%;border:2px dashed var(--line-2);
+  color:var(--text-3);font-size:.7rem;font-weight:600;
+  display:grid;place-items:center;cursor:pointer;
+  background:transparent;
+}
+.swatch-more:hover{border-color:var(--accent);color:var(--accent)}
+.beginner-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1.2rem}
+
+/* ── BANDEAU EXPERT ── */
+.expert-bar{
+  background:#0f0f0f;padding:1.5rem 0;border-top:1px solid var(--line);
+}
+.expert-bar-inner{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:1rem;
+}
+.expert-bar p{color:var(--text-2);font-size:.95rem}
+.expert-bar strong{color:var(--text);font-weight:600}
+
+/* ── COMPARATIF MATERIAUX ── */
+.compare{background:var(--bg)}
+.compare-grid{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media(min-width:800px){ .compare-grid{grid-template-columns:repeat(3,1fr);gap:1.5rem} }
+.compare-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:2rem;display:flex;flex-direction:column;gap:1rem;
+  transition:border-color var(--t),transform var(--t);
+}
+.compare-card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.compare-card.recommended{border-color:var(--accent);background:linear-gradient(180deg,rgba(255,69,0,.04) 0%,var(--bg-card) 50%)}
+.compare-tag{
+  position:absolute;top:-12px;background:var(--accent);color:#fff;
+  font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  padding:.3rem .7rem;border-radius:3px;
+}
+.compare-card{position:relative}
+.compare-sample{width:60px;height:60px;border-radius:50%;display:grid;place-items:center}
+.compare-card h3{font-size:1.4rem;text-transform:uppercase;letter-spacing:.05em}
+.compare-card .price{font-size:1.1rem;color:var(--accent);font-weight:600}
+.compare-card ul{display:flex;flex-direction:column;gap:.7rem;margin-top:.5rem}
+.compare-card li{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;padding:.4rem 0;border-bottom:1px solid var(--line)}
+.compare-card li:last-child{border:0}
+.compare-card li span:first-child{color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;font-size:.78rem}
+.compare-card li span:last-child{color:var(--text);font-weight:500}
+
+/* ── SCHEMA TECHNIQUE ── */
+.schema{background:#1f1f1f}
+.schema-box{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:clamp(1.5rem,3vw,2.5rem);
+  display:grid;grid-template-columns:1fr;gap:2rem;align-items:center;
+}
+@media(min-width:900px){ .schema-box{grid-template-columns:1.4fr 1fr} }
+.schema-svg{background:#0f0f0f;border-radius:4px;padding:1.5rem;border:1px solid var(--line)}
+.schema-legend ul{display:flex;flex-direction:column;gap:1rem}
+.schema-legend li{display:flex;gap:1rem;align-items:start}
+.schema-key{
+  flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--accent);
+  color:#fff;display:grid;place-items:center;font-weight:700;font-size:.92rem;
+}
+.schema-legend strong{display:block;color:var(--text);font-size:.95rem;font-weight:600}
+.schema-legend span{color:var(--text-3);font-size:.85rem}
+
+/* ── POSE ── */
+.pose{background:var(--bg)}
+.pose-grid{display:grid;grid-template-columns:1fr;gap:1.2rem}
+@media(min-width:800px){ .pose-grid{grid-template-columns:repeat(3,1fr);gap:1.5rem} }
+.pose-card{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:1.8rem;transition:border-color var(--t),transform var(--t);
+}
+.pose-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pose-icon{
+  width:48px;height:48px;border-radius:6px;background:rgba(255,69,0,.12);
+  color:var(--accent);display:grid;place-items:center;margin-bottom:1rem;
+}
+.pose-card h3{margin-bottom:.5rem;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em}
+.pose-card p{font-size:.9rem;color:var(--text-2);margin-bottom:1rem}
+.pose-card .level{font-size:.72rem;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── FAQ ── */
+.faq{background:#1f1f1f}
+.faq-list{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:.7rem}
+.faq-item{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  overflow:hidden;transition:border-color var(--t);
+}
+.faq-item[open]{border-color:var(--line-2)}
+.faq-item summary{
+  padding:1.2rem 1.5rem;font-weight:500;color:var(--text);font-size:1rem;
+  cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  list-style:none;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{
+  content:'+';color:var(--accent);font-size:1.6rem;font-weight:300;
+  transition:transform var(--t);
+}
+.faq-item[open] summary::after{content:'−'}
+.faq-item .answer{padding:0 1.5rem 1.4rem;color:var(--text-2);font-size:.95rem;line-height:1.7}
+
+/* ── REVIEWS BAR ── */
+.reviews-bar{
+  background:linear-gradient(180deg,#0f0f0f 0%,#1a1a1a 100%);
+  padding:3rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.reviews-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem;margin-bottom:2rem;text-align:center}
+.reviews-head .stars{color:var(--gold);font-size:1.4rem;letter-spacing:.05em}
+.reviews-head h2{font-size:1.4rem;text-transform:none;letter-spacing:0;margin:0}
+.reviews-head h2 strong{color:var(--text)}
+.mini-testi-grid{display:grid;grid-template-columns:1fr;gap:1rem;max-width:1100px;margin:0 auto}
+@media(min-width:800px){ .mini-testi-grid{grid-template-columns:repeat(3,1fr)} }
+.mini-testi{
+  background:var(--bg-card);border:1px solid var(--line);border-radius:6px;
+  padding:1.3rem;font-size:.88rem;
+}
+.mini-testi .stars{color:var(--gold);font-size:.9rem;margin-bottom:.5rem}
+.mini-testi p{color:var(--text-2);margin-bottom:.7rem;line-height:1.6}
+.mini-testi cite{color:var(--text-3);font-style:normal;font-size:.78rem}
+
+/* ── FOOTER ── */
+footer{background:#0f0f0f;border-top:1px solid var(--line);padding:4rem 0 2rem}
+.foot-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--line)}
+@media(min-width:800px){ .foot-grid{grid-template-columns:1.4fr 1fr 1fr 1fr} }
+.foot-col h4{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+.foot-col a,.foot-col p,.foot-col li{color:var(--text-3);font-size:.88rem;line-height:1.9}
+.foot-col a:hover{color:var(--text)}
+.foot-bottom{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;padding-top:2rem;font-size:.78rem;color:var(--text-3)}
+.legal-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+
+/* ── WHATSAPP STICKY ── */
+.wa-sticky{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:90;
+  display:flex;align-items:center;gap:.7rem;background:var(--green);color:#fff;
+  padding:.85rem 1.2rem;border-radius:50px;font-size:.88rem;font-weight:600;
+  box-shadow:0 8px 24px rgba(37,211,102,.4);
+  transition:transform var(--t),box-shadow var(--t);
+}
+.wa-sticky:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,.55)}
+.wa-sticky svg{width:22px;height:22px;flex-shrink:0}
+@media(max-width:600px){
+  .wa-sticky .wa-label{display:none}
+  .wa-sticky{padding:1rem;border-radius:50%}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">MP</span><span>METAL PLIAGE</span></a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Couvertines</a></li>
+      <li><a href="#">Pliages</a></li>
+      <li><a href="#">Réalisations</a></li>
+      <li><a href="#">Pro</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <div class="nav-phone"><span>Devis express</span><strong>06 43 21 82 01</strong></div>
+      <a href="#" class="btn-primary" style="padding:.7rem 1.2rem;font-size:.72rem">Configurer</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO PRODUIT ── -->
+<header class="hero-prod">
+  <div class="wrap">
+    <nav class="breadcrumb"><a href="#">Accueil</a><span>›</span><a href="#">Produits</a><span>›</span>Couvertines acier</nav>
+    <div class="hero-grid">
+      <div>
+        <span class="section-label">Best-seller · Fabrication française</span>
+        <h1>Couvertine acier sur mesure <span class="accent">à partir de 28 € / ml HT</span></h1>
+        <p class="hero-prod-sub">Protégez durablement vos murets, acrotères et appuis. 32 couleurs RAL, épaisseurs 1.5–3 mm, livraison 10 jours partout en France.</p>
+        <div class="hero-cta">
+          <a href="#beginner" class="btn-primary">Configurer en 3 questions →</a>
+          <a href="#" class="btn-outline">Configurateur expert</a>
+        </div>
+        <div class="hero-trust">
+          <span class="stars">★★★★★</span>
+          <span><strong style="color:var(--text);font-weight:600">4.8/5</strong> · 87 avis Google · garantie 10 ans</span>
+        </div>
+      </div>
+
+      <!-- Schéma 3D de la couvertine avec rejet d'eau -->
+      <div class="product-visual">
+        <svg viewBox="0 0 600 450" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="m2steel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4a4a4a"/>
+              <stop offset="0.5" stop-color="#7a7a7a"/>
+              <stop offset="1" stop-color="#2a2a2a"/>
+            </linearGradient>
+            <linearGradient id="m2top" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#5a5a5a"/>
+              <stop offset=".4" stop-color="#a4a4a4"/>
+              <stop offset=".6" stop-color="#a4a4a4"/>
+              <stop offset="1" stop-color="#3a3a3a"/>
+            </linearGradient>
+            <linearGradient id="m2glow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FF4500" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#FF4500" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="450" fill="#0f0f0f"/>
+          <rect width="600" height="280" fill="url(#m2glow)"/>
+          <!-- Muret -->
+          <polygon points="80,300 480,260 480,400 80,440" fill="#5a4a3a" opacity=".85"/>
+          <line x1="80" y1="340" x2="480" y2="300" stroke="#3a2a1a" stroke-width="1"/>
+          <line x1="80" y1="380" x2="480" y2="340" stroke="#3a2a1a" stroke-width="1"/>
+          <!-- Couvertine top -->
+          <polygon points="50,280 510,235 530,275 70,320" fill="url(#m2top)"/>
+          <!-- Pli arrière -->
+          <polygon points="510,235 530,275 530,300 510,260" fill="#3a3a3a"/>
+          <!-- Pli avant (rejet d'eau 45°) -->
+          <polygon points="50,280 70,320 50,355 30,315" fill="url(#m2steel)"/>
+          <!-- Annotations -->
+          <g font-family="Inter,sans-serif" fill="#FF4500" font-size="13" font-weight="600" letter-spacing="1">
+            <line x1="50" y1="260" x2="50" y2="220" stroke="#FF4500" stroke-width="1.5"/>
+            <line x1="510" y1="220" x2="510" y2="220" stroke="#FF4500"/>
+            <text x="280" y="210" text-anchor="middle">L = longueur sur mesure (max 3 m / pièce)</text>
+            <line x1="40" y1="280" x2="40" y2="355" stroke="#FF4500" stroke-width="1"/>
+            <text x="20" y="320" text-anchor="middle" transform="rotate(-90 20 320)">B = nez 45°</text>
+            <line x1="555" y1="275" x2="555" y2="300" stroke="#FF4500" stroke-width="1"/>
+            <text x="572" y="290" transform="rotate(-90 572 290)">A = retour</text>
+          </g>
+          <!-- Goutte d'eau -->
+          <g transform="translate(38,345)">
+            <ellipse cx="0" cy="0" rx="3" ry="4" fill="#5b8db8" opacity=".7"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── MODE DEBUTANT ── -->
+<section class="beginner" id="beginner">
+  <div class="wrap">
+    <div class="beginner-card">
+      <span class="beginner-tag">★ Mode débutant — recommandé</span>
+      <h2>Vous n'êtes pas pro ? On vous guide.</h2>
+      <p>3 questions simples, sans jargon. On calcule la longueur, le développé, le retour, et on vous propose les accessoires. Vous n'avez qu'à vérifier.</p>
+
+      <div class="steps">
+        <!-- Step 1 -->
+        <div class="step">
+          <span class="step-num">1</span>
+          <p class="step-q">Longueur de mon muret ?</p>
+          <div class="step-visual">
+            <svg viewBox="0 0 240 90" preserveAspectRatio="xMidYMid meet">
+              <rect width="240" height="90" fill="#0f0f0f"/>
+              <rect x="20" y="55" width="200" height="22" fill="#5a4a3a" stroke="#3a2a1a"/>
+              <!-- Mètre ruban -->
+              <line x1="20" y1="40" x2="220" y2="40" stroke="#FF4500" stroke-width="2"/>
+              <polygon points="20,40 30,35 30,45" fill="#FF4500"/>
+              <polygon points="220,40 210,35 210,45" fill="#FF4500"/>
+              <g stroke="#FF4500" stroke-width="1">
+                <line x1="20" y1="36" x2="20" y2="44"/><line x1="60" y1="36" x2="60" y2="44"/><line x1="100" y1="36" x2="100" y2="44"/>
+                <line x1="140" y1="36" x2="140" y2="44"/><line x1="180" y1="36" x2="180" y2="44"/><line x1="220" y1="36" x2="220" y2="44"/>
+              </g>
+              <text x="120" y="25" text-anchor="middle" font-family="Inter,sans-serif" fill="#FF4500" font-size="12" font-weight="600">LONGUEUR TOTALE</text>
+            </svg>
+          </div>
+          <div class="step-input">
+            <input type="number" value="12" min="1" max="200">
+            <span class="unit">mètres</span>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <span class="step-num">2</span>
+          <p class="step-q">Largeur du muret ?</p>
+          <div class="step-visual">
+            <svg viewBox="0 0 240 90" preserveAspectRatio="xMidYMid meet">
+              <rect width="240" height="90" fill="#0f0f0f"/>
+              <rect x="80" y="20" width="80" height="60" fill="#5a4a3a" stroke="#3a2a1a"/>
+              <!-- Double flèche -->
+              <line x1="80" y1="50" x2="160" y2="50" stroke="#FF4500" stroke-width="2"/>
+              <polygon points="80,50 90,45 90,55" fill="#FF4500"/>
+              <polygon points="160,50 150,45 150,55" fill="#FF4500"/>
+              <text x="120" y="42" text-anchor="middle" font-family="Inter,sans-serif" fill="#FF4500" font-size="13" font-weight="700">25 cm</text>
+              <text x="120" y="14" text-anchor="middle" font-family="Inter,sans-serif" fill="#9c9c9c" font-size="9" letter-spacing="1">LARGEUR (B)</text>
+            </svg>
+          </div>
+          <div class="step-input">
+            <input type="number" value="25" min="10" max="100">
+            <span class="unit">cm</span>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <span class="step-num">3</span>
+          <p class="step-q">Couleur préférée ?</p>
+          <div class="step-visual" style="display:flex;align-items:center;justify-content:center;background:#0f0f0f">
+            <svg viewBox="0 0 240 90" preserveAspectRatio="xMidYMid meet">
+              <rect width="240" height="90" fill="#0f0f0f"/>
+              <rect x="40" y="35" width="160" height="20" fill="#293133"/>
+              <rect x="40" y="32" width="160" height="3" fill="#3a4244"/>
+              <text x="120" y="74" text-anchor="middle" font-family="Inter,sans-serif" fill="#FF4500" font-size="11" font-weight="600" letter-spacing="2">RAL 7016 · ANTHRACITE</text>
+            </svg>
+          </div>
+          <div class="swatches">
+            <button class="swatch active" data-ral="7016" aria-label="RAL 7016 Anthracite"></button>
+            <button class="swatch" data-ral="9005" aria-label="RAL 9005 Noir"></button>
+            <button class="swatch" data-ral="9010" aria-label="RAL 9010 Blanc"></button>
+            <button class="swatch" data-ral="9006" aria-label="RAL 9006 Aluminium"></button>
+            <button class="swatch" data-ral="8019" aria-label="RAL 8019 Brun"></button>
+            <button class="swatch-more">+ 27</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="beginner-cta">
+        <a href="#" class="btn-primary">Calculer mon prix et mes accessoires →</a>
+        <span style="color:var(--text-3);font-size:.85rem">Sans inscription · Sans engagement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BANDEAU EXPERT ── -->
+<section class="expert-bar" style="padding:1.5rem 0">
+  <div class="wrap">
+    <div class="expert-bar-inner">
+      <p><strong>Vous êtes pro ou bricoleur expérimenté ?</strong> Accédez au configurateur avancé : pince, nez, développé, âme, retours différenciés, fichiers DXF acceptés.</p>
+      <a href="#" class="btn-ghost">Ouvrir le configurateur expert →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARATIF MATERIAUX ── -->
+<section class="compare">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Bien choisir</span>
+      <h2>Acier · Aluminium · Zinc — lequel pour vous ?</h2>
+      <p>Trois matériaux, trois usages. Voici un comparatif honnête pour vous aider à décider.</p>
+    </div>
+    <div class="compare-grid">
+
+      <!-- ACIER -->
+      <div class="compare-card recommended">
+        <span class="compare-tag">Recommandé</span>
+        <div class="compare-sample" style="background:#293133;border:2px solid #4a5254"></div>
+        <h3>Acier galvanisé peint</h3>
+        <p class="price">à partir de 28 € / ml HT</p>
+        <ul>
+          <li><span>Durée de vie</span><span>30+ ans</span></li>
+          <li><span>Esthétique</span><span>Mat industriel</span></li>
+          <li><span>Poids</span><span>Moyen (8 kg/ml)</span></li>
+          <li><span>Bord de mer</span><span>Oui, avec finition</span></li>
+          <li><span>Couleurs RAL</span><span>32 disponibles</span></li>
+        </ul>
+      </div>
+
+      <!-- ALU -->
+      <div class="compare-card">
+        <div class="compare-sample" style="background:#A5A5A5;border:2px solid #c4c4c4"></div>
+        <h3>Aluminium</h3>
+        <p class="price">à partir de 42 € / ml HT</p>
+        <ul>
+          <li><span>Durée de vie</span><span>40+ ans</span></li>
+          <li><span>Esthétique</span><span>Lisse moderne</span></li>
+          <li><span>Poids</span><span>Léger (3 kg/ml)</span></li>
+          <li><span>Bord de mer</span><span>Excellent</span></li>
+          <li><span>Couleurs RAL</span><span>32 disponibles</span></li>
+        </ul>
+      </div>
+
+      <!-- ZINC -->
+      <div class="compare-card">
+        <div class="compare-sample" style="background:#6e7375;border:2px solid #8a8f91"></div>
+        <h3>Zinc naturel</h3>
+        <p class="price">à partir de 58 € / ml HT</p>
+        <ul>
+          <li><span>Durée de vie</span><span>80+ ans</span></li>
+          <li><span>Esthétique</span><span>Patine vivante</span></li>
+          <li><span>Poids</span><span>Lourd (12 kg/ml)</span></li>
+          <li><span>Bord de mer</span><span>Très bon</span></li>
+          <li><span>Couleurs</span><span>Naturel uniquement</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SCHEMA TECHNIQUE ── -->
+<section class="schema">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Vocabulaire utile</span>
+      <h2>Comprendre les côtes en 60 secondes</h2>
+      <p>Tous les termes du configurateur expliqués sur un schéma. Plus jamais perdu.</p>
+    </div>
+
+    <div class="schema-box">
+      <div class="schema-svg">
+        <svg viewBox="0 0 560 360" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="schSteel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7a7a7a"/>
+              <stop offset="1" stop-color="#3a3a3a"/>
+            </linearGradient>
+          </defs>
+          <rect width="560" height="360" fill="#0f0f0f"/>
+          <!-- Muret en coupe -->
+          <rect x="180" y="160" width="200" height="170" fill="#5a4a3a" stroke="#3a2a1a"/>
+          <text x="280" y="240" text-anchor="middle" font-family="Inter,sans-serif" fill="#3a2a1a" font-size="11" font-weight="600">MUR</text>
+          <!-- Couvertine en coupe (forme en U inversé) -->
+          <polygon points="140,140 420,140 420,200 410,200 410,150 150,150 150,200 140,200" fill="url(#schSteel)" stroke="#1a1a1a"/>
+          <!-- Pli rejet d'eau B -->
+          <line x1="140" y1="140" x2="120" y2="170" stroke="#7a7a7a" stroke-width="4"/>
+          <line x1="420" y1="140" x2="440" y2="170" stroke="#7a7a7a" stroke-width="4"/>
+          <!-- Cotation B -->
+          <g stroke="#FF4500" stroke-width="1.2" fill="none">
+            <line x1="120" y1="100" x2="120" y2="180"/>
+            <line x1="120" y1="100" x2="180" y2="100"/>
+            <line x1="180" y1="100" x2="180" y2="160"/>
+            <circle cx="150" cy="100" r="12" fill="#FF4500" stroke="none"/>
+          </g>
+          <text x="150" y="105" text-anchor="middle" font-family="Inter,sans-serif" fill="#fff" font-size="13" font-weight="700">B</text>
+          <!-- Cotation A (largeur) -->
+          <g stroke="#FF4500" stroke-width="1.2" fill="none">
+            <line x1="120" y1="200" x2="440" y2="200" stroke-dasharray="3 3"/>
+            <line x1="120" y1="195" x2="120" y2="205"/>
+            <line x1="440" y1="195" x2="440" y2="205"/>
+            <circle cx="280" cy="200" r="12" fill="#FF4500" stroke="none"/>
+          </g>
+          <text x="280" y="205" text-anchor="middle" font-family="Inter,sans-serif" fill="#fff" font-size="13" font-weight="700">A</text>
+          <!-- Cotation L -->
+          <g stroke="#FF4500" stroke-width="1.2" fill="none">
+            <line x1="140" y1="60" x2="420" y2="60" stroke-dasharray="3 3"/>
+            <line x1="140" y1="55" x2="140" y2="65"/>
+            <line x1="420" y1="55" x2="420" y2="65"/>
+            <circle cx="280" cy="60" r="12" fill="#FF4500" stroke="none"/>
+          </g>
+          <text x="280" y="65" text-anchor="middle" font-family="Inter,sans-serif" fill="#fff" font-size="13" font-weight="700">L</text>
+          <!-- Goutte d'eau -->
+          <g>
+            <text x="500" y="170" font-family="Inter,sans-serif" fill="#5b8db8" font-size="20">↓</text>
+            <text x="498" y="195" font-family="Inter,sans-serif" fill="#5b8db8" font-size="9">eau</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="schema-legend">
+        <ul>
+          <li>
+            <span class="schema-key">A</span>
+            <div><strong>A · Largeur du muret</strong><span>La mesure du dessus du mur, d'une face à l'autre (généralement 20–40 cm).</span></div>
+          </li>
+          <li>
+            <span class="schema-key">B</span>
+            <div><strong>B · Nez / rejet d'eau</strong><span>Le pli incliné qui éloigne l'eau du mur (typiquement 30–40 mm).</span></div>
+          </li>
+          <li>
+            <span class="schema-key">L</span>
+            <div><strong>L · Longueur de pièce</strong><span>Longueur unitaire de la couvertine (max 3 m). Au-delà, plusieurs pièces avec jonctions.</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── POSE ── -->
+<section class="pose">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Pose facile</span>
+      <h2>Comment poser une couvertine ?</h2>
+      <p>Trois méthodes selon votre support et votre niveau. Notice PDF fournie avec chaque commande.</p>
+    </div>
+
+    <div class="pose-grid">
+      <div class="pose-card">
+        <div class="pose-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </div>
+        <h3>Pose collée</h3>
+        <p>Mastic-colle MS polymère sur muret propre. Idéal pour les murets bas et finitions propres.</p>
+        <span class="level">★ · Niveau débutant</span>
+      </div>
+      <div class="pose-card">
+        <div class="pose-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/></svg>
+        </div>
+        <h3>Pose vissée</h3>
+        <p>Vis inox sur chevilles à frapper. Préconisée pour les zones ventées ou les acrotères.</p>
+        <span class="level">★★ · Niveau intermédiaire</span>
+      </div>
+      <div class="pose-card">
+        <div class="pose-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="8"/></svg>
+        </div>
+        <h3>Pose clippée</h3>
+        <p>Système breveté avec pattes-éclisses. Démontage possible, look pro, idéal architecte.</p>
+        <span class="level">★★★ · Pose pro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-label">Questions fréquentes</span>
+      <h2>On répond à tout</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>Pour un mur de 12 m, comment ça marche ?</summary>
+        <div class="answer">Vos couvertines sont livrées en pièces de 2 à 3 m (max), avec des éclisses de jonction discrètes. Pour 12 m, comptez 4 à 6 pièces + 3 à 5 éclisses + 2 angles si retour. Le configurateur calcule tout automatiquement.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Acier ou aluminium en bord de mer ?</summary>
+        <div class="answer">L'aluminium est plus indiqué (zéro corrosion). L'acier galvanisé prélaqué fonctionne aussi très bien si vous choisissez une finition haute durabilité (HDP). On vous conseille selon votre département à l'étape 4 du configurateur.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Y a-t-il une garantie ?</summary>
+        <div class="answer">Oui. Garantie fabricant 10 ans sur la peinture (décollement, cloquage, perte d'adhérence) et 5 ans sur la planéité. Garantie matière acier galvanisé : 25 ans.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Quel est le délai réel ?</summary>
+        <div class="answer">10 jours ouvrés en moyenne entre la validation de votre commande et la livraison à votre porte. Détail : J+5 fabrication, J+2 contrôle qualité et conditionnement, J+3 transport (J+4 pour les départements 20, 2A, 2B et 974).</div>
+      </details>
+      <details class="faq-item">
+        <summary>Livrez-vous en Bretagne / DOM-TOM ?</summary>
+        <div class="answer">Oui pour toute la France métropolitaine, Corse et Monaco (supplément Corse 12 %). Pour les DOM-TOM, nous fournissons un devis transport sur mesure (compter +200 à +400 €). Contactez-nous directement par WhatsApp pour un délai exact.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVIEWS BAR ── -->
+<section class="reviews-bar">
+  <div class="wrap">
+    <div class="reviews-head">
+      <span class="stars">★★★★★</span>
+      <h2><strong>4.8 / 5</strong> · 87 avis Google Business · 500+ chantiers livrés</h2>
+    </div>
+    <div class="mini-testi-grid">
+      <div class="mini-testi">
+        <div class="stars">★★★★★</div>
+        <p>"Service top, couvertines livrées en 9 jours pour mon muret de jardin. Conseils utiles par téléphone."</p>
+        <cite>— Patrick L., Toulouse · Particulier</cite>
+      </div>
+      <div class="mini-testi">
+        <div class="stars">★★★★★</div>
+        <p>"Configurateur clair, prix compétitifs. Mes 3 derniers chantiers chez eux, jamais déçu."</p>
+        <cite>— Aurélien D., Couvreur · Rennes</cite>
+      </div>
+      <div class="mini-testi">
+        <div class="stars">★★★★★</div>
+        <p>"Excellent rapport qualité-prix pour un acrotère de 86 ml. Côtes au mm près."</p>
+        <cite>— Cabinet Lemoine, Architecture · Lyon</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:1.2rem"><span class="logo-mark">MP</span><span>METAL PLIAGE</span></div>
+        <p style="margin-bottom:1rem">Fabricant français d'acier sur mesure. Couvertines, pliages, inox, appuis. Configurateur en ligne, livraison 10 jours.</p>
+        <address>
+          <strong style="color:var(--text);font-weight:600">Metal Pliage SAS</strong><br>
+          12 rue de l'Industrie · 44100 Nantes<br>
+          SIRET : 893 245 671 00018<br>
+          TVA : FR89 8932 4567 1
+        </address>
+      </div>
+      <div class="foot-col">
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="#">Couvertines</a></li>
+          <li><a href="#">Pliages sur mesure</a></li>
+          <li><a href="#">Inox 304 / 316L</a></li>
+          <li><a href="#">Appuis de fenêtre</a></li>
+          <li><a href="#">Habillage acrotère</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Société</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Réalisations</a></li>
+          <li><a href="#">Espace Pro</a></li>
+          <li><a href="#">Blog & guides</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <p><strong style="color:var(--text);font-weight:600">06 43 21 82 01</strong><br>contact@metal-pliage.fr</p>
+        <p style="margin-top:1rem"><strong style="color:var(--text);font-weight:600">Horaires atelier</strong><br>Lun–Ven : 8h–17h<br>Sam : sur RDV</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Metal Pliage SAS · Tous droits réservés</span>
+      <div class="legal-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">RGPD & cookies</a>
+        <a href="#">Politique de retour</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/33643218201" class="wa-sticky" target="_blank" rel="noopener" aria-label="Discuter sur WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  <span class="wa-label">Discuter sur WhatsApp</span>
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', ()=>{ nav.classList.toggle('scrolled', window.scrollY > 20) });
+
+  // Swatch selector
+  document.querySelectorAll('.swatch').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));
+      s.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
