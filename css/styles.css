@@ -64,6 +64,89 @@
   line-height: 1.5;
 }
 
+/* ── WHATSAPP STICKY (mobile-first, cible artisans en chantier) ──────── */
+#whatsapp-sticky {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #25D366;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 32px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35),
+              0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+#whatsapp-sticky:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.45),
+              0 3px 6px rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+#whatsapp-sticky:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+@media (max-width: 640px) {
+  #whatsapp-sticky {
+    padding: 12px;
+    bottom: 16px;
+    right: 16px;
+  }
+  #whatsapp-sticky .ws-label {
+    display: none;
+  }
+}
+
+/* ── HELPER PROACTIF LONGUEUR > 2800 MM (configurateur couvertine) ───── */
+.dim-helper-proactive {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 69, 0, 0.08);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.dim-helper-proactive svg { flex-shrink: 0; margin-top: 2px; }
+.dim-helper-proactive strong { color: var(--accent); }
+
+/* ── TOOLTIP CTA DISABLED ─────────────────────────────────────────── */
+.btn-disabled-note {
+  display: block;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a1a;
+  color: #f5f5f5;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 320px;
+  z-index: 100;
+  animation: ctaNoteFadeIn 0.2s var(--ease-out);
+}
+@keyframes ctaNoteFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
 /* ── RESET & BASE ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
