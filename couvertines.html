@@ -594,6 +594,441 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
+       COMPARATIF MATÉRIAUX — acier / alu / zinc
+  ═══════════════════════════════════════════ -->
+  <section class="cv-matieres" aria-labelledby="matieres-title">
+    <div class="cv-section">
+      <header class="cv-block-head">
+        <span class="section-label">— CHOISIR SON MATÉRIAU —</span>
+        <h2 id="matieres-title">Acier, aluminium, zinc : lequel pour ma couvertine ?</h2>
+        <p>Chaque matériau a ses forces. Voici un comparatif rapide pour vous aider à décider en fonction de votre environnement, votre budget et l'esthétique recherchée.</p>
+      </header>
+
+      <div class="cv-mat-grid">
+        <article class="cv-mat-card cv-mat-card--featured">
+          <span class="cv-mat-pill cv-mat-pill--reco">Recommandé</span>
+          <h3>Acier prélaqué</h3>
+          <p class="cv-mat-tag">0,75 mm — laqué époxy 80 µm</p>
+          <ul class="cv-mat-list">
+            <li><strong>Durée de vie</strong> : 20 à 30 ans</li>
+            <li><strong>Prix</strong> : le plus compétitif (à partir de 28 €/ml HT)</li>
+            <li><strong>Résistance</strong> : excellente aux chocs et UV</li>
+            <li><strong>Esthétique</strong> : fini lisse, 5 RAL stock + autres sur devis</li>
+            <li><strong>Idéal pour</strong> : murs de clôture, terrasses, acrotères en zone normale</li>
+          </ul>
+          <p class="cv-mat-caveat">À éviter : bord de mer direct (préférer l'alu).</p>
+        </article>
+
+        <article class="cv-mat-card">
+          <h3>Aluminium laqué</h3>
+          <p class="cv-mat-tag">1,5 mm — laqué époxy</p>
+          <ul class="cv-mat-list">
+            <li><strong>Durée de vie</strong> : 30+ ans</li>
+            <li><strong>Prix</strong> : ~30 % plus cher que l'acier</li>
+            <li><strong>Résistance</strong> : anticorrosion naturelle, léger</li>
+            <li><strong>Esthétique</strong> : fini lisse identique à l'acier</li>
+            <li><strong>Idéal pour</strong> : bord de mer, ambiances humides, projets architecturaux</li>
+          </ul>
+          <p class="cv-mat-caveat">À noter : se déforme plus facilement aux chocs.</p>
+        </article>
+
+        <article class="cv-mat-card cv-mat-card--muted">
+          <h3>Zinc</h3>
+          <p class="cv-mat-tag">Sur devis uniquement</p>
+          <ul class="cv-mat-list">
+            <li><strong>Durée de vie</strong> : 50+ ans</li>
+            <li><strong>Prix</strong> : 2 à 3× l'acier</li>
+            <li><strong>Résistance</strong> : excellente, patine naturelle gris bleuté</li>
+            <li><strong>Esthétique</strong> : prend une patine après 1-2 ans</li>
+            <li><strong>Idéal pour</strong> : bâtiments classés, exigences patrimoniales</li>
+          </ul>
+          <p class="cv-mat-caveat">Non disponible sur le configurateur en ligne — <a href="contact.html">demandez un devis</a>.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SCHÉMA TECHNIQUE ANNOTÉ
+  ═══════════════════════════════════════════ -->
+  <section class="cv-schema" aria-labelledby="schema-title">
+    <div class="cv-section cv-section--narrow">
+      <header class="cv-block-head">
+        <span class="section-label">— SCHÉMA TECHNIQUE —</span>
+        <h2 id="schema-title">Anatomie d'une couvertine</h2>
+        <p>Toutes les couvertines Metal Pliage suivent ce profil. Repérez les cotes que vous devrez renseigner dans le configurateur.</p>
+      </header>
+
+      <div class="cv-schema-wrap">
+        <svg viewBox="0 0 480 280" role="img" aria-label="Coupe technique d'une couvertine avec annotations B largeur muret, A retour, C développé, L longueur, R rejet d'eau">
+          <!-- Muret -->
+          <rect x="120" y="120" width="240" height="140" fill="#5a5a5a" opacity="0.6" stroke="#3a3a3a" stroke-width="1"/>
+          <pattern id="brick" patternUnits="userSpaceOnUse" width="40" height="20">
+            <rect width="40" height="20" fill="none"/>
+            <line x1="0" y1="10" x2="40" y2="10" stroke="#3a3a3a" stroke-width="0.5"/>
+            <line x1="20" y1="0" x2="20" y2="10" stroke="#3a3a3a" stroke-width="0.5"/>
+            <line x1="0" y1="10" x2="0" y2="20" stroke="#3a3a3a" stroke-width="0.5"/>
+          </pattern>
+          <rect x="120" y="120" width="240" height="140" fill="url(#brick)"/>
+
+          <!-- Couvertine : trapezoïde -->
+          <path d="M 100 120 L 100 70 L 380 70 L 380 120 L 360 132 L 360 240 L 350 240 L 350 130 L 130 130 L 130 240 L 120 240 L 120 132 Z"
+                fill="#cfcfcf" stroke="#888" stroke-width="1.5"/>
+          <!-- Rejet d'eau à 45° (petits triangles en bout de retour) -->
+          <path d="M 120 240 L 110 250 L 130 240 Z" fill="#888"/>
+          <path d="M 360 240 L 350 240 L 370 250 Z" fill="#888"/>
+
+          <!-- Annotations -->
+          <!-- B : largeur muret -->
+          <line x1="120" y1="115" x2="360" y2="115" stroke="#FF4500" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+          <text x="240" y="108" text-anchor="middle" fill="#FF4500" font-family="Inter" font-size="14" font-weight="700">B</text>
+          <text x="240" y="105" text-anchor="middle" fill="#888" font-family="Inter" font-size="9">largeur muret</text>
+
+          <!-- A : hauteur retour -->
+          <line x1="115" y1="130" x2="115" y2="240" stroke="#FF4500" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+          <text x="105" y="190" text-anchor="middle" fill="#FF4500" font-family="Inter" font-size="14" font-weight="700">A</text>
+          <text x="80" y="200" text-anchor="middle" fill="#888" font-family="Inter" font-size="9">hauteur retour</text>
+
+          <!-- C : développé total -->
+          <line x1="100" y1="60" x2="380" y2="60" stroke="#22c55e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+          <text x="240" y="52" text-anchor="middle" fill="#22c55e" font-family="Inter" font-size="14" font-weight="700">C</text>
+          <text x="240" y="40" text-anchor="middle" fill="#888" font-family="Inter" font-size="9">développé (largeur de tôle à plat)</text>
+
+          <!-- R : rejet d'eau (zoom) -->
+          <circle cx="120" cy="245" r="22" fill="none" stroke="#FF4500" stroke-width="1" stroke-dasharray="3 2"/>
+          <text x="155" y="270" fill="#FF4500" font-family="Inter" font-size="13" font-weight="700">R</text>
+          <text x="155" y="280" fill="#888" font-family="Inter" font-size="9">rejet d'eau 10 mm</text>
+
+          <!-- L : longueur (annotation en arrière-plan) -->
+          <text x="240" y="278" text-anchor="middle" fill="#888" font-family="Inter" font-size="10" font-style="italic">L = longueur de la pièce (perpendiculaire au plan, max 3000 mm)</text>
+
+          <!-- Markers -->
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       COMMENT POSER ?
+  ═══════════════════════════════════════════ -->
+  <section class="cv-pose" aria-labelledby="pose-title">
+    <div class="cv-section">
+      <header class="cv-block-head">
+        <span class="section-label">— POSE —</span>
+        <h2 id="pose-title">Comment poser une couvertine : 3 méthodes</h2>
+        <p>Selon la nature de votre support et vos exigences esthétiques. Toutes nos couvertines sont compatibles avec ces 3 techniques.</p>
+      </header>
+
+      <div class="cv-pose-grid">
+        <article class="cv-pose-card">
+          <div class="cv-pose-num">1</div>
+          <h3>Collage MS polymère</h3>
+          <p>Cordon zigzag continu sur le dessus du muret + jeu de dilatation de 3 à 5 mm aux jonctions. La méthode la plus discrète (aucune vis visible) et la plus rapide sur murets neufs. Recommandée par 90 % de nos clients.</p>
+          <a href="guides.html" class="cv-pose-link">Voir le guide de pose →</a>
+        </article>
+
+        <article class="cv-pose-card">
+          <div class="cv-pose-num">2</div>
+          <h3>Vissage inox</h3>
+          <p>Vis inox auto-foreuses (lot de 100, 32 € HT) tous les 50 cm dans la face supérieure. Plus rapide à poser sur supports irréguliers, mais les têtes de vis restent visibles. Idéal pour les chantiers pros pressés.</p>
+        </article>
+
+        <article class="cv-pose-card">
+          <div class="cv-pose-num">3</div>
+          <h3>Système clipsable</h3>
+          <p>Rails de fixation invisibles vissés sur le muret, la couvertine s'enclipse par-dessus. Démontable pour entretien. Sur devis — nous consulter pour les dimensions et le coût des rails.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FAQ — Lève les objections fréquentes
+  ═══════════════════════════════════════════ -->
+  <section class="cv-faq" aria-labelledby="faq-title">
+    <div class="cv-section cv-section--narrow">
+      <header class="cv-block-head">
+        <span class="section-label">— QUESTIONS FRÉQUENTES —</span>
+        <h2 id="faq-title">Vos questions, nos réponses</h2>
+      </header>
+
+      <div class="cv-faq-list">
+
+        <details class="cv-faq-item">
+          <summary>J'ai un muret de 12 mètres. Comment je commande une couvertine si la longueur max est 3 000 mm ?</summary>
+          <p>Vous commandez 4 couvertines de 3 000 mm + 3 éclisses de jonction (6 € HT/pièce) + 2 talons d'extrémité (5 € HT/pièce). Les éclisses assurent l'étanchéité aux jonctions. Notre mode débutant en haut de page fait le calcul automatiquement pour vous.</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>J'habite en bord de mer (Bretagne, Manche, Atlantique) : acier ou aluminium ?</summary>
+          <p>Aluminium impérativement. L'air marin chargé en sel dégrade plus rapidement l'acier, même prélaqué. L'alu 1,5 mm laqué époxy ne craint ni le sel ni les embruns et garde son aspect 30+ ans. Le surcoût est d'environ 30 % vs acier — largement amorti par la durée de vie.</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>Quelle garantie offrez-vous sur les couvertines ?</summary>
+          <p>Garantie légale de conformité de 2 ans (Code de la consommation, art. L.217-3) à compter de la livraison. La résistance UV et anticorrosion du laquage époxy 80 microns est annoncée par notre fournisseur pour 10 à 15 ans en exposition normale.</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>Quels sont les délais réels entre la commande et la livraison ?</summary>
+          <p>Fabrication en atelier : 5 à 10 jours ouvrés après confirmation de paiement. Transport sur palette par transporteur partenaire : 2 à 4 jours supplémentaires selon votre département. Soit un délai total de 7 à 14 jours ouvrés depuis le paiement.</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>Combien coûte la livraison ?</summary>
+          <p>Livraison gratuite pour toute commande supérieure à 1 200 € HT. En dessous, forfait selon volume et destination — communiqué dans votre devis avant validation. Livraison France métropolitaine uniquement (DOM-TOM et étranger : nous consulter).</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>Y a-t-il un minimum de commande ?</summary>
+          <p>35 € HT minimum par commande (~ 1 mètre linéaire de couvertine). Pas de minimum quantitatif, vous pouvez commander une seule pièce.</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>Et si je me trompe dans mes cotes ?</summary>
+          <p>Les pièces étant fabriquées sur mesure, l'erreur de cote n'est pas un cas de retour (art. L.221-28 3° du Code de la consommation). Conseils : mesurez 2 fois, validez les cotes affichées au récapitulatif avant paiement. En cas de doute, appelez-nous au 06 43 21 82 01 ou utilisez WhatsApp avant de finaliser.</p>
+        </details>
+
+        <details class="cv-faq-item">
+          <summary>Acceptez-vous les artisans / pros avec facture HT ?</summary>
+          <p>Oui. Tous les prix affichés sont en HT par défaut. La facture transmise est conforme (SIRET vendeur, TVA détaillée, mention pro pour récupération TVA). Pour les volumes importants (>50 ml), une remise dégressive peut être négociée — nous consulter avant commande.</p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Styles pour les nouvelles sections (couvertines étoffée) -->
+  <style>
+    .cv-section--narrow { max-width: 920px; }
+    .cv-block-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 2.4rem;
+      padding: 0 1rem;
+    }
+    .cv-block-head h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--text-primary);
+      margin: 0.5rem 0 0.8rem;
+      line-height: 1.25;
+    }
+    .cv-block-head p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Comparatif matériaux */
+    .cv-matieres { padding: clamp(40px, 6vw, 80px) 0; background: var(--bg-base); }
+    .cv-mat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 3vw, 2rem);
+    }
+    .cv-mat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hover);
+      border-radius: 10px;
+      padding: 1.6rem 1.4rem;
+      position: relative;
+    }
+    .cv-mat-card--featured { border-color: var(--accent); }
+    .cv-mat-card--muted { opacity: 0.85; }
+    .cv-mat-pill {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+    .cv-mat-card h3 {
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .cv-mat-tag {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .cv-mat-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .cv-mat-list li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .cv-mat-list li:last-child { border-bottom: none; }
+    .cv-mat-list strong { color: var(--text-primary); display: inline-block; min-width: 110px; }
+    .cv-mat-caveat {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .cv-mat-caveat a { color: var(--accent); }
+    @media (max-width: 860px) { .cv-mat-grid { grid-template-columns: 1fr; } }
+
+    /* Schéma technique */
+    .cv-schema { padding: clamp(40px, 6vw, 80px) 0; background: var(--bg-surface); }
+    .cv-schema-wrap {
+      background: #1a1a1a;
+      border: 1px solid var(--border-hover);
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .cv-schema-wrap svg { width: 100%; height: auto; }
+
+    /* Comment poser */
+    .cv-pose { padding: clamp(40px, 6vw, 80px) 0; background: var(--bg-base); }
+    .cv-pose-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 3vw, 2rem);
+    }
+    .cv-pose-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.6rem 1.4rem;
+    }
+    .cv-pose-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    .cv-pose-card h3 {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .cv-pose-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
+    }
+    .cv-pose-link {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    @media (max-width: 860px) { .cv-pose-grid { grid-template-columns: 1fr; } }
+
+    /* FAQ */
+    .cv-faq { padding: clamp(40px, 6vw, 80px) 0; background: var(--bg-surface); }
+    .cv-faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 clamp(1.2rem, 3vw, 2rem);
+    }
+    .cv-faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+    }
+    .cv-faq-item summary {
+      padding: 1rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      list-style: none;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .cv-faq-item summary::-webkit-details-marker { display: none; }
+    .cv-faq-item summary::after {
+      content: "+";
+      position: absolute;
+      right: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: var(--accent);
+      font-weight: 300;
+      line-height: 1;
+      transition: transform 0.25s var(--ease);
+    }
+    .cv-faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+    .cv-faq-item summary:hover { background: rgba(255, 69, 0, 0.06); }
+    .cv-faq-item p {
+      padding: 0 1.4rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+  </style>
+
+  <!-- Schema.org FAQPage pour les rich snippets Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "J'ai un muret de 12 mètres. Comment commander si la longueur max est 3 000 mm ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Vous commandez 4 couvertines de 3 000 mm + 3 éclisses de jonction (6 € HT/pièce) + 2 talons d'extrémité (5 € HT/pièce). Les éclisses assurent l'étanchéité aux jonctions." }
+      },
+      {
+        "@type": "Question",
+        "name": "Bord de mer : acier ou aluminium ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Aluminium impérativement. L'air marin dégrade plus rapidement l'acier. L'alu 1,5 mm laqué époxy garde son aspect 30+ ans en bord de mer." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelle garantie sur les couvertines ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Garantie légale de conformité de 2 ans (Code de la consommation, art. L.217-3). Résistance UV et anticorrosion du laquage 10 à 15 ans en exposition normale." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quels sont les délais de livraison ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Fabrication 5 à 10 jours ouvrés + transport 2 à 4 jours selon département. Soit 7 à 14 jours ouvrés au total depuis le paiement." }
+      },
+      {
+        "@type": "Question",
+        "name": "Y a-t-il un minimum de commande ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "35 € HT minimum par commande (~ 1 mètre linéaire). Pas de minimum quantitatif." }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════
        CTA BANDEAU EN LIGNE
   ═══════════════════════════════════════════ -->
   <section class="cv-cta-band">
