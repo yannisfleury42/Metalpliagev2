@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Commande confirmée — Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZhrib2Bg-4.woff2" type="font/woff2" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://metal-pliage.fr/commande-confirmee.html">
+  <!-- Favicons + manifest -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1a1a">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/preloader.css">
+  <style>
+    .confirm-wrap {
+      min-height: calc(100vh - var(--nav-h));
+      background: var(--bg-base);
+      padding: calc(var(--nav-h) + 40px) 24px 80px;
+    }
+    .confirm-inner {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Header avec icône ✓ */
+    .confirm-hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .confirm-check {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.12);
+      border: 2px solid #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: checkPulse 1.4s ease-out;
+    }
+    .confirm-check svg { stroke: #22c55e; stroke-width: 2.5; }
+    @keyframes checkPulse {
+      0%   { transform: scale(0.7); opacity: 0; }
+      60%  { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    .confirm-hero h1 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .confirm-hero p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Numéro de commande */
+    .order-id-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hover);
+      border-radius: 8px;
+      padding: 16px 24px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin: 24px auto 0;
+    }
+    .order-id-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .order-id-value {
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    /* Timeline 4 étapes */
+    .order-timeline {
+      margin: 56px 0;
+      padding: 32px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .timeline-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .timeline-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+      gap: 0;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 16px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: var(--border-hover);
+      z-index: 0;
+    }
+    .timeline-line-fill {
+      position: absolute;
+      top: 16px;
+      left: 12.5%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #22c55e, var(--accent));
+      z-index: 1;
+      transition: width 1.2s var(--ease-out);
+    }
+    .timeline-step {
+      position: relative;
+      text-align: center;
+      z-index: 2;
+    }
+    .timeline-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 2px solid var(--border-hover);
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.4s var(--ease);
+    }
+    .timeline-step.is-done .timeline-dot {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+    .timeline-step.is-active .timeline-dot {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(230, 62, 0, 0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(230, 62, 0, 0); }
+    }
+    .timeline-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+    .timeline-step.is-active .timeline-label,
+    .timeline-step.is-done .timeline-label {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .timeline-eta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .timeline-track { grid-template-columns: 1fr; gap: 16px; }
+      .timeline-line, .timeline-line-fill { display: none; }
+      .timeline-step { display: flex; align-items: center; gap: 14px; text-align: left; }
+      .timeline-step .timeline-dot { margin: 0; flex-shrink: 0; }
+    }
+
+    /* Prochaines étapes */
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 56px 0;
+    }
+    .next-step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .next-step-day {
+      display: inline-block;
+      background: rgba(230, 62, 0, 0.12);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+    }
+    .next-step-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .next-step-desc {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    @media (max-width: 700px) {
+      .next-steps { grid-template-columns: 1fr; }
+    }
+
+    /* Actions */
+    .confirm-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 48px;
+    }
+    .confirm-actions a {
+      text-decoration: none;
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 22px;
+      border: 1px solid var(--border-hover);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Aide rapide en bas */
+    .confirm-help {
+      margin-top: 48px;
+      padding: 24px;
+      background: var(--bg-surface);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .confirm-help p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; }
+    .confirm-help a { color: var(--accent); font-weight: 600; }
+    .confirm-help .help-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+      <div class="france-badge" aria-label="Fabriqué en France">
+        <div class="france-flag" aria-hidden="true">
+          <span class="f-blue"></span>
+          <span class="f-white"></span>
+          <span class="f-red"></span>
+        </div>
+        Fabriqué en France
+      </div>
+      <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
+        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+    </div>
+  </nav>
+
+  <main class="confirm-wrap">
+    <div class="confirm-inner">
+
+      <!-- HERO -->
+      <header class="confirm-hero">
+        <div class="confirm-check" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12.5L10 17.5L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1>Commande confirmée — merci !</h1>
+        <p>Votre commande est bien enregistrée. Un email de récapitulatif vient de vous être envoyé. Notre équipe lance la fabrication sous 24 h ouvrées.</p>
+
+        <div class="order-id-box" id="order-id-box">
+          <span class="order-id-label">Numéro de commande</span>
+          <span class="order-id-value" id="order-id-value">MP-2026-—</span>
+        </div>
+      </header>
+
+      <!-- TIMELINE 4 ÉTAPES -->
+      <section class="order-timeline" aria-label="Avancement de votre commande">
+        <p class="timeline-title">Avancement de votre commande</p>
+        <div class="timeline-track">
+          <span class="timeline-line" aria-hidden="true"></span>
+          <span class="timeline-line-fill" aria-hidden="true" style="width: 5%"></span>
+          <div class="timeline-step is-active" aria-current="step">
+            <div class="timeline-dot" aria-hidden="true">1</div>
+            <div class="timeline-label">Commande reçue</div>
+            <div class="timeline-eta">Aujourd'hui</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot" aria-hidden="true">2</div>
+            <div class="timeline-label">Fabrication</div>
+            <div class="timeline-eta">J+1 à J+5</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot" aria-hidden="true">3</div>
+            <div class="timeline-label">Expédition</div>
+            <div class="timeline-eta">J+5 à J+8</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot" aria-hidden="true">4</div>
+            <div class="timeline-label">Livraison</div>
+            <div class="timeline-eta">J+7 à J+10</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROCHAINES ÉTAPES -->
+      <section class="next-steps" aria-label="Que va-t-il se passer ?">
+        <article class="next-step-card">
+          <span class="next-step-day">Aujourd'hui</span>
+          <h3 class="next-step-title">Email de confirmation</h3>
+          <p class="next-step-desc">Récapitulatif détaillé + facture proforma envoyés à l'adresse renseignée. Pensez à vérifier vos courriers indésirables.</p>
+        </article>
+        <article class="next-step-card">
+          <span class="next-step-day">J+1 à J+5</span>
+          <h3 class="next-step-title">Fabrication en atelier</h3>
+          <p class="next-step-desc">Découpe et pliage à nos cotes. Contrôle qualité avant emballage palette. Vous recevrez un email dès l'expédition.</p>
+        </article>
+        <article class="next-step-card">
+          <span class="next-step-day">J+7 à J+10</span>
+          <h3 class="next-step-title">Livraison sur palette</h3>
+          <p class="next-step-desc">Le transporteur vous contacte 24-48 h avant pour fixer un créneau. Vérifiez le colis à réception et notez les éventuelles réserves sur le bordereau.</p>
+        </article>
+      </section>
+
+      <!-- AIDE -->
+      <aside class="confirm-help">
+        <p><strong>Une question sur votre commande ?</strong></p>
+        <p>
+          <a href="mailto:contact@metal-pliage.fr">contact@metal-pliage.fr</a>
+          &nbsp;·&nbsp;
+          <a href="tel:+33643218201">06 43 21 82 01</a>
+          &nbsp;·&nbsp;
+          <a href="https://wa.me/33643218201" target="_blank" rel="noopener">WhatsApp</a>
+        </p>
+        <p class="help-meta">Horaires : du lundi au vendredi, 8 h — 17 h</p>
+      </aside>
+
+      <!-- ACTIONS -->
+      <div class="confirm-actions">
+        <a href="index.html" class="btn-primary">Retour à l'accueil</a>
+        <a href="guides.html" class="btn-ghost">Lire le guide de pose</a>
+        <a href="couvertines.html" class="btn-ghost">Continuer mes achats</a>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Affiche un numéro de commande lisible : soit récupéré de l'URL (?order=...)
+    // soit généré à partir de la date du jour + 4 chiffres pseudo-aléatoires.
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const fromUrl = params.get('order') || params.get('session_id');
+      const el = document.getElementById('order-id-value');
+      if (!el) return;
+      if (fromUrl) {
+        el.textContent = fromUrl.length > 14 ? fromUrl.slice(0, 14).toUpperCase() : fromUrl.toUpperCase();
+      } else {
+        const d = new Date();
+        const yy = d.getFullYear();
+        const seq = String(Math.floor(Math.random() * 9000) + 1000);
+        el.textContent = `MP-${yy}-${seq}`;
+      }
+      // Anime la timeline (passe la barre à 12.5% pour positionner sur l'étape 1)
+      setTimeout(() => {
+        const fill = document.querySelector('.timeline-line-fill');
+        if (fill) fill.style.width = '0%';
+      }, 200);
+    })();
+  </script>
+  <script src="js/main.js" defer></script>
+  <script src="js/preloader.js" defer></script>
+</body>
+</html>

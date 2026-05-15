@@ -1,0 +1,13 @@
+{
+  "name": "Metal Pliage",
+  "short_name": "Metal Pliage",
+  "description": "Fabricant français de couvertines et pliages acier sur mesure",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#FF4500",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.svg", "sizes": "180x180", "type": "image/svg+xml" }
+  ]
+}

@@ -5,7 +5,6 @@ Disallow: /_dev/
 Disallow: /_mockup/
 Disallow: /_analyse-complete/
 Disallow: /_analyse-visuelle/
-Disallow: /Training-Visuel/
 Disallow: /node_modules/
 Disallow: /*-backup-*
 Disallow: /*-old-*

@@ -1,0 +1,201 @@
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURATEUR PLIAGE — Styles spécifiques
+   Complète configurateur.css (déjà chargé)
+   Metal Pliage · Dark industrial · #E63E00
+═══════════════════════════════════════════════════════════════ */
+
+
+/* ── SHAPE CARDS 2×2 ─────────────────────────────────────────── */
+.shape-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.shape-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.shape-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+.shape-card[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: rgba(230, 62, 0,.06);
+}
+
+.shape-card-svg {
+  width: 80px;
+  height: 50px;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.shape-card[aria-pressed="true"] .shape-card-svg {
+  color: var(--accent);
+}
+
+.shape-card strong {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.shape-card span {
+  font-size: 0.73rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+
+/* ── 3 MATERIAL CARDS ────────────────────────────────────────── */
+.material-cards--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+
+/* ── THICKNESS SELECTOR ──────────────────────────────────────── */
+.thickness-selector {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.thickness-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.65rem;
+  font-weight: 500;
+}
+
+.thickness-btns {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.thickness-btn {
+  padding: 0.5rem 1.75rem;
+  background: none;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.thickness-btn:hover {
+  border-color: var(--border-hover);
+}
+
+.thickness-btn[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: rgba(230, 62, 0,.08);
+  color: var(--accent);
+}
+
+.thickness-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.thickness-note a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.thickness-note a:hover {
+  text-decoration: underline;
+}
+
+
+/* ── INOX BRUT CARD ──────────────────────────────────────────── */
+.inox-brut-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.inox-brut-card.is-selected {
+  border-color: var(--accent);
+  background: rgba(230, 62, 0,.04);
+}
+
+.inox-brut-swatch {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 40%, #a8a8a8 70%, #d0d0d0 100%);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 -1px 0 rgba(0,0,0,.15);
+}
+
+.inox-brut-body strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.inox-brut-body p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+
+/* ── PLIAGE SVG PREVIEW ──────────────────────────────────────── */
+#pliage-preview {
+  position: relative;
+}
+
+#pliage-preview::after {
+  content: 'Vue en coupe transversale';
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 10px;
+  color: #2E404F;
+  letter-spacing: 0.08em;
+  font-family: var(--font-head);
+  pointer-events: none;
+}
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .shape-cards { grid-template-columns: 1fr 1fr; }
+  .material-cards--3 { grid-template-columns: 1fr; }
+  .thickness-btns { flex-wrap: wrap; }
+}
+
+@media (max-width: 400px) {
+  .shape-cards { grid-template-columns: 1fr; }
+}
