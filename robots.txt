@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Disallow: /_dev/
+Disallow: /_mockup/
+Disallow: /node_modules/
+Disallow: /*-backup-*
+Disallow: /*-old-*
+Disallow: /index-original.html
+Disallow: /server.js
+Disallow: /server.log
+Disallow: /server.err
+
+Sitemap: https://metal-pliage.fr/sitemap.xml

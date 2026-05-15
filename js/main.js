@@ -157,10 +157,14 @@
   const successMsg = document.querySelector('.form-success-msg');
 
   if (form && successMsg) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    // Affiche le bloc succès si la page revient de FormSubmit (?sent=1)
+    if (new URLSearchParams(location.search).get('sent') === '1') {
+      form.hidden = true;
+      successMsg.hidden = false;
+    }
 
-      // Basic validation
+    form.addEventListener('submit', (e) => {
+      // Validation côté client. Si invalide, on bloque le submit natif.
       const required = form.querySelectorAll('[required]');
       let valid = true;
       required.forEach((field) => {
@@ -170,32 +174,18 @@
           valid = false;
         }
       });
-      if (!valid) return;
-
-      const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.textContent = 'Envoi en cours…';
-      btn.disabled = true;
-
-      try {
-        const data = Object.fromEntries(new FormData(form));
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        if (!res.ok) {
-          const errBody = await res.json().catch(() => ({}));
-          throw new Error(errBody.error || "Erreur d'envoi");
-        }
-        form.hidden = true;
-        successMsg.hidden = false;
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } catch (err) {
-        alert(err.message || "Erreur d'envoi du message. Réessayez plus tard.");
-        btn.textContent = originalText;
-        btn.disabled = false;
+      if (!valid) {
+        e.preventDefault();
+        return;
       }
+
+      // UX : feedback bouton avant redirection FormSubmit
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.textContent = 'Envoi en cours…';
+        btn.disabled = true;
+      }
+      // On laisse le submit natif partir vers https://formsubmit.co/...
     });
 
     // Clear red border on focus

@@ -4,3 +4,14 @@ node_modules
 server.log
 server.err
 .claude/settings.local.json
+
+# Dossiers de travail / itérations design — non déployés sur le site live
+_dev/
+_mockup/
+_analyse-complete/
+
+# Fichiers de backup historiques (archives, ne pas indexer)
+*-backup-*.html
+*-old-*.html
+index-original.html
+js/pliage-backup-avant-patches.js
