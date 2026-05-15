@@ -7,7 +7,7 @@
   <meta name="description" content="Fabricant français de tôles acier, inox, couvertines et profilés pliés sur mesure. Configurateur en ligne, finitions RAL, livraison 10 jours.">
   <meta name="keywords" content="couvertine acier, pliage sur mesure, inox, tôle acier, fabricant français, RAL 7016, profilé métallique">
   <meta property="og:title" content="Metal Pliage — Acier de Précision Sur Mesure">
-  <meta property="og:description" content="Configurez et commandez vos pièces acier sur mesure. Fabrication française, 32 finitions RAL, livraison sous 10 jours.">
+  <meta property="og:description" content="Configurez et commandez vos pièces acier sur mesure. Fabrication française, 5 finitions RAL standard + autres sur devis, livraison sous 10 jours.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta name="twitter:card" content="summary_large_image">
@@ -18,6 +18,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="canonical" href="https://metal-pliage.fr/">
+  <!-- Favicons + manifest -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1a1a">
+  <!-- Open Graph / partages sociaux -->
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
@@ -25,15 +36,41 @@
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": "https://metal-pliage.fr/#business",
     "name": "Metal Pliage",
+    "legalName": "METALLIER DESIGN SERVICE - M.D.S.",
+    "alternateName": "M.D.S.",
     "description": "Fabricant français de tôles acier, inox, couvertines et profilés pliés sur mesure",
     "url": "https://metal-pliage.fr",
+    "logo": "https://metal-pliage.fr/og-cover.png",
+    "image": "https://metal-pliage.fr/og-cover.png",
     "telephone": "+33643218201",
     "email": "contact@metal-pliage.fr",
-    "address": { "@type": "PostalAddress", "addressCountry": "FR" },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "8 Rue Édouard Martel",
+      "postalCode": "42000",
+      "addressLocality": "Saint-Étienne",
+      "addressRegion": "Auvergne-Rhône-Alpes",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 45.4339,
+      "longitude": 4.3947
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "17:00"
+    }],
+    "vatID": "FR77844258178",
+    "taxID": "844258178",
     "priceRange": "€€",
     "currenciesAccepted": "EUR",
     "paymentAccepted": "Card, Bank Transfer",
+    "areaServed": { "@type": "Country", "name": "France" },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Produits acier sur mesure",
@@ -652,7 +689,7 @@
       <address class="footer-contact">
         <p><a href="mailto:contact@metal-pliage.fr">contact@metal-pliage.fr</a></p>
         <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
-        <p>France</p>
+        <p>8 Rue Édouard Martel<br>42000 Saint-Étienne</p>
       </address>
     </div>
     <div class="footer-bottom">

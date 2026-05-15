@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#242424"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5a5a5a"/>
+      <stop offset="50%" stop-color="#d4d4d4"/>
+      <stop offset="100%" stop-color="#787878"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2d2d2d" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.5"/>
+
+  <!-- Schéma stylisé de couvertine en perspective -->
+  <g transform="translate(680, 200)">
+    <!-- Couvertine plate avec retours latéraux -->
+    <path d="M 0 60 L 0 0 L 400 0 L 400 60 L 380 80 L 20 80 Z" fill="url(#steel)" stroke="#3a3a3a" stroke-width="1.5"/>
+    <path d="M 0 60 L 20 80 L 20 200 L 0 180 Z" fill="#3a3a3a" stroke="#2a2a2a" stroke-width="1.5"/>
+    <path d="M 400 60 L 380 80 L 380 200 L 400 180 Z" fill="#4a4a4a" stroke="#2a2a2a" stroke-width="1.5"/>
+    <!-- Muret béton -->
+    <rect x="40" y="180" width="320" height="120" fill="#5d5d5d" opacity="0.6"/>
+    <rect x="40" y="180" width="320" height="120" fill="none" stroke="#3a3a3a" stroke-width="1" stroke-dasharray="6 4"/>
+  </g>
+
+  <!-- Logo / Marque -->
+  <g transform="translate(80, 220)">
+    <text font-family="'Inter', system-ui, sans-serif" font-weight="800" font-size="86" letter-spacing="-3" fill="#ffffff">
+      <tspan x="0" y="0">METAL</tspan>
+      <tspan x="0" y="92">PLIAGE</tspan>
+    </text>
+    <line x1="0" y1="120" x2="120" y2="120" stroke="#FF4500" stroke-width="6"/>
+    <text x="0" y="180" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="28" fill="#c8c8c8">
+      Couvertines &amp; pliage acier
+    </text>
+    <text x="0" y="218" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="28" fill="#c8c8c8">
+      sur mesure — livrés en 10 jours
+    </text>
+  </g>
+
+  <!-- Badge France -->
+  <g transform="translate(80, 530)">
+    <rect x="0" y="0" width="50" height="34" fill="#0055A4"/>
+    <rect x="17" y="0" width="16" height="34" fill="#ffffff"/>
+    <rect x="33" y="0" width="17" height="34" fill="#EF4135"/>
+    <text x="64" y="23" font-family="'Inter', system-ui, sans-serif" font-weight="600" font-size="18" fill="#ffffff">Fabrication française</text>
+  </g>
+
+  <!-- URL en bas -->
+  <text x="1120" y="595" text-anchor="end" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="20" fill="#888888">metal-pliage.fr</text>
+</svg>
