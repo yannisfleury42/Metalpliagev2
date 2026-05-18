@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Démo curseurs 3D — Métal Pliage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    height:100%;
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #050505 100%);
+    color:#eee;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    overflow:hidden;
+  }
+  @media (pointer: fine) { * { cursor: none !important; } }
+
+  .topbar {
+    position:fixed; top:0; left:0; right:0;
+    padding:20px;
+    display:flex; gap:12px; flex-wrap:wrap;
+    align-items:center;
+    z-index:1000;
+    background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+  }
+  .topbar h1 {
+    font-size:14px; font-weight:600; letter-spacing:2px;
+    text-transform:uppercase; color:#FF6F00;
+    margin-right:20px;
+  }
+  .style-btn {
+    padding:10px 18px;
+    background: rgba(255,255,255,0.05);
+    border:1px solid rgba(255,111,0,0.3);
+    color:#eee;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:500;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .style-btn:hover {
+    background: rgba(255,111,0,0.15);
+    border-color: rgba(255,111,0,0.6);
+  }
+  .style-btn.active {
+    background: linear-gradient(135deg, #FF6F00, #FF4500);
+    border-color: #FF6F00;
+    color:#fff;
+    box-shadow: 0 4px 20px rgba(255,111,0,0.4);
+  }
+
+  .playground {
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:40px;
+    padding:80px 40px 40px;
+  }
+  .playground h2 {
+    font-size:42px;
+    font-weight:300;
+    letter-spacing:3px;
+    text-align:center;
+    color:#fff;
+    text-shadow: 0 0 40px rgba(255,111,0,0.3);
+  }
+  .playground .label {
+    font-size:13px; letter-spacing:4px;
+    color:rgba(255,255,255,0.4);
+    text-transform:uppercase;
+  }
+  .test-zone {
+    display:flex; gap:20px; flex-wrap:wrap; justify-content:center;
+  }
+  .test-card {
+    width:200px; height:140px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+    transition: all 0.3s;
+  }
+  .test-card:hover {
+    border-color: rgba(255,111,0,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(255,111,0,0.15);
+  }
+
+  /* ═══════ STYLE 1 : BILLE CHROMÉE ═══════ */
+  #c1-ball {
+    position:fixed;
+    width:24px; height:24px;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 25%, #ffffff 0%, #c8c8c8 25%, #6a6a6a 60%, #1a1a1a 100%);
+    box-shadow:
+      0 6px 12px rgba(0,0,0,0.6),
+      inset -3px -4px 6px rgba(0,0,0,0.4),
+      inset 2px 2px 4px rgba(255,255,255,0.5);
+    pointer-events:none;
+    z-index:99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                width 0.25s, height 0.25s;
+    will-change: transform, left, top;
+  }
+  #c1-ball::before {
+    content:'';
+    position:absolute;
+    top:18%; left:25%;
+    width:30%; height:25%;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.9), transparent 70%);
+    border-radius:50%;
+  }
+  #c1-ball.is-hover {
+    width:36px; height:36px;
+    background: radial-gradient(circle at 30% 25%, #fff7d6 0%, #ffd700 25%, #b8860b 60%, #3d2900 100%);
+  }
+  #c1-ball.is-press {
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  #c1-shadow {
+    position:fixed;
+    width:30px; height:8px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.5), transparent 70%);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99998;
+    transform: translate(-50%, -50%);
+    filter: blur(2px);
+  }
+
+  /* ═══════ STYLE 2 : RÉTICULE INDUSTRIEL ═══════ */
+  #c2-wrap {
+    position:fixed;
+    width:60px; height:60px;
+    pointer-events:none;
+    z-index:99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+  #c2-wrap .ring {
+    position:absolute; inset:30% ;
+    border: 1px solid rgba(255,111,0,0.4);
+    border-radius:50%;
+  }
+  #c2-wrap .cross-h, #c2-wrap .cross-v {
+    position:absolute;
+    background: rgba(255,111,0,0.5);
+  }
+  #c2-wrap .cross-h { top:50%; left:0; right:0; height:1px; transform:translateY(-50%); }
+  #c2-wrap .cross-v { left:50%; top:0; bottom:0; width:1px; transform:translateX(-50%); }
+  #c2-wrap .dot {
+    position:absolute; top:50%; left:50%;
+    width:3px; height:3px;
+    background:#FF6F00;
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0 6px #FF6F00;
+  }
+  #c2-rotator {
+    position:absolute; inset:0;
+    animation: c2-rotate 10s linear infinite;
+  }
+  @keyframes c2-rotate { to { transform: rotate(360deg); } }
+  #c2-rotator .tick {
+    position:absolute;
+    width:8px; height:1.5px;
+    background: #FF6F00;
+    transition: all 0.3s;
+  }
+  #c2-rotator .tick.top    { top:0; left:50%; transform:translateX(-50%) rotate(90deg); }
+  #c2-rotator .tick.right  { right:0; top:50%; transform:translateY(-50%); }
+  #c2-rotator .tick.bottom { bottom:0; left:50%; transform:translateX(-50%) rotate(90deg); }
+  #c2-rotator .tick.left   { left:0; top:50%; transform:translateY(-50%); }
+  #c2-wrap.is-hover {
+    width:90px; height:90px;
+  }
+  #c2-wrap.is-hover #c2-rotator { animation-duration: 3s; }
+  #c2-wrap.is-hover .tick { background: #FFD700; box-shadow: 0 0 8px #FFD700; }
+
+  /* ═══════ STYLE 3 : TRAÎNÉE ÉTINCELLES ═══════ */
+  #c3-dot {
+    position:fixed;
+    width:8px; height:8px;
+    background: radial-gradient(circle, #FFD700, #FF6F00);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99999;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px #FF6F00, 0 0 24px rgba(255,111,0,0.5);
+  }
+  .c3-spark {
+    position:fixed;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99998;
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity;
+  }
+
+  /* ═══════ STYLE 4 : HOLOGRAMME NÉON ═══════ */
+  #c4-wrap {
+    position:fixed;
+    pointer-events:none;
+    z-index:99999;
+    transform: translate(-50%, -50%);
+  }
+  #c4-wrap .h-dot {
+    position:absolute; top:50%; left:50%;
+    width:6px; height:6px;
+    background:#FF6F00;
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0 10px #FF6F00;
+  }
+  #c4-wrap .h-ring {
+    position:absolute; top:50%; left:50%;
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  #c4-wrap .h-ring.r1 {
+    width:20px; height:20px;
+    border:1.5px solid rgba(255,111,0,0.7);
+    animation: c4-pulse 2s ease-in-out infinite;
+  }
+  #c4-wrap .h-ring.r2 {
+    width:38px; height:38px;
+    border:1px solid rgba(255,111,0,0.4);
+    animation: c4-pulse 2s ease-in-out infinite 0.4s;
+  }
+  #c4-wrap .h-ring.r3 {
+    width:60px; height:60px;
+    border:1px solid rgba(255,111,0,0.2);
+    animation: c4-pulse 2s ease-in-out infinite 0.8s;
+  }
+  @keyframes c4-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; box-shadow: 0 0 20px rgba(255,111,0,0.6); }
+  }
+  #c4-wrap.is-hover .r1 { width:32px; height:32px; border-color: #00E5FF; box-shadow: 0 0 15px #00E5FF; }
+  #c4-wrap.is-hover .r2 { width:56px; height:56px; border-color: rgba(0,229,255,0.5); }
+  #c4-wrap.is-hover .r3 { width:84px; height:84px; border-color: rgba(0,229,255,0.3); }
+  #c4-wrap.is-hover .h-dot { background:#00E5FF; box-shadow: 0 0 12px #00E5FF; }
+
+  .style-info {
+    position:fixed;
+    bottom:20px; left:50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: rgba(0,0,0,0.7);
+    border:1px solid rgba(255,111,0,0.3);
+    border-radius:30px;
+    font-size:13px;
+    backdrop-filter: blur(10px);
+    text-align:center;
+  }
+  .style-info strong { color:#FF6F00; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>◆ Démo curseurs 3D</h1>
+    <button class="style-btn active" data-style="1">1 · Bille chromée</button>
+    <button class="style-btn" data-style="2">2 · Réticule</button>
+    <button class="style-btn" data-style="3">3 · Étincelles</button>
+    <button class="style-btn" data-style="4">4 · Hologramme</button>
+  </div>
+
+  <div class="playground">
+    <span class="label">— BOUGE LA SOURIS · CLIQUE · SURVOLE LES CARTES —</span>
+    <h2>Métal Pliage</h2>
+    <div class="test-zone">
+      <div class="test-card">Survole-moi</div>
+      <div class="test-card">Élément interactif</div>
+      <div class="test-card">Test hover</div>
+    </div>
+  </div>
+
+  <div class="style-info" id="style-info">
+    Style actif : <strong>Bille chromée 3D</strong> — sphère métallique avec reflets, change d'or au survol
+  </div>
+
+<script>
+(function(){
+  const infos = {
+    1: '<strong>Bille chromée 3D</strong> — sphère métallique avec reflets, change d\'or au survol, rebond au clic',
+    2: '<strong>Réticule industriel</strong> — viseur de précision avec graduations tournantes (accélèrent au hover)',
+    3: '<strong>Traînée d\'étincelles</strong> — particules orange/dorées qui suivent le mouvement (forge/soudure)',
+    4: '<strong>Hologramme néon</strong> — triple anneau pulsant orange, passe au cyan sci-fi au survol'
+  };
+
+  let currentStyle = 1;
+  let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // ═══ STYLE 1 : BILLE ═══
+  const c1Ball = document.createElement('div'); c1Ball.id = 'c1-ball';
+  const c1Shadow = document.createElement('div'); c1Shadow.id = 'c1-shadow';
+  document.body.append(c1Ball, c1Shadow);
+
+  document.addEventListener('mousedown', () => c1Ball.classList.add('is-press'));
+  document.addEventListener('mouseup',   () => c1Ball.classList.remove('is-press'));
+
+  // ═══ STYLE 2 : RÉTICULE ═══
+  const c2 = document.createElement('div'); c2.id = 'c2-wrap';
+  c2.innerHTML = `
+    <div class="ring"></div>
+    <div class="cross-h"></div>
+    <div class="cross-v"></div>
+    <div id="c2-rotator">
+      <div class="tick top"></div>
+      <div class="tick right"></div>
+      <div class="tick bottom"></div>
+      <div class="tick left"></div>
+    </div>
+    <div class="dot"></div>`;
+  document.body.append(c2);
+
+  // ═══ STYLE 3 : ÉTINCELLES ═══
+  const c3 = document.createElement('div'); c3.id = 'c3-dot';
+  document.body.append(c3);
+  const sparks = [];
+  const SPARK_COUNT = 12;
+  for (let i = 0; i < SPARK_COUNT; i++) {
+    const s = document.createElement('div');
+    s.className = 'c3-spark';
+    const size = 6 - i * 0.4;
+    s.style.width = s.style.height = Math.max(size, 1) + 'px';
+    s.style.background = `radial-gradient(circle, hsl(${30 + i*2}, 100%, ${60 - i*2}%), transparent)`;
+    s.style.opacity = (1 - i/SPARK_COUNT) * 0.8;
+    document.body.append(s);
+    sparks.push({ el: s, x: mouseX, y: mouseY });
+  }
+
+  // ═══ STYLE 4 : HOLOGRAMME ═══
+  const c4 = document.createElement('div'); c4.id = 'c4-wrap';
+  c4.innerHTML = `
+    <div class="h-ring r3"></div>
+    <div class="h-ring r2"></div>
+    <div class="h-ring r1"></div>
+    <div class="h-dot"></div>`;
+  document.body.append(c4);
+
+  // hide all initially except style 1
+  function setStyle(n) {
+    currentStyle = n;
+    c1Ball.style.display   = n === 1 ? 'block' : 'none';
+    c1Shadow.style.display = n === 1 ? 'block' : 'none';
+    c2.style.display       = n === 2 ? 'block' : 'none';
+    c3.style.display       = n === 3 ? 'block' : 'none';
+    sparks.forEach(s => s.el.style.display = n === 3 ? 'block' : 'none');
+    c4.style.display       = n === 4 ? 'block' : 'none';
+    document.getElementById('style-info').innerHTML = 'Style actif : ' + infos[n];
+    document.querySelectorAll('.style-btn').forEach(b => {
+      b.classList.toggle('active', +b.dataset.style === n);
+    });
+  }
+  setStyle(1);
+
+  document.querySelectorAll('.style-btn').forEach(b => {
+    b.addEventListener('click', () => setStyle(+b.dataset.style));
+  });
+
+  // hover state
+  const hoverEls = document.querySelectorAll('button, .test-card, a');
+  hoverEls.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      c1Ball.classList.add('is-hover');
+      c2.classList.add('is-hover');
+      c4.classList.add('is-hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      c1Ball.classList.remove('is-hover');
+      c2.classList.remove('is-hover');
+      c4.classList.remove('is-hover');
+    });
+  });
+
+  // animation loop
+  const lerp = (a,b,n) => a + (b-a)*n;
+
+  function tick() {
+    // STYLE 1
+    c1Ball.style.left = mouseX + 'px';
+    c1Ball.style.top  = mouseY + 'px';
+    c1Shadow.style.left = mouseX + 'px';
+    c1Shadow.style.top  = (mouseY + 14) + 'px';
+
+    // STYLE 2
+    c2.style.left = mouseX + 'px';
+    c2.style.top  = mouseY + 'px';
+
+    // STYLE 3
+    c3.style.left = mouseX + 'px';
+    c3.style.top  = mouseY + 'px';
+    let prevX = mouseX, prevY = mouseY;
+    sparks.forEach((s, i) => {
+      s.x = lerp(s.x, prevX, 0.35 - i * 0.015);
+      s.y = lerp(s.y, prevY, 0.35 - i * 0.015);
+      s.el.style.left = s.x + 'px';
+      s.el.style.top  = s.y + 'px';
+      prevX = s.x; prevY = s.y;
+    });
+
+    // STYLE 4
+    c4.style.left = mouseX + 'px';
+    c4.style.top  = mouseY + 'px';
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Variantes étincelles — Métal Pliage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    height:100%;
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #050505 100%);
+    color:#eee;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    overflow:hidden;
+  }
+  @media (pointer: fine) { * { cursor: none !important; } }
+
+  .topbar {
+    position:fixed; top:0; left:0; right:0;
+    padding:18px 20px;
+    display:flex; gap:10px; flex-wrap:wrap;
+    align-items:center;
+    z-index:1000;
+    background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+  }
+  .topbar h1 {
+    font-size:13px; font-weight:600; letter-spacing:2px;
+    text-transform:uppercase; color:#FF6F00;
+    margin-right:16px;
+  }
+  .style-btn {
+    padding:9px 16px;
+    background: rgba(255,255,255,0.05);
+    border:1px solid rgba(255,111,0,0.3);
+    color:#eee;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:500;
+    transition: all 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  .style-btn:hover {
+    background: rgba(255,111,0,0.15);
+    border-color: rgba(255,111,0,0.6);
+  }
+  .style-btn.active {
+    background: linear-gradient(135deg, #FF6F00, #FF4500);
+    border-color: #FF6F00;
+    color:#fff;
+    box-shadow: 0 4px 20px rgba(255,111,0,0.4);
+  }
+
+  .playground {
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:40px;
+    padding:80px 40px 40px;
+  }
+  .playground h2 {
+    font-size:42px;
+    font-weight:300;
+    letter-spacing:3px;
+    text-align:center;
+    color:#fff;
+    text-shadow: 0 0 40px rgba(255,111,0,0.3);
+  }
+  .label {
+    font-size:12px; letter-spacing:4px;
+    color:rgba(255,255,255,0.4);
+    text-transform:uppercase;
+  }
+  .test-zone {
+    display:flex; gap:20px; flex-wrap:wrap; justify-content:center;
+  }
+  .test-card {
+    width:200px; height:140px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+    transition: all 0.3s;
+  }
+  .test-card:hover {
+    border-color: rgba(255,111,0,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(255,111,0,0.15);
+  }
+
+  .spark, .ember {
+    position:fixed;
+    pointer-events:none;
+    z-index:99998;
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity, left, top;
+  }
+  .core {
+    position:fixed;
+    pointer-events:none;
+    z-index:99999;
+    transform: translate(-50%, -50%);
+    border-radius:50%;
+  }
+
+  .style-info {
+    position:fixed;
+    bottom:20px; left:50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: rgba(0,0,0,0.75);
+    border:1px solid rgba(255,111,0,0.3);
+    border-radius:30px;
+    font-size:13px;
+    backdrop-filter: blur(10px);
+    text-align:center;
+    max-width: 700px;
+  }
+  .style-info strong { color:#FF6F00; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>◆ Variantes étincelles</h1>
+    <button class="style-btn active" data-style="1">1 · Forge classique</button>
+    <button class="style-btn" data-style="2">2 · Soudure arc</button>
+    <button class="style-btn" data-style="3">3 · Gravité réaliste</button>
+    <button class="style-btn" data-style="4">4 · Éclats métal</button>
+    <button class="style-btn" data-style="5">5 · Poussière dorée</button>
+  </div>
+
+  <div class="playground">
+    <span class="label">— BOUGE LA SOURIS RAPIDEMENT POUR ACTIVER LES ÉTINCELLES —</span>
+    <h2>Métal Pliage</h2>
+    <div class="test-zone">
+      <div class="test-card">Survole-moi</div>
+      <div class="test-card">Élément interactif</div>
+      <div class="test-card">Test hover</div>
+    </div>
+  </div>
+
+  <div class="style-info" id="style-info"></div>
+
+<script>
+(function(){
+  const infos = {
+    1: '<strong>Forge classique</strong> — 12 particules orange→rouge en queue de comète. Look forge / atelier industriel.',
+    2: '<strong>Soudure arc</strong> — Étincelles blanches/bleues éclatantes avec dispersion erratique. Look arc électrique de soudure.',
+    3: '<strong>Gravité réaliste</strong> — Particules émises au mouvement, partent dans tous les sens puis tombent avec la gravité. Vraies étincelles de meuleuse.',
+    4: '<strong>Éclats métal</strong> — Fragments angulaires gris-acier qui tournent sur eux-mêmes. Look copeaux de pliage / découpe.',
+    5: '<strong>Poussière dorée</strong> — Particules dorées fines qui scintillent doucement. Look premium / haute joaillerie métal.'
+  };
+
+  let currentStyle = 1;
+  let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+  let prevMouseX = mouseX, prevMouseY = mouseY;
+  let mouseSpeed = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Conteneurs pour chaque style
+  const containers = {};
+  for (let i = 1; i <= 5; i++) {
+    const c = document.createElement('div');
+    c.id = 'style-' + i;
+    c.style.display = 'none';
+    document.body.append(c);
+    containers[i] = c;
+  }
+
+  // ═══ STYLE 1 : FORGE CLASSIQUE ═══
+  const s1Core = document.createElement('div');
+  s1Core.className = 'core';
+  s1Core.style.cssText = 'width:8px;height:8px;background:radial-gradient(circle,#FFD700,#FF6F00);box-shadow:0 0 12px #FF6F00, 0 0 24px rgba(255,111,0,0.5);';
+  containers[1].append(s1Core);
+  const s1Sparks = [];
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const size = Math.max(6 - i * 0.45, 1);
+    s.style.cssText = `width:${size}px;height:${size}px;border-radius:50%;background:radial-gradient(circle,hsl(${30 + i*3},100%,${60 - i*2.5}%),transparent);opacity:${(1 - i/12) * 0.85};`;
+    containers[1].append(s);
+    s1Sparks.push({ el: s, x: mouseX, y: mouseY });
+  }
+
+  // ═══ STYLE 2 : SOUDURE ARC ═══
+  const s2Core = document.createElement('div');
+  s2Core.className = 'core';
+  s2Core.style.cssText = 'width:10px;height:10px;background:radial-gradient(circle,#fff,#4DA6FF);box-shadow:0 0 16px #4DA6FF, 0 0 32px rgba(77,166,255,0.6), 0 0 4px #fff;';
+  containers[2].append(s2Core);
+  const s2Sparks = [];
+  for (let i = 0; i < 15; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const size = Math.max(7 - i * 0.4, 1);
+    const hue = 200 + Math.random() * 30;
+    s.style.cssText = `width:${size}px;height:${size}px;border-radius:50%;background:radial-gradient(circle,#fff,hsl(${hue},100%,70%));box-shadow:0 0 ${size*2}px hsl(${hue},100%,60%);opacity:${(1 - i/15) * 0.9};`;
+    containers[2].append(s);
+    s2Sparks.push({ el: s, x: mouseX, y: mouseY, jx: 0, jy: 0, flick: Math.random() * Math.PI });
+  }
+
+  // ═══ STYLE 3 : GRAVITÉ RÉALISTE (système d'émission) ═══
+  const s3Core = document.createElement('div');
+  s3Core.className = 'core';
+  s3Core.style.cssText = 'width:6px;height:6px;background:radial-gradient(circle,#FFEC8B,#FF4500);box-shadow:0 0 14px #FF6F00, 0 0 28px rgba(255,69,0,0.5);';
+  containers[3].append(s3Core);
+  const s3Pool = [];
+  const S3_POOL_SIZE = 60;
+  for (let i = 0; i < S3_POOL_SIZE; i++) {
+    const s = document.createElement('div');
+    s.className = 'ember';
+    s.style.cssText = 'width:3px;height:3px;border-radius:50%;display:none;';
+    containers[3].append(s);
+    s3Pool.push({ el: s, x: 0, y: 0, vx: 0, vy: 0, life: 0, maxLife: 0, alive: false });
+  }
+  function emitS3() {
+    if (mouseSpeed < 1) return;
+    const count = Math.min(Math.floor(mouseSpeed / 3), 4);
+    for (let i = 0; i < count; i++) {
+      const p = s3Pool.find(p => !p.alive);
+      if (!p) return;
+      p.alive = true;
+      p.x = mouseX + (Math.random() - 0.5) * 4;
+      p.y = mouseY + (Math.random() - 0.5) * 4;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2 + Math.random() * 4;
+      p.vx = Math.cos(angle) * speed;
+      p.vy = Math.sin(angle) * speed - 1;
+      p.maxLife = 40 + Math.random() * 30;
+      p.life = p.maxLife;
+      const size = 2 + Math.random() * 2;
+      p.el.style.width = p.el.style.height = size + 'px';
+      p.el.style.display = 'block';
+    }
+  }
+
+  // ═══ STYLE 4 : ÉCLATS MÉTAL ═══
+  const s4Core = document.createElement('div');
+  s4Core.className = 'core';
+  s4Core.style.cssText = 'width:8px;height:8px;background:linear-gradient(135deg,#fff,#888);box-shadow:0 0 10px rgba(200,220,255,0.5);transform:translate(-50%,-50%) rotate(45deg);border-radius:1px;';
+  containers[4].append(s4Core);
+  const s4Sparks = [];
+  for (let i = 0; i < 14; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const w = Math.max(6 - i * 0.3, 2);
+    const h = Math.max(1.5, 1);
+    const gray = 220 - i * 10;
+    s.style.cssText = `width:${w}px;height:${h}px;background:linear-gradient(90deg,rgb(${gray},${gray},${gray}),rgb(${gray-30},${gray-30},${gray-20}));opacity:${(1 - i/14) * 0.9};border-radius:1px;box-shadow:0 0 3px rgba(200,220,255,0.3);`;
+    containers[4].append(s);
+    s4Sparks.push({ el: s, x: mouseX, y: mouseY, rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 8 });
+  }
+
+  // ═══ STYLE 5 : POUSSIÈRE DORÉE ═══
+  const s5Core = document.createElement('div');
+  s5Core.className = 'core';
+  s5Core.style.cssText = 'width:6px;height:6px;background:radial-gradient(circle,#FFF8DC,#FFD700);box-shadow:0 0 10px #FFD700, 0 0 20px rgba(255,215,0,0.4);';
+  containers[5].append(s5Core);
+  const s5Sparks = [];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const size = Math.max(4 - i * 0.18, 1);
+    s.style.cssText = `width:${size}px;height:${size}px;border-radius:50%;background:radial-gradient(circle,#FFF8DC,#FFC700);box-shadow:0 0 ${size*1.5}px #FFD700;opacity:${(1 - i/18) * 0.7};`;
+    containers[5].append(s);
+    s5Sparks.push({ el: s, x: mouseX, y: mouseY, twinkle: Math.random() * Math.PI * 2 });
+  }
+
+  function setStyle(n) {
+    currentStyle = n;
+    for (let i = 1; i <= 5; i++) {
+      containers[i].style.display = (i === n) ? 'block' : 'none';
+    }
+    document.getElementById('style-info').innerHTML = 'Style actif : ' + infos[n];
+    document.querySelectorAll('.style-btn').forEach(b => {
+      b.classList.toggle('active', +b.dataset.style === n);
+    });
+  }
+  setStyle(1);
+
+  document.querySelectorAll('.style-btn').forEach(b => {
+    b.addEventListener('click', () => setStyle(+b.dataset.style));
+  });
+
+  // animation loop
+  const lerp = (a,b,n) => a + (b-a)*n;
+  let frame = 0;
+
+  function tick() {
+    frame++;
+    const dx = mouseX - prevMouseX;
+    const dy = mouseY - prevMouseY;
+    mouseSpeed = Math.sqrt(dx*dx + dy*dy);
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
+
+    // STYLE 1 : Forge classique
+    if (currentStyle === 1) {
+      s1Core.style.left = mouseX + 'px';
+      s1Core.style.top  = mouseY + 'px';
+      let px = mouseX, py = mouseY;
+      s1Sparks.forEach((s, i) => {
+        const t = 0.38 - i * 0.018;
+        s.x = lerp(s.x, px, t);
+        s.y = lerp(s.y, py, t);
+        s.el.style.left = s.x + 'px';
+        s.el.style.top  = s.y + 'px';
+        px = s.x; py = s.y;
+      });
+    }
+
+    // STYLE 2 : Soudure arc
+    else if (currentStyle === 2) {
+      s2Core.style.left = mouseX + 'px';
+      s2Core.style.top  = mouseY + 'px';
+      // flicker du core
+      s2Core.style.opacity = 0.7 + Math.sin(frame * 0.5) * 0.3;
+      let px = mouseX, py = mouseY;
+      s2Sparks.forEach((s, i) => {
+        const t = 0.45 - i * 0.02;
+        // jitter latéral aléatoire
+        s.jx = lerp(s.jx, (Math.random() - 0.5) * 8, 0.3);
+        s.jy = lerp(s.jy, (Math.random() - 0.5) * 8, 0.3);
+        s.x = lerp(s.x, px + s.jx, t);
+        s.y = lerp(s.y, py + s.jy, t);
+        s.el.style.left = s.x + 'px';
+        s.el.style.top  = s.y + 'px';
+        // flicker individuel
+        s.flick += 0.4 + Math.random() * 0.3;
+        s.el.style.opacity = (1 - i/15) * (0.5 + Math.abs(Math.sin(s.flick)) * 0.5);
+        px = s.x; py = s.y;
+      });
+    }
+
+    // STYLE 3 : Gravité réaliste
+    else if (currentStyle === 3) {
+      s3Core.style.left = mouseX + 'px';
+      s3Core.style.top  = mouseY + 'px';
+      emitS3();
+      const gravity = 0.25;
+      s3Pool.forEach(p => {
+        if (!p.alive) return;
+        p.vy += gravity;
+        p.vx *= 0.98;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        const t = p.life / p.maxLife;
+        p.el.style.left = p.x + 'px';
+        p.el.style.top  = p.y + 'px';
+        // jaune→orange→rouge en mourant
+        const hue = 50 * t;
+        const light = 50 + t * 30;
+        p.el.style.background = `radial-gradient(circle,hsl(${hue},100%,${light}%),transparent)`;
+        p.el.style.boxShadow = `0 0 ${6*t}px hsl(${hue},100%,60%)`;
+        p.el.style.opacity = t;
+        if (p.life <= 0) {
+          p.alive = false;
+          p.el.style.display = 'none';
+        }
+      });
+    }
+
+    // STYLE 4 : Éclats métal
+    else if (currentStyle === 4) {
+      s4Core.style.left = mouseX + 'px';
+      s4Core.style.top  = mouseY + 'px';
+      let px = mouseX, py = mouseY;
+      s4Sparks.forEach((s, i) => {
+        const t = 0.35 - i * 0.015;
+        s.x = lerp(s.x, px, t);
+        s.y = lerp(s.y, py, t);
+        s.rot += s.rotSpeed;
+        s.el.style.left = s.x + 'px';
+        s.el.style.top  = s.y + 'px';
+        s.el.style.transform = `translate(-50%,-50%) rotate(${s.rot}deg)`;
+        px = s.x; py = s.y;
+      });
+    }
+
+    // STYLE 5 : Poussière dorée
+    else if (currentStyle === 5) {
+      s5Core.style.left = mouseX + 'px';
+      s5Core.style.top  = mouseY + 'px';
+      let px = mouseX, py = mouseY;
+      s5Sparks.forEach((s, i) => {
+        const t = 0.3 - i * 0.012;
+        s.x = lerp(s.x, px, t);
+        s.y = lerp(s.y, py, t);
+        s.twinkle += 0.05 + i * 0.005;
+        s.el.style.left = s.x + 'px';
+        s.el.style.top  = s.y + 'px';
+        s.el.style.opacity = (1 - i/18) * (0.4 + Math.abs(Math.sin(s.twinkle)) * 0.6);
+        px = s.x; py = s.y;
+      });
+    }
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>

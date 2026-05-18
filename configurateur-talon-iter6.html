@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Talon embout — itération 6 (assemblage 2 pièces, talon INTÉRIEUR)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0d0d0d;color:#e8e8e8;font-family:'Inter',sans-serif}
+  body{padding:32px;min-height:100vh}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .intro{color:#888;font-size:13px;max-width:920px;line-height:1.6;margin-bottom:24px}
+  .intro strong{color:#FF7040}
+  .grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:1180px}
+  .card{background:#141414;border:1px solid #222;border-radius:14px;padding:22px;position:relative}
+  .card .badge{position:absolute;top:14px;right:18px;font-size:10px;letter-spacing:0.22em;color:#FF7040;background:rgba(255,128,64,0.08);padding:4px 10px;border-radius:20px;font-weight:700}
+  .card.final .badge{color:#3FAB6E;background:rgba(63,171,110,0.1)}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:4px;color:#fff;letter-spacing:-.01em}
+  .card .sub{color:#888;font-size:12px;margin-bottom:14px}
+  .stage{background:#1e2630;border:1px solid #1a1a1a;padding:18px;border-radius:10px;display:flex;align-items:center;justify-content:center;min-height:340px}
+  .stage svg{display:block;width:100%;height:auto;max-height:380px}
+  .report{margin-top:14px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px 18px}
+  .report .r-title{font-size:10px;font-weight:800;letter-spacing:0.22em;color:#FFB347;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .report .r-title::before{content:"●";color:#FFB347}
+  .report ul{margin:0;padding-left:18px;color:#bbb;font-size:12px;line-height:1.7}
+  .report ul li::marker{color:#FF7040}
+  .report .next{margin-top:10px;padding-top:10px;border-top:1px dashed #2a2a2a;color:#7BD5A0;font-size:12px;font-weight:600}
+  .report .next::before{content:"→ ";color:#3FAB6E;font-weight:800}
+  .card.final .report .r-title{color:#3FAB6E}
+  .card.final .report .r-title::before{color:#3FAB6E}
+</style>
+</head>
+<body>
+
+<h1>Talon embout — itération 6 (assemblage 2 pièces, INTÉRIEUR)</h1>
+<p class="intro">
+  Correction majeure : le talon (cornière en L) <strong>glisse à l'intérieur du U de la couvertine</strong>,
+  il ne se pose pas par-dessus. Schéma 2 pièces, vue d'assemblage, analyse client après chaque
+  version, jusqu'au rendu professionnel et clair.
+</p>
+
+<div class="grid">
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- ITER 6 v1 — La correction de base                          -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">ITER 6 · V1</span>
+    <h2>Correction "à l'intérieur"</h2>
+    <p class="sub">Le talon est repositionné comme une pièce qui s'insère dans le canal U, vu de bout. Les retours du L pointent vers l'intérieur.</p>
+    <div class="stage">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v1-cov" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6E9CBC"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <linearGradient id="v1-cov-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a5a78"/><stop offset="100%" stop-color="#2A4858"/>
+          </linearGradient>
+          <linearGradient id="v1-talon" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7AA8C8"/><stop offset="100%" stop-color="#5E8AAA"/>
+          </linearGradient>
+        </defs>
+
+        <!-- TITRE -->
+        <text x="350" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ASSEMBLAGE — VUE PAR L'EXTRÉMITÉ</text>
+
+        <!-- ─── Pièce 1 : COUVERTINE (vue par le bout, en perspective) ─── -->
+        <g transform="translate(60, 90)">
+          <text x="110" y="-12" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.95)" letter-spacing="0.2em" font-weight="700">PIÈCE 1 · COUVERTINE</text>
+
+          <!-- Face avant (visible) -->
+          <polygon points="20,40 200,40 200,160 20,160" fill="url(#v1-cov)" stroke="#2a4858" stroke-width="0.8"/>
+          <!-- Top -->
+          <polygon points="20,40 200,40 220,20 40,20" fill="url(#v1-cov)" opacity="0.85"/>
+          <!-- Côté droit (perspective) -->
+          <polygon points="200,40 220,20 220,140 200,160" fill="url(#v1-cov-dark)"/>
+
+          <!-- Ouverture U (creux intérieur) — vue de bout -->
+          <rect x="40" y="55" width="160" height="90" fill="#0a0d11"/>
+          <polygon points="40,55 200,55 215,40 55,40" fill="#15202a"/>
+          <polygon points="200,55 215,40 215,130 200,145" fill="#0d1218"/>
+
+          <!-- Indication "intérieur" -->
+          <text x="120" y="105" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.4)" letter-spacing="0.16em" font-weight="600">INTÉRIEUR (U)</text>
+
+          <!-- Cotes de la couvertine -->
+          <line x1="0" y1="40" x2="0" y2="160" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="-3" y1="40" x2="3" y2="40" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="-3" y1="160" x2="3" y2="160" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="-7" y="103" text-anchor="end" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">120 mm</text>
+        </g>
+
+        <!-- ─── Flèche d'assemblage ─── -->
+        <g transform="translate(295, 160)">
+          <path d="M 0 0 L 80 0" stroke="#FF7040" stroke-width="2.5"/>
+          <polygon points="80,0 70,-6 70,6" fill="#FF7040"/>
+          <text x="40" y="-10" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="#FF7040" font-weight="800" letter-spacing="0.1em">INSÉRER</text>
+          <text x="40" y="22" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,128,64,0.7)" letter-spacing="0.06em">dans le U</text>
+        </g>
+
+        <!-- ─── Pièce 2 : TALON (vu de face) ─── -->
+        <g transform="translate(420, 90)">
+          <text x="110" y="-12" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.95)" letter-spacing="0.2em" font-weight="700">PIÈCE 2 · TALON</text>
+
+          <!-- Face L du talon -->
+          <polygon points="40,40 180,40 180,55 60,55 60,160 40,160" fill="url(#v1-talon)" stroke="#000" stroke-width="1.5"/>
+
+          <!-- Cotes -->
+          <line x1="40" y1="170" x2="180" y2="170" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="40" y1="167" x2="40" y2="173" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="180" y1="167" x2="180" y2="173" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="110" y="183" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">160 mm</text>
+
+          <line x1="195" y1="40" x2="195" y2="160" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="192" y1="40" x2="198" y2="40" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="192" y1="160" x2="198" y2="160" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="200" y="103" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">120 mm</text>
+
+          <text x="100" y="100" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.5)" letter-spacing="0.16em" font-weight="600">pièce en L</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="report">
+      <div class="r-title">RAPPORT CLIENT — V1</div>
+      <ul>
+        <li>La couvertine est vue de face, mais je ne <strong>distingue pas le canal en U</strong> du reste — on dirait juste un rectangle creux.</li>
+        <li>Le talon est plat dessiné comme un L à plat, mais à côté de la couvertine vue de bout : <strong>échelles et orientations incohérentes</strong>.</li>
+        <li>La flèche "INSÉRER" est correcte dans l'intention, mais on ne voit pas <strong>comment le L vient se poser sur le bord intérieur</strong>.</li>
+        <li>Rien ne montre la <strong>profondeur d'insertion</strong> du talon dans la couvertine.</li>
+      </ul>
+      <div class="next">v2 : passer en vue 3/4 (perspective) pour montrer la profondeur, et figer la cohérence d'orientation entre les 2 pièces.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- ITER 6 v2 — Perspective + profondeur                       -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">ITER 6 · V2</span>
+    <h2>Perspective 3/4 + profondeur d'insertion</h2>
+    <p class="sub">Vue isométrique des deux pièces dans la même orientation. La trajectoire d'insertion est matérialisée par des lignes guides + position fantôme du talon dans le canal.</p>
+    <div class="stage">
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v2-cov-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6E9CBC"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <linearGradient id="v2-cov-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5E8AAA"/><stop offset="100%" stop-color="#3a5a78"/>
+          </linearGradient>
+          <linearGradient id="v2-cov-end" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#3a5a78"/><stop offset="100%" stop-color="#2A4858"/>
+          </linearGradient>
+          <linearGradient id="v2-cov-inside" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a2530"/><stop offset="100%" stop-color="#0a0f14"/>
+          </linearGradient>
+          <linearGradient id="v2-talon-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8AB8D8"/><stop offset="100%" stop-color="#5E8AAA"/>
+          </linearGradient>
+          <linearGradient id="v2-talon-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6E9CBC"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <filter id="v2-drop"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.45"/></filter>
+        </defs>
+
+        <text x="380" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ASSEMBLAGE EN PERSPECTIVE</text>
+        <text x="380" y="48" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.85)" letter-spacing="0.1em" font-weight="600">le talon s'insère DANS le U de la couvertine, par l'extrémité</text>
+
+        <!-- ─── COUVERTINE en perspective 3/4 ─── -->
+        <g transform="translate(60, 100)" filter="url(#v2-drop)">
+          <!-- Côté gauche -->
+          <polygon points="0,40 30,20 30,140 0,160" fill="url(#v2-cov-end)" opacity="0.6"/>
+          <!-- Face avant -->
+          <polygon points="0,40 280,40 280,160 0,160" fill="url(#v2-cov-front)"/>
+          <!-- Top -->
+          <polygon points="0,40 280,40 310,20 30,20" fill="url(#v2-cov-top)"/>
+          <!-- Bord droit ouvert -->
+          <polygon points="280,40 310,20 310,140 280,160" fill="url(#v2-cov-end)" opacity="0.4"/>
+
+          <!-- CANAL U INTÉRIEUR vu depuis l'ouverture droite -->
+          <polygon points="280,55 295,42 295,128 280,145" fill="url(#v2-cov-inside)"/>
+          <polygon points="280,55 295,42 295,45 282,57 282,143 280,145" fill="#0a0f14"/>
+          <!-- Bord intérieur (filets sombres pour voir la paroi) -->
+          <line x1="282" y1="57" x2="295" y2="45" stroke="#5BC4E8" stroke-width="0.6" stroke-dasharray="2 2" opacity="0.7"/>
+          <line x1="282" y1="143" x2="295" y2="128" stroke="#5BC4E8" stroke-width="0.6" stroke-dasharray="2 2" opacity="0.7"/>
+          <line x1="282" y1="57" x2="282" y2="143" stroke="#5BC4E8" stroke-width="0.6" stroke-dasharray="2 2" opacity="0.7"/>
+
+          <text x="140" y="105" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.85)" letter-spacing="0.18em" font-weight="700">COUVERTINE</text>
+
+          <!-- Label "canal U" -->
+          <line x1="288" y1="100" x2="340" y2="100" stroke="rgba(91,196,232,0.7)" stroke-width="0.6"/>
+          <text x="345" y="98" font-size="8" font-family="Inter,sans-serif" fill="#5BC4E8" font-weight="700">canal en U</text>
+          <text x="345" y="108" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.55)">(intérieur creux)</text>
+        </g>
+
+        <!-- ─── Flèche d'insertion + fantôme ─── -->
+        <g transform="translate(0,0)">
+          <!-- Lignes guides en pointillés du talon vers la couvertine -->
+          <line x1="490" y1="155" x2="378" y2="135" stroke="rgba(255,128,64,0.4)" stroke-width="0.6" stroke-dasharray="3 3"/>
+          <line x1="490" y1="195" x2="378" y2="220" stroke="rgba(255,128,64,0.4)" stroke-width="0.6" stroke-dasharray="3 3"/>
+
+          <!-- Fantôme du talon dans la couvertine -->
+          <polygon points="375,153 392,142 392,225 375,232" fill="rgba(122,168,200,0.18)" stroke="rgba(255,128,64,0.6)" stroke-width="0.8" stroke-dasharray="3 2"/>
+
+          <!-- Flèche principale -->
+          <path d="M 480 175 L 410 175" stroke="#FF7040" stroke-width="2.5"/>
+          <polygon points="410,175 420,169 420,181" fill="#FF7040"/>
+          <text x="445" y="167" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="#FF7040" font-weight="800" letter-spacing="0.1em">INSERTION</text>
+        </g>
+
+        <!-- ─── TALON en perspective ─── -->
+        <g transform="translate(490, 100)" filter="url(#v2-drop)">
+          <text x="90" y="-12" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.95)" letter-spacing="0.2em" font-weight="700">TALON (en L)</text>
+
+          <!-- Face avant du L (la face visible une fois inséré) -->
+          <polygon points="20,55 165,55 165,140 50,140 50,225 20,225" fill="url(#v2-talon-front)" stroke="#000" stroke-width="1.5"/>
+          <!-- Top du L -->
+          <polygon points="20,55 165,55 180,40 35,40" fill="url(#v2-talon-top)"/>
+          <polygon points="50,140 165,140 180,125 65,125" fill="url(#v2-talon-top)" opacity="0.7"/>
+          <!-- Côté droit -->
+          <polygon points="165,55 180,40 180,125 165,140" fill="url(#v2-cov-end)" opacity="0.7"/>
+          <polygon points="50,140 65,125 65,210 50,225" fill="url(#v2-cov-end)" opacity="0.6"/>
+
+          <!-- Outline noir L -->
+          <path d="M 20,55 L 165,55 L 165,140 L 50,140 L 50,225 L 20,225 Z" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="miter"/>
+
+          <!-- Cotes -->
+          <line x1="20" y1="240" x2="165" y2="240" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="20" y1="237" x2="20" y2="243" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="165" y1="237" x2="165" y2="243" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="92" y="253" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">160 mm</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="report">
+      <div class="r-title">RAPPORT CLIENT — V2</div>
+      <ul>
+        <li>La perspective 3/4 aide énormément : on voit le <strong>canal en U</strong> et la profondeur.</li>
+        <li>Le fantôme orange montre où le talon va se positionner — bonne idée mais il est <strong>presque invisible</strong>, le contour pointillé orange se perd dans le creux noir.</li>
+        <li>Le talon en L est dessiné mais on ne <strong>comprend pas d'emblée son orientation</strong> : la branche horizontale du L va-t-elle dans le canal, ou est-ce la verticale ? Manque un label sur chaque face.</li>
+        <li>La flèche "INSERTION" est claire, mais sa <strong>trajectoire ne s'aligne pas géométriquement</strong> avec l'ouverture (un peu haute).</li>
+        <li>Aucune indication que le talon, une fois inséré, est <strong>flush avec le bord</strong> de la couvertine.</li>
+      </ul>
+      <div class="next">v3 : labels sur chaque face du talon ("face visible" / "retours intérieurs"), fantôme plus contrasté, alignement flèche, et mini-vue "résultat assemblé".</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- ITER 6 v3 — FINAL                                          -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <div class="card final">
+    <span class="badge">ITER 6 · V3 FINAL</span>
+    <h2>Version professionnelle</h2>
+    <p class="sub">Faces du talon nommées, fantôme contrasté, flèche alignée pile sur l'axe d'insertion, et mini-vue "assemblé" qui confirme le résultat. Schéma directement utilisable côté client.</p>
+    <div class="stage">
+      <svg viewBox="0 0 820 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v3-cov-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6E9CBC"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <linearGradient id="v3-cov-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5E8AAA"/><stop offset="100%" stop-color="#3a5a78"/>
+          </linearGradient>
+          <linearGradient id="v3-cov-end" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#3a5a78"/><stop offset="100%" stop-color="#2A4858"/>
+          </linearGradient>
+          <linearGradient id="v3-shine-top" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <linearGradient id="v3-talon-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8AB8D8"/><stop offset="100%" stop-color="#5E8AAA"/>
+          </linearGradient>
+          <linearGradient id="v3-talon-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6E9CBC"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <radialGradient id="v3-shadow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.5)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+          <filter id="v3-drop"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.45"/></filter>
+        </defs>
+
+        <!-- TITRE -->
+        <text x="410" y="28" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">TALON EMBOUT — ASSEMBLAGE EN 2 PIÈCES</text>
+        <text x="410" y="46" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.9)" letter-spacing="0.1em" font-weight="600">la cornière en L glisse à l'intérieur du canal U de la couvertine</text>
+
+        <!-- Ombre sol globale -->
+        <ellipse cx="410" cy="345" rx="360" ry="6" fill="url(#v3-shadow)"/>
+
+        <!-- ═══ PIÈCE 1 : COUVERTINE ═══ -->
+        <g transform="translate(50, 110)" filter="url(#v3-drop)">
+          <!-- Badge pièce 1 -->
+          <rect x="0" y="-30" width="60" height="20" rx="3" fill="rgba(255,128,64,0.1)" stroke="#FF7040" stroke-width="0.6"/>
+          <text x="30" y="-16" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="#FF7040" font-weight="800" letter-spacing="0.1em">PIÈCE 1</text>
+
+          <!-- Face avant -->
+          <polygon points="0,40 290,40 290,160 0,160" fill="url(#v3-cov-front)" stroke="#1a2a38" stroke-width="0.5"/>
+          <!-- Top -->
+          <polygon points="0,40 290,40 320,20 30,20" fill="url(#v3-cov-top)"/>
+          <polygon points="0,40 290,40 320,20 30,20" fill="url(#v3-shine-top)"/>
+          <line x1="0" y1="40" x2="290" y2="40" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+          <!-- Côté droit (épaisseur) -->
+          <polygon points="290,40 320,20 320,140 290,160" fill="url(#v3-cov-end)"/>
+
+          <!-- ▸ CANAL U INTÉRIEUR — bien sombre + cyan -->
+          <polygon points="290,55 305,42 305,128 290,143" fill="#070a0d"/>
+          <polygon points="290,55 305,42 303,44 292,55 292,141 290,143" fill="#0d1218"/>
+          <polygon points="305,128 303,126 292,137 292,128" fill="#15202a"/>
+          <!-- Contour cyan du canal -->
+          <line x1="292" y1="55" x2="305" y2="42" stroke="#5BC4E8" stroke-width="1" stroke-dasharray="3 2"/>
+          <line x1="292" y1="141" x2="305" y2="128" stroke="#5BC4E8" stroke-width="1" stroke-dasharray="3 2"/>
+          <line x1="292" y1="55" x2="292" y2="141" stroke="#5BC4E8" stroke-width="1" stroke-dasharray="3 2"/>
+          <line x1="305" y1="42" x2="305" y2="128" stroke="#5BC4E8" stroke-width="1" stroke-dasharray="3 2"/>
+
+          <!-- Label couvertine -->
+          <text x="145" y="105" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.92)" letter-spacing="0.2em" font-weight="700">COUVERTINE</text>
+
+          <!-- Annotation canal -->
+          <line x1="305" y1="85" x2="345" y2="85" stroke="rgba(91,196,232,0.8)" stroke-width="0.7"/>
+          <line x1="345" y1="85" x2="350" y2="80" stroke="rgba(91,196,232,0.8)" stroke-width="0.7"/>
+          <text x="354" y="83" font-size="9" font-family="Inter,sans-serif" fill="#5BC4E8" font-weight="700">canal en U</text>
+          <text x="354" y="93" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.55)">extrémité ouverte</text>
+
+          <!-- ▸ FANTÔME DU TALON dans le canal (cyan brillant + contour orange) -->
+          <polygon points="292,57 304,45 304,128 292,140" fill="rgba(122,168,200,0.45)" stroke="#FF7040" stroke-width="1.2" stroke-dasharray="3 2"/>
+          <polygon points="292,57 292,140 282,150 282,67" fill="rgba(122,168,200,0.25)" stroke="#FF7040" stroke-width="1.2" stroke-dasharray="3 2"/>
+          <text x="298" y="100" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,128,64,0.9)" font-weight="700" letter-spacing="0.05em">talon</text>
+          <text x="298" y="108" font-size="6" font-family="Inter,sans-serif" fill="rgba(255,128,64,0.7)">en place</text>
+
+          <!-- Cote hauteur -->
+          <line x1="-10" y1="20" x2="-10" y2="160" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="-14" y1="20" x2="-6" y2="20" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="-14" y1="160" x2="-6" y2="160" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="-18" y="93" text-anchor="end" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">120 mm</text>
+        </g>
+
+        <!-- ═══ FLÈCHE D'INSERTION (alignée pile sur axe canal y=193) ═══ -->
+        <g>
+          <!-- Lignes guides géométriques entre les 2 pièces -->
+          <line x1="540" y1="165" x2="375" y2="155" stroke="rgba(255,128,64,0.35)" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <line x1="540" y1="245" x2="375" y2="240" stroke="rgba(255,128,64,0.35)" stroke-width="0.5" stroke-dasharray="3 3"/>
+
+          <!-- Flèche principale -->
+          <path d="M 530 200 L 410 200" stroke="#FF7040" stroke-width="3"/>
+          <polygon points="410,200 425,192 425,208" fill="#FF7040"/>
+
+          <!-- Étiquette flèche -->
+          <rect x="425" y="170" width="100" height="20" rx="3" fill="#FF7040"/>
+          <text x="475" y="184" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="#fff" font-weight="800" letter-spacing="0.1em">INSÉRER</text>
+
+          <text x="475" y="222" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,128,64,0.85)" letter-spacing="0.04em" font-style="italic">par l'extrémité ouverte</text>
+        </g>
+
+        <!-- ═══ PIÈCE 2 : TALON ═══ -->
+        <g transform="translate(540, 110)" filter="url(#v3-drop)">
+          <!-- Badge pièce 2 -->
+          <rect x="0" y="-30" width="60" height="20" rx="3" fill="rgba(255,128,64,0.1)" stroke="#FF7040" stroke-width="0.6"/>
+          <text x="30" y="-16" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="#FF7040" font-weight="800" letter-spacing="0.1em">PIÈCE 2</text>
+
+          <!-- Le L en perspective :
+               face visible (verticale, 1 face)
+               face retour (horizontale, qui rentre dans la couvertine) -->
+
+          <!-- Branche horizontale (retour intérieur) — celle qui rentre -->
+          <polygon points="50,55 175,55 175,80 50,80" fill="url(#v3-talon-front)"/>
+          <polygon points="50,55 175,55 195,35 70,35" fill="url(#v3-talon-top)"/>
+          <polygon points="50,55 50,80 70,60 70,35" fill="url(#v3-cov-end)" opacity="0.75"/>
+          <polygon points="175,55 195,35 195,60 175,80" fill="url(#v3-cov-end)"/>
+
+          <!-- Branche verticale (face visible) -->
+          <polygon points="50,80 90,80 90,225 50,225" fill="url(#v3-talon-front)"/>
+          <polygon points="50,80 90,80 110,60 70,60" fill="url(#v3-talon-top)" opacity="0.85"/>
+          <polygon points="90,80 110,60 110,205 90,225" fill="url(#v3-cov-end)" opacity="0.85"/>
+
+          <!-- Outline L noir complet -->
+          <path d="M 50,55 L 175,55 L 175,80 L 90,80 L 90,225 L 50,225 Z"
+                fill="none" stroke="#000" stroke-width="2" stroke-linejoin="miter" opacity="0.9"/>
+
+          <!-- Reflet sur la face visible -->
+          <polygon points="50,80 90,80 110,60 70,60" fill="url(#v3-shine-top)" opacity="0.6" pointer-events="none"/>
+
+          <!-- ▸ LABELS DES FACES -->
+          <!-- Label face visible -->
+          <line x1="70" y1="150" x2="20" y2="150" stroke="rgba(255,200,130,0.7)" stroke-width="0.6"/>
+          <circle cx="70" cy="150" r="2.5" fill="#FFB347"/>
+          <text x="15" y="148" text-anchor="end" font-size="8.5" font-family="Inter,sans-serif" fill="#FFB347" font-weight="800">face visible</text>
+          <text x="15" y="158" text-anchor="end" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.7)">(reste apparente)</text>
+
+          <!-- Label retour intérieur -->
+          <line x1="115" y1="67" x2="220" y2="67" stroke="rgba(91,196,232,0.7)" stroke-width="0.6"/>
+          <circle cx="115" cy="67" r="2.5" fill="#5BC4E8"/>
+          <text x="225" y="65" font-size="8.5" font-family="Inter,sans-serif" fill="#5BC4E8" font-weight="800">retour intérieur</text>
+          <text x="225" y="75" font-size="7" font-family="Inter,sans-serif" fill="rgba(91,196,232,0.7)">(glisse dans le U)</text>
+
+          <text x="65" y="245" text-anchor="middle" font-size="10" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.85)" letter-spacing="0.18em" font-weight="700">TALON</text>
+
+          <!-- Cotes -->
+          <line x1="50" y1="265" x2="175" y2="265" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="50" y1="262" x2="50" y2="268" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="175" y1="262" x2="175" y2="268" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="112" y="278" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">160 mm</text>
+
+          <line x1="40" y1="55" x2="40" y2="225" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="37" y1="55" x2="43" y2="55" stroke="#FFB347" stroke-width="0.4"/>
+          <line x1="37" y1="225" x2="43" y2="225" stroke="#FFB347" stroke-width="0.4"/>
+          <text x="34" y="143" text-anchor="end" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.95)" font-weight="700">120 mm</text>
+        </g>
+
+        <!-- ═══ MINI VUE "ASSEMBLÉ" en bas ═══ -->
+        <g transform="translate(280, 295)">
+          <rect x="0" y="0" width="260" height="55" rx="5" fill="rgba(63,171,110,0.07)" stroke="rgba(63,171,110,0.35)" stroke-width="0.7"/>
+          <text x="130" y="13" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="#7BD5A0" letter-spacing="0.22em" font-weight="800">RÉSULTAT — TALON INSÉRÉ FLUSH</text>
+
+          <!-- Mini scène : couvertine en bout avec talon en place -->
+          <g transform="translate(40, 22)">
+            <!-- Couvertine en perspective -->
+            <polygon points="0,8 100,8 100,28 0,28" fill="url(#v3-cov-front)"/>
+            <polygon points="0,8 100,8 108,2 8,2" fill="url(#v3-cov-top)"/>
+            <polygon points="100,8 108,2 108,22 100,28" fill="url(#v3-cov-end)"/>
+            <!-- Talon flush avec le bord -->
+            <polygon points="100,11 105,6 105,25 100,28" fill="url(#v3-talon-front)" stroke="#000" stroke-width="0.5"/>
+            <!-- Ligne flush -->
+            <line x1="100" y1="11" x2="105" y2="6" stroke="rgba(255,255,255,0.5)" stroke-width="0.3"/>
+          </g>
+
+          <!-- Check -->
+          <circle cx="225" cy="32" r="9" fill="#3FAB6E"/>
+          <text x="225" y="36" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="#fff" font-weight="800">✓</text>
+          <text x="170" y="35" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.75)" font-style="italic">bout fermé</text>
+          <text x="170" y="46" text-anchor="middle" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.55)">finition propre</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="report">
+      <div class="r-title">RAPPORT CLIENT — V3 FINAL</div>
+      <ul>
+        <li>Les <strong>2 pièces sont identifiables au premier regard</strong> (badges PIÈCE 1 / PIÈCE 2), même orientation, même échelle.</li>
+        <li>Le canal U de la couvertine est <strong>matérialisé en contour cyan</strong> et le fantôme du talon à l'intérieur est <strong>nettement contrasté</strong> (cyan rempli + contour orange).</li>
+        <li>Les <strong>2 faces du talon sont nommées</strong> : "face visible" (qu'on verra une fois posé) et "retour intérieur" (qui glisse dans le U). Plus d'ambiguïté sur l'orientation.</li>
+        <li>La flèche orange "INSÉRER" est <strong>alignée pile sur l'axe d'insertion</strong> avec des lignes guides géométriques entre les deux pièces.</li>
+        <li>La mini-vue "RÉSULTAT — TALON INSÉRÉ FLUSH" montre l'état final : bout fermé, finition propre, check vert.</li>
+      </ul>
+      <div class="next">Prêt à intégrer dans le configurateur — schéma client-ready.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

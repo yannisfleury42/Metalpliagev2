@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Aluminium brossé — variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;padding:32px;min-height:100vh}
+  h1{font-size:22px;margin-bottom:8px}
+  .intro{color:#888;font-size:14px;margin-bottom:32px;max-width:760px;line-height:1.6}
+  .grid{display:grid;grid-template-columns:1fr;gap:20px}
+  .card{background:#141414;border-radius:12px;padding:36px 32px;border:1px solid #222;text-align:center;position:relative}
+  .card.dark{background:#000}
+  .card .num{position:absolute;top:14px;left:18px;font-size:11px;color:#9bb;font-weight:700;letter-spacing:.2em;background:rgba(120,180,200,.1);padding:4px 10px;border-radius:20px}
+  .demo-css{font-size:96px;font-weight:900;letter-spacing:-.02em;line-height:1;margin:10px 0 12px;display:inline-block}
+  .demo-svg{display:inline-block;vertical-align:middle}
+  .card .name{font-size:14px;color:#ddd;margin-top:18px;font-weight:700}
+  .card .desc{font-size:12px;color:#888;margin-top:4px;max-width:600px;margin-left:auto;margin-right:auto}
+
+  /* ════════════════════════════════════════════════
+     A — Baseline : la classe actuelle .brushed-aluminum
+  ════════════════════════════════════════════════ */
+  .fx-A{
+    background:
+      repeating-linear-gradient(180deg,
+        rgba(255,255,255,.10) 0,
+        rgba(255,255,255,.10) 1px,
+        rgba(0,0,0,.10) 1px,
+        rgba(0,0,0,.10) 2px),
+      linear-gradient(180deg,
+        #fafafa 0%,#d8d8d8 22%,#f0f0f0 38%,
+        #a8a8a8 55%,#e6e6e6 72%,#b8b8b8 88%,#dcdcdc 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.55));
+  }
+
+  /* ════════════════════════════════════════════════
+     B — CSS amélioré : stries fines variées + gradient cylindrique + reflet diagonal
+  ════════════════════════════════════════════════ */
+  .fx-B{
+    background:
+      /* Reflet diagonal (lumière) */
+      linear-gradient(105deg,
+        transparent 0%, transparent 40%,
+        rgba(255,255,255,.18) 47%, rgba(255,255,255,.28) 50%,
+        rgba(255,255,255,.18) 53%, transparent 60%, transparent 100%),
+      /* stries très fines (brossage principal) */
+      repeating-linear-gradient(180deg,
+        rgba(255,255,255,.16) 0px, rgba(255,255,255,.16) 0.5px,
+        rgba(0,0,0,.16)       0.5px, rgba(0,0,0,.16)     1px),
+      /* stries moyennes (variation) */
+      repeating-linear-gradient(180deg,
+        rgba(255,255,255,.08) 0px, rgba(255,255,255,.08) 1px,
+        transparent           1px, transparent           4px,
+        rgba(0,0,0,.10)       4px, rgba(0,0,0,.10)       5px,
+        transparent           5px, transparent           9px),
+      /* base : gradient cylindrique avec arête lumineuse */
+      linear-gradient(180deg,
+        #f4f4f4 0%, #e0e0e0 12%, #c4c4c4 28%,
+        #9c9c9c 48%, #888888 55%, #aaaaaa 65%,
+        #d4d4d4 82%, #ededed 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:
+      drop-shadow(0 2px 4px rgba(0,0,0,.6))
+      drop-shadow(0 -1px 0 rgba(255,255,255,.3))
+      drop-shadow(0 1px 0 rgba(0,0,0,.4));
+  }
+
+  /* ════════════════════════════════════════════════
+     E — Brossé horizontal (grain dans le sens de la largeur)
+  ════════════════════════════════════════════════ */
+  .fx-E{
+    background:
+      repeating-linear-gradient(90deg,
+        rgba(255,255,255,.18) 0px, rgba(255,255,255,.18) 0.5px,
+        rgba(0,0,0,.18)       0.5px, rgba(0,0,0,.18)     1px),
+      repeating-linear-gradient(90deg,
+        rgba(255,255,255,.08) 0px, rgba(255,255,255,.08) 1px,
+        transparent           1px, transparent           5px,
+        rgba(0,0,0,.10)       5px, rgba(0,0,0,.10)       6px,
+        transparent           6px, transparent           11px),
+      linear-gradient(180deg,
+        #f4f4f4 0%, #d0d0d0 30%, #a0a0a0 55%,
+        #c8c8c8 75%, #ededed 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 5px rgba(0,0,0,.55));
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Filtres SVG : vrai bump lighting 3D (brossage = bruit anisotrope)
+══════════════════════════════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Brossage VERTICAL (grain qui descend) — fréquence horizontale forte, verticale très basse -->
+    <filter id="brushedV" x="-2%" y="-5%" width="104%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="2.4 0.015" numOctaves="2" seed="9" result="noise"/>
+      <feColorMatrix in="noise" values="0 0 0 0 0
+                                         0 0 0 0 0
+                                         0 0 0 0 0
+                                         0 0 0 1 0" result="bumpAlpha"/>
+      <feSpecularLighting in="noise" surfaceScale="1.8" specularConstant="1.4"
+                          specularExponent="28" lighting-color="#ffffff" result="spec">
+        <feDistantLight azimuth="225" elevation="60"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceGraphic" operator="in" result="specOnText"/>
+      <feComposite in="SourceGraphic" in2="specOnText" operator="arithmetic"
+                   k1="0" k2="1" k3="1" k4="0"/>
+    </filter>
+
+    <!-- Brossage HORIZONTAL (grain qui traverse) -->
+    <filter id="brushedH" x="-2%" y="-5%" width="104%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 2.4" numOctaves="2" seed="11" result="noise"/>
+      <feSpecularLighting in="noise" surfaceScale="1.8" specularConstant="1.4"
+                          specularExponent="28" lighting-color="#ffffff" result="spec">
+        <feDistantLight azimuth="180" elevation="55"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceGraphic" operator="in" result="specOnText"/>
+      <feComposite in="SourceGraphic" in2="specOnText" operator="arithmetic"
+                   k1="0" k2="1" k3="1" k4="0"/>
+    </filter>
+
+    <!-- Brossage VERTICAL FIN + reflet (version premium) -->
+    <filter id="brushedPremium" x="-2%" y="-5%" width="104%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="3.2 0.008" numOctaves="2" seed="17" result="noise"/>
+      <feSpecularLighting in="noise" surfaceScale="2.2" specularConstant="1.6"
+                          specularExponent="30" lighting-color="#ffffff" result="spec">
+        <feDistantLight azimuth="225" elevation="65"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceGraphic" operator="in" result="specOnText"/>
+      <feComposite in="SourceGraphic" in2="specOnText" operator="arithmetic"
+                   k1="0" k2="1" k3="1" k4="0"/>
+    </filter>
+
+    <!-- Gradient cylindrique alu (clair-sombre-clair) avec arête médiane sombre -->
+    <linearGradient id="aluCyl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f4f4f4"/>
+      <stop offset="18%"  stop-color="#dadada"/>
+      <stop offset="35%"  stop-color="#b8b8b8"/>
+      <stop offset="50%"  stop-color="#8a8a8a"/>
+      <stop offset="58%"  stop-color="#7a7a7a"/>
+      <stop offset="72%"  stop-color="#a8a8a8"/>
+      <stop offset="88%"  stop-color="#d4d4d4"/>
+      <stop offset="100%" stop-color="#ededed"/>
+    </linearGradient>
+
+    <!-- Gradient alu froid (légère teinte bleutée — plus réaliste pour l'aluminium réel) -->
+    <linearGradient id="aluCold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#eef0f2"/>
+      <stop offset="20%"  stop-color="#d2d6db"/>
+      <stop offset="40%"  stop-color="#a8aeb5"/>
+      <stop offset="55%"  stop-color="#7e848c"/>
+      <stop offset="70%"  stop-color="#a2a8b0"/>
+      <stop offset="88%"  stop-color="#cdd2d8"/>
+      <stop offset="100%" stop-color="#e8ebef"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<h1>Aluminium brossé — 5 variantes</h1>
+<p class="intro">
+  A = actuel. B = CSS amélioré (stries fines superposées + arête médiane + reflet diagonal).
+  <strong>C / C+ / D</strong> = SVG bump lighting 3D — vraie simulation 3D du bruit anisotrope éclairé,
+  c'est ce qui donne le rendu le plus crédible pour l'alu brossé. E = brossage horizontal.
+</p>
+
+<div class="grid">
+
+  <div class="card">
+    <span class="num">A — actuel</span>
+    <div class="demo-css fx-A">METAL</div>
+    <div class="name">Brossé baseline (stries 1px)</div>
+    <div class="desc">Pour comparer.</div>
+  </div>
+
+  <div class="card">
+    <span class="num">B — CSS premium</span>
+    <div class="demo-css fx-B">METAL</div>
+    <div class="name">Stries multi-niveaux + arête médiane + reflet diagonal</div>
+    <div class="desc">100% CSS, rendu propre, performant.</div>
+  </div>
+
+  <div class="card">
+    <span class="num">C — SVG 3D bump (vertical)</span>
+    <svg class="demo-svg" viewBox="0 0 520 130" width="520" height="130">
+      <text x="260" y="100" text-anchor="middle" fill="url(#aluCyl)"
+            font-family="Inter,sans-serif" font-size="110" font-weight="900"
+            filter="url(#brushedV)">METAL</text>
+    </svg>
+    <div class="name">SVG feTurbulence anisotrope + feSpecularLighting</div>
+    <div class="desc">Grain vertical fin avec lumière 3D réelle — le plus réaliste.</div>
+  </div>
+
+  <div class="card">
+    <span class="num">C+ — SVG premium</span>
+    <svg class="demo-svg" viewBox="0 0 520 130" width="520" height="130">
+      <text x="260" y="100" text-anchor="middle" fill="url(#aluCold)"
+            font-family="Inter,sans-serif" font-size="110" font-weight="900"
+            filter="url(#brushedPremium)">METAL</text>
+    </svg>
+    <div class="name">SVG bump 3D + teinte alu froide (légèrement bleutée)</div>
+    <div class="desc">Grain encore plus fin + couleur d'alu réel. Top haut de gamme.</div>
+  </div>
+
+  <div class="card">
+    <span class="num">D — SVG horizontal</span>
+    <svg class="demo-svg" viewBox="0 0 520 130" width="520" height="130">
+      <text x="260" y="100" text-anchor="middle" fill="url(#aluCyl)"
+            font-family="Inter,sans-serif" font-size="110" font-weight="900"
+            filter="url(#brushedH)">METAL</text>
+    </svg>
+    <div class="name">SVG bump 3D — brossage horizontal</div>
+    <div class="desc">Grain qui traverse, lumière latérale.</div>
+  </div>
+
+  <div class="card">
+    <span class="num">E — CSS horizontal</span>
+    <div class="demo-css fx-E">METAL</div>
+    <div class="name">Stries horizontales CSS</div>
+    <div class="desc">Variation orientation pour comparer.</div>
+  </div>
+
+</div>
+
+</body>
+</html>
