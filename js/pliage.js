@@ -198,7 +198,7 @@ function dimsValid() {
     const v   = state.dims[k];
     if (v === undefined || v === null || v < def.min || v > def.max) return false;
   }
-  return state.L >= 100 && state.L <= 6000;
+  return state.L >= 100 && state.L <= 3000;
 }
 
 
@@ -728,7 +728,7 @@ function rebuildThicknessBtns(mat) {
 // Longueur input
 elInputL.addEventListener('input', () => {
   const v = parseInt(elInputL.value, 10);
-  state.L = isNaN(v) ? 2000 : Math.min(6000, Math.max(100, v));
+  state.L = isNaN(v) ? 2000 : Math.min(3000, Math.max(100, v));
   updateUI();
   checkUnlockStep4();
 });

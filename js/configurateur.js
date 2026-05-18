@@ -494,6 +494,25 @@
     const ready = !!(state.material && state.color);
     if (btnCart)         btnCart.disabled        = !ready;
     if (sidebarBtnCart)  sidebarBtnCart.disabled  = !ready;
+
+    // Hint under disabled cart button
+    const cartHint = document.getElementById('cart-hint');
+    if (cartHint) {
+      if (!ready) {
+        const missing = [];
+        if (!state.material) missing.push('matière (étape 1)');
+        if (!state.color)    missing.push('couleur RAL (étape 3)');
+        cartHint.textContent = missing.length ? `Choisissez : ${missing.join(' + ')}` : '';
+      } else {
+        cartHint.textContent = '';
+      }
+    }
+
+    // Helper L > 2800 mm
+    const helperLong = document.getElementById('helper-long');
+    if (helperLong) helperLong.hidden = state.L <= 2800;
+
+    persistState();
   }
 
   /* ────────────────────────────────────────────────────────────
@@ -755,10 +774,113 @@
   if (sidebarBtnCart)  sidebarBtnCart.addEventListener('click', handleCartAdd);
 
   /* ────────────────────────────────────────────────────────────
+     PERSIST — localStorage + URL params
+  ──────────────────────────────────────────────────────────── */
+
+  function persistState() {
+    try {
+      localStorage.setItem('cfg_couvertine', JSON.stringify({
+        material: state.material,
+        B: state.B, A: state.A, C: state.C, L: state.L, R: state.R,
+        color: state.color, qty: state.qty,
+        accessories: state.accessories,
+      }));
+      const url = new URL(window.location.href);
+      if (state.material) url.searchParams.set('mat', state.material); else url.searchParams.delete('mat');
+      url.searchParams.set('B', state.B);
+      url.searchParams.set('A', state.A);
+      url.searchParams.set('C', state.C);
+      url.searchParams.set('L', state.L);
+      if (state.color) url.searchParams.set('col', state.color); else url.searchParams.delete('col');
+      url.searchParams.set('qty', state.qty);
+      window.history.replaceState(null, '', url.toString());
+    } catch (e) {}
+  }
+
+  function applyRestoredState() {
+    const inputB = document.getElementById('input-B');
+    const inputA = document.getElementById('input-A');
+    const inputL = document.getElementById('input-L');
+    if (inputB) inputB.value = state.B;
+    if (inputA) inputA.value = state.A;
+    if (inputC) inputC.value = state.C;
+    if (inputL) inputL.value = state.L;
+    if (mainQtyInput) mainQtyInput.value = state.qty;
+    if (state.material) {
+      document.querySelectorAll('.material-card').forEach((card) => {
+        const sel = card.dataset.material === state.material;
+        card.classList.toggle('is-selected', sel);
+        card.setAttribute('aria-pressed', String(sel));
+      });
+      unlockStep(2); unlockStep(3); unlockStep(4); unlockStep(5);
+    }
+    if (state.color && ralGrid) highlightSwatch(ralGrid, state.color);
+    ACCESSORIES.forEach(acc => {
+      const s = state.accessories[acc.id];
+      if (!s) return;
+      const input = document.getElementById('qty-' + acc.id);
+      if (input) input.value = s.qty;
+      const row = document.getElementById('acc-' + acc.id);
+      if (row) row.classList.toggle('acc-inactive', s.qty === 0);
+      if (s.color) {
+        const cc = document.getElementById('colors-' + acc.id);
+        if (cc) highlightSwatch(cc, s.color);
+      }
+    });
+  }
+
+  function restoreState() {
+    const params = new URL(window.location.href).searchParams;
+    const mat    = params.get('mat');
+    if (mat && MATERIALS[mat]) {
+      state.material = mat;
+      const B = parseInt(params.get('B'), 10); if (!isNaN(B)) state.B = B;
+      const A = parseInt(params.get('A'), 10); if (!isNaN(A)) state.A = A;
+      const C = parseInt(params.get('C'), 10); if (!isNaN(C)) state.C = C;
+      const L = parseInt(params.get('L'), 10); if (!isNaN(L)) state.L = L;
+      const col = params.get('col'); if (col) state.color = col;
+      const qty = parseInt(params.get('qty'), 10); if (!isNaN(qty) && qty >= 1) state.qty = qty;
+      applyRestoredState();
+      return;
+    }
+    try {
+      const saved = JSON.parse(localStorage.getItem('cfg_couvertine') || 'null');
+      if (saved && saved.material && MATERIALS[saved.material]) {
+        state.material = saved.material;
+        if (saved.B) state.B = saved.B;
+        if (saved.A) state.A = saved.A;
+        if (saved.C) state.C = saved.C;
+        if (saved.L) state.L = saved.L;
+        if (saved.R) state.R = saved.R;
+        if (saved.color) state.color = saved.color;
+        if (saved.qty >= 1) state.qty = saved.qty;
+        if (saved.accessories) state.accessories = Object.assign(state.accessories, saved.accessories);
+        applyRestoredState();
+      }
+    } catch (e) {}
+  }
+
+  /* "Partager la configuration" button */
+  const btnShare = document.getElementById('btn-share-config');
+  if (btnShare) {
+    btnShare.addEventListener('click', () => {
+      persistState();
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        btnShare.textContent = '✓ Lien copié !';
+        setTimeout(() => { btnShare.textContent = 'Partager la configuration'; }, 2500);
+      }).catch(() => {
+        prompt('Copiez ce lien :', window.location.href);
+      });
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
      INIT
   ──────────────────────────────────────────────────────────── */
 
+  restoreState();
   drawSVG();
   updateUI();
+  persistState();
 
 })();

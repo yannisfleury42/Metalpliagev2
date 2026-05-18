@@ -1,6 +1,5 @@
 /* ══════════════════════════════════════════════════════════════
-   PRELOADER — Couvertine sur muret + goutte + check étanche
-   Utilisé sur toutes les pages (preloader initial + transitions).
+   PRELOADER — M·P tracés au laser
    Logique : js/preloader.js (auto-injection HTML).
 ══════════════════════════════════════════════════════════════ */
 
@@ -25,69 +24,75 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.6rem;
+  gap: 1.8rem;
 }
 
+/* ── SVG wrapper ── */
 .pl-svg {
-  width: clamp(220px, 48vw, 340px);
+  width: clamp(160px, 40vw, 220px);
   height: auto;
   opacity: 0;
-  animation: plAppear 0.3s 0.05s ease-out forwards;
+  animation: plAppear 0.25s 0.1s ease-out forwards;
+  overflow: visible;
 }
 @keyframes plAppear { to { opacity: 1; } }
 
-/* Couvertine : descend et se pose sur le muret avec rebond léger */
-.pl-couv {
-  transform: translateY(-90px);
+/* ── Lettre M ── */
+.pl-letter-m {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: plDraw 1.1s 0.3s ease-in-out forwards;
+}
+
+/* ── Séparateur orange ── */
+.pl-sep {
   opacity: 0;
-  animation: plCouvDrop 0.85s 0.25s cubic-bezier(0.45, 1.6, 0.55, 1) forwards;
-}
-@keyframes plCouvDrop {
-  0%   { transform: translateY(-90px); opacity: 0; }
-  18%  { opacity: 1; }
-  78%  { transform: translateY(0); }
-  86%  { transform: translateY(-3px); }
-  100% { transform: translateY(0); opacity: 1; }
+  animation: plFadeIn 0.25s 1.1s ease-out forwards;
 }
 
-/* Goutte d'eau : tombe depuis le rejet 45° */
-.pl-water { animation: plWaterDrip 0.7s 1.05s ease-in forwards; }
-@keyframes plWaterDrip {
-  0%   { opacity: 0; transform: translateY(0); }
-  20%  { opacity: 1; transform: translateY(0); }
-  85%  { opacity: 1; transform: translateY(26px); }
-  100% { opacity: 0; transform: translateY(34px); }
+/* ── Lettre P ── */
+.pl-letter-p {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+  animation: plDraw 0.85s 1.2s ease-in-out forwards;
 }
 
-/* Check vert "étanche" : pop in */
-.pl-check {
+@keyframes plDraw { to { stroke-dashoffset: 0; } }
+@keyframes plFadeIn { to { opacity: 1; } }
+
+/* ── Points laser (têtes de découpe) ── */
+.pl-dot-m {
   opacity: 0;
-  transform: scale(0.5);
-  transform-origin: 220px 50px;
-  animation: plCheckPop 0.45s 1.4s cubic-bezier(0.4, 1.5, 0.55, 1) forwards;
+  transform: scale(0.4);
+  transform-origin: 80px 90px;
+  animation: plDotPop 0.3s 1.05s cubic-bezier(0.34, 1.8, 0.64, 1) forwards;
 }
-@keyframes plCheckPop {
-  to { opacity: 1; transform: scale(1); }
+.pl-dot-p {
+  opacity: 0;
+  transform: scale(0.4);
+  transform-origin: 110px 70px;
+  animation: plDotPop 0.3s 1.95s cubic-bezier(0.34, 1.8, 0.64, 1) forwards;
 }
+@keyframes plDotPop { to { opacity: 1; transform: scale(1); } }
 
-/* Label METAL PLIAGE */
+/* ── Label METAL PLIAGE ── */
 .pl-label {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: clamp(1rem, 3.5vw, 1.45rem);
+  font-size: clamp(0.9rem, 3.5vw, 1.2rem);
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0;
-  transform: translateY(10px);
-  animation: plLabelIn 0.5s 1.12s cubic-bezier(0, 0, 0.2, 1) forwards;
+  transform: translateY(8px);
+  animation: plLabelIn 0.45s 2.0s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 @keyframes plLabelIn { to { opacity: 1; transform: translateY(0); } }
 .pl-name   { color: #EEF3F8; }
 .pl-accent { color: #FF4500; }
 
-/* Barre de progression */
+/* ── Barre de progression ── */
 .preloader-bar-wrap {
-  width: clamp(140px, 28vw, 260px);
+  width: clamp(120px, 28vw, 200px);
   height: 1px;
   background: #1C1C1C;
   position: relative;
@@ -99,16 +104,18 @@
   height: 100%;
   width: 0;
   background: linear-gradient(90deg, #FF4500, #FFB347);
-  animation: preloaderBar 1.6s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: preloaderBar 1.8s 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes preloaderBar { to { width: 100%; } }
 
-/* Reduced motion */
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   #preloader .preloader-bar-fill { animation: none; width: 100%; }
-  #preloader .pl-couv,
-  #preloader .pl-check,
+  #preloader .pl-letter-m,
+  #preloader .pl-letter-p { animation: none; stroke-dashoffset: 0; }
+  #preloader .pl-sep,
+  #preloader .pl-dot-m,
+  #preloader .pl-dot-p,
   #preloader .pl-label,
   #preloader .pl-svg { animation: none; opacity: 1; transform: none; }
-  #preloader .pl-water { display: none; }
 }
