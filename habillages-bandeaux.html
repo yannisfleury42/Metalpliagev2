@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -15,10 +15,18 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
+  <meta property="og:title" content="Habillages Bandeaux Acier &#8212; Type U &amp; Type L &#8212; Metal Pliage">
+  <meta property="og:description" content="Habillages bandeaux acier laqu&#233; Type U et Type L &#8212; protection de bois de fa&#231;ade, bardage et bandeaux de toiture. Fabrication fran&#231;aise.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://metal-pliage.fr/habillages-bandeaux.html">
   <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Habillages Bandeaux Acier | Metal Pliage">
+  <meta name="twitter:description" content="Habillages Type U et L en acier laqu&#233; sur mesure pour bardage et toiture.">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <script type="application/ld+json">
   {
@@ -46,6 +54,55 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://metal-pliage.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Pliage sur mesure", "item": "https://metal-pliage.fr/pliage.html" },
+      { "@type": "ListItem", "position": 3, "name": "Habillages & bandeaux", "item": "https://metal-pliage.fr/habillages-bandeaux.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Qu'est-ce qu'un habillage métallique de facade ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Un habillage métallique est une tôle pliée sur mesure qui recouvre et protège un support (acrotère, poteau, corniche, bandeau de façade). Il sert à la fois de protection contre les intempéries et d'élément décoratif. Matières disponibles : acier prélaqué, aluminium laqué, inox brossé." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelle épaisseur pour un habillage de bandeau de toiture ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Pour un bandeau horizontal (rive de toit, acrotère), 0,75 mm d'acier prélaqué convient jusqu'à 600 mm de développé. Au-delà, ou pour des longueurs > 2 m, préférez 1 mm pour éviter la déformation. L'aluminium est disponible en 1,5 mm pour les zones exposées." }
+      },
+      {
+        "@type": "Question",
+        "name": "Peut-on commander des habillages avec des plis complexes (forme en U, Z, oméga) ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Oui. Notre service Forme Libre permet jusqu'à 10 plis par pièce. Envoyez votre plan coté (PDF, DWG ou croquis scanné) et nous vous répondons avec un devis sous 24h. Les plis minimum 90° ou 45° sont réalisables selon le développé et la matière." }
+      }
+    ]
+  }
+  </script>  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
@@ -64,8 +121,18 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
@@ -308,6 +375,7 @@
           <li><a href="configurateur.html">Configurateur</a></li>
           <li><a href="accessoires.html">Accessoires</a></li>
           <li><a href="guides.html">Guides de pose</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
       </nav>
@@ -319,6 +387,7 @@
     </div>
     <div class="footer-bottom">
       <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. <p class="footer-flag">middot; SARL au capital de 5 000 € <p class="footer-flag">middot; RCS Saint-Étienne 844 258 178 <p class="footer-flag">middot; SIRET 844 258 178 00010 <p class="footer-flag">middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

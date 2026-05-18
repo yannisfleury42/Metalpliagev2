@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -15,14 +15,38 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
+  <meta property="og:title" content="Configurateur Couvertine Acier Sur Mesure &#8212; Metal Pliage">
+  <meta property="og:description" content="Configurez et commandez votre couvertine acier ou aluminium en 3 min &#8212; retours, rejet d&apos;eau, couleur RAL, prix instantan&#233;.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://metal-pliage.fr/configurateur.html">
   <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Configurateur Couvertine | Metal Pliage">
+  <meta name="twitter:description" content="Configurez votre couvertine acier sur mesure. Prix instantan&#233;, livraison 10 j.">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/configurateur.css">
   <link rel="stylesheet" href="css/preloader.css">
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-configurateur">
 
@@ -44,13 +68,69 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
     </div>
   </nav>
+
+  <!-- ═══════════════════════════════════════════
+       STEPPER STICKY
+  ═══════════════════════════════════════════ -->
+  <div id="cfg-stepper" role="navigation" aria-label="Étapes du configurateur" style="position:sticky;top:var(--nav-h,72px);z-index:90;background:rgba(13,13,13,0.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #2A2A2A;overflow-x:auto;scrollbar-width:none;">
+    <ol style="display:flex;list-style:none;margin:0;padding:0;min-width:max-content;" aria-label="Progression">
+      <li><a href="#step-1" class="cfg-step-pill" data-step="1" style="display:flex;align-items:center;gap:0.55rem;padding:0.7rem 1.2rem;font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#666);text-decoration:none;border-right:1px solid #1E1E1E;white-space:nowrap;transition:color 0.2s,background 0.2s;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:0.6rem;font-weight:700;flex-shrink:0;">1</span>Matière</a></li>
+      <li><a href="#step-2" class="cfg-step-pill" data-step="2" style="display:flex;align-items:center;gap:0.55rem;padding:0.7rem 1.2rem;font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#666);text-decoration:none;border-right:1px solid #1E1E1E;white-space:nowrap;transition:color 0.2s,background 0.2s;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:0.6rem;font-weight:700;flex-shrink:0;">2</span>Dimensions</a></li>
+      <li><a href="#step-3" class="cfg-step-pill" data-step="3" style="display:flex;align-items:center;gap:0.55rem;padding:0.7rem 1.2rem;font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#666);text-decoration:none;border-right:1px solid #1E1E1E;white-space:nowrap;transition:color 0.2s,background 0.2s;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:0.6rem;font-weight:700;flex-shrink:0;">3</span>Couleur</a></li>
+      <li><a href="#step-4" class="cfg-step-pill" data-step="4" style="display:flex;align-items:center;gap:0.55rem;padding:0.7rem 1.2rem;font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#666);text-decoration:none;border-right:1px solid #1E1E1E;white-space:nowrap;transition:color 0.2s,background 0.2s;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:0.6rem;font-weight:700;flex-shrink:0;">4</span>Accessoires</a></li>
+      <li><a href="#step-5" class="cfg-step-pill" data-step="5" style="display:flex;align-items:center;gap:0.55rem;padding:0.7rem 1.2rem;font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted,#666);text-decoration:none;white-space:nowrap;transition:color 0.2s,background 0.2s;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;font-size:0.6rem;font-weight:700;flex-shrink:0;">5</span>Commande</a></li>
+    </ol>
+    <style>
+      #cfg-stepper ol::-webkit-scrollbar { display: none; }
+      .cfg-step-pill.is-active { color: var(--accent, #FF4500) !important; background: rgba(255,69,0,0.07); }
+      .cfg-step-pill.is-done { color: #5A8A5A !important; }
+      .cfg-step-pill.is-done span::before { content: "✓"; font-size: 0.7rem; }
+      .cfg-step-pill.is-done span { font-size: 0 !important; }
+      .cfg-step-pill.is-done span::before { font-size: 0.75rem; }
+    </style>
+    <script>
+      (function() {
+        function updateStepper() {
+          var pills = document.querySelectorAll('.cfg-step-pill');
+          pills.forEach(function(pill) {
+            var n = Number(pill.dataset.step);
+            var section = document.getElementById('step-' + n);
+            if (!section) return;
+            var disabled = section.classList.contains('step-section--disabled');
+            var rect = section.getBoundingClientRect();
+            var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h') || '72', 10);
+            var stepperH = 40;
+            var inView = rect.top < window.innerHeight * 0.6 && rect.bottom > navH + stepperH;
+            pill.classList.remove('is-active', 'is-done');
+            if (!disabled) {
+              if (inView) pill.classList.add('is-active');
+              else if (rect.bottom < navH + stepperH) pill.classList.add('is-done');
+            }
+          });
+        }
+        window.addEventListener('scroll', updateStepper, { passive: true });
+        window.addEventListener('load', updateStepper);
+        setTimeout(updateStepper, 300);
+      })();
+    </script>
+  </div>
 
   <!-- ═══════════════════════════════════════════
        EN-TÊTE PAGE
@@ -187,6 +267,9 @@
               <span class="dim-unit">mm</span>
             </div>
             <span class="dim-hint" id="hint-L">min 200 — max 3000</span>
+            <div id="helper-long" hidden style="grid-column:1/-1;margin-top:0.6rem;padding:0.75rem 1rem;background:rgba(255,144,0,0.08);border:1px solid rgba(255,144,0,0.35);border-radius:4px;font-size:0.82rem;line-height:1.55;color:var(--text-secondary);">
+              <strong style="color:#FFB347;">Longueur &gt; 2800 mm</strong> — pour un linéaire plus long, commandez plusieurs longueurs et ajoutez des <a href="accessoires.html#eclisse" style="color:var(--accent);text-decoration:underline;">éclisses de jonction</a> (6&nbsp;€&nbsp;HT/pièce) à l'étape accessoires. Une éclisse couvre 100 mm de part et d'autre du joint.
+            </div>
           </div>
 
           <div class="dim-row dim-row--info">
@@ -871,10 +954,15 @@
         </div>
 
         <div class="step5-ctas">
-          <button class="btn-primary btn-full" id="btn-cart" disabled>
+          <button type="button" id="btn-share-config" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;width:100%;padding:0.75rem 1rem;background:transparent;border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-head);font-size:0.72rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:border-color 0.2s,color 0.2s;margin-bottom:0.75rem;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Partager la configuration
+          </button>
+          <button class="btn-primary btn-full" id="btn-cart" disabled aria-describedby="cart-hint">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             Ajouter au panier
           </button>
+          <p id="cart-hint" style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:0.5rem;min-height:1.2em;"></p>
           <a href="contact.html" class="btn-outline btn-full">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Demander un devis
@@ -960,11 +1048,139 @@
   </div>
   <div id="cart-backdrop" class="cart-backdrop" hidden></div>
 
+  <!-- ═══ LEAD MAGNET : guide de pose PDF ═══ -->
+  <div id="lead-magnet" role="dialog" aria-modal="true" aria-labelledby="lm-title" hidden
+       style="position:fixed;bottom:0;left:0;right:0;z-index:200;
+              background:var(--bg-card,#1a1a1a);border-top:2px solid var(--accent,#FF4500);
+              box-shadow:0 -8px 32px rgba(0,0,0,0.55);
+              padding:1.25rem 1.5rem 1.5rem;
+              transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1);">
+    <div style="max-width:600px;margin:0 auto;position:relative;">
+      <button id="lm-close" aria-label="Fermer"
+              style="position:absolute;top:-0.25rem;right:0;background:none;border:none;
+                     color:var(--text-muted,#888);font-size:1.4rem;cursor:pointer;line-height:1;padding:0.2rem 0.4rem;">×</button>
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent,#FF4500)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <p id="lm-title" style="font-size:0.8rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-primary,#fff);margin:0;">Guide de pose offert</p>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-secondary,#aaa);margin:0 0 1rem;line-height:1.5;">
+        Recevez notre <strong style="color:var(--text-primary);">guide de pose PDF</strong> — étapes de coupe, fixations, poses à la colle MS polymère. Gratuit, sans engagement.
+      </p>
+      <form id="lm-form" style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+        <input type="email" id="lm-email" name="email" required autocomplete="email"
+               placeholder="votre@email.fr"
+               style="flex:1;min-width:200px;padding:0.65rem 0.9rem;
+                      background:var(--bg-base,#111);border:1px solid var(--border,#333);
+                      color:var(--text-primary,#fff);font-size:0.9rem;border-radius:4px;outline:none;">
+        <input type="hidden" name="_subject" value="Guide de pose — demande configurateur">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="source" value="configurateur-couvertine">
+        <button type="submit" id="lm-submit"
+                style="padding:0.65rem 1.4rem;background:var(--accent,#FF4500);color:#fff;
+                       border:none;font-size:0.8rem;font-weight:700;letter-spacing:0.14em;
+                       text-transform:uppercase;cursor:pointer;border-radius:4px;
+                       transition:opacity 0.2s;white-space:nowrap;">
+          Recevoir le guide
+        </button>
+      </form>
+      <p id="lm-success" hidden
+         style="font-size:0.85rem;color:#4ade80;margin:0.75rem 0 0;font-weight:600;">
+        ✓ Parfait ! Votre guide arrive dans votre boîte mail sous quelques minutes.
+      </p>
+      <p id="lm-error" hidden
+         style="font-size:0.8rem;color:#f87171;margin:0.75rem 0 0;">
+        Une erreur est survenue — réessayez ou écrivez-nous à contact@metal-pliage.fr
+      </p>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var SESSION_KEY = 'lm_shown_couvertine';
+    var lm = document.getElementById('lead-magnet');
+    var lmClose = document.getElementById('lm-close');
+    var lmForm = document.getElementById('lm-form');
+    var lmEmail = document.getElementById('lm-email');
+    var lmSubmit = document.getElementById('lm-submit');
+    var lmSuccess = document.getElementById('lm-success');
+    var lmError = document.getElementById('lm-error');
+    var shown = false;
+
+    function showLeadMagnet() {
+      if (shown || sessionStorage.getItem(SESSION_KEY)) return;
+      shown = true;
+      lm.hidden = false;
+      requestAnimationFrame(function(){ lm.style.transform = 'translateY(0)'; });
+    }
+
+    function hideLeadMagnet() {
+      lm.style.transform = 'translateY(100%)';
+      setTimeout(function(){ lm.hidden = true; }, 350);
+      sessionStorage.setItem(SESSION_KEY, '1');
+    }
+
+    lmClose.addEventListener('click', hideLeadMagnet);
+
+    lmForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = lmEmail.value.trim();
+      if (!email) return;
+      lmSubmit.disabled = true;
+      lmSubmit.textContent = 'Envoi…';
+      fetch('https://formsubmit.co/ajax/contact@metal-pliage.fr', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify({
+          email: email,
+          _subject: 'Guide de pose — demande configurateur couvertine',
+          source: 'configurateur-couvertine'
+        })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.success) {
+          lmForm.hidden = true;
+          lmSuccess.hidden = false;
+          sessionStorage.setItem(SESSION_KEY, '1');
+          /* Identification Brevo pour déclencher séquence email J+1/5/10 */
+          if (window.sib) {
+            window.sib.email_id = email;
+            if (typeof window.sib.identify === 'function') {
+              window.sib.identify({ email: email, GUIDE_PDF: 'couvertine', SOURCE: 'configurateur' });
+            }
+          }
+          setTimeout(hideLeadMagnet, 4000);
+        } else {
+          lmError.hidden = false;
+          lmSubmit.disabled = false;
+          lmSubmit.textContent = 'Recevoir le guide';
+        }
+      })
+      .catch(function(){
+        lmError.hidden = false;
+        lmSubmit.disabled = false;
+        lmSubmit.textContent = 'Recevoir le guide';
+      });
+    });
+
+    /* Déclencher quand la config est complète (btn-cart devient actif) */
+    var btnCart = document.getElementById('btn-cart');
+    if (btnCart) {
+      var observer = new MutationObserver(function(){
+        if (!btnCart.disabled) {
+          setTimeout(showLeadMagnet, 2000);
+        }
+      });
+      observer.observe(btnCart, { attributes: true, attributeFilter: ['disabled'] });
+    }
+  })();
+  </script>
+
   <button id="cart-open-btn" class="cart-fab" aria-label="Panier (0 article)">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     <span id="cart-count-badge" class="cart-badge">0</span>
   </button>
 
+    <div style="text-align:center;padding:0.8rem 1rem;font-size:0.68rem;color:#666;border-top:1px solid #1a1a1a;">METALLIER DESIGN SERVICE - M.D.S. <script src="js/main.js" defer>amp;middot; SARL au capital de 5 000 € <script src="js/main.js" defer>amp;middot; RCS Saint-Étienne 844 258 178 <script src="js/main.js" defer>amp;middot; SIRET 844 258 178 00010 <script src="js/main.js" defer>amp;middot; TVA FR77844258178</div>
   <script src="js/main.js" defer></script>
   <script src="js/cart.js" defer></script>
   <script src="js/configurateur.js" defer></script>

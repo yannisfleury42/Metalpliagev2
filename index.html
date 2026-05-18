@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,7 +13,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Metal Pliage — Acier Sur Mesure">
   <meta name="twitter:description" content="Pliage acier, couvertines, inox. Fabricant français. Commandez en ligne.">
-  <title>Metal Pliage — Fabrication Française d'Acier Sur Mesure</title>
+  <title>Couvertines &amp; Pliages Acier Sur Mesure — Fabricant Français | Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -243,93 +243,126 @@
     }
 
     /* ═══════════════════════════════════════════
-       HERO V2 — module recentré (slideshow original conservé)
+       HERO V3 — flush left, module cible + titre blanc
     ═══════════════════════════════════════════ */
-    .hero-content.hero-content--split {
+    /* Écrase le justify-content:center de styles.css sur cette page uniquement */
+    #hero { justify-content: flex-start; }
+
+    .hero-content.hero-content--v3 {
       position: relative;
       z-index: 2;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 3rem clamp(1.5rem, 5vw, 4rem);
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      padding: 0 0 0 clamp(1.2rem, 2.5vw, 2rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 560px;
       width: 100%;
-    }
-    .hero-content--split .hero-main { text-align: left; }
-    .hero-content--split h1 {
       text-align: left;
-      margin-bottom: 1.4rem;
-      font-size: clamp(2.6rem, 7vw, 6rem);
+      margin: 0; /* annule le margin:0 auto éventuel */
     }
-
-    .hero-sub-v2 {
-      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-      color: var(--text-secondary);
-      max-width: 600px;
-      line-height: 1.55;
-      font-weight: 400;
-      margin-bottom: 1.8rem;
+    /* Module "sur mesure / cible" */
+    .hero-target-module {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.6rem;
     }
-    .hero-orange { color: var(--accent); font-weight: 600; }
-
-    .hero-content--split .hero-cta-group {
-      justify-content: flex-start;
-    }
-
-    /* Carte glassmorphism D3 (à droite du hero) */
-    .hero-glass-card {
-      position: relative;
-      padding: 1.6rem 1.8rem;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px;
-      max-width: 340px;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    .hero-glass-card::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 20px;
-      width: 36px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-    .hero-glass-eyebrow {
-      display: block;
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.32em;
+    .hero-target-label {
+      font-size: 9px;
+      letter-spacing: 0.34em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
+      color: rgba(255,255,255,0.38);
+      font-weight: 600;
     }
-    .hero-glass-line {
+    .hero-target-checks {
+      display: flex;
+      gap: 1.4rem;
+    }
+    .hero-target-check {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 0;
+      gap: 7px;
       font-size: 13.5px;
-      color: var(--text-secondary);
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
     }
-    .hero-glass-line svg { color: var(--accent); flex-shrink: 0; }
-    .hero-glass-line strong { color: var(--text-primary); font-weight: 600; }
+    .hero-check-icon {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-check-icon svg { color: rgba(255,255,255,0.75); }
+    /* Titre blanc pur */
+    .hero-title-v3 {
+      font-size: clamp(1.9rem, 3.6vw, 3rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.022em;
+      color: #fff;
+      margin-bottom: 0.9rem;
+    }
+    /* Sous-infos horizontales */
+    .hero-sub-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-bottom: 1.8rem;
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.03em;
+    }
+    .hero-sub-info span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+    .hero-sub-info span + span::before {
+      content: '·';
+      margin-right: 1rem;
+      color: rgba(255,255,255,0.18);
+      font-size: 15px;
+    }
+    /* Boutons produits — fond sombre, bord blanc, texte blanc */
+    .hero-btns-v3 {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      align-items: flex-start;
+    }
+    .hero-btn-v3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.72rem 1.3rem;
+      background: rgba(0,0,0,0.40);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
+      min-width: 200px;
+    }
+    .hero-btn-v3:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.32);
+      color: #fff;
+    }
+    .hero-btn-v3 svg { color: rgba(255,255,255,0.4); flex-shrink: 0; transition: color 0.18s; }
+    .hero-btn-v3:hover svg { color: rgba(255,255,255,0.75); }
+    .hero-btn-v3 strong { flex: 1; }
+    .hero-btn-v3-arrow { color: rgba(255,255,255,0.25); transition: color 0.18s; }
+    .hero-btn-v3:hover .hero-btn-v3-arrow { color: rgba(255,255,255,0.6); }
 
-    @media (max-width: 900px) {
-      .hero-content.hero-content--split {
-        grid-template-columns: 1fr;
-        gap: 2.2rem;
-        text-align: center;
-      }
-      .hero-content--split .hero-main { text-align: center; }
-      .hero-content--split h1 { text-align: center; }
-      .hero-content--split .hero-cta-group { justify-content: center; }
-      .hero-glass-card { max-width: 100%; }
+    @media (max-width: 700px) {
+      .hero-content.hero-content--v3 { max-width: 100%; padding: 0 1.2rem; }
+      .hero-title-v3 { font-size: clamp(2rem, 8vw, 2.8rem); }
     }
 
     /* ═══════════════════════════════════════════
@@ -442,10 +475,26 @@
       .diptyque-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
-  <div id="scroll-progress" aria-hidden="true"></div>
+  <!-- scroll-progress retiré -->
 
   <!-- PRELOADER : injecté par js/preloader.js -->
 
@@ -469,8 +518,18 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
@@ -509,39 +568,47 @@
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-ambient-glow" aria-hidden="true"></div>
-    <div class="hero-content hero-content--split">
-      <div class="hero-main">
-        <h1 class="animate-fadeup brushed-aluminum" style="--delay: 0.15s">METAL PLIAGE</h1>
-        <p class="hero-sub-v2 animate-fadeup" style="--delay: 0.3s">
-          <span class="hero-orange">Couvertines</span> et <span class="hero-orange">pliages</span> sur mesure.<br>
-          Découvrez nos produits et configurez votre commande quand vous êtes prêt.
-        </p>
-        <div class="hero-cta-group animate-fadeup" style="--delay: 0.45s">
-          <a href="#diptyque" class="btn-hero-primary">
-            Accéder aux produits
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-          </a>
+    <div class="hero-content hero-content--v3">
+      <!-- Module cible : particulier + professionnel -->
+      <div class="hero-target-module animate-fadeup" style="--delay: 0.15s">
+        <div class="hero-target-checks">
+          <div class="hero-target-check">
+            <div class="hero-check-icon" aria-hidden="true">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Particulier
+          </div>
+          <div class="hero-target-check">
+            <div class="hero-check-icon" aria-hidden="true">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Professionnel
+          </div>
         </div>
       </div>
-      <aside class="hero-glass-card animate-fadeup" style="--delay: 0.6s" aria-label="À qui s'adresse ce site">
-        <span class="hero-glass-eyebrow">Sur mesure · sans engagement</span>
-        <div class="hero-glass-line">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          <span><strong>Particulier</strong> — achat en ligne</span>
-        </div>
-        <div class="hero-glass-line">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          <span><strong>Professionnel</strong> — gros volume B2B</span>
-        </div>
-        <div class="hero-glass-line">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          <span><strong>Tarif dégressif</strong> selon quantité</span>
-        </div>
-      </aside>
+      <!-- Titre principal -->
+      <h1 class="hero-title-v3 animate-fadeup" style="--delay: 0.3s">Couvertines &amp; pliages acier<br><em>sur mesure</em> — livrés en 10 jours</h1>
+      <!-- Sous-infos clés -->
+      <div class="hero-sub-info animate-fadeup" style="--delay: 0.38s">
+        <span>Acier · Aluminium · Inox</span>
+        <span>5 RAL standard</span>
+        <span>Livraison 10 jours</span>
+        <span>France entière</span>
+      </div>
+      <!-- Boutons produits -->
+      <div class="hero-btns-v3 animate-fadeup" style="--delay: 0.45s">
+        <a href="couvertines.html" class="hero-btn-v3">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <strong>Nos couvertines</strong>
+          <span class="hero-btn-v3-arrow" aria-hidden="true">›</span>
+        </a>
+        <a href="pliage.html" class="hero-btn-v3">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <strong>Nos pliages</strong>
+          <span class="hero-btn-v3-arrow" aria-hidden="true">›</span>
+        </a>
+      </div>
     </div>
-    <a href="#diptyque" class="hero-scroll-hint" aria-label="Découvrir les produits">
-      <span></span>
-    </a>
   </section>
 
   <!-- ═══════════════════════════════════════════
@@ -549,9 +616,8 @@
   ═══════════════════════════════════════════ -->
   <section class="diptyque-section" id="diptyque" aria-labelledby="diptyque-title">
     <div class="diptyque-header">
-      <span class="section-label">CHOISISSEZ VOTRE PRODUIT</span>
-      <h2 id="diptyque-title">DEUX FAMILLES,<br>UN MÊME SAVOIR-FAIRE</h2>
-      <p>Découvrez nos produits, comparez les solutions et configurez votre commande quand vous êtes prêt.</p>
+      <h2 id="diptyque-title">CE QUE NOUS FABRIQUONS</h2>
+      <p>Couvertines et pliages sur mesure, fabriqués en France et livrés partout en France.</p>
     </div>
     <div class="diptyque-grid">
 
@@ -680,9 +746,11 @@
         <ul role="list">
           <li><a href="#diptyque">Produits</a></li>
           <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="accessoires.html">Accessoires</a></li>
           <li><a href="pliage.html">Pliage</a></li>
           <li><a href="#fabrication">Savoir-Faire</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="contact.html">Devis</a></li>
         </ul>
       </nav>
@@ -700,6 +768,7 @@
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="livraison-retours.html">Livraison &amp; Retours</a>
       </div>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. <p class="footer-flag">middot; SARL au capital de 5 000 € <p class="footer-flag">middot; RCS Saint-Étienne 844 258 178 <p class="footer-flag">middot; SIRET 844 258 178 00010 <p class="footer-flag">middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

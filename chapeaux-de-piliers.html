@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -15,10 +15,18 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
+  <meta property="og:title" content="Chapeaux de Piliers Acier Sur Mesure &#8212; Metal Pliage">
+  <meta property="og:description" content="Chapeaux de piliers acier laqu&#233; sur mesure &#8212; couvre-pilier 4 faces, fraisage num&#233;rique, ajustement au millim&#232;tre. 5 coloris RAL standard.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://metal-pliage.fr/chapeaux-de-piliers.html">
   <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Chapeaux de Piliers Acier | Metal Pliage">
+  <meta name="twitter:description" content="Couvre-piliers acier laqu&#233; sur mesure, 4 faces fris&#233;es, 5 RAL standard.">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <script type="application/ld+json">
   {
@@ -46,6 +54,55 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://metal-pliage.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Pliage sur mesure", "item": "https://metal-pliage.fr/pliage.html" },
+      { "@type": "ListItem", "position": 3, "name": "Chapeaux de piliers", "item": "https://metal-pliage.fr/chapeaux-de-piliers.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Comment mesurer mon pilier pour commander un chapeau ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Mesurez la longueur et la largeur extérieures du pilier maçonné à sa base. Le chapeau est fabriqué avec un jeu de 5 mm de chaque côté pour faciliter la pose. Indiquez ces cotes dans le configurateur — la pente d'évacuation est intégrée." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelle matière choisir pour un chapeau de pilier en bord de mer ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "En zone maritime (< 10 km de la côte), préférez l'aluminium laqué époxy ou l'acier galvanisé prélaqué. L'aluminium est immunisé contre la corrosion saline et conserve son aspect 30+ ans." }
+      },
+      {
+        "@type": "Question",
+        "name": "Les chapeaux de piliers sont-ils livrés peints ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Oui, chaque chapeau est fabriqué en acier prélaqué (laque four cuite en usine). Vous choisissez parmi 5 coloris RAL standard. La pièce est prête à poser, aucun apprêt ni peinture chantier nécessaire." }
+      }
+    ]
+  }
+  </script>  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
@@ -64,8 +121,18 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
@@ -182,6 +249,11 @@
             </div>
           </div>
 
+          <div style="display:inline-flex;align-items:baseline;gap:0.4rem;margin-bottom:1.4rem;padding:0.6rem 1rem;background:var(--bg-surface);border:1px solid var(--border);" aria-label="Prix indicatif">
+            <span style="font-family:var(--font-head);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);">À partir de</span>
+            <span style="font-family:var(--font-head);font-size:1.6rem;font-weight:700;color:var(--text-primary);">45 €</span>
+            <span style="font-family:var(--font-head);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-secondary);">HT / pièce</span>
+          </div><br>
           <a href="configurateur.html?forme=chapeau-pilier" class="btn-primary">Configurer un chapeau</a>
         </div>
       </div>
@@ -246,6 +318,7 @@
           <li><a href="configurateur.html">Configurateur</a></li>
           <li><a href="accessoires.html">Accessoires</a></li>
           <li><a href="guides.html">Guides de pose</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
       </nav>
@@ -257,6 +330,7 @@
     </div>
     <div class="footer-bottom">
       <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. <p class="footer-flag">middot; SARL au capital de 5 000 € <p class="footer-flag">middot; RCS Saint-Étienne 844 258 178 <p class="footer-flag">middot; SIRET 844 258 178 00010 <p class="footer-flag">middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

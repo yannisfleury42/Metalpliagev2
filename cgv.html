@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -32,6 +32,22 @@
     .legal-page li { margin-bottom: 0.3rem; }
     .legal-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
   </style>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
   <div id="scroll-progress" aria-hidden="true"></div>
@@ -43,8 +59,18 @@
       </div>
       <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
@@ -107,6 +133,7 @@
           <li><a href="couvertines.html">Couvertines</a></li>
           <li><a href="pliage.html">Pliage</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
       </nav>
@@ -124,6 +151,7 @@
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="livraison-retours.html">Livraison &amp; Retours</a>
       </div>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. <p class="footer-flag">middot; SARL au capital de 5 000 € <p class="footer-flag">middot; RCS Saint-Étienne 844 258 178 <p class="footer-flag">middot; SIRET 844 258 178 00010 <p class="footer-flag">middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

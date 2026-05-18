@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contactez Metal Pliage pour un devis gratuit sur mesure. Réponse sous 24h ouvrées. Fabrication française d'acier, inox, couvertines.">
-  <title>Contact &amp; Devis — Metal Pliage</title>
+  <meta name="description" content="Demande de devis gratuit sous 24h ouvrées. Plans, croquis ou cotations. Conseil technique par téléphone au 06 43 21 82 01. Couvertines et pliage acier sur mesure.">
+  <title>Devis Couvertine &amp; Pliage Acier — Réponse 24h | Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,10 +15,18 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
+  <meta property="og:title" content="Devis Couvertine &amp; Pliage Acier &#8212; R&#233;ponse 24h | Metal Pliage">
+  <meta property="og:description" content="Demande de devis gratuit sous 24h ouvr&#233;es. Plans, croquis ou cotations. Conseil technique par t&#233;l&#233;phone au 06&#160;43&#160;21&#160;82&#160;01.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://metal-pliage.fr/contact.html">
   <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Demander un Devis | Metal Pliage">
+  <meta name="twitter:description" content="R&#233;ponse sous 24h. Couvertines et pliage acier sur mesure.">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
@@ -186,6 +194,22 @@
       .contact-info-strip-inner { grid-template-columns: 1fr; }
     }
   </style>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
@@ -211,8 +235,18 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html" class="active">Contact</a></li>
       </ul>
@@ -405,6 +439,7 @@
           <li><a href="couvertines.html">Couvertines</a></li>
           <li><a href="pliage.html">Pliage</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="contact.html" aria-current="page">Contact / Devis</a></li>
         </ul>
       </nav>
@@ -422,6 +457,7 @@
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="livraison-retours.html">Livraison &amp; Retours</a>
       </div>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. <p class="footer-flag">middot; SARL au capital de 5 000 € <p class="footer-flag">middot; RCS Saint-Étienne 844 258 178 <p class="footer-flag">middot; SIRET 844 258 178 00010 <p class="footer-flag">middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>
