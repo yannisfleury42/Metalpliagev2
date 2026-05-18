@@ -248,7 +248,9 @@
       window.sib.equeue = window.sib.equeue || [];
       window.sib.email_id = '';
     })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  </script>  <!-- Preload LCP hero image -->
+  <link rel="preload" as="image" href="assets/couvertine-photo/couvertine plate.jpg" fetchpriority="high">
+  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-couvertines">
@@ -302,7 +304,7 @@
 
       <article class="couvertine-featured animate-fadeup">
         <div class="couvertine-featured-img">
-          <img src="assets/couvertine-photo/couvertine plate.jpg" alt="Couvertine métallique sur support — acier prélaqué RAL 7016" loading="lazy">
+          <img src="assets/couvertine-photo/couvertine plate.jpg" alt="Couvertine métallique sur support — acier prélaqué RAL 7016" loading="eager" fetchpriority="high">
           <div class="couvertine-featured-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             Fabriquée en France
