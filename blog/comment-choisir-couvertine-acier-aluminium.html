@@ -49,6 +49,20 @@
     ]
   }
   </script>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>
   <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
   <style>
