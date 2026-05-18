@@ -8,6 +8,7 @@ const {
   FROM_EMAIL,
   FROM_NAME = 'Metal Pliage',
   ADMIN_EMAIL,
+  MDS_ADMIN_EMAIL,
 } = process.env;
 
 if (!BREVO_API_KEY || !FROM_EMAIL || !ADMIN_EMAIL) {
@@ -23,6 +24,8 @@ app.use(express.json({ limit: '100kb' }));
 const ALLOWED_ORIGINS = new Set([
   'https://metal-pliage.fr',
   'https://www.metal-pliage.fr',
+  'https://metallier-mds.fr',
+  'https://www.metallier-mds.fr',
   'http://localhost:3000',
   'http://localhost:3001',
   'http://127.0.0.1:3000',
@@ -163,6 +166,58 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     console.error('[BREVO]', err.message);
     res.status(500).json({ error: "Erreur d'envoi du message. Réessayez plus tard ou écrivez-nous directement." });
+  }
+});
+
+app.post('/api/contact-mds', async (req, res) => {
+  const { name, company, email, phone, project, message } = req.body || {};
+
+  if (!name?.trim() || !email?.trim() || !message?.trim()) {
+    return res.status(400).json({ error: 'Nom, email et message obligatoires.' });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Email invalide.' });
+  }
+
+  const safe = {
+    name: escapeHtml(name),
+    company: escapeHtml(company),
+    email: escapeHtml(email),
+    phone: escapeHtml(phone),
+    project: escapeHtml(project),
+    message: escapeHtml(message).replace(/\n/g, '<br>'),
+  };
+
+  const adminHtml = `
+    <h2 style="font-family:sans-serif;color:#E63E00">Nouveau message — metallier-mds.fr</h2>
+    <table cellpadding="6" style="font-family:sans-serif;border-collapse:collapse">
+      <tr><td><strong>Nom</strong></td><td>${safe.name}</td></tr>
+      <tr><td><strong>Société</strong></td><td>${safe.company || '—'}</td></tr>
+      <tr><td><strong>Email</strong></td><td><a href="mailto:${safe.email}">${safe.email}</a></td></tr>
+      <tr><td><strong>Téléphone</strong></td><td>${safe.phone || '—'}</td></tr>
+      <tr><td><strong>Projet</strong></td><td>${safe.project || '—'}</td></tr>
+    </table>
+    <hr>
+    <p style="font-family:sans-serif"><strong>Message :</strong></p>
+    <p style="font-family:sans-serif">${safe.message}</p>
+  `;
+
+  const clientHtml = `
+    <div style="font-family:sans-serif;max-width:560px">
+      <h2 style="color:#E63E00">Merci pour votre message, ${safe.name}</h2>
+      <p>Nous avons bien reçu votre demande et vous répondrons sous 48h ouvrées.</p>
+      <p>À très bientôt,<br><strong>Dimitry &amp; Yannis — MDS Métallier</strong></p>
+    </div>
+  `;
+
+  const dest = MDS_ADMIN_EMAIL || ADMIN_EMAIL;
+  try {
+    await sendBrevoEmail({ to: dest, subject: `[MDS] Nouveau message — ${name}`, htmlContent: adminHtml, replyTo: { email, name } });
+    await sendBrevoEmail({ to: email, subject: 'Votre demande — MDS Métallier Design Service', htmlContent: clientHtml });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[BREVO/MDS]', err.message);
+    res.status(500).json({ error: "Erreur d'envoi. Réessayez ou écrivez à metallier.mds@gmail.com" });
   }
 });
 
