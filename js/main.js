@@ -397,4 +397,108 @@
     document.body.appendChild(btn);
   })();
 
+
+  /* ── LEAD MAGNET — Guide PDF capture email ───────────────────── */
+  (function () {
+    var SESSION_KEY = 'mp-lead-shown';
+    var SUBMIT_URL = 'https://formsubmit.co/ajax/contact@metal-pliage.fr';
+    if (sessionStorage.getItem(SESSION_KEY)) return;
+    var skipPaths = ['/contact', '/cgv', '/confidentialite', '/mentions-legales', '/livraison', '/commande-confirmee', '/configurateur'];
+    var path = window.location.pathname;
+    for (var i = 0; i < skipPaths.length; i++) {
+      if (path.indexOf(skipPaths[i]) !== -1) return;
+    }
+
+    var shown = false;
+    function show() {
+      if (shown) return;
+      shown = true;
+      sessionStorage.setItem(SESSION_KEY, '1');
+
+      var overlay = document.createElement('div');
+      overlay.id = 'mp-lead-overlay';
+      var sheet = document.createElement('div');
+      sheet.id = 'mp-lead-sheet';
+      sheet.setAttribute('role', 'dialog');
+      sheet.setAttribute('aria-modal', 'true');
+      sheet.setAttribute('aria-label', 'Guide gratuit couvertine sur mesure');
+      sheet.innerHTML =
+        '<button id="mp-lead-close" aria-label="Fermer">&times;</button>' +
+        '<div style="display:flex;gap:1.2rem;align-items:flex-start;flex-wrap:wrap;">' +
+          '<div style="flex:0 0 auto;width:48px;height:48px;border-radius:10px;background:var(--accent,#f97316);display:flex;align-items:center;justify-content:center;">' +
+            '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>' +
+          '</div>' +
+          '<div style="flex:1;min-width:220px;">' +
+            '<p style="margin:0 0 .3rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted,#9ca3af);">Gratuit</p>' +
+            '<h3 style="margin:0 0 .4rem;font-size:1.05rem;font-weight:600;color:var(--text-primary,#f9fafb);line-height:1.3;">Guide de pose couvertine sur mesure</h3>' +
+            '<p style="margin:0 0 1rem;font-size:.85rem;color:var(--text-secondary,#d1d5db);line-height:1.5;">Mesures, profils, fixation : le guide complet en PDF. Envoy\xe9 directement dans votre bo\xeete mail.</p>' +
+            '<form id="mp-lead-form" style="display:flex;gap:.5rem;flex-wrap:wrap;">' +
+              '<input type="email" id="mp-lead-email" name="email" required autocomplete="email" placeholder="votre@email.fr" style="flex:1;min-width:180px;padding:.55rem .9rem;border:1px solid var(--border,#374151);border-radius:6px;background:var(--bg-card,#1f2937);color:var(--text-primary,#f9fafb);font-size:.9rem;outline:none;" />' +
+              '<button type="submit" style="padding:.55rem 1.2rem;border:none;border-radius:6px;background:var(--accent,#f97316);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .2s;">Recevoir le guide</button>' +
+            '</form>' +
+            '<p id="mp-lead-msg" style="margin:.6rem 0 0;font-size:.8rem;color:var(--text-muted,#9ca3af);display:none;"></p>' +
+          '</div>' +
+        '</div>';
+
+      var style = document.createElement('style');
+      style.textContent =
+        '#mp-lead-overlay{position:fixed;inset:0;z-index:1100;pointer-events:none;}' +
+        '#mp-lead-sheet{position:fixed;bottom:-220px;left:0;right:0;z-index:1101;padding:clamp(1.2rem,4vw,2rem);background:var(--bg-surface,#111827);border-top:1px solid var(--border,#374151);box-shadow:0 -8px 40px rgba(0,0,0,.4);transition:bottom .4s cubic-bezier(.22,.61,.36,1);pointer-events:all;}' +
+        '#mp-lead-sheet.mp-open{bottom:0;}' +
+        '#mp-lead-close{position:absolute;top:.8rem;right:1rem;border:none;background:none;color:var(--text-muted,#9ca3af);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem .5rem;}' +
+        '#mp-lead-close:hover{color:var(--text-primary,#f9fafb);}' +
+        '#mp-lead-email:focus{border-color:var(--accent,#f97316);}';
+      document.head.appendChild(style);
+      document.body.appendChild(overlay);
+      document.body.appendChild(sheet);
+      setTimeout(function () { sheet.classList.add('mp-open'); }, 80);
+
+      document.getElementById('mp-lead-close').addEventListener('click', dismiss);
+      overlay.addEventListener('click', dismiss);
+
+      document.getElementById('mp-lead-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = document.getElementById('mp-lead-email').value.trim();
+        var msg = document.getElementById('mp-lead-msg');
+        var btn = this.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.style.opacity = '.5';
+        msg.style.display = 'block';
+        msg.textContent = 'Envoi en cours…';
+        fetch(SUBMIT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ email: email, _subject: 'T\xe9l\xe9chargement guide couvertine', message: 'Demande de guide PDF couvertine — ' + window.location.href })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function () {
+            msg.style.color = '#4ade80';
+            msg.textContent = 'Guide envoy\xe9 ! V\xe9rifiez votre bo\xeete mail.';
+            setTimeout(dismiss, 2500);
+          })
+          .catch(function () {
+            msg.style.color = 'var(--accent,#f97316)';
+            msg.textContent = 'Erreur — r\xe9essayez ou \xe9crivez-nous \xe0 contact@metal-pliage.fr';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          });
+      });
+    }
+
+    function dismiss() {
+      var sheet = document.getElementById('mp-lead-sheet');
+      if (sheet) { sheet.style.bottom = '-220px'; setTimeout(function () { sheet.remove(); }, 420); }
+      var ov = document.getElementById('mp-lead-overlay');
+      if (ov) ov.remove();
+    }
+
+    // Trigger: 40% scroll OR 25s timer, whichever comes first
+    var timer = setTimeout(show, 25000);
+    function onScroll() {
+      var scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      if (scrolled >= 0.4) { clearTimeout(timer); window.removeEventListener('scroll', onScroll); show(); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
 })();
