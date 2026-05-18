@@ -627,7 +627,8 @@ p { color: var(--text-secondary); }
 }
 
 /* ── Hamburger ─────────────────────────────────────────────── */
-.nav-hamburger {
+.nav-hamburger,
+.nav-toggle {
   display: none;
   flex-direction: column;
   justify-content: center;
@@ -637,15 +638,19 @@ p { color: var(--text-secondary); }
   margin-left: auto;
   padding: 0;
 }
-.nav-hamburger span {
+.nav-hamburger span,
+.nav-toggle span {
   display: block;
   height: 1px;
   background: var(--text-primary);
   transition: transform var(--t) var(--ease), opacity var(--t) var(--ease);
 }
-#navbar.nav-open .nav-hamburger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-#navbar.nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
-#navbar.nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+#navbar.nav-open .nav-hamburger span:nth-child(1),
+#navbar.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+#navbar.nav-open .nav-hamburger span:nth-child(2),
+#navbar.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+#navbar.nav-open .nav-hamburger span:nth-child(3),
+#navbar.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 
 /* ══════════════════════════════════════════════════════════════
@@ -1533,7 +1538,7 @@ p { color: var(--text-secondary); }
 @media (max-width: 768px) {
 
   /* Nav */
-  .nav-hamburger { display: flex; }
+  .nav-hamburger, .nav-toggle { display: flex; }
   .nav-cta { display: none; }
 
   #nav-links {

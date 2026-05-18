@@ -77,7 +77,7 @@
 
       // Close mobile nav if open
       navbar.classList.remove('nav-open');
-      const btn = navbar.querySelector('.nav-hamburger');
+      const btn = navbar.querySelector('.nav-hamburger, .nav-toggle');
       if (btn) btn.setAttribute('aria-expanded', 'false');
     });
   });
@@ -121,7 +121,7 @@
 
 
   /* ── HAMBURGER / MOBILE NAV ───────────────────────────────── */
-  const hamburger = document.querySelector('.nav-hamburger');
+  const hamburger = document.querySelector('.nav-hamburger, .nav-toggle');
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
