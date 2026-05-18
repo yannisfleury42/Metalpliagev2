@@ -405,6 +405,34 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Comment envoyer mon plan pour obtenir un devis ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Envoyez votre plan (PDF, DWG, DXF ou croquis coté) par email à contact@metal-pliage.fr. Précisez la matière, l'épaisseur, la quantité et la finition. Devis sous 24h ouvrées." }
+      },
+      {
+        "@type": "Question",
+        "name": "Combien de plis puis-je avoir sur une même pièce ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nos plieuses CNC permettent jusqu'à 10 plis sur une même pièce, dans la limite de l'accès outil. Le développé maximal est de 3 000 mm." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelles matières sont disponibles pour le pliage forme libre ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Acier prélaqué (RAL standard ou sur mesure), acier galvanisé, aluminium 1050A et inox 304/316L. Épaisseurs de 0,6 mm à 3 mm selon matière." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel est le délai pour une pièce forme libre sur mesure ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Délai standard : 5 à 10 jours ouvrés après validation du devis et confirmation de paiement." }
+      }
+    ]
+  }
+  </script>
   <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
   <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
   <script>
@@ -673,6 +701,32 @@
           </a>
         </li>
       </ul>
+    </div>
+  </section>
+
+  <!-- FAQ FORME LIBRE -->
+  <section style="padding:clamp(48px,7vw,80px) 0;background:var(--bg-surface);border-top:1px solid var(--border);">
+    <div style="max-width:760px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);">
+      <span class="section-label">FAQ</span>
+      <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:300;letter-spacing:-.01em;margin:.5rem 0 2.5rem;">Questions fréquentes — Forme libre</h2>
+      <div class="faq-list" id="faq-libre">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Comment envoyer mon plan pour obtenir un devis ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Envoyez votre plan (PDF, DWG, DXF ou simple croquis coté) par email à <a href="mailto:contact@metal-pliage.fr" style="color:var(--accent)">contact@metal-pliage.fr</a>. Précisez la matière, l'épaisseur, la quantité et la finition souhaitée. Vous recevez un devis sous 24h ouvrées. Un simple croquis à main levée avec les cotes est suffisant.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Combien de plis puis-je avoir sur une même pièce ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Nos plieuses CNC permettent jusqu'à 10 plis sur une même pièce, dans la limite de l'accès outil. Le développé maximal est de 3 000 mm. Au-delà ou pour des profils très complexes, contactez-nous : nous étudions chaque cas.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Quelles matières sont disponibles pour le pliage forme libre ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Nous travaillons l'acier prélaqué (RAL standard ou sur mesure), l'acier galvanisé, l'aluminium 1050A et l'inox 304/316L. Les épaisseurs disponibles vont de 0,6 mm à 3 mm selon la matière. Des matières spécifiques sont accessibles sur devis.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Quel est le délai pour une pièce forme libre sur mesure ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Le délai standard est de 5 à 10 jours ouvrés après validation du devis et confirmation de paiement. Pour les commandes urgentes ou les grandes séries, contactez-nous pour étudier une solution adaptée.</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
