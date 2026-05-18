@@ -67,6 +67,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Réalisations -->
+  <url>
+    <loc>https://metal-pliage.fr/realisations.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Guides & Blog -->
   <url>
     <loc>https://metal-pliage.fr/guides.html</loc>
