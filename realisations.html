@@ -34,10 +34,42 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Toutes les pièces présentées sont-elles fabriquées dans votre atelier ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Oui, toutes nos réalisations sont fabriquées dans notre atelier de Saint-Étienne (42), sur nos plieuses CNC haute précision. Aucune sous-traitance : de la découpe au laquage, tout est fait en interne." }
+      },
+      {
+        "@type": "Question",
+        "name": "Puis-je commander exactement le même profil que dans la galerie ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Oui — toutes nos pièces sont fabriquées sur mesure, mais le profil est identique. Indiquez vos cotes dans le configurateur ou par email. Vous pouvez aussi mentionner la référence visuelle souhaitée." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quels délais pour une commande similaire ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Fabrication sous 5 à 10 jours ouvrés après confirmation. Livraison sous 2 à 4 jours supplémentaires. Soit 7 à 14 jours ouvrés depuis le paiement." }
+      }
+    ]
+  }
+  </script>
   <!-- Brevo tracker -->
   <script>
-    (function(s,i,b,c,o,n){s['SibObject']=o;s[o]=s[o]||function(){(s[o].q=s[o].q||[]).push(arguments)};s[o].l=1*new Date();n=i.createElement(b);var x=i.getElementsByTagName(b)[0];n.async=1;n.src=c;x.parentNode.insertBefore(n,x);})(window,document,'script','https://sibautomation.com/sa.js?key=VOTRE-CLE-BREVO','sib');
-    window.sib.page();
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
   </script>
   <!-- Plausible Analytics -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
@@ -285,6 +317,28 @@
         <h3>Vous avez posé nos couvertines ou nos pliages ?</h3>
         <p>Envoyez-nous des photos de votre chantier terminé — nous les intégrons à cette galerie avec votre accord, et vous offrons un code promo -5 % sur votre prochaine commande.</p>
         <a href="mailto:contact@metal-pliage.fr?subject=Photos%20de%20chantier%20Metal%20Pliage" class="btn-primary" style="display:inline-block;text-decoration:none;">Envoyer mes photos →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ RÉALISATIONS -->
+  <section style="padding:clamp(40px,6vw,72px) 0;background:var(--bg-surface);border-top:1px solid var(--border);">
+    <div style="max-width:760px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);">
+      <span class="section-label">FAQ</span>
+      <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:300;letter-spacing:-.01em;margin:.5rem 0 2rem;">Questions fréquentes</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Toutes les pièces présentées sont-elles fabriquées dans votre atelier ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Oui, toutes nos réalisations sont fabriquées dans notre atelier de Saint-Étienne (42), sur nos plieuses CNC haute précision. Aucune sous-traitance : de la découpe au laquage, tout est fait en interne.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Puis-je commander exactement le même profil que dans la galerie ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Oui — toutes nos pièces sont fabriquées sur mesure, mais le profil est identique. Indiquez vos cotes (largeur, retours, longueur) dans le configurateur ou par email. Vous pouvez aussi mentionner la référence visuelle souhaitée dans votre message.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Quels délais pour une commande similaire ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Fabrication sous 5 à 10 jours ouvrés après confirmation. Livraison sous 2 à 4 jours supplémentaires selon votre région. Soit un total de 7 à 14 jours ouvrés depuis le paiement.</p></div>
+        </div>
       </div>
     </div>
   </section>
