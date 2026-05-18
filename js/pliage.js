@@ -45,9 +45,9 @@ const SHAPES = {
     label: 'Forme U',
     dimKeys: ['A1', 'B', 'A2'],
     dimDefs: {
-      A1: { label: 'Bras gauche', def: 40, min: 20, max: 300 },
-      B:  { label: 'Largeur de la base', def: 200, min: 50, max: 600 },
-      A2: { label: 'Bras droit',  def: 40, min: 20, max: 300 },
+      A1: { label: 'Bras gauche', def: 40, min: 20, max: 300, hint: 'Hauteur du bras gauche descendant' },
+      B:  { label: 'Largeur de la base', def: 200, min: 50, max: 600, hint: 'Largeur intérieure de la base horizontale' },
+      A2: { label: 'Bras droit',  def: 40, min: 20, max: 300, hint: 'Hauteur du bras droit descendant' },
     },
     pts: (d) => [[0, d.A1], [0, 0], [d.B, 0], [d.B, d.A2]],
     dev: (d) => d.A1 + d.B + d.A2,
@@ -56,8 +56,8 @@ const SHAPES = {
     label: 'Forme L',
     dimKeys: ['A', 'B'],
     dimDefs: {
-      A: { label: 'Hauteur de la jambe', def: 60, min: 20, max: 400 },
-      B: { label: 'Largeur de la base', def: 150, min: 30, max: 500 },
+      A: { label: 'Hauteur de la jambe', def: 60, min: 20, max: 400, hint: 'Partie verticale du L, montant mural' },
+      B: { label: 'Largeur de la base', def: 150, min: 30, max: 500, hint: 'Partie horizontale du L, en saillie' },
     },
     pts: (d) => [[0, 0], [0, d.A], [d.B, d.A]],
     dev: (d) => d.A + d.B,
@@ -66,9 +66,9 @@ const SHAPES = {
     label: 'Forme Z',
     dimKeys: ['A', 'H', 'B'],
     dimDefs: {
-      A: { label: 'Aile haute', def: 60, min: 20, max: 300 },
-      H: { label: "Hauteur de l'âme", def: 80, min: 20, max: 400 },
-      B: { label: 'Aile basse', def: 60, min: 20, max: 300 },
+      A: { label: 'Aile haute', def: 60, min: 20, max: 300, hint: 'Retour horizontal supérieur' },
+      H: { label: 'Partie verticale (âme)', def: 80, min: 20, max: 400, hint: 'Hauteur de la partie centrale en Z (verticale)' },
+      B: { label: 'Aile basse', def: 60, min: 20, max: 300, hint: 'Retour horizontal inférieur (décalé)' },
     },
     pts: (d) => [[0, 0], [d.A, 0], [d.A, d.H], [d.A + d.B, d.H]],
     dev: (d) => d.A + d.H + d.B,
@@ -77,9 +77,9 @@ const SHAPES = {
     label: 'Appui de Fenêtre',
     dimKeys: ['A', 'B', 'C'],
     dimDefs: {
-      A: { label: 'Retour (A)', def: 40, min: 20, max: 150 },
-      B: { label: 'Profondeur (B)', def: 200, min: 80, max: 400 },
-      C: { label: 'Nez (C)', def: 60, min: 20, max: 150 },
+      A: { label: 'Retour mural (A)', def: 40, min: 20, max: 150, hint: 'Partie collée au mur, en dessous de la fenêtre' },
+      B: { label: 'Profondeur tablette (B)', def: 200, min: 80, max: 400, hint: 'Largeur visible devant la fenêtre (avec pente 10° intégrée)' },
+      C: { label: 'Nez avant (C)', def: 60, min: 20, max: 150, hint: 'Retombée avant de l\'appui (protection façade). 60 mm est standard.' },
     },
     pts: (d) => {
       const p0 = [0, 0];
@@ -395,7 +395,7 @@ function renderDimInputs() {
           value="${state.dims[k]}" min="${def.min}" max="${def.max}" step="5">
         <span class="dim-unit">mm</span>
       </div>
-      <span class="dim-hint">min ${def.min} — max ${def.max}</span>
+      <span class="dim-hint">${def.hint ? def.hint + ' — ' : ''}min ${def.min} — max ${def.max} mm</span>
     `;
 
     elDimInputs.appendChild(row);
@@ -416,10 +416,10 @@ function renderDimInputs() {
     row.innerHTML = `
       <label class="dim-label">
         <span class="dim-letter dim-letter--fixed">P</span>
-        Pince (fixe)
+        Pince d'accroche (fixe)
       </label>
       <div class="dim-fixed-val">${PINCE_MM} <em>mm</em></div>
-      <span class="dim-hint">Non modifiable</span>
+      <span class="dim-hint">Replat intérieur pour glisser sous le cadre de fenêtre — fixé à 12 mm</span>
     `;
     elDimInputs.appendChild(row);
   }
