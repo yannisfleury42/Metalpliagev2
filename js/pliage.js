@@ -77,9 +77,9 @@ const SHAPES = {
     label: 'Appui de Fenêtre',
     dimKeys: ['A', 'B', 'C'],
     dimDefs: {
-      A: { label: 'Retour mural (A)', def: 40, min: 20, max: 150, hint: 'Partie collée au mur, en dessous de la fenêtre' },
-      B: { label: 'Profondeur tablette (B)', def: 200, min: 80, max: 400, hint: 'Largeur visible devant la fenêtre (avec pente 10° intégrée)' },
-      C: { label: 'Nez avant (C)', def: 60, min: 20, max: 150, hint: 'Retombée avant de l\'appui (protection façade). 60 mm est standard.' },
+      A: { label: 'Retour mural (A)', def: 40, min: 20, max: 150, hint: 'fixé au mur' },
+      B: { label: 'Profondeur tablette (B)', def: 200, min: 80, max: 400, hint: 'pente 10° intégrée' },
+      C: { label: 'Nez avant (C)', def: 60, min: 20, max: 150, hint: '60 mm standard' },
     },
     pts: (d) => {
       const p0 = [0, 0];
