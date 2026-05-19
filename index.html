@@ -263,20 +263,21 @@
     /* ═══════════════════════════════════════════
        HERO V3 — flush left, module cible + titre blanc
     ═══════════════════════════════════════════ */
-    /* Écrase le justify-content:center de styles.css sur cette page uniquement */
-    #hero { justify-content: flex-start; }
+    /* Hero centré */
+    #hero { justify-content: center; }
 
     .hero-content.hero-content--v3 {
       position: relative;
       z-index: 2;
-      padding: 0 0 0 clamp(1.2rem, 2.5vw, 2rem);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
       display: flex;
       flex-direction: column;
       gap: 0;
-      max-width: 560px;
+      max-width: 680px;
       width: 100%;
-      text-align: left;
-      margin: 0; /* annule le margin:0 auto éventuel */
+      text-align: center;
+      align-items: center;
+      margin: 0 auto;
     }
     /* Module "sur mesure / cible" */
     .hero-target-module {
@@ -299,13 +300,13 @@
     .hero-target-check {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: 13.5px;
+      gap: 10px;
+      font-size: 27px;
       color: rgba(255,255,255,0.85);
       font-weight: 500;
     }
     .hero-check-icon {
-      width: 18px; height: 18px;
+      width: 36px; height: 36px;
       border-radius: 50%;
       border: 1.5px solid rgba(255,255,255,0.35);
       display: flex; align-items: center; justify-content: center;
@@ -326,8 +327,9 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem 1rem;
+      justify-content: center;
       margin-bottom: 1.8rem;
-      font-size: 12px;
+      font-size: 18px;
       color: rgba(255,255,255,0.72);
       letter-spacing: 0.03em;
     }
@@ -342,41 +344,50 @@
       color: rgba(255,255,255,0.18);
       font-size: 15px;
     }
-    /* Boutons produits — fond sombre, bord blanc, texte blanc */
+    /* Boutons produits — encadrement orange ×2 */
     .hero-btns-v3 {
       display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      align-items: flex-start;
+      flex-direction: row;
+      gap: 0.9rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     .hero-btn-v3 {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 0.72rem 1.3rem;
-      background: rgba(0,0,0,0.40);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.16);
-      color: rgba(255,255,255,0.85);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.03em;
+      gap: 16px;
+      padding: 1.15rem 2rem;
+      background: transparent;
+      border: 2px solid #FF6B35;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
       border-radius: 3px;
       text-decoration: none;
-      transition: background 0.18s, border-color 0.18s, color 0.18s;
-      min-width: 200px;
+      min-width: 260px;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.28s;
     }
-    .hero-btn-v3:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.32);
-      color: #fff;
+    .hero-btn-v3::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #FF6B35;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      z-index: 0;
     }
-    .hero-btn-v3 svg { color: rgba(255,255,255,0.4); flex-shrink: 0; transition: color 0.18s; }
-    .hero-btn-v3:hover svg { color: rgba(255,255,255,0.75); }
+    .hero-btn-v3:hover::before { transform: scaleX(1); }
+    .hero-btn-v3 > * { position: relative; z-index: 1; }
+    .hero-btn-v3 svg { color: #FF6B35; flex-shrink: 0; transition: color 0.28s; }
+    .hero-btn-v3:hover svg { color: #fff; }
     .hero-btn-v3 strong { flex: 1; }
-    .hero-btn-v3-arrow { color: rgba(255,255,255,0.25); transition: color 0.18s; }
-    .hero-btn-v3:hover .hero-btn-v3-arrow { color: rgba(255,255,255,0.6); }
+    .hero-btn-v3-arrow { color: rgba(255,107,53,0.7); font-size: 1.1rem; transition: color 0.28s, transform 0.28s; }
+    .hero-btn-v3:hover .hero-btn-v3-arrow { color: #fff; transform: translateX(5px); }
 
     @media (max-width: 700px) {
       .hero-content.hero-content--v3 { max-width: 100%; padding: 0 1.2rem; }
@@ -582,38 +593,37 @@
         <div class="hero-target-checks">
           <div class="hero-target-check">
             <div class="hero-check-icon" aria-hidden="true">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             Particulier
           </div>
           <div class="hero-target-check">
             <div class="hero-check-icon" aria-hidden="true">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             Professionnel
           </div>
         </div>
       </div>
       <!-- Titre principal -->
-      <h1 class="hero-title-v3 animate-fadeup" style="--delay: 0.3s">Fabrication et livraison de<br><em>couvertines et pliages</em> sur mesure</h1>
+      <h1 class="hero-title-v3 animate-fadeup" style="--delay: 0.3s">Fabrication sur mesure, <em>couvertine et pliage</em></h1>
       <!-- Sous-infos clés -->
       <div class="hero-sub-info animate-fadeup" style="--delay: 0.38s">
         <span>Acier · Aluminium · Inox</span>
         <span>5 RAL standard</span>
-        <span>Livraison 10 jours</span>
-        <span>France entière</span>
+        <span>Livraison en France sous 10 jours</span>
       </div>
       <!-- Boutons produits -->
       <div class="hero-btns-v3 animate-fadeup" style="--delay: 0.45s">
         <a href="couvertines.html" class="hero-btn-v3">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           <strong>Nos couvertines</strong>
-          <span class="hero-btn-v3-arrow" aria-hidden="true">›</span>
+          <span class="hero-btn-v3-arrow" aria-hidden="true">→</span>
         </a>
         <a href="pliage.html" class="hero-btn-v3">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           <strong>Nos pliages</strong>
-          <span class="hero-btn-v3-arrow" aria-hidden="true">›</span>
+          <span class="hero-btn-v3-arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
