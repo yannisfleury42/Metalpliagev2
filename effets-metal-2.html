@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Effets métal — série 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#080808;color:#eee;padding:32px;min-height:100vh}
+  h1{font-size:22px;margin-bottom:8px}
+  .intro{color:#888;font-size:14px;margin-bottom:32px;max-width:700px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:20px}
+  .card{background:#141414;border-radius:12px;padding:32px 28px;border:1px solid #222;text-align:center;position:relative;overflow:hidden}
+  .card.light{background:#e8e8e8}
+  .card.gradient{background:radial-gradient(circle at 50% 30%,#2a2a2a 0%,#0a0a0a 100%)}
+  .card .num{position:absolute;top:10px;left:14px;font-size:11px;color:#555;font-weight:600;letter-spacing:.15em}
+  .card .demo{font-size:72px;font-weight:900;letter-spacing:-.02em;line-height:1;margin:18px 0 8px}
+  .card .sub{font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:300;margin-top:6px}
+  .card .name{font-size:13px;color:#bbb;margin-top:22px;font-weight:600}
+  .card.light .name{color:#333}
+  .card .desc{font-size:12px;color:#666;margin-top:4px}
+  .card.light .desc{color:#888}
+
+  /* ───── 13. GUNMETAL (acier noir premium) ───── */
+  .fx-13{
+    background:linear-gradient(180deg,#4a4a52 0%,#2a2a30 30%,#15151a 55%,#3a3a42 75%,#5a5a62 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.8)) drop-shadow(0 -1px 0 rgba(255,255,255,.15));
+  }
+
+  /* ───── 14. CARBONE (mat noir + reflets ultra-subtils) ───── */
+  .fx-14{
+    background:
+      repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0,rgba(255,255,255,.04) 2px,transparent 2px,transparent 5px),
+      repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 2px,transparent 2px,transparent 5px),
+      linear-gradient(180deg,#252525 0%,#0a0a0a 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.9)) drop-shadow(0 -1px 0 rgba(255,255,255,.1));
+  }
+
+  /* ───── 15. ACIER INCANDESCENT (chauffé au rouge) ───── */
+  .fx-15{
+    background:linear-gradient(180deg,#fff8c0 0%,#ffaa20 25%,#ff4010 50%,#a01000 75%,#400000 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 0 12px rgba(255,80,0,.7)) drop-shadow(0 0 30px rgba(255,40,0,.4));
+  }
+
+  /* ───── 16. OR ROSE ───── */
+  .fx-16{
+    background:linear-gradient(180deg,#ffe0d0 0%,#e8a890 25%,#b07060 55%,#d89880 80%,#ffd8c4 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 6px rgba(80,40,30,.5));
+  }
+
+  /* ───── 17. NÉON ACIER (halo électrique) ───── */
+  .fx-17{
+    background:linear-gradient(180deg,#fff 0%,#a8d8ff 50%,#5080c0 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:
+      drop-shadow(0 0 6px rgba(80,160,255,.9))
+      drop-shadow(0 0 18px rgba(40,120,255,.5))
+      drop-shadow(0 0 36px rgba(0,100,255,.3));
+  }
+
+  /* ───── 18. ACIER DAMASSÉ (motif onde) ───── */
+  .fx-18{
+    background:
+      repeating-linear-gradient(15deg,
+        rgba(255,255,255,.18) 0,
+        rgba(255,255,255,.18) 2px,
+        rgba(0,0,0,.18) 2px,
+        rgba(0,0,0,.18) 4px,
+        rgba(255,255,255,.10) 4px,
+        rgba(255,255,255,.10) 7px,
+        rgba(0,0,0,.10) 7px,
+        rgba(0,0,0,.10) 10px),
+      linear-gradient(180deg,#b8b8b8 0%,#787878 50%,#a8a8a8 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));
+  }
+
+  /* ───── 19. ALU SABLÉ (mat, fine granulation) ───── */
+  .fx-19{
+    background:
+      radial-gradient(circle at 20% 30%,rgba(255,255,255,.15) 0,transparent 1px),
+      radial-gradient(circle at 60% 70%,rgba(255,255,255,.12) 0,transparent 1px),
+      radial-gradient(circle at 80% 20%,rgba(0,0,0,.15) 0,transparent 1px),
+      radial-gradient(circle at 35% 80%,rgba(0,0,0,.12) 0,transparent 1px),
+      linear-gradient(180deg,#d0d0d0 0%,#a0a0a0 100%);
+    background-size:6px 6px,7px 7px,8px 8px,5px 5px,100% 100%;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.55));
+  }
+
+  /* ───── 20. METAL EN MOUVEMENT (gradient rotatif animé) ───── */
+  .fx-20{
+    background:conic-gradient(from 0deg,#fff,#888,#fff,#444,#fff,#888,#fff);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    animation:rotate-conic 6s linear infinite;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.6));
+  }
+  @keyframes rotate-conic{
+    0%{background:conic-gradient(from 0deg,#fff,#888,#fff,#444,#fff,#888,#fff);
+       -webkit-background-clip:text;background-clip:text}
+    100%{background:conic-gradient(from 360deg,#fff,#888,#fff,#444,#fff,#888,#fff);
+         -webkit-background-clip:text;background-clip:text}
+  }
+
+  /* ───── 21. ACIER NERVURÉ (rainures verticales marquées) ───── */
+  .fx-21{
+    background:
+      repeating-linear-gradient(90deg,
+        rgba(255,255,255,.3) 0,
+        rgba(255,255,255,.3) 1px,
+        transparent 1px,
+        transparent 4px,
+        rgba(0,0,0,.25) 4px,
+        rgba(0,0,0,.25) 5px,
+        transparent 5px,
+        transparent 8px),
+      linear-gradient(180deg,#e0e0e0 0%,#909090 50%,#c8c8c8 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 2px 5px rgba(0,0,0,.6));
+  }
+
+  /* ───── 22. LASER CUT (contour lumineux bleu électrique) ───── */
+  .fx-22{
+    color:#0a0a0a;
+    text-shadow:
+      0 0 1px #0080ff,
+      0 0 4px #00aaff,
+      0 0 12px #0080ff,
+      0 0 24px rgba(0,128,255,.5),
+      1px 1px 0 #222;
+  }
+
+  /* ───── 23. ÉCLAT DIAGONAL (reflet de lumière qui coupe) ───── */
+  .fx-23{
+    background:linear-gradient(110deg,
+      #888 0%,
+      #888 35%,
+      #fff 45%,
+      #fff 50%,
+      #f8f8f8 55%,
+      #888 65%,
+      #888 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));
+  }
+
+  /* ───── 24. METAL FORGÉ MARTELÉ (texture irrégulière) ───── */
+  .fx-24{
+    background:
+      radial-gradient(ellipse at 25% 30%,rgba(255,255,255,.2) 0,transparent 30%),
+      radial-gradient(ellipse at 70% 60%,rgba(0,0,0,.2) 0,transparent 35%),
+      radial-gradient(ellipse at 50% 80%,rgba(255,255,255,.15) 0,transparent 30%),
+      radial-gradient(ellipse at 80% 20%,rgba(0,0,0,.18) 0,transparent 28%),
+      linear-gradient(180deg,#a8a8a8 0%,#707070 50%,#989898 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 3px 7px rgba(0,0,0,.65));
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Effets métal — série 2 (variations + originaux)</h1>
+<p class="intro">Effets plus tranchés ou texturés. Dis-moi le numéro à appliquer sur le hero, ou un mix lettres-par-lettres (ex : "ME en 17, T en 15, AL en 13").</p>
+
+<div class="grid">
+
+  <div class="card">
+    <span class="num">13</span>
+    <div class="demo fx-13">METAL</div>
+    <div class="sub fx-13">PLIAGE SUR MESURE</div>
+    <div class="name">Gunmetal</div>
+    <div class="desc">Acier noir premium — sobre, haut de gamme</div>
+  </div>
+
+  <div class="card">
+    <span class="num">14</span>
+    <div class="demo fx-14">METAL</div>
+    <div class="sub fx-14">PLIAGE SUR MESURE</div>
+    <div class="name">Carbone mat</div>
+    <div class="desc">Style automobile, trame carbone fine</div>
+  </div>
+
+  <div class="card">
+    <span class="num">15</span>
+    <div class="demo fx-15">METAL</div>
+    <div class="sub fx-15">PLIAGE SUR MESURE</div>
+    <div class="name">Acier incandescent</div>
+    <div class="desc">Sortie de forge, rouge chauffé + halo</div>
+  </div>
+
+  <div class="card">
+    <span class="num">16</span>
+    <div class="demo fx-16">METAL</div>
+    <div class="sub fx-16">PLIAGE SUR MESURE</div>
+    <div class="name">Or rose</div>
+    <div class="desc">Plus chaleureux que l'or jaune</div>
+  </div>
+
+  <div class="card">
+    <span class="num">17</span>
+    <div class="demo fx-17">METAL</div>
+    <div class="sub fx-17">PLIAGE SUR MESURE</div>
+    <div class="name">Néon acier</div>
+    <div class="desc">Acier + halo bleu électrique, futuriste</div>
+  </div>
+
+  <div class="card">
+    <span class="num">18</span>
+    <div class="demo fx-18">METAL</div>
+    <div class="sub fx-18">PLIAGE SUR MESURE</div>
+    <div class="name">Acier damassé</div>
+    <div class="desc">Motif ondulé type lame damas</div>
+  </div>
+
+  <div class="card">
+    <span class="num">19</span>
+    <div class="demo fx-19">METAL</div>
+    <div class="sub fx-19">PLIAGE SUR MESURE</div>
+    <div class="name">Alu sablé</div>
+    <div class="desc">Granulation fine, très mat</div>
+  </div>
+
+  <div class="card">
+    <span class="num">20</span>
+    <div class="demo fx-20">METAL</div>
+    <div class="sub fx-20">PLIAGE SUR MESURE</div>
+    <div class="name">Métal rotatif (animé)</div>
+    <div class="desc">Reflet conique qui tourne</div>
+  </div>
+
+  <div class="card">
+    <span class="num">21</span>
+    <div class="demo fx-21">METAL</div>
+    <div class="sub fx-21">PLIAGE SUR MESURE</div>
+    <div class="name">Acier nervuré</div>
+    <div class="desc">Rainures verticales marquées — graphique</div>
+  </div>
+
+  <div class="card gradient">
+    <span class="num">22</span>
+    <div class="demo fx-22">METAL</div>
+    <div class="sub fx-22">PLIAGE SUR MESURE</div>
+    <div class="name">Laser cut</div>
+    <div class="desc">Contour bleu lumineux, découpe à chaud</div>
+  </div>
+
+  <div class="card">
+    <span class="num">23</span>
+    <div class="demo fx-23">METAL</div>
+    <div class="sub fx-23">PLIAGE SUR MESURE</div>
+    <div class="name">Éclat diagonal</div>
+    <div class="desc">Reflet net en biais — net, moderne</div>
+  </div>
+
+  <div class="card">
+    <span class="num">24</span>
+    <div class="demo fx-24">METAL</div>
+    <div class="sub fx-24">PLIAGE SUR MESURE</div>
+    <div class="name">Métal forgé martelé</div>
+    <div class="desc">Texture irrégulière, artisanal</div>
+  </div>
+
+</div>
+
+</body>
+</html>

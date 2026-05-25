@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conditions Générales de Vente de Metal Pliage : modalités de commande, prix HT, délais de fabrication, livraison, retours et droit de rétractation.">
   <title>Conditions Générales de Vente — Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,6 +33,31 @@
     .legal-page li { margin-bottom: 0.3rem; }
     .legal-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
   </style>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://metal-pliage.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Conditions Générales de Vente", "item": "https://metal-pliage.fr/cgv.html" }
+    ]
+  }
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
   <div id="scroll-progress" aria-hidden="true"></div>
@@ -43,7 +69,7 @@
       </div>
       <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
         <li class="nav-item"><a href="pliage.html">Pliage</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
@@ -124,6 +150,7 @@
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="livraison-retours.html">Livraison &amp; Retours</a>
       </div>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. &middot; SARL au capital de 5 000 € &middot; RCS Saint-Étienne 844 258 178 &middot; SIRET 844 258 178 00010 &middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

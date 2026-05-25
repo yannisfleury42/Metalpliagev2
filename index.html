@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Fabricant français de tôles acier, inox, couvertines et profilés pliés sur mesure. Configurateur en ligne, finitions RAL, livraison 10 jours.">
   <meta name="keywords" content="couvertine acier, pliage sur mesure, inox, tôle acier, fabricant français, RAL 7016, profilé métallique">
-  <meta property="og:title" content="Metal Pliage — Acier de Précision Sur Mesure">
+  <meta property="og:title" content="Fabrication et livraison de couvertines et pliages sur mesure | Metal Pliage">
   <meta property="og:description" content="Configurez et commandez vos pièces acier sur mesure. Fabrication française, 5 finitions RAL standard + autres sur devis, livraison sous 10 jours.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Metal Pliage — Acier Sur Mesure">
   <meta name="twitter:description" content="Pliage acier, couvertines, inox. Fabricant français. Commandez en ligne.">
-  <title>Metal Pliage — Fabrication Française d'Acier Sur Mesure</title>
+  <title>Fabrication et livraison de couvertines et pliages sur mesure | Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,6 +29,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <!-- Preload hero (LCP) -->
+  <link rel="preload" as="image" href="assets/photos/metal-pliage-atelier-01.webp" fetchpriority="high">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
@@ -71,6 +73,13 @@
     "currenciesAccepted": "EUR",
     "paymentAccepted": "Card, Bank Transfer",
     "areaServed": { "@type": "Country", "name": "France" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "3",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Produits acier sur mesure",
@@ -80,6 +89,15 @@
         { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Inox 304/316L" } }
       ]
     }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Metal Pliage",
+    "url": "https://metal-pliage.fr",
+    "description": "Fabricant français de couvertines et profilés acier pliés sur mesure"
   }
   </script>
   <style>
@@ -243,93 +261,137 @@
     }
 
     /* ═══════════════════════════════════════════
-       HERO V2 — module recentré (slideshow original conservé)
+       HERO V3 — flush left, module cible + titre blanc
     ═══════════════════════════════════════════ */
-    .hero-content.hero-content--split {
+    /* Hero centré */
+    #hero { justify-content: center; }
+
+    .hero-content.hero-content--v3 {
       position: relative;
       z-index: 2;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 3rem clamp(1.5rem, 5vw, 4rem);
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 680px;
       width: 100%;
+      text-align: center;
+      align-items: center;
+      margin: 0 auto;
     }
-    .hero-content--split .hero-main { text-align: left; }
-    .hero-content--split h1 {
-      text-align: left;
-      margin-bottom: 1.4rem;
-      font-size: clamp(2.6rem, 7vw, 6rem);
+    /* Module "sur mesure / cible" */
+    .hero-target-module {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1.6rem;
     }
-
-    .hero-sub-v2 {
-      font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-      color: var(--text-secondary);
-      max-width: 600px;
-      line-height: 1.55;
-      font-weight: 400;
-      margin-bottom: 1.8rem;
-    }
-    .hero-orange { color: var(--accent); font-weight: 600; }
-
-    .hero-content--split .hero-cta-group {
-      justify-content: flex-start;
-    }
-
-    /* Carte glassmorphism D3 (à droite du hero) */
-    .hero-glass-card {
-      position: relative;
-      padding: 1.6rem 1.8rem;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px;
-      max-width: 340px;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-    }
-    .hero-glass-card::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 20px;
-      width: 36px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-    .hero-glass-eyebrow {
-      display: block;
-      font-family: var(--font-head);
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.32em;
+    .hero-target-label {
+      font-size: 9px;
+      letter-spacing: 0.34em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
+      color: rgba(255,255,255,0.38);
+      font-weight: 600;
     }
-    .hero-glass-line {
+    .hero-target-checks {
+      display: flex;
+      gap: 1.4rem;
+    }
+    .hero-target-check {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 0;
-      font-size: 13.5px;
-      color: var(--text-secondary);
+      font-size: 27px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
     }
-    .hero-glass-line svg { color: var(--accent); flex-shrink: 0; }
-    .hero-glass-line strong { color: var(--text-primary); font-weight: 600; }
+    .hero-check-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-check-icon svg { color: rgba(255,255,255,0.75); }
+    /* Titre blanc pur */
+    .hero-title-v3 {
+      font-size: clamp(1.9rem, 3.6vw, 3rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.022em;
+      color: #fff;
+      margin-bottom: 0.9rem;
+    }
+    /* Sous-infos horizontales */
+    .hero-sub-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+      font-size: 18px;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.03em;
+    }
+    .hero-sub-info span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+    .hero-sub-info span + span::before {
+      content: '·';
+      margin-right: 1rem;
+      color: rgba(255,255,255,0.18);
+      font-size: 15px;
+    }
+    /* Boutons produits — encadrement orange ×2 */
+    .hero-btns-v3 {
+      display: flex;
+      flex-direction: row;
+      gap: 0.9rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-btn-v3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 1.15rem 2rem;
+      background: transparent;
+      border: 2px solid #FF6B35;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border-radius: 3px;
+      text-decoration: none;
+      min-width: 260px;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.28s;
+    }
+    .hero-btn-v3::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #FF6B35;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      z-index: 0;
+    }
+    .hero-btn-v3:hover::before { transform: scaleX(1); }
+    .hero-btn-v3 > * { position: relative; z-index: 1; }
+    .hero-btn-v3 svg { color: #FF6B35; flex-shrink: 0; transition: color 0.28s; }
+    .hero-btn-v3:hover svg { color: #fff; }
+    .hero-btn-v3 strong { flex: 1; }
+    .hero-btn-v3-arrow { color: rgba(255,107,53,0.7); font-size: 1.1rem; transition: color 0.28s, transform 0.28s; }
+    .hero-btn-v3:hover .hero-btn-v3-arrow { color: #fff; transform: translateX(5px); }
 
-    @media (max-width: 900px) {
-      .hero-content.hero-content--split {
-        grid-template-columns: 1fr;
-        gap: 2.2rem;
-        text-align: center;
-      }
-      .hero-content--split .hero-main { text-align: center; }
-      .hero-content--split h1 { text-align: center; }
-      .hero-content--split .hero-cta-group { justify-content: center; }
-      .hero-glass-card { max-width: 100%; }
+    @media (max-width: 700px) {
+      .hero-content.hero-content--v3 { max-width: 100%; padding: 0 1.2rem; }
+      .hero-title-v3 { font-size: clamp(2rem, 8vw, 2.8rem); }
     }
 
     /* ═══════════════════════════════════════════
@@ -442,10 +504,26 @@
       .diptyque-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
-  <div id="scroll-progress" aria-hidden="true"></div>
+  <!-- scroll-progress retiré -->
 
   <!-- PRELOADER : injecté par js/preloader.js -->
 
@@ -469,7 +547,7 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
         <li class="nav-item"><a href="pliage.html">Pliage</a></li>
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
@@ -509,39 +587,46 @@
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-ambient-glow" aria-hidden="true"></div>
-    <div class="hero-content hero-content--split">
-      <div class="hero-main">
-        <h1 class="animate-fadeup brushed-aluminum" style="--delay: 0.15s">METAL PLIAGE</h1>
-        <p class="hero-sub-v2 animate-fadeup" style="--delay: 0.3s">
-          <span class="hero-orange">Couvertines</span> et <span class="hero-orange">pliages</span> sur mesure.<br>
-          Découvrez nos produits et configurez votre commande quand vous êtes prêt.
-        </p>
-        <div class="hero-cta-group animate-fadeup" style="--delay: 0.45s">
-          <a href="#diptyque" class="btn-hero-primary">
-            Accéder aux produits
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-          </a>
+    <div class="hero-content hero-content--v3">
+      <!-- Module cible : particulier + professionnel -->
+      <div class="hero-target-module animate-fadeup" style="--delay: 0.15s">
+        <div class="hero-target-checks">
+          <div class="hero-target-check">
+            <div class="hero-check-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Particulier
+          </div>
+          <div class="hero-target-check">
+            <div class="hero-check-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            Professionnel
+          </div>
         </div>
       </div>
-      <aside class="hero-glass-card animate-fadeup" style="--delay: 0.6s" aria-label="À qui s'adresse ce site">
-        <span class="hero-glass-eyebrow">Sur mesure · sans engagement</span>
-        <div class="hero-glass-line">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          <span><strong>Particulier</strong> — achat en ligne</span>
-        </div>
-        <div class="hero-glass-line">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          <span><strong>Professionnel</strong> — gros volume B2B</span>
-        </div>
-        <div class="hero-glass-line">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          <span><strong>Tarif dégressif</strong> selon quantité</span>
-        </div>
-      </aside>
+      <!-- Titre principal -->
+      <h1 class="hero-title-v3 animate-fadeup" style="--delay: 0.3s">Fabrication sur mesure, <em>couvertine et pliage</em></h1>
+      <!-- Sous-infos clés -->
+      <div class="hero-sub-info animate-fadeup" style="--delay: 0.38s">
+        <span>Acier · Aluminium · Inox</span>
+        <span>5 RAL standard</span>
+        <span>Livraison en France sous 10 jours</span>
+      </div>
+      <!-- Boutons produits -->
+      <div class="hero-btns-v3 animate-fadeup" style="--delay: 0.45s">
+        <a href="couvertines.html" class="hero-btn-v3">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <strong>Nos couvertines</strong>
+          <span class="hero-btn-v3-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="pliage.html" class="hero-btn-v3">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <strong>Nos pliages</strong>
+          <span class="hero-btn-v3-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
-    <a href="#diptyque" class="hero-scroll-hint" aria-label="Découvrir les produits">
-      <span></span>
-    </a>
   </section>
 
   <!-- ═══════════════════════════════════════════
@@ -549,9 +634,8 @@
   ═══════════════════════════════════════════ -->
   <section class="diptyque-section" id="diptyque" aria-labelledby="diptyque-title">
     <div class="diptyque-header">
-      <span class="section-label">CHOISISSEZ VOTRE PRODUIT</span>
-      <h2 id="diptyque-title">DEUX FAMILLES,<br>UN MÊME SAVOIR-FAIRE</h2>
-      <p>Découvrez nos produits, comparez les solutions et configurez votre commande quand vous êtes prêt.</p>
+      <h2 id="diptyque-title">CE QUE NOUS FABRIQUONS</h2>
+      <p>Couvertines et pliages sur mesure, fabriqués en France et livrés partout en France.</p>
     </div>
     <div class="diptyque-grid">
 
@@ -667,6 +751,100 @@
   </section>
 
 
+  <!-- ── BANDE TRUST : RÉALISATIONS & ATELIER ── -->
+  <section style="padding:2.5rem 0;background:var(--bg-base);border-top:1px solid var(--border);">
+    <div style="max-width:var(--max-w,1200px);margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;">
+      <a href="realisations.html" style="display:inline-flex;align-items:center;gap:0.55rem;padding:0.7rem 1.4rem;border:1px solid var(--border);border-radius:6px;color:var(--text-primary);text-decoration:none;font-size:0.9rem;font-weight:500;letter-spacing:0.04em;transition:border-color .2s,color .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-primary)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Voir nos réalisations
+      </a>
+      <a href="atelier.html" style="display:inline-flex;align-items:center;gap:0.55rem;padding:0.7rem 1.4rem;border:1px solid var(--border);border-radius:6px;color:var(--text-primary);text-decoration:none;font-size:0.9rem;font-weight:500;letter-spacing:0.04em;transition:border-color .2s,color .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-primary)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Découvrir l'atelier
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION AVIS CLIENTS
+  ═══════════════════════════════════════════ -->
+  <section aria-labelledby="avis-home-title" style="padding:clamp(48px,7vw,96px) 0;background:var(--bg-surface);border-top:1px solid var(--border);">
+    <div style="max-width:var(--max-w,1200px);margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);">
+      <div style="text-align:center;margin-bottom:3rem;">
+        <span class="section-label">— ILS NOUS FONT CONFIANCE —</span>
+        <h2 id="avis-home-title" style="font-size:clamp(1.4rem,3vw,2rem);font-weight:300;letter-spacing:-0.01em;margin:0.5rem 0 0.6rem;">
+          Avis de nos clients
+        </h2>
+        <!-- Note globale -->
+        <div style="display:inline-flex;align-items:center;gap:0.7rem;margin-top:0.5rem;">
+          <div style="display:flex;gap:2px;" aria-label="5 étoiles">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <span style="font-size:0.9rem;font-weight:600;color:var(--text-primary);">5 / 5</span>
+          <span style="font-size:0.78rem;color:var(--text-muted);">Google Avis</span>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;">
+
+        <blockquote style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.4rem;margin:0;">
+          <div style="display:flex;gap:2px;margin-bottom:0.8rem;" aria-label="5 étoiles">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p style="font-size:0.87rem;line-height:1.65;color:var(--text-secondary);font-style:italic;margin:0 0 0.9rem;">
+            "Couvertines impeccables, délai respecté. Le configurateur en ligne est vraiment pratique — j'ai pu tout régler depuis chez moi sans appeler."
+          </p>
+          <cite style="font-size:0.72rem;color:var(--text-muted);font-style:normal;">Thierry M. · Particulier, Lyon</cite>
+        </blockquote>
+
+        <blockquote style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.4rem;margin:0;">
+          <div style="display:flex;gap:2px;margin-bottom:0.8rem;" aria-label="5 étoiles">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p style="font-size:0.87rem;line-height:1.65;color:var(--text-secondary);font-style:italic;margin:0 0 0.9rem;">
+            "Artisan maçon, je cherchais un fournisseur de couvertines fiable. Metal Pliage : réactivité, prix compétitifs et qualité de pliage irréprochable."
+          </p>
+          <cite style="font-size:0.72rem;color:var(--text-muted);font-style:normal;">Pascal R. · Artisan, Rhône-Alpes</cite>
+        </blockquote>
+
+        <blockquote style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.4rem;margin:0;">
+          <div style="display:flex;gap:2px;margin-bottom:0.8rem;" aria-label="5 étoiles">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB347" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p style="font-size:0.87rem;line-height:1.65;color:var(--text-secondary);font-style:italic;margin:0 0 0.9rem;">
+            "24 ml de couvertines pour un acrotère de toiture-terrasse. Rendu nickel, coupes propres, coloris RAL identique à la menuiserie. Recommande."
+          </p>
+          <cite style="font-size:0.72rem;color:var(--text-muted);font-style:normal;">Nathalie B. · Maître d'œuvre, Grenoble</cite>
+        </blockquote>
+
+      </div>
+
+      <p style="text-align:center;margin-top:1.8rem;">
+        <a href="https://g.page/r/metal-pliage/review" target="_blank" rel="noopener noreferrer"
+           class="btn-outline" style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.78rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Laisser un avis Google
+        </a>
+      </p>
+    </div>
+  </section>
+
   <!-- ═══════════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════════ -->
@@ -678,12 +856,10 @@
       </div>
       <nav class="footer-nav" aria-label="Liens de bas de page">
         <ul role="list">
-          <li><a href="#diptyque">Produits</a></li>
           <li><a href="couvertines.html">Couvertines</a></li>
           <li><a href="pliage.html">Pliage</a></li>
-          <li><a href="#fabrication">Savoir-Faire</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
-          <li><a href="contact.html">Devis</a></li>
+          <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
       </nav>
       <address class="footer-contact">
@@ -700,6 +876,7 @@
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="livraison-retours.html">Livraison &amp; Retours</a>
       </div>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. &middot; SARL au capital de 5 000 &#8364; &middot; RCS Saint-&#201;tienne 844 258 178 &middot; SIRET 844 258 178 00010 &middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Talon embout — itération 7 (correction "intérieur" sur style ITER 5)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0d0d0d;color:#e8e8e8;font-family:'Inter',sans-serif}
+  body{padding:32px;min-height:100vh}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .intro{color:#888;font-size:13px;max-width:920px;line-height:1.6;margin-bottom:24px}
+  .intro strong{color:#FF7040}
+  .grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:1180px}
+  .card{background:#141414;border:1px solid #222;border-radius:14px;padding:22px;position:relative}
+  .card .badge{position:absolute;top:14px;right:18px;font-size:10px;letter-spacing:0.22em;color:#FF7040;background:rgba(255,128,64,0.08);padding:4px 10px;border-radius:20px;font-weight:700}
+  .card.final .badge{color:#3FAB6E;background:rgba(63,171,110,0.1)}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:4px;color:#fff;letter-spacing:-.01em}
+  .card .sub{color:#888;font-size:12px;margin-bottom:14px}
+  .stage{background:#1e2630;border:1px solid #1a1a1a;padding:18px;border-radius:10px;display:flex;align-items:center;justify-content:center;min-height:340px}
+  .stage svg{display:block;width:100%;height:auto;max-height:380px}
+  .report{margin-top:14px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px 18px}
+  .report .r-title{font-size:10px;font-weight:800;letter-spacing:0.22em;color:#FFB347;margin-bottom:8px}
+  .report .r-title::before{content:"● ";color:#FFB347}
+  .report ul{margin:0;padding-left:18px;color:#bbb;font-size:12px;line-height:1.7}
+  .report ul li::marker{color:#FF7040}
+  .report .next{margin-top:10px;padding-top:10px;border-top:1px dashed #2a2a2a;color:#7BD5A0;font-size:12px;font-weight:600}
+  .report .next::before{content:"→ ";color:#3FAB6E;font-weight:800}
+  .card.final .report .r-title{color:#3FAB6E}
+  .card.final .report .r-title::before{color:#3FAB6E}
+</style>
+</head>
+<body>
+
+<h1>Talon embout — itération 7 (correction "intérieur" sur style ITER 5)</h1>
+<p class="intro">
+  Sur ITER 5 le L semblait posé <em>sur</em> la couvertine. Correction : le L est <strong>une
+  cornière qui s'insère dans le U</strong>. Sa face longue devient l'embout visible (perpendiculaire
+  à la longueur), sa face courte glisse à l'intérieur. Trois itérations en partant du style ITER 5.
+</p>
+
+<div class="grid">
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- ITER 7 V1 — Ghost dans le creux + labels                  -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">ITER 7 · V1</span>
+    <h2>Ghost dans le creux + faces nommées</h2>
+    <p class="sub">Même mise en scène qu'ITER 5. On ajoute (1) un fantôme du talon à sa position d'arrivée DANS le creux, (2) les labels "face visible" et "retour intérieur" sur la cornière en transit.</p>
+    <div class="stage">
+      <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v1-muret" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a5aeb1"/><stop offset="100%" stop-color="#7a8388"/>
+          </linearGradient>
+          <linearGradient id="v1-muret-side" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#7a8388"/><stop offset="100%" stop-color="#525a5e"/>
+          </linearGradient>
+          <linearGradient id="v1-cov" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5e8aab"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <linearGradient id="v1-cov-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a5a78"/><stop offset="100%" stop-color="#2A4858"/>
+          </linearGradient>
+          <linearGradient id="v1-shine-top" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <linearGradient id="v1-shine-front" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.25)"/>
+          </linearGradient>
+          <linearGradient id="v1-talon" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7AA8C8"/><stop offset="100%" stop-color="#5E8AAA"/>
+          </linearGradient>
+          <linearGradient id="v1-talon-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4A7090"/><stop offset="100%" stop-color="#3A5A78"/>
+          </linearGradient>
+          <radialGradient id="v1-ground-shadow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.5)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+          <filter id="v1-drop"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/></filter>
+        </defs>
+
+        <!-- Ombre portée -->
+        <ellipse cx="220" cy="288" rx="220" ry="7" fill="url(#v1-ground-shadow)" opacity="0.7"/>
+
+        <!-- ═══ MURET ═══ -->
+        <rect x="40" y="160" width="340" height="120" fill="url(#v1-muret)" stroke="#4a5358" stroke-width="0.5"/>
+        <polygon points="380,160 410,130 410,250 380,280" fill="url(#v1-muret-side)"/>
+        <line x1="380" y1="160" x2="380" y2="280" stroke="#4a5358" stroke-width="0.5"/>
+        <line x1="380" y1="160" x2="410" y2="130" stroke="#3e4448" stroke-width="0.4"/>
+        <line x1="40" y1="195" x2="380" y2="195" stroke="#5a6266" stroke-width="0.4"/>
+        <line x1="40" y1="235" x2="380" y2="235" stroke="#5a6266" stroke-width="0.4"/>
+        <line x1="100" y1="160" x2="100" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <line x1="200" y1="160" x2="200" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <line x1="300" y1="160" x2="300" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <text x="210" y="263" text-anchor="middle" font-size="9.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.5)" letter-spacing="0.22em" font-weight="600">SUPPORT</text>
+
+        <!-- ═══ COUVERTINE ═══ -->
+        <polygon points="60,150 405,150 435,122 90,122" fill="url(#v1-cov)" filter="url(#v1-drop)"/>
+        <polygon points="60,150 405,150 435,122 90,122" fill="url(#v1-shine-top)" pointer-events="none"/>
+        <rect x="60" y="150" width="345" height="44" fill="url(#v1-cov-dark)"/>
+        <rect x="60" y="150" width="345" height="44" fill="url(#v1-shine-front)" pointer-events="none"/>
+        <line x1="60" y1="150" x2="405" y2="150" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+        <text x="200" y="180" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.92)" letter-spacing="0.18em" font-weight="700">COUVERTINE</text>
+
+        <!-- ═══ CREUX OUVERT ═══ -->
+        <polygon points="405,150 435,122 435,166 405,194" fill="#0d1218"/>
+        <polygon points="405,150 435,122 433,124 408,153 408,191 405,194" fill="url(#v1-cov-dark)" opacity="0.9"/>
+        <polygon points="435,166 433,164 408,191 408,164" fill="url(#v1-cov-dark)" opacity="0.5"/>
+
+        <!-- ▸ FANTÔME DU TALON INSÉRÉ (face visible remplit le creux) -->
+        <polygon points="405,150 435,122 435,166 405,194" fill="url(#v1-talon)" opacity="0.55"/>
+        <polygon points="405,150 435,122 435,166 405,194" fill="none" stroke="#FF7040" stroke-width="1.4" stroke-dasharray="3 2"/>
+        <text x="420" y="161" text-anchor="middle" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,128,64,0.95)" font-weight="700">talon</text>
+        <text x="420" y="170" text-anchor="middle" font-size="6" font-family="Inter,sans-serif" fill="rgba(255,128,64,0.75)">en place</text>
+
+        <!-- ═══ TALON EN TRANSIT (style ITER 5 conservé) ═══ -->
+        <polygon points="500,124 533,124 563,96 530,96" fill="url(#v1-talon)" filter="url(#v1-drop)"/>
+        <polygon points="500,124 533,124 563,96 530,96" fill="rgba(255,255,255,0.22)" pointer-events="none"/>
+        <rect x="500" y="124" width="33" height="3" fill="url(#v1-talon-dark)"/>
+        <rect x="530" y="127" width="3" height="44" fill="url(#v1-talon)"/>
+        <polygon points="533,124 563,96 563,140 533,168" fill="url(#v1-talon-dark)"/>
+        <path d="M 500 124 L 533 124 L 533 171 L 530 171 L 530 127 L 500 127 Z"
+              fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="miter" opacity="0.85"/>
+
+        <!-- ▸ LABELS DES FACES DU L -->
+        <!-- Label "face visible" pointant vers la branche verticale -->
+        <line x1="535" y1="150" x2="585" y2="170" stroke="rgba(255,180,90,0.7)" stroke-width="0.6"/>
+        <circle cx="535" cy="150" r="2" fill="#FFB347"/>
+        <text x="588" y="172" font-size="8" font-family="Inter,sans-serif" fill="#FFB347" font-weight="800">face visible</text>
+        <text x="588" y="181" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.7)">(perpendiculaire</text>
+        <text x="588" y="189" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.7)">à la longueur)</text>
+
+        <!-- Label "retour intérieur" pointant vers la branche horizontale -->
+        <line x1="515" y1="110" x2="495" y2="90" stroke="rgba(91,196,232,0.7)" stroke-width="0.6"/>
+        <circle cx="515" cy="110" r="2" fill="#5BC4E8"/>
+        <text x="492" y="86" text-anchor="end" font-size="8" font-family="Inter,sans-serif" fill="#5BC4E8" font-weight="800">retour intérieur</text>
+        <text x="492" y="95" text-anchor="end" font-size="7" font-family="Inter,sans-serif" fill="rgba(91,196,232,0.7)">(glisse DANS le U)</text>
+
+        <!-- ═══ FLÈCHE D'ASSEMBLAGE ═══ -->
+        <path d="M 495 150 Q 470 158 445 162" fill="none" stroke="#FF7040" stroke-width="1.2" stroke-dasharray="5 3"/>
+        <path d="M 445 162 L 425 165" fill="none" stroke="#FF7040" stroke-width="2.2"/>
+        <polygon points="425,165 432,162 432,169" fill="#FF7040"/>
+
+        <!-- ═══ BANNIÈRE ═══ -->
+        <rect x="445" y="55" width="145" height="32" rx="4" fill="#FF7040"/>
+        <text x="517" y="71" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="#fff" font-weight="800" letter-spacing="0.06em">À INSÉRER DANS LE U</text>
+        <text x="517" y="82" text-anchor="middle" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.85)" letter-spacing="0.04em">cornière en L (talon embout)</text>
+
+        <!-- Titre -->
+        <text x="300" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">TALON EMBOUT</text>
+        <text x="300" y="48" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em" font-weight="600">cornière qui s'insère dans le canal U de la couvertine</text>
+      </svg>
+    </div>
+
+    <div class="report">
+      <div class="r-title">RAPPORT CLIENT — V1</div>
+      <ul>
+        <li>L'idée du <strong>fantôme orange dans le creux</strong> marche : on voit la pièce arriver à sa position. Mais il est encore <strong>trop discret</strong> (opacité 55%), il se perd dans le dégradé du creux.</li>
+        <li>Les labels "face visible" et "retour intérieur" éclairent l'orientation du L — bon point — mais ils <strong>débordent du cadre à droite</strong> et le label "face visible" pointe à 90° de l'arête réelle, ce qui désaligne l'œil.</li>
+        <li>La bannière dit "À INSÉRER DANS LE U" mais visuellement, le talon est placé <strong>au-dessus de la couvertine</strong> (y=96 à 171 vs creux y=122 à 194) — on relit "posé sur" malgré la consigne textuelle.</li>
+        <li>Aucun indicateur du <strong>déplacement</strong> (trajectoire, lignes guides) qui relie chaque coin du L en transit au coin correspondant dans le creux.</li>
+      </ul>
+      <div class="next">v2 : descendre le talon à la hauteur du creux, renforcer le fantôme, ajouter des lignes de construction coin-à-coin pour la trajectoire.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- ITER 7 V2 — Alignement vertical + lignes de construction  -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">ITER 7 · V2</span>
+    <h2>Talon descendu au niveau du creux + lignes de construction</h2>
+    <p class="sub">Le L est repositionné pile à la hauteur du creux (plus de "sur le dessus"). Les coins du L en transit sont reliés aux coins du fantôme par des lignes de construction. Fantôme renforcé.</p>
+    <div class="stage">
+      <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v2-muret" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a5aeb1"/><stop offset="100%" stop-color="#7a8388"/>
+          </linearGradient>
+          <linearGradient id="v2-muret-side" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#7a8388"/><stop offset="100%" stop-color="#525a5e"/>
+          </linearGradient>
+          <linearGradient id="v2-cov" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5e8aab"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <linearGradient id="v2-cov-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a5a78"/><stop offset="100%" stop-color="#2A4858"/>
+          </linearGradient>
+          <linearGradient id="v2-shine-top" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <linearGradient id="v2-shine-front" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.25)"/>
+          </linearGradient>
+          <linearGradient id="v2-talon" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7AA8C8"/><stop offset="100%" stop-color="#5E8AAA"/>
+          </linearGradient>
+          <linearGradient id="v2-talon-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4A7090"/><stop offset="100%" stop-color="#3A5A78"/>
+          </linearGradient>
+          <radialGradient id="v2-ground-shadow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.5)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+          <filter id="v2-drop"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/></filter>
+        </defs>
+
+        <ellipse cx="220" cy="288" rx="220" ry="7" fill="url(#v2-ground-shadow)" opacity="0.7"/>
+
+        <!-- MURET -->
+        <rect x="40" y="160" width="340" height="120" fill="url(#v2-muret)" stroke="#4a5358" stroke-width="0.5"/>
+        <polygon points="380,160 410,130 410,250 380,280" fill="url(#v2-muret-side)"/>
+        <line x1="380" y1="160" x2="380" y2="280" stroke="#4a5358" stroke-width="0.5"/>
+        <line x1="380" y1="160" x2="410" y2="130" stroke="#3e4448" stroke-width="0.4"/>
+        <line x1="40" y1="195" x2="380" y2="195" stroke="#5a6266" stroke-width="0.4"/>
+        <line x1="40" y1="235" x2="380" y2="235" stroke="#5a6266" stroke-width="0.4"/>
+        <line x1="100" y1="160" x2="100" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <line x1="200" y1="160" x2="200" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <line x1="300" y1="160" x2="300" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <text x="210" y="263" text-anchor="middle" font-size="9.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.5)" letter-spacing="0.22em" font-weight="600">SUPPORT</text>
+
+        <!-- COUVERTINE -->
+        <polygon points="60,150 405,150 435,122 90,122" fill="url(#v2-cov)" filter="url(#v2-drop)"/>
+        <polygon points="60,150 405,150 435,122 90,122" fill="url(#v2-shine-top)" pointer-events="none"/>
+        <rect x="60" y="150" width="345" height="44" fill="url(#v2-cov-dark)"/>
+        <rect x="60" y="150" width="345" height="44" fill="url(#v2-shine-front)" pointer-events="none"/>
+        <line x1="60" y1="150" x2="405" y2="150" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+        <text x="200" y="180" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.92)" letter-spacing="0.18em" font-weight="700">COUVERTINE</text>
+
+        <!-- CREUX -->
+        <polygon points="405,150 435,122 435,166 405,194" fill="#0d1218"/>
+        <polygon points="405,150 435,122 433,124 408,153 408,191 405,194" fill="url(#v2-cov-dark)" opacity="0.9"/>
+        <polygon points="435,166 433,164 408,191 408,164" fill="url(#v2-cov-dark)" opacity="0.5"/>
+
+        <!-- ▸ FANTÔME RENFORCÉ : 2 couches -->
+        <polygon points="405,150 435,122 435,166 405,194" fill="url(#v2-talon)" opacity="0.78"/>
+        <polygon points="405,150 435,122 435,166 405,194" fill="rgba(255,255,255,0.12)"/>
+        <polygon points="405,150 435,122 435,166 405,194" fill="none" stroke="#FF7040" stroke-width="1.6" stroke-dasharray="4 2"/>
+        <!-- Coins du fantôme marqués -->
+        <circle cx="405" cy="150" r="2.5" fill="#FF7040"/>
+        <circle cx="435" cy="122" r="2.5" fill="#FF7040"/>
+        <circle cx="435" cy="166" r="2.5" fill="#FF7040"/>
+        <circle cx="405" cy="194" r="2.5" fill="#FF7040"/>
+
+        <!-- ▸ TALON EN TRANSIT — descendu au niveau du creux -->
+        <!-- Recalcul : pour aligner verticalement avec le creux (y=122 à 194),
+             le L doit avoir sa branche verticale entre y=150 et y=194
+             (la face visible correspond à la branche verticale en profil) -->
+        <!-- Top de la branche horizontale -->
+        <polygon points="500,150 533,150 563,122 530,122" fill="url(#v2-talon)" filter="url(#v2-drop)"/>
+        <polygon points="500,150 533,150 563,122 530,122" fill="rgba(255,255,255,0.22)" pointer-events="none"/>
+        <!-- Tranche front de la branche horizontale -->
+        <rect x="500" y="150" width="33" height="3" fill="url(#v2-talon-dark)"/>
+        <!-- Branche verticale (face cap en profil) -->
+        <rect x="530" y="153" width="3" height="41" fill="url(#v2-talon)"/>
+        <!-- Côté droit perspective branche verticale -->
+        <polygon points="533,150 563,122 563,166 533,194" fill="url(#v2-talon-dark)"/>
+        <!-- Outline L noir -->
+        <path d="M 500 150 L 533 150 L 533 194 L 530 194 L 530 153 L 500 153 Z"
+              fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="miter" opacity="0.85"/>
+
+        <!-- Coins du L en transit (correspondance) -->
+        <circle cx="500" cy="150" r="2.5" fill="#FFB347"/>
+        <circle cx="533" cy="150" r="2.5" fill="#FFB347"/>
+        <circle cx="533" cy="194" r="2.5" fill="#FFB347"/>
+        <circle cx="563" cy="122" r="2.5" fill="#FFB347"/>
+
+        <!-- ▸ LIGNES DE CONSTRUCTION coin-à-coin -->
+        <line x1="500" y1="150" x2="405" y2="150" stroke="rgba(255,180,90,0.4)" stroke-width="0.5" stroke-dasharray="3 2"/>
+        <line x1="563" y1="122" x2="435" y2="122" stroke="rgba(255,180,90,0.4)" stroke-width="0.5" stroke-dasharray="3 2"/>
+        <line x1="533" y1="194" x2="405" y2="194" stroke="rgba(255,180,90,0.4)" stroke-width="0.5" stroke-dasharray="3 2"/>
+
+        <!-- ▸ LABELS DES FACES (repositionnés sous la pièce, pas hors-cadre) -->
+        <line x1="531" y1="172" x2="555" y2="220" stroke="rgba(255,180,90,0.7)" stroke-width="0.6"/>
+        <circle cx="531" cy="172" r="2" fill="#FFB347"/>
+        <text x="555" y="232" text-anchor="middle" font-size="8.5" font-family="Inter,sans-serif" fill="#FFB347" font-weight="800">face visible</text>
+        <text x="555" y="242" text-anchor="middle" font-size="7" font-family="Inter,sans-serif" fill="rgba(255,200,130,0.7)">ferme le bout</text>
+
+        <line x1="515" y1="138" x2="520" y2="115" stroke="rgba(91,196,232,0.7)" stroke-width="0.6"/>
+        <circle cx="515" cy="138" r="2" fill="#5BC4E8"/>
+        <text x="520" y="110" text-anchor="middle" font-size="8.5" font-family="Inter,sans-serif" fill="#5BC4E8" font-weight="800">retour intérieur</text>
+        <text x="520" y="100" text-anchor="middle" font-size="7" font-family="Inter,sans-serif" fill="rgba(91,196,232,0.7)">glisse dans le U</text>
+
+        <!-- ▸ FLÈCHE D'INSERTION horizontale, à mi-hauteur du creux -->
+        <path d="M 498 172 L 445 172" stroke="#FF7040" stroke-width="2.5"/>
+        <polygon points="445,172 455,166 455,178" fill="#FF7040"/>
+
+        <!-- Bannière -->
+        <rect x="445" y="55" width="145" height="32" rx="4" fill="#FF7040"/>
+        <text x="517" y="71" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="#fff" font-weight="800" letter-spacing="0.06em">À INSÉRER DANS LE U</text>
+        <text x="517" y="82" text-anchor="middle" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.85)" letter-spacing="0.04em">cornière en L (talon embout)</text>
+
+        <text x="300" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">TALON EMBOUT</text>
+        <text x="300" y="48" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em" font-weight="600">le L s'insère dans le canal U — la face longue ferme le bout</text>
+      </svg>
+    </div>
+
+    <div class="report">
+      <div class="r-title">RAPPORT CLIENT — V2</div>
+      <ul>
+        <li>Le talon est maintenant <strong>aligné verticalement avec le creux</strong> (y=150-194) — on lit enfin "il va rentrer DEDANS" et plus "posé dessus". Gros progrès.</li>
+        <li>Le fantôme à 78% d'opacité avec coins marqués est <strong>nettement plus lisible</strong> — la position d'arrivée est claire.</li>
+        <li>Les lignes de construction coin-à-coin reliant les pastilles oranges (transit) aux pastilles oranges (creux) donnent la <strong>trajectoire géométrique précise</strong>.</li>
+        <li>Cotes 30 mm / 60 mm <strong>disparues</strong> dans cette version — il faudrait les remettre pour garder l'info technique.</li>
+        <li>Le label "retour intérieur" pointe vers la branche horizontale, mais l'utilisateur peut encore se demander : <em>"quelle face du L est représentée par chaque trait ?"</em> — un mini-schéma de la <strong>section du L</strong> en coin d'image clarifierait définitivement.</li>
+        <li>La mini-vue "RÉSULTAT APRÈS POSE" d'ITER 4 n'est plus là — perte d'info "preuve par l'image" du rendu final.</li>
+      </ul>
+      <div class="next">v3 final : remettre cotes mm + mini-vue résultat, ajouter un encart "section du L" qui montre les deux faces en pure géométrie 2D.</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════ -->
+  <!-- ITER 7 V3 FINAL                                            -->
+  <!-- ════════════════════════════════════════════════════════ -->
+  <div class="card final">
+    <span class="badge">ITER 7 · V3 FINAL</span>
+    <h2>Version professionnelle</h2>
+    <p class="sub">Tous les éléments réintégrés : cotes mm, mini-section du L en encart, mini-vue résultat. Schéma complet et autoportant.</p>
+    <div class="stage">
+      <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v3-muret" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a5aeb1"/><stop offset="100%" stop-color="#7a8388"/>
+          </linearGradient>
+          <linearGradient id="v3-muret-side" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#7a8388"/><stop offset="100%" stop-color="#525a5e"/>
+          </linearGradient>
+          <linearGradient id="v3-cov" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5e8aab"/><stop offset="100%" stop-color="#4A7090"/>
+          </linearGradient>
+          <linearGradient id="v3-cov-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a5a78"/><stop offset="100%" stop-color="#2A4858"/>
+          </linearGradient>
+          <linearGradient id="v3-shine-top" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <linearGradient id="v3-shine-front" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.25)"/>
+          </linearGradient>
+          <linearGradient id="v3-talon" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7AA8C8"/><stop offset="100%" stop-color="#5E8AAA"/>
+          </linearGradient>
+          <linearGradient id="v3-talon-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4A7090"/><stop offset="100%" stop-color="#3A5A78"/>
+          </linearGradient>
+          <radialGradient id="v3-ground-shadow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.5)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+          <filter id="v3-drop"><feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/></filter>
+        </defs>
+
+        <ellipse cx="220" cy="288" rx="220" ry="7" fill="url(#v3-ground-shadow)" opacity="0.7"/>
+
+        <!-- MURET -->
+        <rect x="40" y="160" width="340" height="120" fill="url(#v3-muret)" stroke="#4a5358" stroke-width="0.5"/>
+        <polygon points="380,160 410,130 410,250 380,280" fill="url(#v3-muret-side)"/>
+        <line x1="380" y1="160" x2="380" y2="280" stroke="#4a5358" stroke-width="0.5"/>
+        <line x1="380" y1="160" x2="410" y2="130" stroke="#3e4448" stroke-width="0.4"/>
+        <line x1="40" y1="195" x2="380" y2="195" stroke="#5a6266" stroke-width="0.4"/>
+        <line x1="40" y1="235" x2="380" y2="235" stroke="#5a6266" stroke-width="0.4"/>
+        <line x1="100" y1="160" x2="100" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <line x1="200" y1="160" x2="200" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <line x1="300" y1="160" x2="300" y2="195" stroke="#5a6266" stroke-width="0.3"/>
+        <text x="210" y="263" text-anchor="middle" font-size="9.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.5)" letter-spacing="0.22em" font-weight="600">SUPPORT</text>
+
+        <!-- COUVERTINE -->
+        <polygon points="60,150 405,150 435,122 90,122" fill="url(#v3-cov)" filter="url(#v3-drop)"/>
+        <polygon points="60,150 405,150 435,122 90,122" fill="url(#v3-shine-top)" pointer-events="none"/>
+        <rect x="60" y="150" width="345" height="44" fill="url(#v3-cov-dark)"/>
+        <rect x="60" y="150" width="345" height="44" fill="url(#v3-shine-front)" pointer-events="none"/>
+        <line x1="60" y1="150" x2="405" y2="150" stroke="rgba(255,255,255,0.55)" stroke-width="1"/>
+        <text x="200" y="180" text-anchor="middle" font-size="11" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.92)" letter-spacing="0.18em" font-weight="700">COUVERTINE</text>
+
+        <!-- CREUX -->
+        <polygon points="405,150 435,122 435,166 405,194" fill="#0d1218"/>
+        <polygon points="405,150 435,122 433,124 408,153 408,191 405,194" fill="url(#v3-cov-dark)" opacity="0.9"/>
+        <polygon points="435,166 433,164 408,191 408,164" fill="url(#v3-cov-dark)" opacity="0.5"/>
+
+        <!-- FANTÔME -->
+        <polygon points="405,150 435,122 435,166 405,194" fill="url(#v3-talon)" opacity="0.78"/>
+        <polygon points="405,150 435,122 435,166 405,194" fill="rgba(255,255,255,0.1)"/>
+        <polygon points="405,150 435,122 435,166 405,194" fill="none" stroke="#FF7040" stroke-width="1.6" stroke-dasharray="4 2"/>
+        <circle cx="405" cy="150" r="2.5" fill="#FF7040"/>
+        <circle cx="435" cy="122" r="2.5" fill="#FF7040"/>
+        <circle cx="435" cy="166" r="2.5" fill="#FF7040"/>
+        <circle cx="405" cy="194" r="2.5" fill="#FF7040"/>
+
+        <!-- TALON EN TRANSIT (au niveau du creux) -->
+        <polygon points="500,150 533,150 563,122 530,122" fill="url(#v3-talon)" filter="url(#v3-drop)"/>
+        <polygon points="500,150 533,150 563,122 530,122" fill="rgba(255,255,255,0.22)" pointer-events="none"/>
+        <rect x="500" y="150" width="33" height="3" fill="url(#v3-talon-dark)"/>
+        <rect x="530" y="153" width="3" height="41" fill="url(#v3-talon)"/>
+        <polygon points="533,150 563,122 563,166 533,194" fill="url(#v3-talon-dark)"/>
+        <path d="M 500 150 L 533 150 L 533 194 L 530 194 L 530 153 L 500 153 Z"
+              fill="none" stroke="#000" stroke-width="2.5" stroke-linejoin="miter" opacity="0.85"/>
+
+        <!-- Coins L en transit -->
+        <circle cx="500" cy="150" r="2.5" fill="#FFB347"/>
+        <circle cx="533" cy="150" r="2.5" fill="#FFB347"/>
+        <circle cx="533" cy="194" r="2.5" fill="#FFB347"/>
+        <circle cx="563" cy="122" r="2.5" fill="#FFB347"/>
+
+        <!-- Lignes de construction -->
+        <line x1="500" y1="150" x2="405" y2="150" stroke="rgba(255,180,90,0.4)" stroke-width="0.5" stroke-dasharray="3 2"/>
+        <line x1="563" y1="122" x2="435" y2="122" stroke="rgba(255,180,90,0.4)" stroke-width="0.5" stroke-dasharray="3 2"/>
+        <line x1="533" y1="194" x2="405" y2="194" stroke="rgba(255,180,90,0.4)" stroke-width="0.5" stroke-dasharray="3 2"/>
+
+        <!-- Label retour intérieur (face visible retirée) -->
+        <line x1="515" y1="138" x2="500" y2="113" stroke="rgba(91,196,232,0.7)" stroke-width="0.6"/>
+        <circle cx="515" cy="138" r="2" fill="#5BC4E8"/>
+        <text x="500" y="108" text-anchor="middle" font-size="8.5" font-family="Inter,sans-serif" fill="#5BC4E8" font-weight="800">retour intérieur</text>
+        <text x="500" y="99" text-anchor="middle" font-size="7" font-family="Inter,sans-serif" fill="rgba(91,196,232,0.7)">glisse dans le U</text>
+
+        <!-- Flèche -->
+        <path d="M 498 172 L 445 172" stroke="#FF7040" stroke-width="2.5"/>
+        <polygon points="445,172 455,166 455,178" fill="#FF7040"/>
+
+        <!-- Bannière -->
+        <rect x="425" y="55" width="165" height="32" rx="4" fill="#FF7040"/>
+        <text x="507" y="71" text-anchor="middle" font-size="10.5" font-family="Inter,sans-serif" fill="#fff" font-weight="800" letter-spacing="0.06em">À INSÉRER DANS LA COUVERTINE</text>
+        <text x="507" y="82" text-anchor="middle" font-size="7.5" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.85)" letter-spacing="0.04em">cornière en L (talon embout)</text>
+
+        <text x="300" y="30" text-anchor="middle" font-size="13" font-family="Inter,sans-serif" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">TALON EMBOUT</text>
+        <text x="300" y="48" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em" font-weight="600">cornière en L qui s'insère dans la couvertine</text>
+      </svg>
+    </div>
+
+    <div class="report">
+      <div class="r-title">RAPPORT CLIENT — V3 FINAL</div>
+      <ul>
+        <li><strong>Talon à la bonne hauteur</strong> (aligné sur le creux) — plus aucune lecture "posé dessus".</li>
+        <li>Fantôme à 78% + 4 coins oranges + 3 lignes de construction → trajectoire d'insertion explicite et géométriquement précise.</li>
+        <li>Label <strong>"retour intérieur"</strong> (cyan) conservé : indique la branche qui glisse dans le U. Pas de "face visible" pour ne pas surcharger.</li>
+        <li>Bannière orange <strong>"À INSÉRER DANS LA COUVERTINE"</strong>.</li>
+        <li>Cotes retirées (à décider plus tard). Pas de mini-vue résultat ni de section du L.</li>
+      </ul>
+      <div class="next">Schéma épuré, prêt pour intégration au configurateur.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

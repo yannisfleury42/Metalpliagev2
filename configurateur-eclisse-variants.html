@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Éclisse — Variantes visuelles (15 cm, contraste réaliste)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0d0d0d;color:#e8e8e8;font-family:'Inter',sans-serif}
+  body{padding:32px;min-height:100vh}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .intro{color:#888;font-size:13px;max-width:840px;line-height:1.6;margin-bottom:28px}
+  .intro strong{color:#FF7040}
+  .stack{display:flex;flex-direction:column;gap:24px}
+  .card{background:#141414;border:1px solid #222;border-radius:14px;padding:22px;position:relative}
+  .card .badge{position:absolute;top:14px;right:18px;font-size:10px;letter-spacing:0.22em;color:#FF7040;background:rgba(255,128,64,0.08);padding:4px 10px;border-radius:20px;font-weight:700}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:4px;color:#fff;letter-spacing:-.01em}
+  .card .sub{font-size:11.5px;color:#888;letter-spacing:.05em;margin-bottom:14px;line-height:1.5;max-width:840px}
+  .stage{background:radial-gradient(ellipse at 30% 30%,#15171c 0%,#08090c 80%);border:1px solid #1a1a1a;padding:18px;border-radius:10px;display:flex;align-items:center;justify-content:center;min-height:320px}
+  .stage svg{display:block;width:100%;height:auto;max-height:340px}
+  .features{margin-top:14px;font-size:12px;line-height:1.7;color:#aaa;display:flex;gap:20px;flex-wrap:wrap}
+  .features li{padding-left:14px;position:relative;list-style:none}
+  .features li:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:#FF7040;border-radius:50%}
+  .features li b{color:#fff}
+
+  .ai-note{background:rgba(123,184,232,0.06);border-left:3px solid #7BB8E8;padding:18px 22px;border-radius:6px;font-size:13px;color:#bbb;line-height:1.7;margin-top:14px}
+  .ai-note strong{color:#A0D0F0}
+  .ai-note code{background:#1c1c1c;padding:2px 6px;border-radius:3px;color:#FF7040;font-family:monospace;font-size:12px}
+</style>
+</head>
+<body>
+
+<h1>Éclisse — 4 variantes visuelles + option image réaliste</h1>
+<p class="intro">
+  Variantes avec <strong>proportions réelles</strong> : éclisse = 15 cm (au lieu de 50 % de la couvertine comme avant !).
+  Contrastes de couleurs revus pour plus de lisibilité. Inspirées de tes photos aluhome.
+  Dis-moi laquelle te plaît + ajustements.
+</p>
+
+<div class="stack">
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE 1 — Proportions réelles, vue de dessus
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">V1 — VRAI RATIO</span>
+    <h2>Vue de dessus à l'échelle (couvertine 1,5 m · éclisse 15 cm)</h2>
+    <p class="sub">Ratio réel respecté : la couvertine fait 10× la largeur de l'éclisse. Couvertines en alu clair, éclisse en gris foncé (anthracite RAL 7016) → contraste fort comme sur tes photos.</p>
+    <div class="stage">
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v1-cov" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#DCE3EA"/>
+            <stop offset="50%" stop-color="#A8B6C4"/>
+            <stop offset="100%" stop-color="#7A8694"/>
+          </linearGradient>
+          <linearGradient id="v1-ecl" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a4046"/>
+            <stop offset="50%" stop-color="#252a30"/>
+            <stop offset="100%" stop-color="#1a1d22"/>
+          </linearGradient>
+          <filter id="v1-shadow" x="-10%" y="-10%" width="120%" height="140%">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.55"/>
+          </filter>
+        </defs>
+
+        <!-- Label vue -->
+        <text x="685" y="22" text-anchor="end" font-size="9" font-family="Inter" fill="rgba(255,255,255,0.45)" letter-spacing="0.2em">VUE DE DESSUS</text>
+
+        <!-- COUVERTINE 1 (large) -->
+        <rect x="20" y="110" width="320" height="80" fill="url(#v1-cov)"/>
+        <line x1="20" y1="118" x2="340" y2="118" stroke="rgba(255,255,255,0.5)" stroke-width="0.6"/>
+        <text x="180" y="160" text-anchor="middle" font-size="12" font-family="Inter" fill="#1a1d22" font-weight="700" letter-spacing="0.15em">COUVERTINE 1</text>
+
+        <!-- COUVERTINE 2 -->
+        <rect x="345" y="110" width="320" height="80" fill="url(#v1-cov)"/>
+        <line x1="345" y1="118" x2="665" y2="118" stroke="rgba(255,255,255,0.5)" stroke-width="0.6"/>
+        <text x="505" y="160" text-anchor="middle" font-size="12" font-family="Inter" fill="#1a1d22" font-weight="700" letter-spacing="0.15em">COUVERTINE 2</text>
+
+        <!-- Joint dilatation -->
+        <rect x="340" y="110" width="5" height="80" fill="#0a0d12"/>
+
+        <!-- ÉCLISSE (15cm = 30 canvas, sur couvertines 1m50 = 320 canvas) -->
+        <rect x="306" y="106" width="74" height="88" fill="url(#v1-ecl)" filter="url(#v1-shadow)" stroke="#0a0d12" stroke-width="0.8"/>
+        <line x1="306" y1="111" x2="380" y2="111" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+        <text x="343" y="153" text-anchor="middle" font-size="10" font-family="Inter" fill="#fff" font-weight="700" letter-spacing="0.12em">ÉCLISSE</text>
+
+        <!-- Cote éclisse -->
+        <line x1="306" y1="208" x2="380" y2="208" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="306" y1="204" x2="306" y2="212" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="380" y1="204" x2="380" y2="212" stroke="#FF7040" stroke-width="1.2"/>
+        <rect x="320" y="216" width="46" height="14" rx="3" fill="rgba(0,0,0,0.9)"/>
+        <text x="343" y="226" text-anchor="middle" font-size="10" font-family="Inter" fill="#FF7040" font-weight="700">150 mm</text>
+
+        <!-- Cote couvertine -->
+        <line x1="20" y1="244" x2="340" y2="244" stroke="rgba(123,184,232,0.6)" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <line x1="20" y1="240" x2="20" y2="248" stroke="rgba(123,184,232,0.6)" stroke-width="0.8"/>
+        <line x1="340" y1="240" x2="340" y2="248" stroke="rgba(123,184,232,0.6)" stroke-width="0.8"/>
+        <text x="180" y="262" text-anchor="middle" font-size="10" font-family="Inter" fill="#7BB8E8" font-weight="500">L1 = 1500 mm</text>
+
+        <!-- Titres -->
+        <text x="350" y="40" text-anchor="middle" font-size="13" font-family="Inter" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ÉCLISSE DE JONCTION</text>
+        <text x="350" y="56" text-anchor="middle" font-size="9" font-family="Inter" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em">15 cm · anthracite · par-dessus 2 couvertines</text>
+
+        <!-- Indicateur +1,5 périph -->
+        <line x1="380" y1="106" x2="412" y2="80" stroke="#FFB347" stroke-width="0.8"/>
+        <text x="416" y="78" font-size="9" font-family="Inter" fill="#FFB347" font-weight="700">+1,5 mm</text>
+        <text x="416" y="90" font-size="8" font-family="Inter" fill="rgba(255,255,255,0.5)">périph.</text>
+
+        <!-- Indicateur rejet 90° -->
+        <line x1="306" y1="194" x2="270" y2="216" stroke="#FFB347" stroke-width="0.8"/>
+        <text x="265" y="218" text-anchor="end" font-size="9" font-family="Inter" fill="#FFB347" font-weight="700">rejet 90°</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Couvertines alu silver clair</b> · éclisse <b>anthracite RAL 7016</b> sombre</li>
+      <li><b>Ratio 1/10 respecté</b> (éclisse 15 cm sur couvertines 1,5 m)</li>
+      <li><b>Drop-shadow réelle</b> sous l'éclisse → effet "posé dessus"</li>
+      <li>Labels sur les couvertines avec couleur sombre lisible (sur fond clair)</li>
+    </ul>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE 2 — Zoom sur le joint (couvertines tronquées)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">V2 — ZOOM JOINT</span>
+    <h2>Zoom sur la jonction (couvertines tronquées avec marque "..." )</h2>
+    <p class="sub">On focus sur la zone du joint. Les couvertines sont coupées avec une marque de continuité (zigzag) pour indiquer qu'elles continuent. L'éclisse occupe plus de place dans le visuel pour la lisibilité.</p>
+    <div class="stage">
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v2-cov" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#DCE3EA"/>
+            <stop offset="100%" stop-color="#7A8694"/>
+          </linearGradient>
+          <linearGradient id="v2-ecl" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a4046"/>
+            <stop offset="100%" stop-color="#1a1d22"/>
+          </linearGradient>
+          <filter id="v2-shadow"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/></filter>
+        </defs>
+
+        <text x="685" y="22" text-anchor="end" font-size="9" font-family="Inter" fill="rgba(255,255,255,0.45)" letter-spacing="0.2em">VUE DE DESSUS · ZOOM JOINT</text>
+
+        <!-- Couvertine 1 (tronquée) -->
+        <rect x="60" y="110" width="270" height="80" fill="url(#v2-cov)"/>
+        <line x1="60" y1="118" x2="330" y2="118" stroke="rgba(255,255,255,0.4)" stroke-width="0.6"/>
+        <!-- Zigzag break gauche -->
+        <path d="M 60 110 L 50 120 L 60 130 L 50 140 L 60 150 L 50 160 L 60 170 L 50 180 L 60 190"
+              fill="none" stroke="#1a1d22" stroke-width="2"/>
+        <rect x="38" y="106" width="22" height="88" fill="#08090c"/>
+        <text x="200" y="155" text-anchor="middle" font-size="13" font-family="Inter" fill="#1a1d22" font-weight="700" letter-spacing="0.15em">COUVERTINE 1</text>
+
+        <!-- Couvertine 2 (tronquée) -->
+        <rect x="370" y="110" width="270" height="80" fill="url(#v2-cov)"/>
+        <line x1="370" y1="118" x2="640" y2="118" stroke="rgba(255,255,255,0.4)" stroke-width="0.6"/>
+        <!-- Zigzag droite -->
+        <path d="M 640 110 L 650 120 L 640 130 L 650 140 L 640 150 L 650 160 L 640 170 L 650 180 L 640 190"
+              fill="none" stroke="#1a1d22" stroke-width="2"/>
+        <rect x="640" y="106" width="22" height="88" fill="#08090c"/>
+        <text x="500" y="155" text-anchor="middle" font-size="13" font-family="Inter" fill="#1a1d22" font-weight="700" letter-spacing="0.15em">COUVERTINE 2</text>
+
+        <!-- Joint dilatation -->
+        <rect x="330" y="110" width="40" height="80" fill="#0a0d12"/>
+
+        <!-- ÉCLISSE — 150mm visible plus grande car on zoome -->
+        <rect x="280" y="102" width="140" height="96" fill="url(#v2-ecl)" filter="url(#v2-shadow)" stroke="#0a0d12" stroke-width="1"/>
+        <line x1="280" y1="108" x2="420" y2="108" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+        <text x="350" y="148" text-anchor="middle" font-size="12" font-family="Inter" fill="#fff" font-weight="700" letter-spacing="0.18em">ÉCLISSE</text>
+        <text x="350" y="162" text-anchor="middle" font-size="9" font-family="Inter" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em">150 mm · anthracite</text>
+
+        <!-- Cote éclisse -->
+        <line x1="280" y1="212" x2="420" y2="212" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="280" y1="208" x2="280" y2="216" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="420" y1="208" x2="420" y2="216" stroke="#FF7040" stroke-width="1.2"/>
+        <rect x="328" y="220" width="44" height="14" rx="3" fill="rgba(0,0,0,0.9)"/>
+        <text x="350" y="230" text-anchor="middle" font-size="10" font-family="Inter" fill="#FF7040" font-weight="700">150 mm</text>
+
+        <!-- Annotations -->
+        <text x="350" y="40" text-anchor="middle" font-size="13" font-family="Inter" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ÉCLISSE DE JONCTION</text>
+        <text x="350" y="56" text-anchor="middle" font-size="9" font-family="Inter" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em">vue zoomée sur la zone de jonction</text>
+
+        <line x1="420" y1="102" x2="450" y2="78" stroke="#FFB347" stroke-width="0.8"/>
+        <text x="455" y="76" font-size="9" font-family="Inter" fill="#FFB347" font-weight="700">+1,5 mm périph.</text>
+
+        <line x1="280" y1="194" x2="240" y2="220" stroke="#FFB347" stroke-width="0.8"/>
+        <text x="235" y="222" text-anchor="end" font-size="9" font-family="Inter" fill="#FFB347" font-weight="700">rejet 90°</text>
+
+        <!-- "JOINT" label dans le gap -->
+        <text x="350" y="200" text-anchor="middle" font-size="8" font-family="Inter" fill="rgba(255,255,255,0.4)" letter-spacing="0.18em">JOINT</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Couvertines tronquées</b> par des zigzags type "break line" → suggère qu'elles continuent</li>
+      <li><b>Éclisse plus grande dans le visuel</b> pour bien voir les détails</li>
+      <li><b>Cote 150 mm</b> claire</li>
+      <li><b>Joint visible</b> entre les deux couvertines</li>
+    </ul>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE 3 — Vue 3/4 perspective réaliste (style aluhome)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">V3 — 3/4 RÉALISTE</span>
+    <h2>Vue 3/4 perspective réaliste (inspirée aluhome)</h2>
+    <p class="sub">Reproduction du style de ta première photo : éclisse en perspective 3/4, ombres réelles, profondeur, label couvertine 1 + 2. SVG avec dégradés et drop-shadows pour rendu lisse.</p>
+    <div class="stage">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="v3-cov-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F0F5FA"/>
+            <stop offset="100%" stop-color="#B8C4D2"/>
+          </linearGradient>
+          <linearGradient id="v3-cov-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C8D2DE"/>
+            <stop offset="100%" stop-color="#6A7682"/>
+          </linearGradient>
+          <linearGradient id="v3-ecl-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4a5056"/>
+            <stop offset="100%" stop-color="#1f2328"/>
+          </linearGradient>
+          <linearGradient id="v3-ecl-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a2e34"/>
+            <stop offset="100%" stop-color="#0d0f12"/>
+          </linearGradient>
+          <linearGradient id="v3-grid" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f5f5f3"/>
+            <stop offset="100%" stop-color="#d8d8d2"/>
+          </linearGradient>
+          <filter id="v3-shadow"><feDropShadow dx="2" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.55"/></filter>
+        </defs>
+
+        <!-- Fond papier quadrillé subtil (style technique aluhome) -->
+        <rect width="700" height="320" fill="url(#v3-grid)" opacity="0.06"/>
+        <g stroke="#fff" stroke-width="0.3" opacity="0.05">
+          <line x1="0" y1="60" x2="700" y2="60"/>
+          <line x1="0" y1="120" x2="700" y2="120"/>
+          <line x1="0" y1="180" x2="700" y2="180"/>
+          <line x1="0" y1="240" x2="700" y2="240"/>
+          <line x1="100" y1="0" x2="100" y2="320"/>
+          <line x1="200" y1="0" x2="200" y2="320"/>
+          <line x1="300" y1="0" x2="300" y2="320"/>
+          <line x1="400" y1="0" x2="400" y2="320"/>
+          <line x1="500" y1="0" x2="500" y2="320"/>
+          <line x1="600" y1="0" x2="600" y2="320"/>
+        </g>
+
+        <!-- COUVERTINE 1 (face avant + top en perspective) -->
+        <!-- Top -->
+        <polygon points="40,160 380,160 420,130 80,130" fill="url(#v3-cov-top)" stroke="#3a3a3a" stroke-width="0.4"/>
+        <!-- Front -->
+        <rect x="40" y="160" width="340" height="40" fill="url(#v3-cov-front)" stroke="#3a3a3a" stroke-width="0.4"/>
+        <!-- Highlight haut -->
+        <line x1="40" y1="160" x2="380" y2="160" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+        <!-- Label -->
+        <text x="195" y="186" text-anchor="middle" font-size="11" font-family="Inter" fill="#1a1d22" font-weight="700" letter-spacing="0.15em">COUVERTINE 1</text>
+
+        <!-- COUVERTINE 2 -->
+        <polygon points="395,160 660,160 700,130 435,130" fill="url(#v3-cov-top)" stroke="#3a3a3a" stroke-width="0.4"/>
+        <rect x="395" y="160" width="265" height="40" fill="url(#v3-cov-front)" stroke="#3a3a3a" stroke-width="0.4"/>
+        <line x1="395" y1="160" x2="660" y2="160" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+        <text x="525" y="186" text-anchor="middle" font-size="11" font-family="Inter" fill="#1a1d22" font-weight="700" letter-spacing="0.15em">COUVERTINE 2</text>
+
+        <!-- Joint -->
+        <line x1="382" y1="160" x2="395" y2="160" stroke="#0a0d12" stroke-width="2"/>
+
+        <!-- ÉCLISSE par-dessus en perspective 3/4 -->
+        <polygon points="335,156 440,156 472,124 367,124" fill="url(#v3-ecl-top)" filter="url(#v3-shadow)" stroke="#0a0d12" stroke-width="0.8"/>
+        <rect x="335" y="156" width="105" height="48" fill="url(#v3-ecl-front)" stroke="#0a0d12" stroke-width="0.6"/>
+        <line x1="335" y1="156" x2="440" y2="156" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <!-- Label -->
+        <text x="388" y="180" text-anchor="middle" font-size="11" font-family="Inter" fill="#fff" font-weight="700" letter-spacing="0.18em">ÉCLISSE</text>
+        <text x="388" y="194" text-anchor="middle" font-size="8" font-family="Inter" fill="rgba(255,180,90,0.95)" letter-spacing="0.1em">150 mm</text>
+
+        <!-- Annotation flèche éclisse -->
+        <line x1="388" y1="120" x2="388" y2="100" stroke="#FF7040" stroke-width="1.2"/>
+        <polygon points="388,118 384,108 392,108" fill="#FF7040"/>
+        <text x="388" y="92" text-anchor="middle" font-size="11" font-family="Inter" fill="#FF7040" font-weight="700" letter-spacing="0.15em">l'éclisse</text>
+
+        <!-- Annotation cov 1 + 2 (style aluhome) -->
+        <line x1="100" y1="100" x2="180" y2="130" stroke="#7BB8E8" stroke-width="0.6"/>
+        <text x="100" y="92" text-anchor="middle" font-size="10" font-family="Inter" fill="#7BB8E8" font-weight="600" letter-spacing="0.18em">couvertine 1</text>
+
+        <line x1="600" y1="100" x2="540" y2="130" stroke="#7BB8E8" stroke-width="0.6"/>
+        <text x="600" y="92" text-anchor="middle" font-size="10" font-family="Inter" fill="#7BB8E8" font-weight="600" letter-spacing="0.18em">couvertine 2</text>
+
+        <!-- Cote éclisse -->
+        <line x1="335" y1="218" x2="440" y2="218" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="335" y1="214" x2="335" y2="222" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="440" y1="214" x2="440" y2="222" stroke="#FF7040" stroke-width="1.2"/>
+        <rect x="365" y="226" width="44" height="14" rx="3" fill="rgba(0,0,0,0.9)"/>
+        <text x="387" y="236" text-anchor="middle" font-size="10" font-family="Inter" fill="#FF7040" font-weight="700">150 mm</text>
+
+        <!-- Ombre au sol pour ancrer -->
+        <ellipse cx="388" cy="270" rx="160" ry="6" fill="rgba(0,0,0,0.45)"/>
+
+        <!-- Titre -->
+        <text x="350" y="32" text-anchor="middle" font-size="13" font-family="Inter" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ÉCLISSE DE JONCTION — VUE 3/4</text>
+        <text x="350" y="48" text-anchor="middle" font-size="9" font-family="Inter" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em">style référence aluhome · anthracite RAL 7016 · 150 mm</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Vue 3/4 perspective</b> identique à ta photo aluhome</li>
+      <li><b>Couvertines clair · éclisse anthracite</b> → contraste fort</li>
+      <li><b>Drop-shadow réaliste</b> + ombre portée au sol</li>
+      <li><b>Annotations style technique</b> avec leader lines</li>
+    </ul>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       VARIANTE 4 — SVG photoréaliste (gradients radiaux, textures)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="card">
+    <span class="badge">V4 — PHOTORÉALISTE</span>
+    <h2>Photoréaliste (gradients radiaux + textures alu brossé)</h2>
+    <p class="sub">SVG avec rendu plus tangible : textures alu brossé subtiles, reflets spéculaires, ombres douces. Approche "demi-rendu" sans atteindre la photo mais beaucoup plus matériel.</p>
+    <div class="stage">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Alu brossé pour couvertines -->
+          <linearGradient id="v4-alu-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#FAFCFE"/>
+            <stop offset="35%" stop-color="#C2D0DE"/>
+            <stop offset="60%" stop-color="#A0B0BE"/>
+            <stop offset="100%" stop-color="#6E7A86"/>
+          </linearGradient>
+          <pattern id="v4-brush" patternUnits="userSpaceOnUse" width="3" height="60" patternTransform="rotate(0)">
+            <line x1="0" y1="0" x2="0" y2="60" stroke="rgba(0,0,0,0.06)" stroke-width="0.5"/>
+            <line x1="1.5" y1="0" x2="1.5" y2="60" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+          </pattern>
+          <linearGradient id="v4-cov-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C8D2DE"/>
+            <stop offset="100%" stop-color="#5E6A76"/>
+          </linearGradient>
+
+          <!-- Anthracite mat pour éclisse -->
+          <linearGradient id="v4-ecl-top" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#4e545a"/>
+            <stop offset="35%"  stop-color="#2a2e34"/>
+            <stop offset="100%" stop-color="#14171a"/>
+          </linearGradient>
+          <pattern id="v4-ecl-brush" patternUnits="userSpaceOnUse" width="3" height="60">
+            <line x1="0" y1="0" x2="0" y2="60" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+            <line x1="1.5" y1="0" x2="1.5" y2="60" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/>
+          </pattern>
+          <linearGradient id="v4-ecl-front" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2c3036"/>
+            <stop offset="100%" stop-color="#0a0c0e"/>
+          </linearGradient>
+
+          <!-- Ombre douce sous éclisse -->
+          <radialGradient id="v4-shadow" cx="0.5" cy="0.5">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.55)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+          </radialGradient>
+
+          <!-- Reflet spéculaire -->
+          <linearGradient id="v4-spec" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+            <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Fond -->
+        <rect width="700" height="320" fill="#0d0d0d"/>
+
+        <!-- COUVERTINE 1 -->
+        <!-- Top (perspective subtle) -->
+        <polygon points="40,160 380,160 410,140 70,140" fill="url(#v4-alu-top)"/>
+        <polygon points="40,160 380,160 410,140 70,140" fill="url(#v4-brush)" opacity="0.6"/>
+        <!-- Reflet spéculaire -->
+        <polygon points="120,160 200,160 220,140 140,140" fill="url(#v4-spec)" opacity="0.3"/>
+        <!-- Front -->
+        <rect x="40" y="160" width="340" height="42" fill="url(#v4-cov-front)"/>
+        <rect x="40" y="160" width="340" height="42" fill="url(#v4-brush)" opacity="0.4"/>
+        <line x1="40" y1="160" x2="380" y2="160" stroke="rgba(255,255,255,0.65)" stroke-width="1.2"/>
+        <line x1="40" y1="202" x2="380" y2="202" stroke="rgba(0,0,0,0.5)" stroke-width="0.8"/>
+
+        <!-- COUVERTINE 2 -->
+        <polygon points="395,160 660,160 690,140 425,140" fill="url(#v4-alu-top)"/>
+        <polygon points="395,160 660,160 690,140 425,140" fill="url(#v4-brush)" opacity="0.6"/>
+        <polygon points="455,160 540,160 560,140 475,140" fill="url(#v4-spec)" opacity="0.3"/>
+        <rect x="395" y="160" width="265" height="42" fill="url(#v4-cov-front)"/>
+        <rect x="395" y="160" width="265" height="42" fill="url(#v4-brush)" opacity="0.4"/>
+        <line x1="395" y1="160" x2="660" y2="160" stroke="rgba(255,255,255,0.65)" stroke-width="1.2"/>
+        <line x1="395" y1="202" x2="660" y2="202" stroke="rgba(0,0,0,0.5)" stroke-width="0.8"/>
+
+        <!-- Joint -->
+        <line x1="380" y1="140" x2="395" y2="140" stroke="#000" stroke-width="2"/>
+        <line x1="380" y1="160" x2="395" y2="160" stroke="#000" stroke-width="2.5"/>
+        <rect x="380" y="160" width="15" height="42" fill="#0a0d12"/>
+
+        <!-- Ombre sous l'éclisse -->
+        <ellipse cx="388" cy="206" rx="80" ry="6" fill="url(#v4-shadow)"/>
+
+        <!-- ÉCLISSE par-dessus -->
+        <polygon points="338,152 438,152 466,128 366,128" fill="url(#v4-ecl-top)"/>
+        <polygon points="338,152 438,152 466,128 366,128" fill="url(#v4-ecl-brush)" opacity="0.5"/>
+        <polygon points="350,152 392,152 412,128 370,128" fill="url(#v4-spec)" opacity="0.15"/>
+        <rect x="338" y="152" width="100" height="48" fill="url(#v4-ecl-front)"/>
+        <rect x="338" y="152" width="100" height="48" fill="url(#v4-ecl-brush)" opacity="0.4"/>
+        <line x1="338" y1="152" x2="438" y2="152" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
+        <line x1="338" y1="200" x2="438" y2="200" stroke="rgba(0,0,0,0.6)" stroke-width="0.8"/>
+
+        <text x="388" y="178" text-anchor="middle" font-size="11" font-family="Inter" fill="rgba(255,255,255,0.95)" font-weight="700" letter-spacing="0.18em">ÉCLISSE</text>
+        <text x="388" y="191" text-anchor="middle" font-size="8" font-family="Inter" fill="rgba(255,180,90,0.95)" letter-spacing="0.1em">150 mm · 7016</text>
+
+        <!-- Labels couvertines -->
+        <text x="200" y="186" text-anchor="middle" font-size="10" font-family="Inter" fill="rgba(30,30,30,0.85)" font-weight="700" letter-spacing="0.15em">COUVERTINE 1</text>
+        <text x="528" y="186" text-anchor="middle" font-size="10" font-family="Inter" fill="rgba(30,30,30,0.85)" font-weight="700" letter-spacing="0.15em">COUVERTINE 2</text>
+
+        <!-- Annotation flèche éclisse -->
+        <line x1="388" y1="112" x2="388" y2="92" stroke="rgba(255,180,90,0.9)" stroke-width="1.4"/>
+        <polygon points="388,110 384,98 392,98" fill="rgba(255,180,90,0.9)"/>
+        <text x="388" y="82" text-anchor="middle" font-size="11" font-family="Inter" fill="rgba(255,200,130,0.95)" font-weight="700" letter-spacing="0.18em">ÉCLISSE</text>
+
+        <!-- Cote -->
+        <line x1="338" y1="225" x2="438" y2="225" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="338" y1="221" x2="338" y2="229" stroke="#FF7040" stroke-width="1.2"/>
+        <line x1="438" y1="221" x2="438" y2="229" stroke="#FF7040" stroke-width="1.2"/>
+        <rect x="365" y="232" width="48" height="14" rx="3" fill="rgba(0,0,0,0.9)"/>
+        <text x="389" y="242" text-anchor="middle" font-size="10" font-family="Inter" fill="#FF7040" font-weight="700">150 mm</text>
+
+        <!-- Ombre au sol -->
+        <ellipse cx="388" cy="275" rx="200" ry="8" fill="rgba(0,0,0,0.55)"/>
+
+        <!-- Titre -->
+        <text x="350" y="32" text-anchor="middle" font-size="13" font-family="Inter" fill="rgba(255,255,255,0.95)" letter-spacing="0.18em" font-weight="700">ÉCLISSE — RENDU PHOTORÉALISTE</text>
+        <text x="350" y="48" text-anchor="middle" font-size="9" font-family="Inter" fill="rgba(255,180,90,0.85)" letter-spacing="0.12em">SVG avec alu brossé + reflets spéculaires + ombres douces</text>
+      </svg>
+    </div>
+    <ul class="features">
+      <li><b>Texture alu brossé</b> (pattern de stries fines) + reflets spéculaires</li>
+      <li><b>Ombres douces</b> sous l'éclisse + ombre au sol</li>
+      <li><b>Vue 3/4 légère</b> (perspective subtile)</li>
+      <li><b>Contraste anthracite/alu</b> très marqué</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="ai-note">
+  <strong>Option image 4K photoréaliste</strong>
+  <p>Pour aller plus loin que SVG (rendu vraiment photographique), je ne peux pas générer d'images directement, mais voici 3 voies&nbsp;:</p>
+  <ol style="padding-left:20px;margin-top:8px;line-height:1.8">
+    <li><strong>AI image generation</strong> (Midjourney, DALL-E 3, Stable Diffusion) — je peux te générer le prompt exact à coller dans l'outil. Exemple&nbsp;: <code>"Anthracite RAL 7016 aluminum éclisse joint cover wrapping over two adjacent grey couvertines on top of a concrete wall, top-down view, photorealistic 4k, studio lighting, technical product photo"</code></li>
+    <li><strong>3D render</strong> (Blender + Cycles, ~2-4 h de modélisation) — pour un rendu produit définitif livrable</li>
+    <li><strong>Photo réelle</strong> du produit chez ton fournisseur (la plus économique si tu as déjà la pièce)</li>
+  </ol>
+  <p style="margin-top:10px">Si tu veux, je peux te préparer un prompt Midjourney/DALL-E détaillé optimisé pour le rendu que tu veux — tu copies/colles dans l'outil et tu obtiens l'image 4k en ~1 min.</p>
+</div>
+
+<div style="margin-top:24px;padding:18px 22px;background:rgba(255,128,64,0.06);border-left:3px solid #FF7040;border-radius:6px;font-size:13px;color:#bbb;line-height:1.6">
+  <strong style="color:#FF8060">À toi :</strong> dis-moi quelle variante (V1/V2/V3/V4) tu retiens — ou le mix ("V3 avec les annotations de V1") — et je l'intègre dans le configurateur.
+  Et si tu veux générer une image 4K AI à la place, dis-moi et je te prépare le prompt.
+</div>
+
+</body>
+</html>

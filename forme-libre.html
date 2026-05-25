@@ -15,10 +15,18 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
+  <meta property="og:title" content="Pliage Forme Libre &#8212; Devis 24h | Metal Pliage">
+  <meta property="og:description" content="Devis pour pliage m&#233;tallique forme libre &#8212; jusqu&apos;&#224; 10 plis personnalis&#233;s. Acier, aluminium ou inox. Envoyez votre plan, r&#233;ponse sous 24h.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://metal-pliage.fr/forme-libre.html">
   <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pliage Forme Libre | Metal Pliage">
+  <meta name="twitter:description" content="Pliage m&#233;tallique sur mesure, formes libres, jusqu&apos;&#224; 10 plis. Devis sous 24h.">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
@@ -356,6 +364,91 @@
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Pliage métallique forme libre sur mesure",
+    "description": "Service de pliage sur mesure pour formes complexes : jusqu'à 10 plis personnalisés, acier prélaqué, aluminium ou inox. Envoi du plan, devis en 24h, fabrication française.",
+    "url": "https://metal-pliage.fr/forme-libre.html",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "METALLIER DESIGN SERVICE - M.D.S.",
+      "url": "https://metal-pliage.fr",
+      "telephone": "+33643218201",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "8 Rue Édouard Martel",
+        "addressLocality": "Saint-Étienne",
+        "postalCode": "42000",
+        "addressCountry": "FR"
+      }
+    },
+    "areaServed": { "@type": "Country", "name": "France" },
+    "serviceType": "Pliage tôle acier aluminium inox sur mesure",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "priceCurrency": "EUR",
+      "description": "Devis gratuit sous 24h sur envoi du plan"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://metal-pliage.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Pliage sur mesure", "item": "https://metal-pliage.fr/pliage.html" },
+      { "@type": "ListItem", "position": 3, "name": "Forme libre", "item": "https://metal-pliage.fr/forme-libre.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Comment envoyer mon plan pour obtenir un devis ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Envoyez votre plan (PDF, DWG, DXF ou croquis coté) par email à contact@metal-pliage.fr. Précisez la matière, l'épaisseur, la quantité et la finition. Devis sous 24h ouvrées." }
+      },
+      {
+        "@type": "Question",
+        "name": "Combien de plis puis-je avoir sur une même pièce ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nos plieuses CNC permettent jusqu'à 10 plis sur une même pièce, dans la limite de l'accès outil. Le développé maximal est de 3 000 mm." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelles matières sont disponibles pour le pliage forme libre ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Acier prélaqué (RAL standard ou sur mesure), acier galvanisé, aluminium 1050A et inox 304/316L. Épaisseurs de 0,6 mm à 3 mm selon matière." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel est le délai pour une pièce forme libre sur mesure ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Délai standard : 5 à 10 jours ouvrés après validation du devis et confirmation de paiement." }
+      }
+    ]
+  }
+  </script>
+  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-forme-libre">
 
@@ -377,8 +470,18 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html" class="active">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item nav-item--dropdown is-active">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-controls="nav-dd-pliage">Pliage <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="nav-dropdown" id="nav-dd-pliage" role="menu">
+            <a href="pliage.html" role="menuitem">Pliage sur mesure</a>
+            <a href="chapeaux-de-piliers.html" role="menuitem">Chapeaux de piliers</a>
+            <a href="appuis-de-fenetre.html" role="menuitem">Appuis de fen&ecirc;tre</a>
+            <a href="habillages-bandeaux.html" role="menuitem">Habillages &amp; bandeaux</a>
+            <a href="forme-libre.html" role="menuitem">Forme libre</a>
+          </div>
+        </li>
+        
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
@@ -577,6 +680,56 @@
 
   </div>
 
+  <!-- À LIRE AUSSI -->
+  <section style="background:var(--bg-surface);padding:3rem 0;border-top:1px solid var(--border);">
+    <div style="max-width:900px;margin:0 auto;padding:0 1.5rem;">
+      <header style="margin-bottom:1.5rem;text-align:center;">
+        <span style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">— RESSOURCES UTILES —</span>
+        <h2 style="font-size:1.4rem;margin:.5rem 0 0;">À lire aussi</h2>
+      </header>
+      <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;list-style:none;padding:0;margin:0;">
+        <li style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <a href="blog/pliage-tole-sur-mesure-tout-savoir.html" style="color:var(--text-primary);text-decoration:none;">
+            <strong style="display:block;margin-bottom:.4rem;">Pliage tôle sur mesure : tout savoir</strong>
+            <span style="color:var(--text-secondary);font-size:.9rem;">Matières, tolérances, délais et comment préparer votre commande ou votre plan.</span>
+          </a>
+        </li>
+        <li style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <a href="blog/comment-choisir-couvertine-acier-aluminium.html" style="color:var(--text-primary);text-decoration:none;">
+            <strong style="display:block;margin-bottom:.4rem;">Acier ou aluminium ?</strong>
+            <span style="color:var(--text-secondary);font-size:.9rem;">Comparatif complet pour choisir la matière adaptée à votre projet de pliage.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ FORME LIBRE -->
+  <section style="padding:clamp(48px,7vw,80px) 0;background:var(--bg-surface);border-top:1px solid var(--border);">
+    <div style="max-width:760px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);">
+      <span class="section-label">FAQ</span>
+      <h2 style="font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:300;letter-spacing:-.01em;margin:.5rem 0 2.5rem;">Questions fréquentes — Forme libre</h2>
+      <div class="faq-list" id="faq-libre">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Comment envoyer mon plan pour obtenir un devis ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Envoyez votre plan (PDF, DWG, DXF ou simple croquis coté) par email à <a href="mailto:contact@metal-pliage.fr" style="color:var(--accent)">contact@metal-pliage.fr</a>. Précisez la matière, l'épaisseur, la quantité et la finition souhaitée. Vous recevez un devis sous 24h ouvrées. Un simple croquis à main levée avec les cotes est suffisant.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Combien de plis puis-je avoir sur une même pièce ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Nos plieuses CNC permettent jusqu'à 10 plis sur une même pièce, dans la limite de l'accès outil. Le développé maximal est de 3 000 mm. Au-delà ou pour des profils très complexes, contactez-nous : nous étudions chaque cas.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Quelles matières sont disponibles pour le pliage forme libre ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Nous travaillons l'acier prélaqué (RAL standard ou sur mesure), l'acier galvanisé, l'aluminium 1050A et l'inox 304/316L. Les épaisseurs disponibles vont de 0,6 mm à 3 mm selon la matière. Des matières spécifiques sont accessibles sur devis.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Quel est le délai pour une pièce forme libre sur mesure ?<svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-answer"><p>Le délai standard est de 5 à 10 jours ouvrés après validation du devis et confirmation de paiement. Pour les commandes urgentes ou les grandes séries, contactez-nous pour étudier une solution adaptée.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- TRUST SECTION -->
   <section class="trust-section" aria-label="Nos garanties">
     <div class="trust-grid">
@@ -622,7 +775,6 @@
         <ul role="list">
           <li><a href="couvertines.html">Couvertines</a></li>
           <li><a href="pliage.html">Pliage</a></li>
-          <li><a href="configurateur-pliage.html">Configurateur</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
@@ -635,6 +787,7 @@
     </div>
     <div class="footer-bottom">
       <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. &middot; SARL au capital de 5 000 € &middot; RCS Saint-Étienne 844 258 178 &middot; SIRET 844 258 178 00010 &middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

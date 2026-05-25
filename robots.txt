@@ -1,17 +1,46 @@
 User-agent: *
 Allow: /
 
+# Dossiers dev / analyse — non destinés au public
 Disallow: /_dev/
 Disallow: /_mockup/
 Disallow: /_analyse-complete/
 Disallow: /_analyse-visuelle/
 Disallow: /Training-Visuel/
+Disallow: /Training-Visuel-MDS/
 Disallow: /node_modules/
+
+# Fichiers archives et backups
 Disallow: /*-backup-*
 Disallow: /*-old-*
 Disallow: /index-original.html
 Disallow: /server.js
 Disallow: /server.log
 Disallow: /server.err
+
+# Fichiers de travail design / prototypes / démos
+Disallow: /preview-*
+Disallow: /cursor-*
+Disallow: /effets-*
+Disallow: /theme-preview*
+Disallow: /hero-*
+Disallow: /loaders-demo.html
+Disallow: /listing-photos.html
+Disallow: /contact-variants.html
+Disallow: /contact-visuels.html
+Disallow: /appui-angle-variants.html
+Disallow: /configurateur-axo-variants.html
+Disallow: /configurateur-corniere-eclate.html
+Disallow: /configurateur-corniere-variants.html
+Disallow: /configurateur-eclisse-alignement.html
+Disallow: /configurateur-eclisse-muret.html
+Disallow: /configurateur-eclisse-variants.html
+Disallow: /configurateur-talon-final.html
+Disallow: /configurateur-talon-iter5.html
+Disallow: /configurateur-talon-iter6.html
+Disallow: /configurateur-talon-iter7.html
+Disallow: /configurateur-talon-variants.html
+Disallow: /configurateur-visuels-demo.html
+Disallow: /cursor-demo.html
 
 Sitemap: https://metal-pliage.fr/sitemap.xml

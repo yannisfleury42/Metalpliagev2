@@ -15,10 +15,18 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
+  <meta property="og:title" content="Pliage Sur Mesure &#8212; Formes U, L, Z, Appuis | Metal Pliage">
+  <meta property="og:description" content="Pliage acier, aluminium et inox sur mesure &#8212; formes U, L, Z, appuis de fen&#234;tre et formes libres. Prix instantan&#233;, livraison 10 jours.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://metal-pliage.fr/pliage.html">
   <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pliage Acier Sur Mesure | Metal Pliage">
+  <meta name="twitter:description" content="Formes U, L, Z, appuis fen&#234;tre en acier ou alu. Prix en ligne, livraison 10 j.">
   <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
   <script type="application/ld+json">
   {
@@ -40,6 +48,13 @@
     "countryOfOrigin": {
       "@type": "Country",
       "name": "France"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "3",
+      "bestRating": "5",
+      "worstRating": "1"
     },
     "offers": {
       "@type": "AggregateOffer",
@@ -69,75 +84,67 @@
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
   <style>
-    /* ═══ PAGE PLIAGE MARKETING — EN-TÊTE SOBRE CENTRÉ ═══ */
-    .pliage-header {
-      padding: calc(var(--nav-h) + 3.5rem) 1.5rem 3rem;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
-      text-align: center;
+    /* ═══ INTRO MODULE UNIQUE FLUSH-LEFT (Option A) ═══ */
+    .forms-intro {
+      padding: calc(var(--nav-h) + 3.5rem) clamp(1.5rem, 3vw, 2.5rem) 0;
+      max-width: 1280px;
+      margin: 0 auto;
     }
-    .pliage-eyebrow {
-      display: inline-block;
-      font-size: 0.7rem;
+    .forms-intro-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .forms-intro-tag {
+      font-size: 0.68rem;
       letter-spacing: 0.35em;
-      color: var(--accent);
       text-transform: uppercase;
       font-weight: 600;
-      margin-bottom: 1.2rem;
+      color: var(--accent);
     }
-    .pliage-title {
-      font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+    .forms-intro-sep {
+      width: 32px;
+      height: 1px;
+      background: rgba(255,255,255,0.18);
+    }
+    .forms-intro-tag-sub {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
+    }
+    .forms-intro h1 {
+      font-size: clamp(1.9rem, 4vw, 3.2rem);
       font-weight: 300;
-      letter-spacing: 0.02em;
+      line-height: 1.1;
       color: var(--text-primary);
-      line-height: 1.15;
-      margin: 0 0 0.9rem;
+      letter-spacing: 0.01em;
+      margin-bottom: 1.1rem;
     }
-    .pliage-title strong { color: var(--accent); font-weight: 500; }
-    .pliage-desc {
-      font-size: 0.95rem;
+    .forms-intro h1 em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .forms-intro-text {
+      font-size: 0.97rem;
       color: var(--text-secondary);
-      max-width: 620px;
-      margin: 0 auto;
-      line-height: 1.6;
+      max-width: 680px;
+      line-height: 1.65;
+      margin-bottom: 2.8rem;
+    }
+    .forms-intro-divider {
+      height: 1px;
+      background: var(--border);
     }
 
     /* ═══ GRILLE DES 5 FORMES ═══ */
     .forms-section {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 3rem clamp(1.5rem, 3vw, 2.5rem) 5rem;
-    }
-    .forms-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .forms-eyebrow {
-      display: inline-block;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      color: var(--accent);
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    .forms-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 300;
-      letter-spacing: 0.02em;
-      color: var(--text-primary);
-      line-height: 1.1;
-    }
-    .forms-title em {
-      font-style: normal;
-      color: var(--accent);
-      font-weight: 500;
-    }
-    .forms-subtitle {
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 1rem auto 0;
-      font-size: 0.95rem;
+      padding: 2.5rem clamp(1.5rem, 3vw, 2.5rem) 5rem;
     }
     .forms-grid {
       display: grid;
@@ -409,22 +416,26 @@
       margin: 0.25rem 0 0;
     }
 
-    /* ═══ STRONG CTA ═══ */
-    .pliage-cta {
+    /* ═══ CTA BANDEAU COMPACT ═══ */
+    .pliage-cta-band {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 5rem clamp(1.5rem, 3vw, 2.5rem);
-      text-align: center;
+      padding: 0 clamp(1.5rem, 3vw, 2.5rem) 2.4rem;
     }
-    .pliage-cta-inner {
+    .pliage-cta-band-inner {
       background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 4rem 2rem;
+      border-radius: 14px;
+      padding: 1.2rem 1.8rem;
       position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.4rem;
+      flex-wrap: wrap;
     }
-    .pliage-cta-inner::before {
+    .pliage-cta-band-inner::before {
       content: '';
       position: absolute;
       top: 50%; left: 50%;
@@ -433,26 +444,19 @@
       transform: translate(-50%, -50%);
       pointer-events: none;
     }
-    .pliage-cta-inner > * { position: relative; z-index: 1; }
-    .pliage-cta h3 {
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 300;
+    .pliage-cta-band-inner > * { position: relative; z-index: 1; }
+    .pliage-cta-band-text { flex: 1; min-width: 260px; }
+    .pliage-cta-band-inner h2 {
+      font-size: 1.15rem;
+      font-weight: 500;
       color: var(--text-primary);
-      margin-bottom: 1rem;
-      line-height: 1.2;
+      margin: 0 0 0.2rem;
     }
-    .pliage-cta h3 em { color: var(--accent); font-style: normal; font-weight: 500; }
-    .pliage-cta p {
+    .pliage-cta-band-inner h2 em { font-style: normal; color: var(--accent); }
+    .pliage-cta-band-inner p {
+      font-size: 0.88rem;
       color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto 2rem;
-      font-size: 0.95rem;
-    }
-    .pliage-cta-btns {
-      display: inline-flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
+      margin: 0;
     }
 
     @media (max-width: 600px) {
@@ -461,6 +465,59 @@
       .form-cta { justify-content: center; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://metal-pliage.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Pliage sur mesure", "item": "https://metal-pliage.fr/pliage.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quelle est la longueur maximale pour un pliage sur mesure ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Notre presse-plieuse traite des longueurs jusqu'à 3 000 mm (3 mètres) par pièce. Pour des linéaires plus longs, nous fabriquons plusieurs éléments à assembler avec des éclisses de jonction. Contactez-nous pour les projets > 6 mètres." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelles matières sont disponibles pour le pliage sur mesure ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nous travaillons l'acier prélaqué (0,5 à 2 mm), l'aluminium laqué (1 à 3 mm) et l'inox (0,8 à 1,5 mm). Pour l'acier et l'aluminium, 5 coloris RAL sont disponibles en stock. D'autres RAL sont possibles sur commande (délai +5 jours)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Puis-je envoyer mon plan DWG ou PDF pour un devis pliage ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Oui, c'est le moyen le plus rapide. Envoyez votre plan coté via le formulaire Forme Libre ou par email à contact@metal-pliage.fr. Nous répondons avec un devis sous 24h ouvrées. Les fichiers DWG, DXF, PDF et photos de croquis sont acceptés." }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel délai de fabrication pour un pliage sur mesure ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "La fabrication est de 1 à 5 jours ouvrés selon la complexité. La livraison transporteur est de 2 à 5 jours supplémentaires. Comptez 7 à 10 jours ouvrés de la commande à la réception. Enlèvement possible à l'atelier sur RDV (Saint-Étienne 42)." }
+      }
+    ]
+  }
+  </script>  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
+  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
+  <script>
+    window.brevoKey = 'VOTRE-CLE-BREVO';
+    (function(d, s, id, tid) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id; js.async = true;
+      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
+      fjs.parentNode.insertBefore(js, fjs);
+      window.sib = window.sib || {};
+      window.sib.equeue = window.sib.equeue || [];
+      window.sib.email_id = '';
+    })(document, 'script', 'brevo-sa', window.brevoKey);
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-pliage">
 
@@ -484,8 +541,9 @@
         <span></span><span></span><span></span>
       </button>
       <ul id="nav-links" role="list">
-        <li class="nav-item"><a href="couvertines.html">Couvertine</a></li>
-        <li class="nav-item"><a href="pliage.html" class="active">Pliage</a></li>
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item is-active"><a href="pliage.html">Pliage</a></li>
+        
         <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
         <li class="nav-item"><a href="contact.html">Contact</a></li>
       </ul>
@@ -496,24 +554,19 @@
   </nav>
 
   <!-- ═══════════════════════════════════════════
-       EN-TÊTE PAGE — Sobre centré
+       INTRO + LES 5 FORMES — module unique flush-left
   ═══════════════════════════════════════════ -->
-  <header class="pliage-header">
-    <div class="pliage-eyebrow">— PLIAGE SUR MESURE —</div>
-    <h1 class="pliage-title">Quelle <strong>forme</strong> choisir ?</h1>
-    <p class="pliage-desc">Notre configurateur calcule le prix de votre pièce en temps réel. Choisissez d'abord la forme la plus proche de votre besoin parmi nos profils standards, ou optez pour la forme libre.</p>
-  </header>
+  <div class="forms-intro">
+    <h1>Nos profils — <em>5 formes</em><br>à configurer selon vos souhaits</h1>
+    <p class="forms-intro-text">
+      Choisissez la forme la plus proche de votre besoin parmi nos 5 profils prédéfinis —
+      Forme U, L, Z, Appui de fenêtre ou Forme libre — puis configurez les cotes, le matériau
+      et la longueur pour obtenir votre prix en temps réel.
+    </p>
+    <div class="forms-intro-divider"></div>
+  </div>
 
-  <!-- ═══════════════════════════════════════════
-       LES 5 FORMES
-  ═══════════════════════════════════════════ -->
   <section class="forms-section" aria-labelledby="forms-title">
-    <div class="forms-header">
-      <span class="forms-eyebrow">Nos profils</span>
-      <h2 class="forms-title" id="forms-title">5 formes <em>au choix</em></h2>
-      <p class="forms-subtitle">Survolez une carte pour la mettre en avant. Cliquez sur « Configurer » pour lancer le configurateur avec la forme pré-sélectionnée.</p>
-    </div>
-
     <div class="forms-grid">
 
       <!-- FORME U -->
@@ -731,58 +784,43 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       MATÉRIAUX ET TARIFS
+       CTA — CONFIGURATEUR
   ═══════════════════════════════════════════ -->
-  <section class="materials-band" aria-labelledby="mat-title">
-    <div class="materials-inner">
-      <div class="materials-header">
-        <h3 id="mat-title">Trois matières, <em>cinq tarifs</em></h3>
-        <p>Tous nos pliages sont disponibles en acier laqué (32 couleurs RAL), aluminium ou inox brut. Tarif au m² appliqué sur la surface développée de votre pièce.</p>
+  <section class="pliage-cta-band">
+    <div class="pliage-cta-band-inner">
+      <div class="pliage-cta-band-text">
+        <h2>Lancez votre <em>pliage en 2 min</em></h2>
+        <p>Renseignez vos cotes, obtenez un prix immédiat HT/TTC.</p>
       </div>
-      <div class="materials-grid">
-
-        <div class="material-row">
-          <h4>Acier laqué</h4>
-          <dl>
-            <dt>Épaisseur</dt><dd>0,75 mm (7,5/10ème)</dd>
-            <dt>Tarif</dt><dd>75 € HT / m²</dd>
-            <dt>Finition</dt><dd>5 coloris RAL standard + autres sur devis — poudre époxy 80 microns</dd>
-          </dl>
-        </div>
-
-        <div class="material-row">
-          <h4>Aluminium</h4>
-          <dl>
-            <dt>Épaisseurs</dt><dd>1 mm ou 2 mm</dd>
-            <dt>Tarif</dt><dd>90 € HT / m² (1 mm) — 115 € HT / m² (2 mm)</dd>
-            <dt>Finition</dt><dd>Brut, laqué RAL, brossé ou anodisé</dd>
-          </dl>
-        </div>
-
-        <div class="material-row">
-          <h4>Inox</h4>
-          <dl>
-            <dt>Épaisseurs</dt><dd>1 mm ou 2 mm</dd>
-            <dt>Tarif</dt><dd>125 € HT / m² (1 mm) — 160 € HT / m² (2 mm)</dd>
-            <dt>Finition</dt><dd>Brut brossé (laqué non standard)</dd>
-          </dl>
-        </div>
-
+      <div>
+        <a href="configurateur-pliage.html" class="btn-primary">Lancer le configurateur →</a>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════
-       STRONG CTA
+       À LIRE AUSSI
   ═══════════════════════════════════════════ -->
-  <section class="pliage-cta">
-    <div class="pliage-cta-inner">
-      <h3>Lancez votre <em>pliage en 2 minutes</em></h3>
-      <p>Configurateur en ligne, prix HT/TTC instantané, paiement sécurisé. Livraison 5 à 10 jours ouvrés partout en France.</p>
-      <div class="pliage-cta-btns">
-        <a href="configurateur-pliage.html" class="btn-primary">Configurer mon pliage</a>
-        <a href="contact.html" class="btn-outline">Demander un devis</a>
-      </div>
+  <section style="background:var(--bg-surface);padding:3rem 0;">
+    <div style="max-width:900px;margin:0 auto;padding:0 1.5rem;">
+      <header style="margin-bottom:1.5rem;text-align:center;">
+        <span style="font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">— RESSOURCES UTILES —</span>
+        <h2 style="font-size:1.4rem;margin:.5rem 0 0;">À lire aussi</h2>
+      </header>
+      <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;list-style:none;padding:0;margin:0;">
+        <li style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <a href="blog/pliage-tole-sur-mesure-tout-savoir.html" style="color:var(--text-primary);text-decoration:none;">
+            <strong style="display:block;margin-bottom:.4rem;">Pliage tôle sur mesure : tout savoir</strong>
+            <span style="color:var(--text-secondary);font-size:.9rem;">Matières, tolérances, délais, prix et comment passer commande efficacement.</span>
+          </a>
+        </li>
+        <li style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <a href="blog/appui-fenetre-metal-sur-mesure.html" style="color:var(--text-primary);text-decoration:none;">
+            <strong style="display:block;margin-bottom:.4rem;">Appuis de fenêtre métal sur mesure</strong>
+            <span style="color:var(--text-secondary);font-size:.9rem;">Guide matières et mesures pour appuis de fenêtre en acier, alu ou inox.</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -835,7 +873,6 @@
         <ul role="list">
           <li><a href="couvertines.html">Couvertines</a></li>
           <li><a href="pliage.html">Pliage</a></li>
-          <li><a href="configurateur-pliage.html">Configurateur Pliage</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
         </ul>
@@ -848,6 +885,7 @@
     </div>
     <div class="footer-bottom">
       <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+            <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. &middot; SARL au capital de 5 000 € &middot; RCS Saint-Étienne 844 258 178 &middot; SIRET 844 258 178 00010 &middot; TVA FR77844258178</p>
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>

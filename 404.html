@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow">
+  <title>Page introuvable — Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://metal-pliage.fr/404.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1a1a">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .notfound-wrap {
+      min-height: calc(100vh - var(--nav-h));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--nav-h) + 2rem) 1.5rem 4rem;
+      background: var(--bg-base);
+    }
+    .notfound-inner {
+      max-width: 600px;
+      text-align: center;
+    }
+    .notfound-code {
+      font-size: clamp(5rem, 20vw, 10rem);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent);
+      margin: 0 0 1rem;
+      letter-spacing: -0.04em;
+    }
+    .notfound-inner h1 {
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      margin: 0 0 1rem;
+      color: var(--text-primary);
+    }
+    .notfound-inner p {
+      color: var(--text-secondary);
+      margin: 0 0 2.5rem;
+      line-height: 1.6;
+    }
+    .notfound-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .notfound-pages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: .75rem;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+    .notfound-pages a {
+      display: block;
+      padding: .75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: .9rem;
+      transition: border-color .2s;
+    }
+    .notfound-pages a:hover { border-color: var(--accent); color: var(--accent); }
+    .notfound-pages a span {
+      display: block;
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: .2rem;
+    }
+  </style>
+  <!-- Plausible Analytics -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+      <ul class="nav-list" role="list">
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            Couvertines <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="/couvertines.html">Couvertines sur mesure</a></li>
+            <li><a href="/accessoires.html">Accessoires</a></li>
+            <li><a href="/guides.html">Guide de pose</a></li>
+          </ul>
+        </li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            Pliage <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="/pliage.html">Pliage sur mesure</a></li>
+            <li><a href="/chapeaux-de-piliers.html">Chapeaux de piliers</a></li>
+            <li><a href="/appuis-de-fenetre.html">Appuis de fenêtre</a></li>
+            <li><a href="/habillages-bandeaux.html">Habillages & bandeaux</a></li>
+            <li><a href="/forme-libre.html">Forme libre</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="/realisations.html">Réalisations</a></li>
+        <li class="nav-item"><a href="/atelier.html">L'atelier</a></li>
+        <li class="nav-item"><a href="/blog/">Blog</a></li>
+        <li class="nav-item"><a href="/guides.html">Guides</a></li>
+        <li class="nav-item"><a href="/contact.html">Contact</a></li>
+      </ul>
+      <a href="/configurateur.html" class="btn-primary nav-cta">Configurer →</a>
+      <button class="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="notfound-wrap">
+    <div class="notfound-inner">
+      <p class="notfound-code">404</p>
+      <h1>Page introuvable</h1>
+      <p>La page que vous recherchez n'existe pas ou a été déplacée.<br>Voici quelques liens pour retrouver votre chemin.</p>
+
+      <div class="notfound-links">
+        <a href="/" class="btn-primary">Retour à l'accueil</a>
+        <a href="/contact.html" class="btn-outline">Nous contacter</a>
+      </div>
+
+      <nav class="notfound-pages" aria-label="Pages principales">
+        <a href="/couvertines.html">Couvertines<span>Acier & aluminium sur mesure</span></a>
+        <a href="/pliage.html">Pliage sur mesure<span>Toutes formes, toutes matières</span></a>
+        <a href="/configurateur.html">Configurateur<span>Prix instantané en ligne</span></a>
+        <a href="/chapeaux-de-piliers.html">Chapeaux de piliers<span>Finitions piliers & poteaux</span></a>
+        <a href="/appuis-de-fenetre.html">Appuis de fenêtre<span>Acier, alu, inox</span></a>
+        <a href="/guides.html">Guide de pose<span>Couvertines étape par étape</span></a>
+        <a href="/blog/">Blog<span>Conseils & comparatifs</span></a>
+        <a href="/accessoires.html">Accessoires<span>Éclisses, talons, angles</span></a>
+      </nav>
+    </div>
+  </main>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>

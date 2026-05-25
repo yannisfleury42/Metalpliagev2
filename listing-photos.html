@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Listing photos — Métal pliage</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, Segoe UI, sans-serif; background: #1a1a1a; color: #eee; padding: 24px; }
+  h1 { font-size: 22px; margin-bottom: 8px; }
+  p.intro { color: #aaa; margin-bottom: 24px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .card { background: #2a2a2a; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+  .card img { width: 100%; height: 220px; object-fit: cover; display: block; background: #111; }
+  .card .info { padding: 12px 14px; }
+  .card .name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .card .path { font-size: 12px; color: #888; font-family: ui-monospace, Consolas, monospace; }
+  .card .usage { font-size: 12px; color: #6cf; margin-top: 6px; }
+  .section { margin-top: 32px; }
+  .section h2 { font-size: 16px; color: #fc6; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #444; }
+</style>
+</head>
+<body>
+
+<h1>Listing des photos intégrées au site</h1>
+<p class="intro">Indique-moi les numéros / noms à supprimer et je les retire du site + du dossier.</p>
+
+<div class="section">
+  <h2>Slideshow page d'accueil — index.html (9 photos)</h2>
+  <div class="grid">
+    <div class="card"><img src="assets/photos/slide-01.jpg"><div class="info"><div class="name">slide-01</div><div class="path">assets/photos/slide-01.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-02.jpg"><div class="info"><div class="name">slide-02</div><div class="path">assets/photos/slide-02.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-03.jpg"><div class="info"><div class="name">slide-03</div><div class="path">assets/photos/slide-03.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-04.jpg"><div class="info"><div class="name">slide-04</div><div class="path">assets/photos/slide-04.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-06.jpg"><div class="info"><div class="name">slide-06</div><div class="path">assets/photos/slide-06.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-08.jpg"><div class="info"><div class="name">slide-08</div><div class="path">assets/photos/slide-08.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-10.jpg"><div class="info"><div class="name">slide-10</div><div class="path">assets/photos/slide-10.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-14.jpg"><div class="info"><div class="name">slide-14</div><div class="path">assets/photos/slide-14.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+    <div class="card"><img src="assets/photos/slide-15.jpg"><div class="info"><div class="name">slide-15</div><div class="path">assets/photos/slide-15.jpg</div><div class="usage">→ slideshow accueil</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Autres photos du site</h2>
+  <div class="grid">
+    <div class="card"><img src="assets/couvertine-photo/couvertine plate.jpg"><div class="info"><div class="name">couvertine plate</div><div class="path">assets/couvertine-photo/couvertine plate.jpg</div><div class="usage">→ index.html (section couvertines)</div></div></div>
+  </div>
+</div>
+
+</body>
+</html>

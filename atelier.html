@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="METALLIER DESIGN SERVICE — atelier de pliage acier à Saint-Étienne. Découvrez notre savoir-faire, nos machines et notre équipe derrière chaque pièce sur mesure.">
+  <meta property="og:title" content="L'Atelier Metal Pliage — Fabrication Française à Saint-Étienne">
+  <meta property="og:description" content="Plieuses numériques, acier de précision, équipe passionnée — tout ce qui se passe dans notre atelier avant que votre commande n'arrive chez vous.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:url" content="https://metal-pliage.fr/atelier.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>L'Atelier — Fabrication Française à Saint-Étienne | Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://metal-pliage.fr/atelier.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1a1a">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/preloader.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://metal-pliage.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "L'atelier", "item": "https://metal-pliage.fr/atelier.html" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "METALLIER DESIGN SERVICE - M.D.S.",
+    "url": "https://metal-pliage.fr",
+    "telephone": "+33643218201",
+    "email": "contact@metal-pliage.fr",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "8 Rue Édouard Martel",
+      "addressLocality": "Saint-Étienne",
+      "postalCode": "42000",
+      "addressCountry": "FR"
+    },
+    "vatID": "FR77844258178",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:30" }
+    ]
+  }
+  </script>
+
+  <!-- Brevo tracker -->
+  <script>
+    (function(s,i,b,c,o,n){s['SibObject']=o;s[o]=s[o]||function(){(s[o].q=s[o].q||[]).push(arguments)};s[o].l=1*new Date();n=i.createElement(b);var x=i.getElementsByTagName(b)[0];n.async=1;n.src=c;x.parentNode.insertBefore(n,x);})(window,document,'script','https://sibautomation.com/sa.js?key=VOTRE-CLE-BREVO','sib');
+    window.sib.page();
+  </script>
+  <!-- Plausible Analytics -->
+  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
+
+  <style>
+    .atelier-hero {
+      padding: calc(var(--nav-h) + 4rem) 0 4rem;
+      background: var(--bg-base);
+      text-align: center;
+    }
+    .atelier-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: .75rem; }
+    .atelier-hero p { color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.7; }
+
+    .atelier-inner { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.5rem,5vw,4rem); }
+
+    .atelier-section { padding: 4rem 0; }
+    .atelier-section--alt { background: var(--bg-surface); }
+
+    .atelier-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media(max-width:700px){ .atelier-grid-2 { grid-template-columns: 1fr; } }
+
+    .atelier-photo-placeholder {
+      aspect-ratio: 4/3;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      color: var(--text-muted);
+      font-size: .8rem;
+    }
+
+    .atelier-label { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; display: block; }
+    .atelier-h2 { font-size: clamp(1.3rem,2.5vw,1.7rem); margin-bottom: 1rem; }
+    .atelier-text { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; font-size: .95rem; }
+
+    .atelier-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .atelier-spec {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .atelier-spec .spec-label { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .3rem; }
+    .atelier-spec .spec-value { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+
+    .atelier-machines {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .atelier-machine {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+    .atelier-machine-img {
+      aspect-ratio: 16/9;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: .75rem;
+    }
+    .atelier-machine-body { padding: 1rem 1.25rem; }
+    .atelier-machine-body h3 { font-size: .95rem; margin-bottom: .3rem; }
+    .atelier-machine-body p { font-size: .82rem; color: var(--text-secondary); margin: 0; }
+
+    .atelier-values {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .atelier-value { text-align: center; }
+    .atelier-value .val-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,69,0,.1);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto .75rem;
+    }
+    .atelier-value h3 { font-size: .95rem; margin-bottom: .35rem; }
+    .atelier-value p { font-size: .85rem; color: var(--text-secondary); margin: 0; line-height: 1.55; }
+
+    .atelier-cta-band {
+      background: linear-gradient(135deg, #111 60%, #1a1a2e);
+      padding: 4rem clamp(1.5rem,5vw,4rem);
+      text-align: center;
+    }
+    .atelier-cta-band h2 { font-size: clamp(1.4rem,3vw,2rem); margin-bottom: .75rem; }
+    .atelier-cta-band p { color: var(--text-secondary); max-width: 560px; margin: 0 auto 2rem; }
+    .atelier-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar" class="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+      <ul class="nav-list" role="list">
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            Couvertines <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="couvertines.html">Couvertines sur mesure</a></li>
+            <li><a href="accessoires.html">Accessoires</a></li>
+            <li><a href="guides.html">Guide de pose</a></li>
+          </ul>
+        </li>
+        <li class="nav-item nav-item--dropdown">
+          <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            Pliage <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav-dropdown" role="list">
+            <li><a href="pliage.html">Pliage sur mesure</a></li>
+            <li><a href="chapeaux-de-piliers.html">Chapeaux de piliers</a></li>
+            <li><a href="appuis-de-fenetre.html">Appuis de fenêtre</a></li>
+            <li><a href="habillages-bandeaux.html">Habillages & bandeaux</a></li>
+            <li><a href="forme-libre.html">Forme libre</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="realisations.html">Réalisations</a></li>
+        <li class="nav-item"><a href="atelier.html" aria-current="page">L'atelier</a></li>
+        <li class="nav-item"><a href="blog/">Blog</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="configurateur.html" class="btn-primary nav-cta">Configurer →</a>
+      <button class="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="atelier-hero">
+    <div class="atelier-inner">
+      <span class="section-label">— NOTRE SAVOIR-FAIRE —</span>
+      <h1>L'atelier Metal Pliage</h1>
+      <p>Derrière chaque couvertine, chaque appui de fenêtre et chaque pliage sur mesure, il y a un atelier à Saint-Étienne, des machines de précision et des artisans qui contrôlent chaque pièce avant expédition.</p>
+    </div>
+  </header>
+
+  <!-- QUI SOMMES-NOUS -->
+  <section class="atelier-section">
+    <div class="atelier-inner">
+      <div class="atelier-grid-2">
+        <div>
+          <span class="atelier-label">À propos</span>
+          <h2 class="atelier-h2">METALLIER DESIGN SERVICE — M.D.S.</h2>
+          <p class="atelier-text">Fondée en 2019, notre société est spécialisée dans la fabrication de pièces métalliques pliées sur mesure destinées au bâtiment. Nos clients sont des particuliers, des artisans maçons, des paysagistes et des architectes qui cherchent des pièces précises, livrées rapidement, sans minimum de commande.</p>
+          <p class="atelier-text">Notre atelier est situé au 8 Rue Édouard Martel, 42000 Saint-Étienne. Chaque pièce est fabriquée ici, contrôlée ici, et expédiée depuis ici vers toute la France métropolitaine.</p>
+          <div style="margin-top:1.5rem;">
+            <p style="font-size:.8rem;color:var(--text-muted);margin:0;">SIRET : 844 258 178 00010 · TVA : FR77844258178 · RCS Saint-Étienne 844 258 178</p>
+          </div>
+        </div>
+        <div class="atelier-photo-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Photo atelier à venir</span>
+        </div>
+      </div>
+
+      <div class="atelier-specs">
+        <div class="atelier-spec">
+          <div class="spec-label">Création</div>
+          <div class="spec-value">2019</div>
+        </div>
+        <div class="atelier-spec">
+          <div class="spec-label">Localisation</div>
+          <div class="spec-value">Saint-Étienne (42)</div>
+        </div>
+        <div class="atelier-spec">
+          <div class="spec-label">Fabrication</div>
+          <div class="spec-value">100% France</div>
+        </div>
+        <div class="atelier-spec">
+          <div class="spec-label">Longueur max</div>
+          <div class="spec-value">3 000 mm</div>
+        </div>
+        <div class="atelier-spec">
+          <div class="spec-label">Délai de livraison</div>
+          <div class="spec-value">5–10 jours ouvrés</div>
+        </div>
+        <div class="atelier-spec">
+          <div class="spec-label">Matières</div>
+          <div class="spec-value">Acier · Alu · Inox</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOS MACHINES -->
+  <section class="atelier-section atelier-section--alt">
+    <div class="atelier-inner">
+      <span class="atelier-label">Équipements</span>
+      <h2 class="atelier-h2">Nos machines</h2>
+      <p class="atelier-text" style="max-width:640px;">Nos plieuses numériques permettent de reproduire n'importe quelle forme avec une tolérance de ±1 mm. Chaque programme est mémorisé pour garantir une reproductibilité parfaite à chaque commande.</p>
+
+      <div class="atelier-machines">
+        <div class="atelier-machine">
+          <div class="atelier-machine-img">Photo machine à venir</div>
+          <div class="atelier-machine-body">
+            <h3>Presse-plieuse numérique</h3>
+            <p>3 000 mm de longueur utile — acier jusqu'à 2 mm, alu jusqu'à 3 mm, inox jusqu'à 2 mm. Programmation CNC pour reproductibilité.</p>
+          </div>
+        </div>
+        <div class="atelier-machine">
+          <div class="atelier-machine-img">Photo machine à venir</div>
+          <div class="atelier-machine-body">
+            <h3>Cisaille guillotine</h3>
+            <p>Découpe droite ou en biseau jusqu'à 3 000 mm. Coupe nette sans bavure pour une mise en longueur précise.</p>
+          </div>
+        </div>
+        <div class="atelier-machine">
+          <div class="atelier-machine-img">Photo machine à venir</div>
+          <div class="atelier-machine-body">
+            <h3>Cabine de laquage poudre</h3>
+            <p>Laquage époxy poudre 80 microns, cuit au four à 200°C. Tenue aux UV et à la corrosion garantie 10 ans.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOS VALEURS -->
+  <section class="atelier-section">
+    <div class="atelier-inner">
+      <span class="atelier-label">Ce qui nous distingue</span>
+      <h2 class="atelier-h2">Notre approche</h2>
+
+      <div class="atelier-values">
+        <div class="atelier-value">
+          <div class="val-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>Précision numérique</h3>
+          <p>Chaque pièce est usinée sur programme CNC — tolérance ±1 mm, angles reproductibles à chaque commande.</p>
+        </div>
+        <div class="atelier-value">
+          <div class="val-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Qualité contrôlée</h3>
+          <p>Chaque pièce est vérifiée dimensionnellement avant emballage. Les colis sont protégés par film bulle et cornières.</p>
+        </div>
+        <div class="atelier-value">
+          <div class="val-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Réactivité</h3>
+          <p>Devis sous 24h ouvrées pour les formes libres. Fabrication en 1–5 jours ouvrés pour les formes standard.</p>
+        </div>
+        <div class="atelier-value">
+          <div class="val-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h3>Livraison nationale</h3>
+          <p>Expédition vers toute la France métropolitaine. Franco de port dès 1 200 € HT. Livraison en 2–5 jours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINITIONS -->
+  <section class="atelier-section atelier-section--alt">
+    <div class="atelier-inner">
+      <span class="atelier-label">Matières & finitions</span>
+      <h2 class="atelier-h2">Ce que nous fabriquons</h2>
+      <p class="atelier-text" style="max-width:640px;">Nous travaillons principalement l'acier prélaqué, l'aluminium et l'inox. Chaque matière est disponible dans différentes épaisseurs et finitions pour répondre à l'ensemble des usages du bâtiment.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.5rem;">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <strong style="display:block;margin-bottom:.4rem;">Acier prélaqué</strong>
+          <p style="font-size:.85rem;color:var(--text-secondary);margin:0;">Épaisseur 0,75 mm ou 1,5 mm · 5 RAL standard + autres sur devis · Laquage four époxy 80 µm</p>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <strong style="display:block;margin-bottom:.4rem;">Aluminium</strong>
+          <p style="font-size:.85rem;color:var(--text-secondary);margin:0;">Épaisseur 1,5 mm ou 2 mm · Anodisé naturel ou laqué · Immunisé contre la corrosion</p>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+          <strong style="display:block;margin-bottom:.4rem;">Inox 304 / 316L</strong>
+          <p style="font-size:.85rem;color:var(--text-secondary);margin:0;">Épaisseur 1, 2 ou 3 mm · Finition brut (à peindre) · Idéal zones maritimes et milieux humides</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="atelier-cta-band">
+    <h2>Discutons de votre projet</h2>
+    <p>Vous avez un projet particulier, des dimensions hors-standard ou une question technique ? Notre équipe vous répond sous 24h.</p>
+    <div class="atelier-cta-btns">
+      <a href="configurateur.html" class="btn-primary">Configurer en ligne →</a>
+      <a href="forme-libre.html" class="btn-outline">Forme libre — Devis 24h</a>
+      <a href="contact.html" class="btn-outline">Contacter l'atelier</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo footer-logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <p class="footer-tagline">Fabrication française &nbsp;·&nbsp; Acier de précision sur mesure</p>
+      </div>
+      <nav class="footer-nav" aria-label="Liens de bas de page">
+        <ul role="list">
+          <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="pliage.html">Pliage</a></li>
+          <li><a href="guides.html">Guide de pose</a></li>
+          <li><a href="contact.html">Contact / Devis</a></li>
+        </ul>
+      </nav>
+      <address class="footer-contact">
+        <p><a href="mailto:contact@metal-pliage.fr">contact@metal-pliage.fr</a></p>
+        <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
+        <p>8 Rue Édouard Martel<br>42000 Saint-Étienne</p>
+      </address>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2026</span> Metal Pliage — Tous droits réservés</p>
+      <div class="footer-legal-links">
+        <a href="cgv.html">CGV</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="livraison-retours.html">Livraison &amp; Retours</a>
+      </div>
+      <p class="footer-legal-line">METALLIER DESIGN SERVICE - M.D.S. &middot; SARL au capital de 5 000 € &middot; RCS Saint-Étienne 844 258 178 &middot; SIRET 844 258 178 00010 &middot; TVA FR77844258178</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/preloader.js" defer></script>
+</body>
+</html>

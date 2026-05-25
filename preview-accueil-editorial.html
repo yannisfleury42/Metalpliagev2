@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Aperçu accueil — Éditorial premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    color: var(--text);
+    background: var(--bg-base);
+    line-height:1.6;
+  }
+
+  /* ═══ PALETTE SABLE CHAUD ═══ */
+  :root {
+    --bg-base: #4C4239;
+    --bg-surface: #5A4F44;
+    --bg-card: #685C50;
+    --bg-card-elev: #756859;
+    --border: #75695C;
+    --border-strong: #897B6D;
+    --text: #FCF7EE;
+    --text-soft: #E3D5C0;
+    --text-muted: #A6997F;
+    --accent: #FF4500;
+    --accent-warm: #FFB347;
+    --gold: #D4AF6A;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  /* ═══ BANDEAU PREVIEW ═══ */
+  .preview-banner {
+    position:fixed; top:0; left:0; right:0;
+    padding:12px 24px;
+    background: rgba(20,15,10,0.95);
+    backdrop-filter: blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    z-index:99999;
+    text-align:center;
+    font-size:11px; letter-spacing:2px;
+    color: #FFB347;
+    text-transform:uppercase;
+  }
+  .preview-banner strong { color: #fff; font-weight:600; }
+  body { padding-top:42px; }
+
+  /* ═══ NAV ═══ */
+  nav.topnav {
+    position:fixed; top:42px; left:0; right:0;
+    padding: 16px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+    background: rgba(76,66,57,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index:1000;
+  }
+  .logo {
+    font-size: 18px; font-weight: 600; letter-spacing: 3px;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); font-weight: 400; }
+  .nav-links { display:flex; gap:32px; align-items:center; }
+  .nav-links a {
+    color: var(--text-soft);
+    text-decoration:none;
+    font-size:13px; font-weight:500; letter-spacing:1px;
+    text-transform:uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    padding: 10px 22px;
+    border-radius: 100px;
+    background: var(--accent);
+    color: #fff !important;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: #FF6030; color:#fff !important; transform: translateY(-1px); }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    height: 100vh;
+    min-height: 700px;
+    margin-top: 64px;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-slideshow {
+    position:absolute; inset:0;
+    background-size: cover;
+    background-position: center;
+    background-image: url('assets/photos/slide-01.jpg');
+    filter: brightness(0.55) contrast(1.05);
+  }
+  .hero-overlay {
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(76,66,57,0.4) 0%, rgba(76,66,57,0.85) 100%);
+  }
+  .hero-content {
+    position:relative; z-index:2;
+    text-align:center;
+    max-width:900px;
+    padding: 0 40px;
+  }
+  .hero-eyebrow {
+    font-size:11px; letter-spacing:6px; font-weight:600;
+    color: var(--accent-warm);
+    text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(64px, 11vw, 144px);
+    line-height: 0.95;
+    color: var(--text);
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 br + span,
+  .hero h1 .accent {
+    color: var(--accent-warm);
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-soft);
+    margin-bottom: 36px;
+    letter-spacing: 1px;
+  }
+  .hero-sub strong { color: var(--accent); font-weight: 500; }
+  .hero-cta {
+    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  }
+  .btn {
+    padding: 16px 32px;
+    font-size:13px; font-weight:500; letter-spacing:1.5px;
+    text-transform:uppercase;
+    border-radius: 100px;
+    cursor:pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s;
+    display:inline-flex; align-items:center; gap:10px;
+    text-decoration:none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #FF6030; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,69,0,0.3); }
+  .btn-outline {
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    border-color: rgba(255,255,255,0.25);
+    backdrop-filter: blur(6px);
+  }
+  .btn-outline:hover { border-color: var(--accent-warm); color: var(--accent-warm); }
+  .btn svg { width:16px; height:16px; }
+
+  .hero-scroll {
+    position:absolute; bottom:30px; left:50%;
+    transform: translateX(-50%);
+    color: var(--text-soft);
+    font-size:10px; letter-spacing:3px;
+    text-transform:uppercase;
+    opacity:0.6;
+    animation: bounce 2.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%     { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ═══ MARQUEE ═══ */
+  .marquee {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    overflow:hidden;
+    position:relative;
+  }
+  .marquee-track {
+    display:flex; gap:60px;
+    animation: scroll 35s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  @keyframes scroll {
+    to { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    font-size:14px; letter-spacing:3px;
+    color: var(--text-soft);
+    text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:60px;
+  }
+  .marquee-item strong { color: var(--accent-warm); font-weight:600; }
+  .marquee-item::after {
+    content:'◆';
+    color: var(--accent);
+    font-size:8px;
+  }
+
+  /* ═══ SECTIONS ═══ */
+  section.editorial {
+    padding: 120px 40px;
+    position:relative;
+  }
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+  .section-label {
+    display:inline-block;
+    font-size:11px; letter-spacing:5px; font-weight:600;
+    color: var(--accent);
+    text-transform:uppercase;
+    margin-bottom: 18px;
+    padding-bottom:10px;
+    position:relative;
+  }
+  .section-label::after {
+    content:'';
+    position:absolute;
+    bottom:0; left:50%;
+    transform: translateX(-50%);
+    width:30px; height:1px;
+    background: var(--accent);
+  }
+  .section-header h2 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.05;
+    color: var(--text);
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+  .section-header h2 em { color: var(--accent-warm); }
+  .section-desc {
+    max-width:600px; margin: 0 auto;
+    color: var(--text-soft);
+    font-size: 16px;
+  }
+
+  /* ═══ PROCESS ═══ */
+  .process-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .process-step {
+    background: var(--bg-card);
+    border-radius: 14px;
+    padding: 36px 28px 32px;
+    position:relative;
+    overflow:hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .process-step:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,0.25); }
+  .process-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 64px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+  .process-step h4 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .process-step p {
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ═══ COUVERTINE FEATURED ═══ */
+  .featured-product {
+    background: var(--bg-card);
+    border-radius: 18px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.25);
+    border-top: 3px solid var(--accent);
+  }
+  .featured-img {
+    background: var(--bg-card-elev);
+    background-image: url('assets/couvertine-photo/couvertine plate.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 440px;
+  }
+  .featured-img::after {
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, transparent 60%, rgba(0,0,0,0.4) 100%);
+  }
+  .featured-badge {
+    position:absolute;
+    top: 24px; left: 24px;
+    background: rgba(20,15,10,0.85);
+    backdrop-filter: blur(10px);
+    color: var(--accent-warm);
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase;
+    display:inline-flex; align-items:center; gap:6px;
+    z-index: 2;
+  }
+  .featured-body {
+    padding: 50px 50px 50px 46px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .featured-tag {
+    font-size:10px; letter-spacing:4px; font-weight:700;
+    color: var(--accent);
+    text-transform:uppercase;
+    margin-bottom: 16px;
+  }
+  .featured-body h3 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .featured-desc {
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .specs {
+    list-style:none;
+    margin-bottom: 28px;
+  }
+  .specs li {
+    display:flex; align-items:center; gap:10px;
+    font-size: 14px;
+    color: var(--text-soft);
+    padding: 6px 0;
+  }
+  .specs li::before {
+    content:'✓';
+    color: var(--accent);
+    font-weight:700;
+  }
+  .swatches {
+    display:flex; gap:10px;
+    margin-bottom: 28px;
+  }
+  .swatch {
+    width:28px; height:28px;
+    border-radius:50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .swatch-anthracite { background: #383E42; }
+  .swatch-black { background: #1B1B1B; }
+  .swatch-white { background: #F1ECE1; }
+  .swatch-choco { background: #4C2F1F; }
+  .swatch-light-grey { background: #A5A8A6; }
+  .featured-ctas {
+    display:flex; gap:12px; flex-wrap:wrap;
+  }
+
+  /* ═══ PLIAGE ═══ */
+  .pliage-tabs {
+    display:flex; justify-content:center; gap:12px;
+    margin-bottom: 50px;
+  }
+  .pliage-tab {
+    padding: 12px 24px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-soft);
+    font-size: 13px; letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .pliage-tab:hover { border-color: var(--accent); }
+  .pliage-tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .pliage-tab-dot {
+    width:6px; height:6px;
+    background: var(--accent-warm);
+    border-radius:50%;
+  }
+  .pliage-tab.active .pliage-tab-dot { background: #fff; }
+  .products-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: var(--bg-card);
+    border-radius: 14px;
+    overflow:hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-top: 3px solid var(--accent);
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+  }
+  .product-img {
+    height: 200px;
+    background: linear-gradient(135deg, var(--bg-card-elev), var(--bg-surface));
+    display:flex; align-items:center; justify-content:center;
+    color: var(--accent);
+    position: relative;
+  }
+  .product-img svg { width: 80px; height: 80px; }
+  .product-body { padding: 24px 26px 28px; }
+  .product-body h4 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .product-body p {
+    color: var(--text-soft);
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .product-price {
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .price-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent-warm);
+    font-weight: 500;
+  }
+  .price-tag span { font-size:13px; color: var(--text-muted); font-family: 'Inter', sans-serif; font-style:normal; }
+  .product-arrow {
+    color: var(--accent);
+    font-size: 22px;
+    transition: transform 0.2s;
+  }
+  .product-card:hover .product-arrow { transform: translateX(6px); }
+
+  /* ═══ STATS ═══ */
+  .stats {
+    background: var(--bg-surface);
+    padding: 80px 40px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+    text-align:center;
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 72px;
+    color: var(--accent-warm);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* ═══ PORTFOLIO ═══ */
+  .portfolio-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .portfolio-item {
+    border-radius: 12px;
+    overflow:hidden;
+    aspect-ratio: 4/3;
+    background-size: cover;
+    background-position: center;
+    position:relative;
+    cursor:pointer;
+    transition: transform 0.3s;
+  }
+  .portfolio-item:hover { transform: translateY(-4px); }
+  .portfolio-item::before {
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%);
+    transition: opacity 0.3s;
+  }
+  .portfolio-item span {
+    position:absolute;
+    bottom: 20px; left: 24px;
+    color: var(--text);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    z-index: 2;
+  }
+
+  /* ═══ TÉMOIGNAGES ═══ */
+  .testimonials-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .testimonial {
+    background: var(--bg-card);
+    border-radius: 14px;
+    padding: 36px 32px;
+    position:relative;
+  }
+  .testimonial::before {
+    content:'\201C';
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 100px;
+    color: var(--accent);
+    position:absolute;
+    top: 0; left: 16px;
+    line-height: 1;
+    opacity: 0.4;
+  }
+  .testimonial-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    position:relative;
+  }
+  .testimonial-author {
+    display:flex; align-items:center; gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .author-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+    display:flex; align-items:center; justify-content:center;
+    color: #fff;
+    font-weight: 600;
+  }
+  .author-info { line-height: 1.4; }
+  .author-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .author-role { font-size: 12px; color: var(--text-muted); }
+
+  .stars { color: var(--accent-warm); font-size: 14px; margin-bottom: 8px; }
+
+  /* ═══ FAQ ═══ */
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 22px 0;
+  }
+  .faq-q {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text);
+    cursor: pointer;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .faq-q::after {
+    content:'+';
+    color: var(--accent);
+    font-size: 28px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 0;
+    max-height: 0;
+    overflow:hidden;
+    transition: max-height 0.4s, margin-top 0.4s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; margin-top: 14px; }
+
+  /* ═══ CONTACT CTA ═══ */
+  .contact-cta {
+    background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+    border-radius: 18px;
+    padding: 80px 40px;
+    text-align:center;
+    margin-top: 40px;
+    position:relative;
+    overflow:hidden;
+    border: 1px solid var(--border);
+  }
+  .contact-cta h3 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 48px;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .contact-cta p {
+    color: var(--text-soft);
+    max-width: 540px;
+    margin: 0 auto 32px;
+  }
+  .contact-cta .cta {
+    display:inline-flex; gap: 12px;
+  }
+
+  /* ═══ FOOTER ═══ */
+  footer.foot {
+    background: #2E2823;
+    padding: 50px 40px 30px;
+    text-align:center;
+    border-top: 1px solid var(--border);
+  }
+  .foot-logo {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 26px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .foot-logo span { color: var(--accent); }
+  .foot-tag {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .foot-copy {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 800px) {
+    .featured-product { grid-template-columns: 1fr; }
+    .featured-img { min-height: 280px; }
+    .featured-body { padding: 32px; }
+    nav.topnav { padding: 12px 20px; }
+    .nav-links { display:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="preview-banner">
+    <strong>APERÇU</strong> · Page d'accueil · Style <strong>Éditorial premium</strong> · Palette <strong>Sable chaud</strong>
+  </div>
+
+  <nav class="topnav">
+    <div class="logo">METAL <span>PLIAGE</span></div>
+    <div class="nav-links">
+      <a href="#">Accueil</a>
+      <a href="#">Couvertines</a>
+      <a href="#">Pliage</a>
+      <a href="#">Réalisations</a>
+      <a href="#">Contact</a>
+      <a href="#" class="nav-cta">Devis gratuit</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-slideshow"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Précision métal · Fabriqué en France</div>
+      <h1>Métal<br><span class="accent">Pliage</span></h1>
+      <p class="hero-sub">Couvertine <strong>·</strong> Pliage sur mesure <strong>·</strong> Fabrication française</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Configurer ma couvertine
+        </a>
+        <a href="#" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          Configurer mon pliage
+        </a>
+        <a href="#" class="btn btn-outline">Demander un devis</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll ↓</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item"><strong>Fabrication française</strong></span>
+      <span class="marquee-item">Acier sur mesure</span>
+      <span class="marquee-item"><strong>Couvertines alu &amp; acier</strong></span>
+      <span class="marquee-item">RAL sur mesure</span>
+      <span class="marquee-item"><strong>Délai 10 jours</strong></span>
+      <span class="marquee-item">Pliage CNC</span>
+      <span class="marquee-item"><strong>Fabrication française</strong></span>
+      <span class="marquee-item">Acier sur mesure</span>
+      <span class="marquee-item"><strong>Couvertines alu &amp; acier</strong></span>
+      <span class="marquee-item">RAL sur mesure</span>
+      <span class="marquee-item"><strong>Délai 10 jours</strong></span>
+      <span class="marquee-item">Pliage CNC</span>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <section class="editorial">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Comment ça marche</div>
+        <h2>De la cote<br>à <em>la livraison</em></h2>
+        <p class="section-desc">Un processus simplifié, de votre premier clic jusqu'à la pièce entre vos mains.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="process-num">01</div>
+          <h4>Configurez</h4>
+          <p>Choisissez votre forme, vos dimensions, votre matière et votre finition dans notre configurateur en ligne.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">02</div>
+          <h4>Validez</h4>
+          <p>Obtenez un prix immédiat HT/TTC, ajoutez au panier et réglez en ligne par carte sécurisée via Stripe.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">03</div>
+          <h4>Fabrication</h4>
+          <p>Votre pièce est fabriquée sur commande dans notre atelier. Pliage CNC et laquage en 5 à 10 jours ouvrés.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">04</div>
+          <h4>Livraison</h4>
+          <p>Expédition sécurisée, emballage sur mesure, livraison à domicile ou sur chantier partout en France.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUVERTINE FEATURED -->
+  <section class="editorial">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Couvertine</div>
+        <h2>Couvertine<br><em>sur mesure</em></h2>
+        <p class="section-desc">Couvertine plate avec retours et rejet d'eau — acier ou aluminium, fabriquée à vos dimensions exactes.</p>
+      </div>
+      <article class="featured-product">
+        <div class="featured-img">
+          <div class="featured-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Fabriquée en France
+          </div>
+        </div>
+        <div class="featured-body">
+          <div class="featured-tag">Produit standard</div>
+          <h3>Couvertine avec Retour</h3>
+          <p class="featured-desc">Profil plat avec retours de chaque côté vers le bas et rejet d'eau à 45° vers l'intérieur. Dépassement de 25 mm de part et d'autre du muret. Protection renforcée contre les infiltrations.</p>
+          <ul class="specs">
+            <li>Acier 0,75 mm ou Aluminium 1,5 mm</li>
+            <li>Rejet d'eau intégré à 45°</li>
+            <li>Dimensions sur mesure, longueur jusqu'à 3 000 mm</li>
+            <li>5 coloris RAL standard — autres sur devis</li>
+          </ul>
+          <div class="swatches">
+            <span class="swatch swatch-anthracite" title="Gris Anthracite"></span>
+            <span class="swatch swatch-black" title="Noir Satiné"></span>
+            <span class="swatch swatch-white" title="Blanc Pur"></span>
+            <span class="swatch swatch-choco" title="Brun Chocolat"></span>
+            <span class="swatch swatch-light-grey" title="Gris Clair"></span>
+          </div>
+          <div class="featured-ctas">
+            <a href="#" class="btn btn-primary">Configurer ma couvertine</a>
+            <a href="#" class="btn btn-outline">Demander un devis</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PLIAGE -->
+  <section class="editorial" style="background: var(--bg-surface);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Pliage sur mesure</div>
+        <h2>Formes prédéfinies<br>&amp; <em>libres</em></h2>
+        <p class="section-desc">Acier, aluminium ou inox. 5 couleurs standard ou RAL personnalisé sur devis.</p>
+      </div>
+      <div class="pliage-tabs">
+        <button class="pliage-tab active"><span class="pliage-tab-dot"></span>Acier</button>
+        <button class="pliage-tab"><span class="pliage-tab-dot"></span>Aluminium</button>
+        <button class="pliage-tab"><span class="pliage-tab-dot"></span>Inox</button>
+      </div>
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none"><polyline points="20,8 20,42 60,42 60,8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div class="product-body">
+            <h4>Forme U</h4>
+            <p>Pliage en U classique, pour habillage de poteau, encadrement ou structure.</p>
+            <div class="product-price">
+              <span class="price-tag">42€ <span>/m</span></span>
+              <span class="product-arrow">→</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none"><polyline points="15,42 15,8 65,8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div class="product-body">
+            <h4>Forme L</h4>
+            <p>Cornière simple à 90°, finitions de mur, jonctions, plinthes métalliques.</p>
+            <div class="product-price">
+              <span class="price-tag">28€ <span>/m</span></span>
+              <span class="product-arrow">→</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none"><polyline points="10,42 25,8 55,8 70,42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div class="product-body">
+            <h4>Forme trapèze</h4>
+            <p>Couvre-mur, larmier, dosseret — protection renforcée des sommets de muret.</p>
+            <div class="product-price">
+              <span class="price-tag">52€ <span>/m</span></span>
+              <span class="product-arrow">→</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img">
+            <svg viewBox="0 0 80 50" fill="none"><polyline points="10,42 10,20 40,20 40,8 70,8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div class="product-body">
+            <h4>Forme libre</h4>
+            <p>Jusqu'à 10 plis personnalisés, transmettez votre schéma — devis en 24h.</p>
+            <div class="product-price">
+              <span class="price-tag">Sur devis</span>
+              <span class="product-arrow">→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">12 ans</div>
+        <div class="stat-lbl">Expérience</div>
+      </div>
+      <div>
+        <div class="stat-num">2500+</div>
+        <div class="stat-lbl">Pliages livrés</div>
+      </div>
+      <div>
+        <div class="stat-num">48h</div>
+        <div class="stat-lbl">Délai moyen</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">Fabrication FR</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="editorial">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Réalisations</div>
+        <h2>Nos projets<br><em>en images</em></h2>
+        <p class="section-desc">Quelques exemples de pièces livrées sur chantiers résidentiels et tertiaires.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item" style="background-image:url('assets/photos/slide-01.jpg')">
+          <span>Couvertine alu RAL 7016</span>
+        </div>
+        <div class="portfolio-item" style="background-image:url('assets/photos/slide-02.jpg')">
+          <span>Habillage bandeau zinc</span>
+        </div>
+        <div class="portfolio-item" style="background-image:url('assets/photos/slide-08.jpg')">
+          <span>Appuis de fenêtre acier</span>
+        </div>
+        <div class="portfolio-item" style="background-image:url('assets/photos/slide-15.jpg')">
+          <span>Chapeau de pilier sur mesure</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES -->
+  <section class="editorial" style="background: var(--bg-surface);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Témoignages</div>
+        <h2>Ils nous font<br><em>confiance</em></h2>
+        <p class="section-desc">Plus de 2500 pliages livrés à des particuliers, architectes et entreprises du bâtiment.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">Qualité irréprochable, finitions parfaites et délai respecté. Le configurateur est ultra simple à utiliser. Je recommande sans hésitation.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JM</div>
+            <div class="author-info">
+              <div class="author-name">Jean-Marc D.</div>
+              <div class="author-role">Particulier · Toulouse</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">Pliage acier sur mesure reçu en 6 jours, conforme au schéma. Le service client est disponible et réactif. Du vrai sur mesure français.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">CB</div>
+            <div class="author-info">
+              <div class="author-name">Claire B.</div>
+              <div class="author-role">Architecte · Lyon</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">Couvertines posées sur une terrasse, rendu impeccable. La couleur RAL 7016 anthracite est superbe. À recommander les yeux fermés.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PG</div>
+            <div class="author-info">
+              <div class="author-name">Pierre G.</div>
+              <div class="author-role">Entreprise BTP · Bordeaux</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="editorial">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">FAQ</div>
+        <h2>Questions<br><em>fréquentes</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-q">Quel est le délai de fabrication ?<span></span></div>
+          <div class="faq-a">Entre 5 et 10 jours ouvrés selon la complexité de la pièce et la finition choisie. Vous recevez un suivi de fabrication par email.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Puis-je commander un coloris RAL spécifique ?<span></span></div>
+          <div class="faq-a">Oui, en plus de nos 5 coloris standard, tout RAL personnalisé est disponible sur devis (supplément 15%).</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Livrez-vous partout en France ?<span></span></div>
+          <div class="faq-a">Oui, livraison à domicile ou sur chantier partout en France métropolitaine. Tarif selon dimensions et destination.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Comment se passe le paiement ?<span></span></div>
+          <div class="faq-a">Paiement 100% sécurisé en ligne par carte bancaire via Stripe, ou par virement sur devis pour les professionnels.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section class="editorial">
+    <div class="section-inner">
+      <div class="contact-cta">
+        <div class="section-label" style="display:inline-block">Devis gratuit</div>
+        <h3>Parlez-nous de<br><em>votre projet</em></h3>
+        <p>Configurez en ligne pour un prix immédiat, ou contactez-nous pour les projets sur mesure complexes.</p>
+        <div class="cta">
+          <a href="#" class="btn btn-primary">Démarrer mon devis</a>
+          <a href="#" class="btn btn-outline">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="foot-logo">Métal <span>Pliage</span></div>
+    <div class="foot-tag">Précision · Fabriqué en France</div>
+    <div class="foot-copy">© 2026 Métal Pliage — Tous droits réservés</div>
+  </footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.parentElement.classList.toggle('open');
+    });
+  });
+</script>
+</body>
+</html>

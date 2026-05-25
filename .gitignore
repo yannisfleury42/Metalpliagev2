@@ -3,7 +3,7 @@ node_modules
 .env
 server.log
 server.err
-.claude/settings.local.json
+.claude/
 
 # Dossiers de travail / itérations design — non déployés sur le site live
 _dev/
@@ -16,6 +16,23 @@ _mockup/
 *-old-*.html
 index-original.html
 js/pliage-backup-avant-patches.js
+
+# Prototypes / démos de design (ne pas déployer)
+preview-*.html
+cursor-*.html
+effets-*.html
+theme-preview*.html
+hero-*.html
+loaders-demo.html
+listing-photos.html
+contact-variants.html
+contact-visuels.html
+appui-angle-variants.html
+configurateur-axo-variants.html
+configurateur-corniere-*.html
+configurateur-eclisse-*.html
+configurateur-talon-*.html
+configurateur-visuels-demo.html
 
 # Images originales (PNG/JPG) remplacées par WebP — backups gardés en local
 assets/photos/_orig/

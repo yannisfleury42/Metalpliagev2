@@ -138,7 +138,7 @@
     'B': "<strong>Largeur du support</strong><br>C'est la largeur de votre muret, mesurée du bord extérieur au bord extérieur, en haut.",
     'A': "<strong>Hauteur de retour</strong><br>Les retours sont les rabats verticaux de chaque côté de la couvertine, qui descendent le long du muret. Plus c'est haut, mieux le muret est protégé des coulures.",
     'C': "<strong>Largeur de tôle (développé)</strong><br>Largeur totale de la tôle avant pliage. Calcul : <em>B + 2× retours + dépassement</em>. Modifier seulement si vous savez ce que vous faites.",
-    'L': "<strong>Longueur de la pièce</strong><br>Longueur d'une seule pièce de couvertine (max 3 000 mm). Pour les murs plus longs, on utilise des éclisses de jonction (étape Accessoires).",
+    'L': "<strong>Longueur de la pièce</strong><br>Longueur souhaitée pour votre couvertine, en millimètres.",
     'R': "<strong>Rejet d'eau</strong><br>Petit pli à 45° tout au bord du retour, qui empêche l'eau de revenir vers le muret par capillarité. Fixé à 10 mm.",
     'H': "<strong>Hauteur de l'âme</strong><br>L'âme est la partie verticale centrale d'un profil en Z. C'est la dimension entre les deux pliures.",
     'Nez': "<strong>Nez de l'appui</strong><br>Petit retour vertical en façade qui éloigne l'eau de la maçonnerie (effet larmier). Angle généralement à 92° pour s'écarter naturellement du mur.",

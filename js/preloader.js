@@ -10,51 +10,34 @@
   const PRELOADER_HTML = `
 <div id="preloader" aria-hidden="true">
   <div class="pl-scene">
-    <svg class="pl-svg" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="pl-svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="plWall" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#7a766e"/>
-          <stop offset="100%" stop-color="#4a463e"/>
-        </linearGradient>
-        <linearGradient id="plCouv" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#DCE3EA"/>
-          <stop offset="45%"  stop-color="#A8B6C4"/>
-          <stop offset="100%" stop-color="#5C6878"/>
-        </linearGradient>
-        <linearGradient id="plEdge" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#3E4A56"/>
-          <stop offset="100%" stop-color="#171D24"/>
-        </linearGradient>
+        <filter id="pl-glow">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="pl-glow-o">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
       </defs>
-      <rect x="80" y="85" width="100" height="85" fill="url(#plWall)"/>
-      <g stroke="rgba(0,0,0,0.3)" stroke-width="0.5">
-        <line x1="80" y1="100" x2="180" y2="100"/>
-        <line x1="80" y1="115" x2="180" y2="115"/>
-        <line x1="80" y1="130" x2="180" y2="130"/>
-        <line x1="80" y1="145" x2="180" y2="145"/>
-        <line x1="80" y1="160" x2="180" y2="160"/>
-      </g>
-      <g stroke="rgba(0,0,0,0.18)" stroke-width="0.4">
-        <line x1="110" y1="100" x2="110" y2="115"/>
-        <line x1="150" y1="100" x2="150" y2="115"/>
-        <line x1="100" y1="115" x2="100" y2="130"/>
-        <line x1="140" y1="115" x2="140" y2="130"/>
-        <line x1="170" y1="115" x2="170" y2="130"/>
-      </g>
-      <g class="pl-couv">
-        <polygon points="74,80 80,80 80,100 74,100" fill="url(#plCouv)"/>
-        <rect x="74" y="100" width="6" height="0.8" fill="url(#plEdge)"/>
-        <rect x="74" y="74" width="112" height="8" fill="url(#plCouv)"/>
-        <rect x="74" y="74" width="112" height="1.5" fill="rgba(255,255,255,0.5)"/>
-        <rect x="74" y="82" width="112" height="0.9" fill="url(#plEdge)"/>
-        <polygon points="180,80 186,80 186,98 188,102 184,102 180,98" fill="url(#plCouv)"/>
-      </g>
-      <ellipse class="pl-water" cx="187" cy="106" rx="2.4" ry="3.4" fill="#6AB8E8" opacity="0"/>
-      <g class="pl-check">
-        <circle cx="220" cy="50" r="11" fill="none" stroke="#3CB371" stroke-width="1.5"/>
-        <polyline points="215.5,50 219,53.5 225,47" fill="none" stroke="#3CB371"
-                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>
+      <!-- M -->
+      <polyline class="pl-letter-m"
+        points="20,100 20,20 52,65 84,20 84,100"
+        stroke="#EEF3F8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+        fill="none" filter="url(#pl-glow)"/>
+      <!-- Point laser fin du M -->
+      <circle class="pl-dot-m" cx="84" cy="100" r="4.5" fill="#fff" filter="url(#pl-glow)"/>
+      <!-- Séparateur -->
+      <line class="pl-sep" x1="100" y1="18" x2="100" y2="102"
+            stroke="#FF4500" stroke-width="1.5" opacity="0"/>
+      <!-- P -->
+      <path class="pl-letter-p"
+        d="M 116,100 L 116,20 L 152,20 Q 180,20 180,48 Q 180,76 152,76 L 116,76"
+        stroke="#FF4500" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+        fill="none" filter="url(#pl-glow-o)"/>
+      <!-- Point laser fin du P -->
+      <circle class="pl-dot-p" cx="116" cy="76" r="4.5" fill="#FF4500" filter="url(#pl-glow-o)"/>
     </svg>
     <div class="pl-label">
       <span class="pl-name">METAL</span><span class="pl-accent"> PLIAGE</span>
@@ -93,7 +76,7 @@
     const replayPreloader = () => {
       preloader.classList.remove('done');
       preloader.querySelectorAll(
-        '.pl-couv, .pl-water, .pl-check, .pl-svg, .pl-label, .preloader-bar-fill'
+        '.pl-letter-m, .pl-letter-p, .pl-sep, .pl-dot-m, .pl-dot-p, .pl-svg, .pl-label, .preloader-bar-fill'
       ).forEach(el => {
         el.style.animation = 'none';
         void el.offsetWidth; // reflow → réamorce l'animation

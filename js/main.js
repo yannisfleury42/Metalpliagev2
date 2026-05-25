@@ -77,7 +77,7 @@
 
       // Close mobile nav if open
       navbar.classList.remove('nav-open');
-      const btn = navbar.querySelector('.nav-hamburger');
+      const btn = navbar.querySelector('.nav-hamburger, .nav-toggle');
       if (btn) btn.setAttribute('aria-expanded', 'false');
     });
   });
@@ -121,7 +121,7 @@
 
 
   /* ── HAMBURGER / MOBILE NAV ───────────────────────────────── */
-  const hamburger = document.querySelector('.nav-hamburger');
+  const hamburger = document.querySelector('.nav-hamburger, .nav-toggle');
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
@@ -153,29 +153,16 @@
 
 
   /* ── CONTACT FORM ─────────────────────────────────────────── */
-  // URL de l'API backend (server.js sur Render). En dev local on cible localhost.
-  const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-    ? ''  // server.js Express sert le même host en dev
-    : 'https://metal-pliage-api.onrender.com';  // À remplacer par l'URL Render après déploiement
-
   const form = document.querySelector('.contact-form');
   const successMsg = document.querySelector('.form-success-msg');
 
   if (form && successMsg) {
-    // Warmup : réveille le free tier Render (cold start ~30s) dès l'arrivée sur la page
-    // pour éviter l'attente au moment du submit.
-    if (API_BASE) {
-      fetch(`${API_BASE}/api/health`, { method: 'GET', mode: 'cors' }).catch(() => {});
-    }
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Honeypot anti-spam : si le champ caché est rempli, c'est un bot.
       const honey = form.querySelector('input[name="_honey"]');
       if (honey && honey.value) return;
 
-      // Validation côté client
       const required = form.querySelectorAll('[required]');
       let valid = true;
       required.forEach((field) => {
@@ -195,31 +182,28 @@
       try {
         const data = Object.fromEntries(new FormData(form));
         delete data._honey;
-        const res = await fetch(`${API_BASE}/api/contact`, {
+        const res = await fetch('https://formsubmit.co/ajax/contact@metal-pliage.fr', {
           method: 'POST',
-          mode: 'cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            ...data,
+            _subject: 'Demande de contact — Metal Pliage',
+            _captcha: 'false',
+          }),
         });
-        if (!res.ok) {
-          const errBody = await res.json().catch(() => ({}));
-          throw new Error(errBody.error || "Erreur d'envoi");
-        }
+        if (!res.ok) throw new Error("Erreur d'envoi");
         form.hidden = true;
         successMsg.hidden = false;
         successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch (err) {
-        alert(err.message || "Erreur d'envoi du message. Réessayez ou écrivez à contact@metal-pliage.fr");
+        alert("Erreur d'envoi. Réessayez ou écrivez directement à contact@metal-pliage.fr");
         btn.textContent = originalText;
         btn.disabled = false;
       }
     });
 
-    // Clear red border on focus
     form.querySelectorAll('input, select, textarea').forEach((field) => {
-      field.addEventListener('focus', () => {
-        field.style.borderColor = '';
-      });
+      field.addEventListener('focus', () => { field.style.borderColor = ''; });
     });
   }
 
@@ -312,52 +296,8 @@
   }
 
 
-  /* ── WHATSAPP STICKY (mobile-first, cible artisans/paysagistes en chantier) ── */
-  function injectWhatsAppSticky() {
-    if (document.getElementById('whatsapp-sticky')) return;
-    const a = document.createElement('a');
-    a.id = 'whatsapp-sticky';
-    a.href = 'https://wa.me/33643218201?text=' + encodeURIComponent('Bonjour, je souhaite un devis pour ');
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.setAttribute('aria-label', 'Discuter sur WhatsApp');
-    a.innerHTML = `
-      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
-        <path fill="#fff" d="M16 3C8.82 3 3 8.82 3 16c0 2.31.6 4.49 1.66 6.39L3 29l6.84-1.62A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm0 23.6c-2.07 0-4-.57-5.66-1.55l-.4-.24-4.06.96.97-3.96-.26-.41A10.6 10.6 0 1 1 26.6 16c0 5.85-4.75 10.6-10.6 10.6zm5.84-7.94c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.51-.16-.73.16-.21.32-.84 1.05-1.03 1.27-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.59-1.6-.96-.85-1.6-1.9-1.8-2.22-.19-.32-.02-.5.14-.66.14-.14.32-.38.48-.57.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.57-.08-.16-.73-1.76-1-2.41-.27-.63-.54-.55-.73-.56l-.62-.01c-.21 0-.55.08-.84.4-.29.32-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.22 3.4 5.39 4.77.75.32 1.34.51 1.8.66.76.24 1.45.21 2 .13.61-.09 1.9-.78 2.16-1.53.27-.75.27-1.4.19-1.53-.08-.13-.29-.21-.61-.37z"/>
-      </svg>
-      <span class="ws-label">WhatsApp</span>
-    `;
-    document.body.appendChild(a);
-  }
-  // N'affiche pas sur la page contact (déjà couverte par le formulaire)
-  if (!location.pathname.endsWith('/contact.html')) {
-    injectWhatsAppSticky();
-  }
 
 
-  /* ── HELPER LONGUEUR > 2800 MM (configurateur couvertine) ────────────── */
-  // Quand l'utilisateur saisit une longueur proche du max (3000 mm),
-  // on lui propose une solution pour les murs plus longs (éclisses).
-  const inputL = document.getElementById('input-L');
-  const isCouvertineConfig = location.pathname.endsWith('/configurateur.html');
-  if (inputL && isCouvertineConfig) {
-    const helper = document.createElement('div');
-    helper.className = 'dim-helper-proactive';
-    helper.hidden = true;
-    helper.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <circle cx="8" cy="8" r="7" stroke="#FF4500" stroke-width="1.5"/>
-        <path d="M8 4v5M8 11.5v.5" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span><strong>Mur plus long que 3 m ?</strong> Une couvertine fait <b>3 m max</b> en une pièce. Pour un mur de 6 m, prévoyez 2 longueurs + 1 éclisse de jonction (étape 4).</span>
-    `;
-    inputL.closest('.dim-row').appendChild(helper);
-    const updateHelper = () => {
-      helper.hidden = Number(inputL.value) < 2800;
-    };
-    inputL.addEventListener('input', updateHelper);
-    updateHelper();
-  }
 
 
   /* ── TOOLTIP CTA DISABLED (configurateurs) ────────────────────────────── */
@@ -417,5 +357,46 @@
       }, 400);
     });
   }
+
+
+  /* ── RGPD COOKIE NOTICE ──────────────────────────────────────── */
+  (function () {
+    if (localStorage.getItem('mp-cookie-ok')) return;
+    const banner = document.createElement('div');
+    banner.id = 'cookie-notice';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-label', 'Notice cookies');
+    banner.innerHTML = '<p style="margin:0 1rem 0 0;font-size:.85rem;color:#e5e7eb;">Ce site utilise des cookies d\'analyse (Plausible, sans suivi publicitaire) et un outil d\'e-mail (Brevo) pour vous recontacter. <a href="/confidentialite.html" style="color:#fff;text-decoration:underline;">En savoir plus</a></p><button id="cookie-accept" style="flex-shrink:0;padding:.5rem 1.2rem;border:none;border-radius:6px;background:#f97316;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;">J\'accepte</button><button id="cookie-refuse" style="flex-shrink:0;padding:.5rem 1rem;border:1px solid #6b7280;border-radius:6px;background:transparent;color:#9ca3af;font-size:.85rem;cursor:pointer;white-space:nowrap;margin-left:.5rem;">Refuser</button>';
+    const s = document.createElement('style');
+    s.textContent = '#cookie-notice{position:fixed;bottom:0;left:0;right:0;z-index:1000;display:flex;align-items:center;padding:1rem clamp(1rem,4vw,2rem);background:#1f2937;border-top:1px solid #374151;box-shadow:0 -4px 24px rgba(0,0,0,.3);}@media(max-width:600px){#cookie-notice{flex-direction:column;align-items:flex-start;gap:.75rem;}}';
+    document.head.appendChild(s);
+    document.body.appendChild(banner);
+
+    function dismiss(accepted) {
+      if (accepted) localStorage.setItem('mp-cookie-ok', '1');
+      else localStorage.setItem('mp-cookie-ok', 'no');
+      banner.remove();
+    }
+    document.getElementById('cookie-accept').addEventListener('click', () => dismiss(true));
+    document.getElementById('cookie-refuse').addEventListener('click', () => dismiss(false));
+  })();
+
+
+  /* ── WHATSAPP STICKY BUTTON ──────────────────────────────────── */
+  (function () {
+    const btn = document.createElement('a');
+    btn.href = 'https://wa.me/33643218201?text=Bonjour%2C%20j%27ai%20une%20question%20sur%20une%20commande%20Metal%20Pliage.';
+    btn.target = '_blank';
+    btn.rel = 'noopener noreferrer';
+    btn.setAttribute('aria-label', 'Nous contacter sur WhatsApp');
+    btn.id = 'wa-btn';
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+    const style = document.createElement('style');
+    style.textContent = '#wa-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.25);text-decoration:none;transition:transform .2s,box-shadow .2s;}#wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(0,0,0,.3);}@media(max-width:768px){#wa-btn{bottom:1rem;right:1rem;width:50px;height:50px;}}';
+    document.head.appendChild(style);
+    document.body.appendChild(btn);
+  })();
+
+
 
 })();
