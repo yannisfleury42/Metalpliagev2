@@ -38,10 +38,12 @@ function onHomepage(e) {
 function onGmailMessage(e) {
   GmailApp.setCurrentMessageAccessToken(e.gmail.accessToken);
   var msg = GmailApp.getMessageById(e.gmail.messageId);
-  var attachments = msg.getAttachments({ includeInlineImages: false });
-  var pdfs = attachments.filter(isPdf_);
+  var thread = msg.getThread();
+  // Scanne TOUS les messages du thread (pas juste le message actif),
+  // car la facture peut etre en PJ d'un message precedent.
+  var pdfs = collectThreadPdfs_(thread);
 
-  var alreadyDone = hasLabel_(msg.getThread(), LABEL_DONE);
+  var alreadyDone = hasLabel_(thread, LABEL_DONE);
 
   var card = CardService.newCardBuilder()
     .setHeader(CardService.newCardHeader()
@@ -65,7 +67,8 @@ function onGmailMessage(e) {
   // --- Liste des PDFs ---
   if (pdfs.length > 0) {
     var pdfSection = CardService.newCardSection().setHeader("Pieces jointes PDF");
-    pdfs.forEach(function (att) {
+    pdfs.forEach(function (item) {
+      var att = item.att;
       var sizeKB = Math.round(att.getSize() / 1024);
       pdfSection.addWidget(CardService.newKeyValue()
         .setIcon(CardService.Icon.DESCRIPTION)
@@ -108,28 +111,28 @@ function onGmailMessage(e) {
 function analyzeInvoiceAction(e) {
   GmailApp.setCurrentMessageAccessToken(e.gmail.accessToken);
   var msg = GmailApp.getMessageById(e.parameters.messageId);
-  var attachments = msg.getAttachments({ includeInlineImages: false });
-  var pdfs = attachments.filter(isPdf_);
+  var thread = msg.getThread();
+  var pdfs = collectThreadPdfs_(thread);
 
   if (pdfs.length === 0) {
     return CardService.newActionResponseBuilder()
       .setNotification(CardService.newNotification()
-        .setText("Aucun PDF a traiter dans ce mail."))
+        .setText("Aucun PDF a traiter dans ce thread."))
       .build();
   }
 
   var inbox = getOrCreateInboxFolder_();
   var savedNames = [];
-  pdfs.forEach(function (att) {
-    var filename  = buildFilename_(msg, att);
+  pdfs.forEach(function (item) {
+    var filename  = buildFilename_(item.msg, item.att);
     var finalName = uniqueFilename_(inbox, filename);
-    inbox.createFile(att.copyBlob().setName(finalName));
+    inbox.createFile(item.att.copyBlob().setName(finalName));
     savedNames.push(finalName);
   });
 
   // Labellise le thread comme archive
   var labelDone = getOrCreateLabel_(LABEL_DONE);
-  msg.getThread().addLabel(labelDone);
+  thread.addLabel(labelDone);
 
   // Carte de confirmation
   var card = CardService.newCardBuilder()
@@ -161,6 +164,24 @@ function analyzeInvoiceAction(e) {
 
 
 // --- Helpers --------------------------------------------------
+
+/**
+ * Parcourt tous les messages d'un thread et renvoie la liste
+ * des PJ PDF sous forme {msg, att}.
+ */
+function collectThreadPdfs_(thread) {
+  var result = [];
+  var messages = thread.getMessages();
+  for (var i = 0; i < messages.length; i++) {
+    var atts = messages[i].getAttachments({ includeInlineImages: false });
+    for (var j = 0; j < atts.length; j++) {
+      if (isPdf_(atts[j])) {
+        result.push({ msg: messages[i], att: atts[j] });
+      }
+    }
+  }
+  return result;
+}
 
 function isPdf_(attachment) {
   var ct = (attachment.getContentType() || "").toLowerCase();

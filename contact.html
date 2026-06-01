@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Demande de devis gratuit sous 24h ouvrées. Plans, croquis ou cotations. Conseil technique par téléphone au 06 43 21 82 01. Couvertines et pliage acier sur mesure.">
-  <title>Devis Couvertine &amp; Pliage Acier — Réponse 24h | Metal Pliage</title>
+  <meta name="description" content="Prise de contact et demande de devis gratuit sous 24h ouvrées. Joignez vos plans (PDF, DWG, DXF) ou photos de croquis. Conseil technique par téléphone au 06 43 21 82 01. Couvertines et pliage acier sur mesure.">
+  <title>Contact &amp; Demande de devis — Couvertine &amp; Pliage Acier | Metal Pliage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -147,6 +147,73 @@
     .contact-form-centered {
       max-width: 820px;
       margin: 0 auto;
+    }
+
+    /* ══════════════════════════════════════════
+       UPLOAD ZONE (drag & drop)
+    ══════════════════════════════════════════ */
+    .upload-zone {
+      position: relative;
+      border: 2px dashed rgba(255,69,0,0.4);
+      border-radius: 10px;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      background: rgba(255,69,0,0.03);
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .upload-zone:hover,
+    .upload-zone.is-drag {
+      border-color: var(--accent);
+      background: rgba(255,69,0,0.07);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icon {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+      line-height: 1;
+    }
+    .upload-text {
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .upload-sub {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+    }
+    .file-list {
+      list-style: none;
+      margin: 0.8rem 0 0;
+      padding: 0;
+    }
+    .file-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.7rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .file-list li::before {
+      content: '📄';
+      flex-shrink: 0;
+    }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
     }
 
     /* ══════════════════════════════════════════
@@ -303,8 +370,8 @@
         <div class="choice-card-icon" aria-hidden="true">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
-        <h3>Prise de contact</h3>
-        <p>Question, renseignement sur nos produits, tarifs ou livraisons.</p>
+        <h3>Contact &amp; devis</h3>
+        <p>Question, renseignement, devis. Joignez vos plans si besoin (PDF, DWG, DXF).</p>
         <span class="choice-card-pill">Remplir le formulaire</span>
       </div>
 
@@ -329,60 +396,87 @@
 
       <div class="contact-page-form animate-fadeup">
         <header class="contact-form-header">
-          <h2 id="contact-title">Prise de contact</h2>
-          <p>Remplissez le formulaire ci-dessous ou envoyez-nous vos plans / DXF. Nous vous contactons sous 24h. Pour un pliage précis avec dimensions, utilisez plutôt le <a href="configurateur-pliage.html" style="color:var(--accent)">configurateur</a>.</p>
+          <h2 id="contact-title">Prise de contact / Demande de devis</h2>
+          <p>Posez votre question ou demandez un devis personnalisé. Joignez vos plans (PDF, DWG, DXF) ou une photo de croquis si vous en avez. Réponse sous 24h ouvrées.<br>Pour un pliage précis avec dimensions à l'avance, vous pouvez aussi utiliser notre <a href="configurateur-pliage.html" style="color:var(--accent)">configurateur en ligne</a>.</p>
         </header>
 
-        <form class="contact-form" novalidate>
+        <form class="contact-form"
+              id="contact-form"
+              action="https://formsubmit.co/contact@metal-pliage.fr"
+              method="POST"
+              enctype="multipart/form-data"
+              novalidate>
+          <!-- Anti-spam + redirection (FormSubmit) -->
+          <input type="hidden" name="_subject" value="Contact / Devis — Metal Pliage">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://metal-pliage.fr/contact.html?sent=1">
+          <!-- Honeypot anti-bot -->
           <input type="text" name="_honey" tabindex="-1" autocomplete="off"
                  style="position:absolute;left:-9999px" aria-hidden="true">
+
           <div class="form-row form-row--2col">
             <div class="form-group">
               <label for="f-name">Nom *</label>
-              <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Jean Dupont" required aria-required="true">
+              <input type="text" id="f-name" name="Nom" autocomplete="name" placeholder="Jean Dupont" required aria-required="true">
             </div>
             <div class="form-group">
               <label for="f-company">Société</label>
-              <input type="text" id="f-company" name="company" autocomplete="organization" placeholder="Entreprise SA">
+              <input type="text" id="f-company" name="Société" autocomplete="organization" placeholder="Entreprise SA">
             </div>
           </div>
           <div class="form-row form-row--2col">
             <div class="form-group">
               <label for="f-email">Email *</label>
-              <input type="email" id="f-email" name="email" autocomplete="email" placeholder="contact@entreprise.fr" required aria-required="true">
+              <input type="email" id="f-email" name="Email" autocomplete="email" placeholder="contact@entreprise.fr" required aria-required="true">
             </div>
             <div class="form-group">
               <label for="f-phone">Téléphone</label>
-              <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="+33 6 00 00 00 00">
+              <input type="tel" id="f-phone" name="Téléphone" autocomplete="tel" placeholder="+33 6 00 00 00 00">
             </div>
           </div>
           <div class="form-group">
             <label for="f-product">Produit</label>
-            <select id="f-product" name="product">
+            <select id="f-product" name="Produit">
               <option value="" disabled selected>Sélectionner un produit</option>
-              <option value="tole-acier">Tôle Acier Huilée</option>
-              <option value="inox-304">Inox 304 / 316L</option>
-              <option value="inox-brosse">Inox Brossé</option>
-              <option value="couvertine-std">Couvertines Standard</option>
-              <option value="couvertine-custom">Couvertines Sur Mesure</option>
-              <option value="pliage">Pliage Sur Mesure</option>
-              <option value="autre">Autre / Plusieurs produits</option>
+              <option value="Tôle Acier Huilée">Tôle Acier Huilée</option>
+              <option value="Inox 304 / 316L">Inox 304 / 316L</option>
+              <option value="Inox Brossé">Inox Brossé</option>
+              <option value="Couvertines Standard">Couvertines Standard</option>
+              <option value="Couvertines Sur Mesure">Couvertines Sur Mesure</option>
+              <option value="Pliage Sur Mesure">Pliage Sur Mesure</option>
+              <option value="Autre / Plusieurs produits">Autre / Plusieurs produits</option>
             </select>
           </div>
           <div class="form-group">
             <label for="f-message">Message / Détails du projet</label>
-            <textarea id="f-message" name="message" rows="5" placeholder="Décrivez votre projet, vos contraintes, votre délai souhaité..."></textarea>
+            <textarea id="f-message" name="Message" rows="5" placeholder="Décrivez votre projet, vos contraintes, votre délai souhaité..."></textarea>
           </div>
+
+          <!-- UPLOAD : plans / photos / croquis -->
+          <div class="form-group">
+            <label for="file-input">Joindre des fichiers <span style="color:var(--text-muted);font-weight:normal;">(plans, photos, croquis — optionnel)</span></label>
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" name="Fichiers[]" id="file-input"
+                     multiple
+                     accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
+              <div class="upload-icon" aria-hidden="true">↑</div>
+              <div class="upload-text">Glissez vos fichiers ici ou cliquez pour parcourir</div>
+              <div class="upload-sub">DXF, DWG, PDF, photo de croquis (JPG, PNG, HEIC) — jusqu'à 25 Mo total</div>
+            </div>
+            <ul class="file-list" id="file-list" aria-live="polite"></ul>
+          </div>
+
           <div class="form-footer">
             <p class="form-legal">* Champs obligatoires. Vos données ne sont pas transmises à des tiers.</p>
-            <button type="submit" class="btn-primary">Envoyer la demande</button>
+            <button type="submit" class="btn-primary">Envoyer ma demande</button>
           </div>
         </form>
 
-        <div class="form-success-msg" aria-live="polite" hidden>
+        <div class="form-success-msg" id="form-success-msg" aria-live="polite" hidden>
           <div class="success-icon" aria-hidden="true">✓</div>
           <h3>Demande envoyée</h3>
-          <p>Nous vous répondrons sous 24h ouvrées.</p>
+          <p>Merci, nous avons bien reçu votre demande. Notre équipe vous répondra sous 24h ouvrées par email.</p>
         </div>
       </div>
 
@@ -494,6 +588,55 @@
   <script>
     function selectChoice() {
       document.getElementById('contact-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ═══ UPLOAD : drag & drop + listing fichiers ═══
+    (function() {
+      const zone = document.getElementById('upload-zone');
+      const input = document.getElementById('file-input');
+      const list  = document.getElementById('file-list');
+      if (!zone || !input || !list) return;
+
+      function fmt(b) {
+        return b < 1024 ? b + ' o'
+             : b < 1048576 ? (b/1024).toFixed(1) + ' Ko'
+             : (b/1048576).toFixed(2) + ' Mo';
+      }
+      function render(files) {
+        list.innerHTML = '';
+        files.forEach(f => {
+          const li = document.createElement('li');
+          li.innerHTML = `${f.name}<span class="file-size">${fmt(f.size)}</span>`;
+          list.appendChild(li);
+        });
+      }
+
+      input.addEventListener('change', e => render(Array.from(e.target.files)));
+
+      ['dragover','dragenter'].forEach(ev => {
+        zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('is-drag'); });
+      });
+      ['dragleave','drop'].forEach(ev => {
+        zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('is-drag'); });
+      });
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        if (e.dataTransfer.files.length) {
+          input.files = e.dataTransfer.files;
+          render(Array.from(e.dataTransfer.files));
+        }
+      });
+    })();
+
+    // ═══ Message succès si ?sent=1 (retour FormSubmit) ═══
+    if (new URLSearchParams(location.search).get('sent') === '1') {
+      const form = document.getElementById('contact-form');
+      const msg  = document.getElementById('form-success-msg');
+      if (form && msg) {
+        form.style.display = 'none';
+        msg.hidden = false;
+        document.getElementById('contact-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   </script>
 </body>
