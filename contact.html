@@ -20,14 +20,14 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://metal-pliage.fr/contact.html">
-  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Demander un Devis | Metal Pliage">
   <meta name="twitter:description" content="R&#233;ponse sous 24h. Couvertines et pliage acier sur mesure.">
-  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
@@ -261,21 +261,6 @@
       .contact-info-strip-inner { grid-template-columns: 1fr; }
     }
   </style>
-  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
-  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
-  <script>
-    window.brevoKey = 'VOTRE-CLE-BREVO';
-    (function(d, s, id, tid) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = true;
-      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
-      fjs.parentNode.insertBefore(js, fjs);
-      window.sib = window.sib || {};
-      window.sib.equeue = window.sib.equeue || [];
-      window.sib.email_id = '';
-    })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -317,6 +302,7 @@
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
   <div id="scroll-progress" aria-hidden="true"></div>
 
@@ -354,7 +340,7 @@
   <!-- ═══════════════════════════════════════════
        CHOIX DU BESOIN
   ═══════════════════════════════════════════ -->
-  <section class="contact-choice-section" aria-label="Type de demande">
+  <section id="main-content" tabindex="-1" class="contact-choice-section" aria-label="Type de demande">
     <div class="contact-choice-intro animate-fadeup">
       <span class="section-label">QUE RECHERCHEZ-VOUS ?</span>
       <h2>CHOISISSEZ VOTRE BESOIN</h2>

@@ -20,35 +20,21 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://metal-pliage.fr/configurateur.html">
-  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Configurateur Couvertine | Metal Pliage">
   <meta name="twitter:description" content="Configurez votre couvertine acier sur mesure. Prix instantan&#233;, livraison 10 j.">
-  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/configurateur.css">
-  <link rel="stylesheet" href="css/preloader.css">
-  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
-  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
-  <script>
-    window.brevoKey = 'VOTRE-CLE-BREVO';
-    (function(d, s, id, tid) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = true;
-      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
-      fjs.parentNode.insertBefore(js, fjs);
-      window.sib = window.sib || {};
-      window.sib.equeue = window.sib.equeue || [];
-      window.sib.email_id = '';
-    })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  <link rel="stylesheet" href="css/preloader.css">  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-configurateur">
+  <a href="#step-1" class="skip-link">Aller au contenu principal</a>
 
   <!-- ═══════════════════════════════════════════
        NAVBAR
@@ -142,7 +128,7 @@
     <div class="config-steps">
 
       <!-- ══ STEP 1 : MATIÈRE ══ -->
-      <section class="step-section" id="step-1" aria-label="Étape 1 — Matière">
+      <section tabindex="-1" class="step-section" id="step-1" aria-label="Étape 1 — Matière">
         <div class="step-header">
           <span class="step-num" aria-hidden="true">1</span>
           <div class="step-header-text">
@@ -217,7 +203,7 @@
               Largeur du support
             </label>
             <div class="dim-input-wrap">
-              <input type="number" id="input-B" class="dim-input" value="200" min="80" max="600" step="5" aria-describedby="hint-B">
+              <input type="number" inputmode="numeric" id="input-B" class="dim-input" value="200" min="80" max="600" step="5" aria-describedby="hint-B">
               <span class="dim-unit">mm</span>
             </div>
             <span class="dim-hint" id="hint-B">Largeur vue de dessus de votre muret. Ex : muret de 20 cm → 200 mm</span>
@@ -229,7 +215,7 @@
               Hauteur de retour
             </label>
             <div class="dim-input-wrap">
-              <input type="number" id="input-A" class="dim-input" value="40" min="20" max="60" step="5" aria-describedby="hint-A">
+              <input type="number" inputmode="numeric" id="input-A" class="dim-input" value="40" min="20" max="60" step="5" aria-describedby="hint-A">
               <span class="dim-unit">mm</span>
             </div>
             <span class="dim-hint" id="hint-A">min 20 — max 60 · identique des 2 côtés</span>
@@ -241,7 +227,7 @@
               Largeur de tôle
             </label>
             <div class="dim-input-wrap">
-              <input type="number" id="input-C" class="dim-input" value="250" min="210" max="400" step="5" aria-describedby="hint-C">
+              <input type="number" inputmode="numeric" id="input-C" class="dim-input" value="250" min="210" max="400" step="5" aria-describedby="hint-C">
               <span class="dim-unit">mm</span>
             </div>
             <span class="dim-hint" id="hint-C">B+50 par défaut · max 400 mm</span>
@@ -253,7 +239,7 @@
               Longueur de pièce
             </label>
             <div class="dim-input-wrap">
-              <input type="number" id="input-L" class="dim-input" value="2000" min="200" max="3000" step="50" aria-describedby="hint-L">
+              <input type="number" inputmode="numeric" id="input-L" class="dim-input" value="2000" min="200" max="3000" step="50" aria-describedby="hint-L">
               <span class="dim-unit">mm</span>
             </div>
             <span class="dim-hint" id="hint-L">min 200 — max 3000</span>
@@ -446,7 +432,7 @@
             </div>
             <div class="accessory-qty">
               <button class="qty-btn" data-acc="talon" data-dir="-1" aria-label="Retirer un talon">−</button>
-              <input type="number" class="qty-input" id="qty-talon" value="0" min="0" max="20" aria-label="Quantité talons" readonly>
+              <input type="number" inputmode="numeric" class="qty-input" id="qty-talon" value="0" min="0" max="20" aria-label="Quantité talons" readonly>
               <button class="qty-btn" data-acc="talon" data-dir="1" aria-label="Ajouter un talon">+</button>
             </div>
             <div class="accessory-colors" id="colors-talon" role="group" aria-label="Couleur talon">
@@ -634,7 +620,7 @@
             </div>
             <div class="accessory-qty">
               <button class="qty-btn" data-acc="clisse" data-dir="-1" aria-label="Retirer une éclisse">−</button>
-              <input type="number" class="qty-input" id="qty-clisse" value="0" min="0" max="20" aria-label="Quantité éclisses" readonly>
+              <input type="number" inputmode="numeric" class="qty-input" id="qty-clisse" value="0" min="0" max="20" aria-label="Quantité éclisses" readonly>
               <button class="qty-btn" data-acc="clisse" data-dir="1" aria-label="Ajouter une éclisse">+</button>
             </div>
             <div class="accessory-colors" id="colors-clisse" role="group" aria-label="Couleur éclisse">
@@ -770,7 +756,7 @@
             </div>
             <div class="accessory-qty">
               <button class="qty-btn" data-acc="angle" data-dir="-1" aria-label="Retirer un angle">−</button>
-              <input type="number" class="qty-input" id="qty-angle" value="0" min="0" max="20" aria-label="Quantité angles" readonly>
+              <input type="number" inputmode="numeric" class="qty-input" id="qty-angle" value="0" min="0" max="20" aria-label="Quantité angles" readonly>
               <button class="qty-btn" data-acc="angle" data-dir="1" aria-label="Ajouter un angle">+</button>
             </div>
             <div class="accessory-colors" id="colors-angle" role="group" aria-label="Couleur angle">
@@ -907,7 +893,7 @@
             </div>
             <div class="accessory-qty">
               <button class="qty-btn" data-acc="corniere" data-dir="-1" aria-label="Retirer une cornière">−</button>
-              <input type="number" class="qty-input" id="qty-corniere" value="0" min="0" max="20" aria-label="Quantité cornières" readonly>
+              <input type="number" inputmode="numeric" class="qty-input" id="qty-corniere" value="0" min="0" max="20" aria-label="Quantité cornières" readonly>
               <button class="qty-btn" data-acc="corniere" data-dir="1" aria-label="Ajouter une cornière">+</button>
             </div>
             <div class="accessory-colors" id="colors-corniere" role="group" aria-label="Couleur cornière">
@@ -933,7 +919,7 @@
           <label class="qty-label" for="main-qty">Quantité</label>
           <div class="qty-controls">
             <button class="qty-btn qty-btn--lg" id="main-qty-minus" aria-label="Diminuer la quantité">−</button>
-            <input type="number" id="main-qty" class="qty-input qty-input--lg" value="1" min="1" max="999" aria-label="Quantité de couvertines">
+            <input type="number" inputmode="numeric" id="main-qty" class="qty-input qty-input--lg" value="1" min="1" max="999" aria-label="Quantité de couvertines">
             <button class="qty-btn qty-btn--lg" id="main-qty-plus" aria-label="Augmenter la quantité">+</button>
           </div>
         </div>

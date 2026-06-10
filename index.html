@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Fabricant français de tôles acier, inox, couvertines et profilés pliés sur mesure. Configurateur en ligne, finitions RAL, livraison 10 jours.">
-  <meta name="keywords" content="couvertine acier, pliage sur mesure, inox, tôle acier, fabricant français, RAL 7016, profilé métallique">
+
   <meta property="og:title" content="Fabrication et livraison de couvertines et pliages sur mesure | Metal Pliage">
   <meta property="og:description" content="Configurez et commandez vos pièces acier sur mesure. Fabrication française, 5 finitions RAL standard + autres sur devis, livraison sous 10 jours.">
   <meta property="og:type" content="website">
@@ -24,11 +24,11 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
-  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
-  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.png">
   <!-- Preload hero (LCP) -->
   <link rel="preload" as="image" href="assets/photos/metal-pliage-atelier-01.webp" fetchpriority="high">
   <link rel="stylesheet" href="css/styles.css">
@@ -503,25 +503,11 @@
     @media (max-width: 880px) {
       .diptyque-grid { grid-template-columns: 1fr; }
     }
-  </style>
-  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
-  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
-  <script>
-    window.brevoKey = 'VOTRE-CLE-BREVO';
-    (function(d, s, id, tid) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = true;
-      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
-      fjs.parentNode.insertBefore(js, fjs);
-      window.sib = window.sib || {};
-      window.sib.equeue = window.sib.equeue || [];
-      window.sib.email_id = '';
-    })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  </style>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+  <a href="#hero" class="skip-link">Aller au contenu principal</a>
 
   <!-- scroll-progress retiré -->
 
@@ -561,7 +547,7 @@
   <!-- ═══════════════════════════════════════════
        SECTION 1 — HERO (slideshow original + nouveau module)
   ═══════════════════════════════════════════ -->
-  <section id="hero" aria-label="Présentation">
+  <section tabindex="-1" id="hero" aria-label="Présentation">
     <div class="hero-letterbox-top" aria-hidden="true"></div>
     <div class="hero-letterbox-bottom" aria-hidden="true"></div>
     <div class="hero-slideshow" aria-hidden="true">

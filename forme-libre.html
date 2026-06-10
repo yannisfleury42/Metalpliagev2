@@ -20,14 +20,14 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://metal-pliage.fr/forme-libre.html">
-  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pliage Forme Libre | Metal Pliage">
   <meta name="twitter:description" content="Pliage m&#233;tallique sur mesure, formes libres, jusqu&apos;&#224; 10 plis. Devis sous 24h.">
-  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
@@ -432,25 +432,11 @@
       }
     ]
   }
-  </script>
-  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
-  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
-  <script>
-    window.brevoKey = 'VOTRE-CLE-BREVO';
-    (function(d, s, id, tid) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = true;
-      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
-      fjs.parentNode.insertBefore(js, fjs);
-      window.sib = window.sib || {};
-      window.sib.equeue = window.sib.equeue || [];
-      window.sib.email_id = '';
-    })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-forme-libre">
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
   <!-- NAVIGATION -->
   <nav id="navbar" aria-label="Navigation principale">
@@ -541,7 +527,7 @@
     </aside>
 
     <!-- FORMULAIRE -->
-    <main>
+    <main id="main-content" tabindex="-1">
       <form class="libre-form" id="forme-libre-form"
             action="https://formsubmit.co/contact@metal-pliage.fr"
             method="POST"

@@ -626,21 +626,41 @@ p { color: var(--text-secondary); }
   padding: 0.65rem 1.6rem;
 }
 
+/* ── Accessibilité : skip-link (visible au focus clavier) ──── */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 8px;
+  z-index: 10000;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 0 0 6px 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus,
+.skip-link:focus-visible { top: 0; }
+
 /* ── Hamburger ─────────────────────────────────────────────── */
 .nav-hamburger,
 .nav-toggle {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   margin-left: auto;
-  padding: 0;
+  padding: 10px;
 }
 .nav-hamburger span,
 .nav-toggle span {
   display: block;
+  width: 24px;
   height: 1px;
   background: var(--text-primary);
   transition: transform var(--t) var(--ease), opacity var(--t) var(--ease);
