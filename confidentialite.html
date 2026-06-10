@@ -15,11 +15,11 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1a1a">
   <!-- Open Graph / partages sociaux -->
-  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
-  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/futuriste.css">
   <link rel="stylesheet" href="css/preloader.css">
@@ -35,22 +35,7 @@
     .legal-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
     .legal-page .info-block { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin: 0.5rem 0 1rem; }
     .legal-page .info-block p { margin: 0.15rem 0; }
-  </style>
-  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
-  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
-  <script>
-    window.brevoKey = 'VOTRE-CLE-BREVO';
-    (function(d, s, id, tid) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = true;
-      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
-      fjs.parentNode.insertBefore(js, fjs);
-      window.sib = window.sib || {};
-      window.sib.equeue = window.sib.equeue || [];
-      window.sib.email_id = '';
-    })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>  <script type="application/ld+json">
+  </style>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -63,6 +48,7 @@
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <div id="scroll-progress" aria-hidden="true"></div>
   <nav id="navbar" aria-label="Navigation principale">
     <div class="nav-inner">
@@ -81,7 +67,7 @@
     </div>
   </nav>
 
-  <main class="legal-page">
+  <main id="main-content" tabindex="-1" class="legal-page">
     <nav class="breadcrumb" aria-label="Fil d'Ariane" style="margin-bottom:2rem;">
       <a href="index.html">Accueil</a><span aria-hidden="true"> › </span><span aria-current="page">Confidentialité</span>
     </nav>

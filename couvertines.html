@@ -18,14 +18,14 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://metal-pliage.fr/couvertines.html">
-  <meta property="og:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta property="og:image" content="https://metal-pliage.fr/og-cover.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Metal Pliage — Couvertines et pliage acier sur mesure">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Couvertine Acier Sur Mesure | Metal Pliage">
   <meta name="twitter:description" content="Couvertines acier ou alu sur mesure, d&#232;s 28&#8364;/ml HT. Configurateur en ligne, livraison 10 j.">
-  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.svg">
+  <meta name="twitter:image" content="https://metal-pliage.fr/og-cover.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -233,27 +233,13 @@
       .couvertine-featured-body { padding: 1.6rem 1.5rem !important; }
       .couvertine-featured-body h3 { font-size: 1.7rem !important; }
     }
-  </style>
-  <!-- Brevo (ex-Sendinblue) — tracker automation email J+1/5/10 -->
-  <!-- TODO : remplacer VOTRE-CLE-BREVO par votre clé tracker Brevo (Paramètres > Tracking > Tracker JS) -->
-  <script>
-    window.brevoKey = 'VOTRE-CLE-BREVO';
-    (function(d, s, id, tid) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id; js.async = true;
-      js.src = 'https://sibautomation.com/sa.js?key=' + tid;
-      fjs.parentNode.insertBefore(js, fjs);
-      window.sib = window.sib || {};
-      window.sib.equeue = window.sib.equeue || [];
-      window.sib.email_id = '';
-    })(document, 'script', 'brevo-sa', window.brevoKey);
-  </script>  <!-- Preload LCP hero image -->
+  </style>  <!-- Preload LCP hero image -->
   <link rel="preload" as="image" href="assets/couvertine-photo/couvertine plate.jpg" fetchpriority="high">
   <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body class="page-couvertines">
+  <a href="#couvertine" class="skip-link">Aller au contenu principal</a>
 
   <!-- ═══════════════════════════════════════════
        NAV
@@ -289,7 +275,7 @@
   <!-- ═══════════════════════════════════════════
        PRODUIT STANDARD
   ═══════════════════════════════════════════ -->
-  <section id="couvertine" aria-labelledby="couvertine-title">
+  <section tabindex="-1" id="couvertine" aria-labelledby="couvertine-title">
     <div class="cv-section">
 
       <article class="couvertine-featured animate-fadeup">

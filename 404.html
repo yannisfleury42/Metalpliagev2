@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="canonical" href="https://metal-pliage.fr/404.html">
+  <meta name="robots" content="noindex, follow">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
   <link rel="manifest" href="/site.webmanifest">
@@ -83,6 +83,7 @@
   <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
   <!-- NAV -->
   <nav id="navbar" class="navbar" role="navigation" aria-label="Navigation principale">
@@ -124,7 +125,7 @@
     </div>
   </nav>
 
-  <main class="notfound-wrap">
+  <main id="main-content" tabindex="-1" class="notfound-wrap">
     <div class="notfound-inner">
       <p class="notfound-code">404</p>
       <h1>Page introuvable</h1>
