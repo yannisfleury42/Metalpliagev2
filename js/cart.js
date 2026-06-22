@@ -239,6 +239,8 @@
       .order-form input:focus,.order-form textarea:focus{outline:none;border-color:var(--accent,#FF4500);}
       .order-reassure{font-size:.84rem;line-height:1.5;background:rgba(255,69,0,.08);border:1px solid rgba(255,69,0,.32);padding:.65rem .8rem;border-radius:5px;color:var(--text-secondary,#ccc);margin:0;}
       .order-mini{font-size:.72rem;color:var(--text-muted,#888);line-height:1.45;margin:.2rem 0 0;}
+      .order-error{font-size:.82rem;line-height:1.45;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.45);color:#fca5a5;padding:.6rem .75rem;border-radius:5px;margin:0;}
+      .order-error a{color:#fca5a5;text-decoration:underline;}
     `;
     document.head.appendChild(st);
   }
@@ -268,23 +270,22 @@
       <label>Téléphone*<input type="tel" name="Telephone" inputmode="tel" required autocomplete="tel"></label>
       <label>Code postal &amp; ville*<input type="text" name="Code postal et ville" required></label>
       <label>Message (accès, délai souhaité…)<textarea name="Message" rows="2"></textarea></label>
-      <input type="hidden" name="Reference">
-      <input type="hidden" name="Recapitulatif commande">
-      <input type="hidden" name="_subject" value="Nouvelle demande de commande — Metal Pliage">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next">
+      <p class="order-error" id="order-error" hidden></p>
       <button type="submit" class="btn-primary btn-full">Envoyer ma demande</button>
       <p class="order-mini">Produits fabriqués sur mesure : ni repris, ni échangés (art. L221-28 du Code de la consommation). Le prix indiqué est ferme.</p>
     `;
-    form.querySelector('[name="Recapitulatif commande"]').value = cartSummaryText();
-    form.querySelector('[name="_next"]').value = window.location.origin + '/commande-confirmee.html';
     host.appendChild(form);
     form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    // À l'envoi : on génère la référence, on sauvegarde la demande (preuve imprimable)
-    // et on redirige vers la confirmation avec la référence.
-    form.addEventListener('submit', () => {
+    // Envoi en AJAX : permet de DÉTECTER un échec (sinon une commande peut se perdre
+    // en silence) et déclenche un accusé de réception automatique au client (_autoresponse).
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const btn = form.querySelector('button[type="submit"]');
+      const errEl = form.querySelector('#order-error');
+      if (errEl) errEl.hidden = true;
+
       const ref = genRef();
       const order = {
         ref,
@@ -295,20 +296,55 @@
         })),
         total: cart.reduce((s, it) => s + it.price * it.qty, 0),
         client: {
-          nom: (form.querySelector('[name="Nom"]') || {}).value || '',
-          email: (form.querySelector('[name="Email"]') || {}).value || '',
-          tel: (form.querySelector('[name="Telephone"]') || {}).value || '',
-          adresse: (form.querySelector('[name="Code postal et ville"]') || {}).value || '',
-          message: (form.querySelector('[name="Message"]') || {}).value || '',
+          nom: form.querySelector('[name="Nom"]').value,
+          email: form.querySelector('[name="Email"]').value,
+          tel: form.querySelector('[name="Telephone"]').value,
+          adresse: form.querySelector('[name="Code postal et ville"]').value,
+          message: form.querySelector('[name="Message"]').value,
         },
       };
-      try { localStorage.setItem('mp_last_order', JSON.stringify(order)); } catch (e) {}
-      form.querySelector('[name="Reference"]').value = ref;
-      const subj = form.querySelector('[name="_subject"]');
-      if (subj) subj.value = 'Demande de commande ' + ref + ' — Metal Pliage';
-      form.querySelector('[name="_next"]').value =
-        window.location.origin + '/commande-confirmee.html?order=' + encodeURIComponent(ref);
-      // pas de preventDefault : l'envoi natif FormSubmit se poursuit
+      try { localStorage.setItem('mp_last_order', JSON.stringify(order)); } catch (err) {}
+
+      const payload = {
+        Reference: ref,
+        Nom: order.client.nom,
+        Email: order.client.email,
+        Telephone: order.client.tel,
+        'Code postal et ville': order.client.adresse,
+        Message: order.client.message,
+        'Recapitulatif commande': cartSummaryText(),
+        _subject: 'Demande de commande ' + ref + ' — Metal Pliage',
+        _template: 'table',
+        _captcha: 'false',
+        _autoresponse:
+          'Bonjour,\n\nNous avons bien reçu votre demande de commande (référence ' + ref + ') sur Metal Pliage. Merci !\n\n'
+          + 'Après vérification, nous vous enverrons votre lien de paiement (carte bancaire ou virement), généralement sous 24 h ouvrées. '
+          + 'La fabrication sur mesure démarre dès réception du règlement.\n\n'
+          + 'À très vite,\nMetal Pliage / MDS\ncontact@metal-pliage.fr — 06 43 21 82 01',
+      };
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/' + ORDER_EMAIL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !(data && (data.success === 'true' || data.success === true))) {
+          throw new Error('FormSubmit a renvoyé une erreur');
+        }
+        window.location.href = 'commande-confirmee.html?order=' + encodeURIComponent(ref);
+      } catch (err) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Envoyer ma demande'; }
+        if (errEl) {
+          errEl.innerHTML = "L'envoi a échoué. Réessayez, ou contactez-nous directement : "
+            + '<a href="mailto:contact@metal-pliage.fr">contact@metal-pliage.fr</a> · '
+            + '<a href="tel:+33643218201">06 43 21 82 01</a>.';
+          errEl.hidden = false;
+          errEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
     });
   }
 
