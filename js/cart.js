@@ -1,13 +1,15 @@
 ﻿/* ═══════════════════════════════════════════════════════════════
-   cart.js — Shop configurator, cart state, Stripe checkout
+   cart.js — Panier + demande de commande (sans paiement immédiat)
    Metal Pliage
+   Flux : le client valide sa demande → email à MDS via FormSubmit →
+          MDS vérifie et envoie un lien de paiement (carte ou virement).
 ═══════════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
   /* ── CONFIG ───────────────────────────────────────────────── */
-  const STRIPE_PK = 'pk_test_51TTNAxAgv3zk1c5zHucUyiIp9RooJL8skChklmgRDMyB1pFsMHLzPldvvLInb3cB2SryURPBuGl724drLsrKd8zt00VTLr5mVx';
+  const ORDER_EMAIL = 'contact@metal-pliage.fr';
 
   /* ── STATE ────────────────────────────────────────────────── */
   let cart = [];
@@ -198,50 +200,77 @@
     });
   }
 
-  /* ── STRIPE CHECKOUT ──────────────────────────────────────── */
+  /* ── DEMANDE DE COMMANDE (sans paiement immédiat) ─────────────
+     Le client envoie sa demande (récap panier + coordonnées) par email
+     via FormSubmit. MDS vérifie puis renvoie un lien de paiement. ── */
+  function cartSummaryText() {
+    const lines = cart.map((it, i) =>
+      `${i + 1}. ${it.name || 'Couvertine métallique'} | ${it.finish} | ${it.length} | qté ${it.qty} | ${formatPrice(it.price)}/u = ${formatPrice(it.price * it.qty)}`
+    );
+    const total = cart.reduce((s, it) => s + it.price * it.qty, 0);
+    lines.push(`TOTAL : ${formatPrice(total)}`);
+    return lines.join('\n');
+  }
+
+  function injectOrderStyles() {
+    if (document.getElementById('order-form-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'order-form-styles';
+    st.textContent = `
+      .order-form{display:flex;flex-direction:column;gap:.65rem;padding:1rem 0 0;}
+      .order-form label{display:flex;flex-direction:column;gap:.25rem;font-size:.82rem;color:var(--text-secondary,#bbb);}
+      .order-form input,.order-form textarea{padding:.6rem .7rem;border:1px solid #3a3a3a;background:#161616;color:#fff;border-radius:5px;font-size:.95rem;font-family:inherit;}
+      .order-form input:focus,.order-form textarea:focus{outline:none;border-color:var(--accent,#FF4500);}
+      .order-reassure{font-size:.84rem;line-height:1.5;background:rgba(255,69,0,.08);border:1px solid rgba(255,69,0,.32);padding:.65rem .8rem;border-radius:5px;color:var(--text-secondary,#ccc);margin:0;}
+      .order-mini{font-size:.72rem;color:var(--text-muted,#888);line-height:1.45;margin:.2rem 0 0;}
+    `;
+    document.head.appendChild(st);
+  }
+
+  function showOrderForm() {
+    if (!cartDrawer) return;
+    const host = cartDrawer.querySelector('.cart-drawer-body')
+      || (cartItemsList && cartItemsList.parentElement)
+      || cartDrawer;
+    const existing = host.querySelector('#order-form');
+    if (existing) {
+      existing.querySelector('[name="Recapitulatif commande"]').value = cartSummaryText();
+      existing.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    injectOrderStyles();
+    if (cartFooter) cartFooter.hidden = true;
+    const form = document.createElement('form');
+    form.id = 'order-form';
+    form.className = 'order-form';
+    form.method = 'POST';
+    form.action = 'https://formsubmit.co/' + ORDER_EMAIL;
+    form.innerHTML = `
+      <p class="order-reassure">Vous ne payez rien maintenant. Après vérification de votre commande, vous recevrez votre <strong>lien de paiement</strong> (carte bancaire ou virement), généralement sous 24&nbsp;h ouvrées.</p>
+      <label>Nom complet*<input type="text" name="Nom" required autocomplete="name"></label>
+      <label>Email*<input type="email" name="Email" required autocomplete="email"></label>
+      <label>Téléphone*<input type="tel" name="Telephone" inputmode="tel" required autocomplete="tel"></label>
+      <label>Code postal &amp; ville*<input type="text" name="Code postal et ville" required></label>
+      <label>Message (accès, délai souhaité…)<textarea name="Message" rows="2"></textarea></label>
+      <input type="hidden" name="Recapitulatif commande">
+      <input type="hidden" name="_subject" value="Nouvelle demande de commande — Metal Pliage">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next">
+      <button type="submit" class="btn-primary btn-full">Envoyer ma demande</button>
+      <p class="order-mini">Produits fabriqués sur mesure : ni repris, ni échangés (art. L221-28 du Code de la consommation). Le prix indiqué est ferme.</p>
+    `;
+    form.querySelector('[name="Recapitulatif commande"]').value = cartSummaryText();
+    form.querySelector('[name="_next"]').value = window.location.origin + '/commande-confirmee.html';
+    host.appendChild(form);
+    form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
   if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', async () => {
+    checkoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (!cart.length) return;
-
-      checkoutBtn.disabled = true;
-      checkoutBtn.textContent = 'Redirection…';
-
-      try {
-        const res = await fetch('/api/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            items: cart.map((item) => ({
-              finish: item.finish,
-              length: item.length,
-              price: item.price,
-              quantity: item.qty,
-            })),
-          }),
-        });
-
-        if (!res.ok) throw new Error(`Erreur serveur : ${res.status}`);
-
-        const { id } = await res.json();
-        // Lazy-load Stripe.js seulement quand on en a besoin (sortir du chemin critique)
-        if (!window.Stripe) {
-          await new Promise((resolve, reject) => {
-            const s = document.createElement('script');
-            s.src = 'https://js.stripe.com/v3/';
-            s.async = true;
-            s.onload = resolve;
-            s.onerror = () => reject(new Error('Échec chargement Stripe'));
-            document.head.appendChild(s);
-          });
-        }
-        const stripe = Stripe(STRIPE_PK);
-        await stripe.redirectToCheckout({ sessionId: id });
-      } catch (err) {
-        console.error(err);
-        checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Procéder au paiement';
-        alert('Une erreur est survenue. Veuillez réessayer.');
-      }
+      showOrderForm();
     });
   }
 
