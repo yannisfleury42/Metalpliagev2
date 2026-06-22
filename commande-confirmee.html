@@ -316,6 +316,59 @@
         </div>
       </header>
 
+      <!-- RÉCAPITULATIF IMPRIMABLE -->
+      <style>
+        .order-recap{max-width:880px;margin:32px auto 0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:28px 24px;}
+        .recap-print-head{display:none;}
+        .recap-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+        .recap-head h2{font-size:1.15rem;color:var(--text-primary);}
+        .btn-print{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;background:var(--accent);color:#fff;border:none;border-radius:5px;font-size:.85rem;font-weight:600;cursor:pointer;}
+        .btn-print:hover{filter:brightness(1.08);}
+        .recap-meta{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:18px;}
+        .recap-meta span{display:block;color:var(--text-muted);text-transform:uppercase;font-size:.7rem;letter-spacing:.06em;margin-bottom:2px;}
+        .recap-meta strong{color:var(--text-primary);font-family:'Courier New',monospace;font-size:1rem;}
+        .recap-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:18px;}
+        .recap-table th,.recap-table td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text-secondary);}
+        .recap-table th{color:var(--text-muted);text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;}
+        .recap-table td:last-child,.recap-table th:last-child{text-align:right;white-space:nowrap;}
+        .recap-table tfoot td{font-weight:700;color:var(--text-primary);border-top:2px solid var(--border-hover);border-bottom:none;}
+        .recap-client h3{font-size:.95rem;margin:6px 0 6px;color:var(--text-primary);}
+        .recap-client #r-client{font-size:.85rem;color:var(--text-secondary);line-height:1.6;}
+        .recap-note{font-size:.75rem;color:var(--text-muted);line-height:1.5;margin-top:14px;}
+        @media print {
+          body * { visibility: hidden !important; }
+          #order-recap, #order-recap * { visibility: visible !important; }
+          #order-recap { position:absolute; left:0; top:0; width:100%; margin:0; border:none; border-radius:0; background:#fff; color:#000; }
+          #order-recap *, .recap-table th, .recap-table td, .recap-meta strong, .recap-client #r-client, .recap-note { color:#000 !important; }
+          #btn-print { display:none !important; }
+          .recap-print-head { display:block !important; font-weight:800; font-size:18px; margin-bottom:14px; letter-spacing:.5px; }
+        }
+      </style>
+      <section class="order-recap" id="order-recap" hidden aria-label="Récapitulatif de votre demande">
+        <div class="recap-print-head">METAL PLIAGE / MDS — Récapitulatif de demande</div>
+        <div class="recap-head">
+          <h2>Récapitulatif de votre demande</h2>
+          <button type="button" id="btn-print" class="btn-print">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Imprimer / Enregistrer en PDF
+          </button>
+        </div>
+        <div class="recap-meta">
+          <div><span>Référence</span><strong id="r-ref">—</strong></div>
+          <div><span>Date</span><strong id="r-date">—</strong></div>
+        </div>
+        <table class="recap-table">
+          <thead><tr><th>Article</th><th>Finition</th><th>Longueur</th><th>Qté</th><th>Montant</th></tr></thead>
+          <tbody id="r-items"></tbody>
+          <tfoot><tr><td colspan="4">Total (prix ferme)</td><td id="r-total">—</td></tr></tfoot>
+        </table>
+        <div class="recap-client">
+          <h3>Vos coordonnées</h3>
+          <div id="r-client"></div>
+        </div>
+        <p class="recap-note">Ce document est un récapitulatif de votre demande, et non une facture. Le prix indiqué est ferme ; le règlement s'effectuera après notre validation, via le lien de paiement que nous vous adresserons (carte bancaire ou virement). Produits fabriqués sur mesure : ni repris ni échangés (art. L221-28 du Code de la consommation).</p>
+      </section>
+
       <!-- TIMELINE 4 ÉTAPES -->
       <section class="order-timeline" aria-label="Avancement de votre commande">
         <p class="timeline-title">Avancement de votre commande</p>
@@ -408,6 +461,38 @@
         const fill = document.querySelector('.timeline-line-fill');
         if (fill) fill.style.width = '0%';
       }, 200);
+    })();
+  </script>
+  <script>
+    // Récapitulatif imprimable : alimenté par la demande sauvegardée dans le navigateur.
+    (function(){
+      var raw; try { raw = localStorage.getItem('mp_last_order'); } catch(e){}
+      var sec = document.getElementById('order-recap');
+      if (!raw || !sec) return;
+      var o; try { o = JSON.parse(raw); } catch(e){ return; }
+      var euro = function(c){ return (Number(c)/100).toFixed(2).replace('.', ',') + ' €'; };
+      var refEl = document.getElementById('r-ref'); if (refEl) refEl.textContent = o.ref || '—';
+      var dateEl = document.getElementById('r-date'); if (dateEl) dateEl.textContent = o.date || '—';
+      var tb = document.getElementById('r-items');
+      (o.items || []).forEach(function(it){
+        var tr = document.createElement('tr');
+        ['name','finish','length'].forEach(function(k){
+          var td = document.createElement('td'); td.textContent = it[k] || '—'; tr.appendChild(td);
+        });
+        var tdq = document.createElement('td'); tdq.textContent = it.qty; tr.appendChild(tdq);
+        var tdm = document.createElement('td'); tdm.textContent = euro(it.price * it.qty); tr.appendChild(tdm);
+        tb.appendChild(tr);
+      });
+      var totEl = document.getElementById('r-total'); if (totEl) totEl.textContent = euro(o.total || 0);
+      var c = o.client || {};
+      var clEl = document.getElementById('r-client');
+      if (clEl) {
+        clEl.textContent = [c.nom, c.email, c.tel, c.adresse].filter(Boolean).join('  ·  ');
+        if (c.message) { clEl.appendChild(document.createElement('br')); clEl.appendChild(document.createTextNode('« ' + c.message + ' »')); }
+      }
+      sec.hidden = false;
+      var btn = document.getElementById('btn-print');
+      if (btn) btn.addEventListener('click', function(){ window.print(); });
     })();
   </script>
   <script src="js/main.js" defer></script>
