@@ -68,6 +68,10 @@
     if (cartEmptyState) cartEmptyState.hidden = !isEmpty;
     if (cartFooter) cartFooter.hidden = isEmpty;
 
+    // Retour à l'état normal du panier (au cas où le formulaire de demande était ouvert)
+    const leftoverForm = document.getElementById('order-form');
+    if (leftoverForm) leftoverForm.remove();
+
     let total = 0;
 
     cart.forEach((item, index) => {
@@ -180,6 +184,10 @@
     cartDrawer.setAttribute('aria-hidden', 'true');
     if (cartBackdrop) cartBackdrop.classList.remove('is-visible');
     document.body.style.overflow = '';
+    // Repartir d'un panier propre : on retire le formulaire de demande s'il était ouvert
+    const f = document.getElementById('order-form');
+    if (f) f.remove();
+    if (cartFooter) cartFooter.hidden = cart.length === 0;
   }
 
   if (cartOpenBtn)  cartOpenBtn.addEventListener('click', openCart);
@@ -274,8 +282,27 @@
     });
   }
 
+  /* ── BOUTON « CONTINUER MES ACHATS » ─────────────────────────
+     Ajouté dans le pied du tiroir pour pouvoir fermer le panier et
+     reconfigurer / ajouter un autre article (manquait avant). ── */
+  function injectContinueButton() {
+    if (!cartFooter || !checkoutBtn || document.getElementById('btn-continue-shopping')) return;
+    const cont = document.createElement('button');
+    cont.id = 'btn-continue-shopping';
+    cont.type = 'button';
+    cont.textContent = '← Continuer mes achats';
+    cont.style.cssText = 'display:block;width:100%;margin-bottom:.6rem;padding:.7rem 1rem;'
+      + 'background:transparent;border:1px solid #3a3a3a;border-radius:5px;color:var(--text-secondary,#bbb);'
+      + 'font-family:inherit;font-size:.9rem;cursor:pointer;transition:border-color .2s,color .2s;';
+    cont.addEventListener('mouseover', () => { cont.style.borderColor = 'var(--accent,#FF4500)'; cont.style.color = 'var(--accent,#FF4500)'; });
+    cont.addEventListener('mouseout',  () => { cont.style.borderColor = '#3a3a3a'; cont.style.color = 'var(--text-secondary,#bbb)'; });
+    cont.addEventListener('click', closeCart);
+    checkoutBtn.parentElement.insertBefore(cont, checkoutBtn);
+  }
+
   /* ── INIT ─────────────────────────────────────────────────── */
   renderCart();
+  injectContinueButton();
 
   /* ── GLOBAL API for configurateur.js ─────────────────────── */
   window.CartAddItem = function (item) {
