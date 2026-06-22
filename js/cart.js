@@ -220,6 +220,14 @@
     return lines.join('\n');
   }
 
+  // Référence de demande lisible : MP-AAMMJJ-HHMM-XX (date+heure+2 car. aléatoires)
+  function genRef() {
+    const d = new Date();
+    const p = (n) => String(n).padStart(2, '0');
+    const rnd = Math.random().toString(36).slice(2, 4).toUpperCase();
+    return `MP-${String(d.getFullYear()).slice(2)}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}-${rnd}`;
+  }
+
   function injectOrderStyles() {
     if (document.getElementById('order-form-styles')) return;
     const st = document.createElement('style');
@@ -260,6 +268,7 @@
       <label>Téléphone*<input type="tel" name="Telephone" inputmode="tel" required autocomplete="tel"></label>
       <label>Code postal &amp; ville*<input type="text" name="Code postal et ville" required></label>
       <label>Message (accès, délai souhaité…)<textarea name="Message" rows="2"></textarea></label>
+      <input type="hidden" name="Reference">
       <input type="hidden" name="Recapitulatif commande">
       <input type="hidden" name="_subject" value="Nouvelle demande de commande — Metal Pliage">
       <input type="hidden" name="_template" value="table">
@@ -272,6 +281,35 @@
     form.querySelector('[name="_next"]').value = window.location.origin + '/commande-confirmee.html';
     host.appendChild(form);
     form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // À l'envoi : on génère la référence, on sauvegarde la demande (preuve imprimable)
+    // et on redirige vers la confirmation avec la référence.
+    form.addEventListener('submit', () => {
+      const ref = genRef();
+      const order = {
+        ref,
+        date: new Date().toLocaleString('fr-FR'),
+        items: cart.map((it) => ({
+          name: it.name || 'Couvertine métallique',
+          finish: it.finish, length: it.length, price: it.price, qty: it.qty,
+        })),
+        total: cart.reduce((s, it) => s + it.price * it.qty, 0),
+        client: {
+          nom: (form.querySelector('[name="Nom"]') || {}).value || '',
+          email: (form.querySelector('[name="Email"]') || {}).value || '',
+          tel: (form.querySelector('[name="Telephone"]') || {}).value || '',
+          adresse: (form.querySelector('[name="Code postal et ville"]') || {}).value || '',
+          message: (form.querySelector('[name="Message"]') || {}).value || '',
+        },
+      };
+      try { localStorage.setItem('mp_last_order', JSON.stringify(order)); } catch (e) {}
+      form.querySelector('[name="Reference"]').value = ref;
+      const subj = form.querySelector('[name="_subject"]');
+      if (subj) subj.value = 'Demande de commande ' + ref + ' — Metal Pliage';
+      form.querySelector('[name="_next"]').value =
+        window.location.origin + '/commande-confirmee.html?order=' + encodeURIComponent(ref);
+      // pas de preventDefault : l'envoi natif FormSubmit se poursuit
+    });
   }
 
   if (checkoutBtn) {
