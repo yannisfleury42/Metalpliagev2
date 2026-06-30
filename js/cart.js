@@ -374,9 +374,23 @@
     checkoutBtn.parentElement.insertBefore(cont, checkoutBtn);
   }
 
+  /* ── BANDEAU « LIVRAISON INCLUSE » ───────────────────────────
+     Affiché au-dessus du total du panier (argument différenciant :
+     transport compris, contrairement aux concurrents). ── */
+  function injectShippingNote() {
+    if (!cartFooter || document.getElementById('cart-ship-incl')) return;
+    const note = document.createElement('div');
+    note.id = 'cart-ship-incl';
+    note.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Livraison incluse (France métropolitaine)';
+    note.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:.4rem;'
+      + 'margin-bottom:.6rem;font-size:.82rem;font-weight:600;color:#1f9d55;';
+    cartFooter.insertBefore(note, cartFooter.firstChild);
+  }
+
   /* ── INIT ─────────────────────────────────────────────────── */
   renderCart();
   injectContinueButton();
+  injectShippingNote();
 
   /* ── GLOBAL API for configurateur.js ─────────────────────── */
   window.CartAddItem = function (item) {
