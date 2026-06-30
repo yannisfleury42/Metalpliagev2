@@ -563,7 +563,9 @@
     if (e.target.id === 'input-A') state.A = clamp(val, 20, 150);
     if (e.target.id === 'input-C') {
       state.C = clamp(val, state.B + 10, 400);
-      e.target.value = state.C;
+      // Recadrage uniquement à la sortie du champ (change), pas à chaque frappe :
+      // sinon taper "170" devient impossible ("1"->130 puis "17"->400).
+      if (e.type === 'change') e.target.value = state.C;
     }
     if (e.target.id === 'input-L') state.L = clamp(val, 200, 3000);
     updateUI();
