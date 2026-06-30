@@ -535,7 +535,7 @@
         <input type="hidden" name="_subject" value="Demande devis — Pliage forme libre">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://metalpliage.fr/forme-libre.html?sent=1">
+        <input type="hidden" name="_next" value="https://metal-pliage.fr/forme-libre.html?sent=1">
 
         <!-- SECTION 1 : VOS COORDONNÉES -->
         <div class="form-section">
@@ -613,17 +613,18 @@
         <div class="form-section">
           <div class="section-num">
             <span>3</span>
-            <h2>Votre plan ou schéma</h2>
+            <h2>Votre plan ou schéma <span style="font-size:.7em;font-weight:400;color:var(--text-muted);">(optionnel)</span></h2>
           </div>
           <div class="upload-zone" id="upload-zone">
             <input type="file" name="Fichiers[]" id="file-input"
                    multiple
                    accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
             <div class="upload-icon">↑</div>
-            <div class="upload-text">Glissez vos fichiers ici ou cliquez pour parcourir</div>
-            <div class="upload-sub">DXF, DWG, PDF, photo de croquis (JPG, PNG, HEIC) — jusqu'à 25 Mo total</div>
+            <div class="upload-text">Glissez une photo / un croquis léger ici ou cliquez</div>
+            <div class="upload-sub">Plan lourd (DXF/DWG/PDF) : envoyez-le directement à <strong>contact@metal-pliage.fr</strong></div>
           </div>
           <ul class="file-list" id="file-list"></ul>
+          <p class="upload-warn" id="upload-warn" hidden style="margin:.6rem 0 0;font-size:.8rem;color:#fca5a5;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.4);padding:.55rem .7rem;border-radius:6px;">⚠️ Fichier volumineux : il risque de ne pas nous parvenir. Envoyez-le directement à <strong>contact@metal-pliage.fr</strong> (avec votre nom).</p>
         </div>
 
         <!-- SECTION 4 : DESCRIPTION -->
@@ -788,6 +789,7 @@
       const zone = document.getElementById('upload-zone');
       const input = document.getElementById('file-input');
       const list = document.getElementById('file-list');
+      const warn = document.getElementById('upload-warn');
       let files = [];
 
       function fmt(b) {
@@ -798,11 +800,15 @@
 
       function render() {
         list.innerHTML = '';
+        let total = 0;
         files.forEach((f, i) => {
+          total += f.size;
           const li = document.createElement('li');
           li.innerHTML = `${f.name}<span class="file-size">${fmt(f.size)}</span>`;
           list.appendChild(li);
         });
+        // FormSubmit (gratuit) ne transmet pas les pièces jointes lourdes (> ~2 Mo)
+        if (warn) warn.hidden = total <= 2 * 1024 * 1024;
       }
 
       input.addEventListener('change', e => {
