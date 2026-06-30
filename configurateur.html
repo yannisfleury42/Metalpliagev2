@@ -239,10 +239,14 @@
               Longueur de pièce
             </label>
             <div class="dim-input-wrap">
-              <input type="number" inputmode="numeric" id="input-L" class="dim-input" value="2000" min="200" max="3000" step="50" aria-describedby="hint-L">
+              <select id="input-L" class="dim-input" aria-describedby="hint-L">
+                <option value="2000">2000</option>
+                <option value="2500">2500</option>
+                <option value="3000">3000</option>
+              </select>
               <span class="dim-unit">mm</span>
             </div>
-            <span class="dim-hint" id="hint-L">min 200 — max 3000</span>
+            <span class="dim-hint" id="hint-L">Longueurs standard : 2000, 2500 ou 3000 mm</span>
             <div id="helper-long" hidden style="grid-column:1/-1;margin-top:0.6rem;padding:0.75rem 1rem;background:rgba(255,144,0,0.08);border:1px solid rgba(255,144,0,0.35);border-radius:4px;font-size:0.82rem;line-height:1.55;color:var(--text-secondary);">
               <strong style="color:#FFB347;">Longueur &gt; 2800 mm</strong> — pour un linéaire plus long, commandez plusieurs longueurs et ajoutez des <a href="accessoires.html#eclisse" style="color:var(--accent);text-decoration:underline;">éclisses de jonction</a> (6&nbsp;€&nbsp;HT/pièce) à l'étape accessoires. Une éclisse couvre 100 mm de part et d'autre du joint.
             </div>
