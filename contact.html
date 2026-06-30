@@ -434,23 +434,51 @@
               <option value="Autre / Plusieurs produits">Autre / Plusieurs produits</option>
             </select>
           </div>
+
+          <!-- DIMENSIONS DU PROJET (optionnel — évite les allers-retours) -->
+          <div class="form-group">
+            <label>Dimensions du projet <span style="color:var(--text-muted);font-weight:normal;">(si vous les connaissez — accélère votre devis)</span></label>
+            <p class="form-legal" style="margin:.2rem 0 .6rem;">Renseignez ce que vous savez, on revient vers vous pour préciser le reste.</p>
+          </div>
+          <div class="form-row form-row--2col">
+            <div class="form-group">
+              <label for="f-longueurs">Longueur(s) à réaliser</label>
+              <input type="text" id="f-longueurs" name="Longueurs" placeholder="ex : 3 pièces de 2,40 m">
+            </div>
+            <div class="form-group">
+              <label for="f-largeur">Largeur à couvrir / développé</label>
+              <input type="text" id="f-largeur" name="Largeur à couvrir" placeholder="ex : dessus de poutre 160 mm">
+            </div>
+          </div>
+          <div class="form-row form-row--2col">
+            <div class="form-group">
+              <label for="f-quantite">Quantité / nombre d'éléments</label>
+              <input type="text" id="f-quantite" name="Quantité" placeholder="ex : 4">
+            </div>
+            <div class="form-group">
+              <label for="f-ral">Coloris RAL souhaité</label>
+              <input type="text" id="f-ral" name="Coloris RAL" placeholder="ex : RAL 7016 — ou à définir">
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="f-message">Message / Détails du projet</label>
             <textarea id="f-message" name="Message" rows="5" placeholder="Décrivez votre projet, vos contraintes, votre délai souhaité..."></textarea>
           </div>
 
-          <!-- UPLOAD : plans / photos / croquis -->
+          <!-- UPLOAD : photo / croquis (optionnel — bonus, la demande tient sans) -->
           <div class="form-group">
-            <label for="file-input">Joindre des fichiers <span style="color:var(--text-muted);font-weight:normal;">(plans, photos, croquis — optionnel)</span></label>
+            <label for="file-input">Joindre une photo ou un croquis <span style="color:var(--text-muted);font-weight:normal;">(optionnel)</span></label>
             <div class="upload-zone" id="upload-zone">
               <input type="file" name="Fichiers[]" id="file-input"
                      multiple
                      accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
               <div class="upload-icon" aria-hidden="true">↑</div>
-              <div class="upload-text">Glissez vos fichiers ici ou cliquez pour parcourir</div>
-              <div class="upload-sub">DXF, DWG, PDF, photo de croquis (JPG, PNG, HEIC) — jusqu'à 25 Mo total</div>
+              <div class="upload-text">Glissez une photo / un croquis ici ou cliquez</div>
+              <div class="upload-sub">Fichier léger conseillé. Plan lourd (DXF/DWG/PDF) : envoyez-le à <strong>contact@metal-pliage.fr</strong></div>
             </div>
             <ul class="file-list" id="file-list" aria-live="polite"></ul>
+            <p class="upload-warn" id="upload-warn" hidden style="margin:.5rem 0 0;font-size:.8rem;color:#fca5a5;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.4);padding:.55rem .7rem;border-radius:6px;">⚠️ Fichier volumineux : il risque de ne pas nous parvenir. Merci de l'envoyer directement à <strong>contact@metal-pliage.fr</strong> (en précisant votre nom).</p>
           </div>
 
           <div class="form-footer">
@@ -581,6 +609,7 @@
       const zone = document.getElementById('upload-zone');
       const input = document.getElementById('file-input');
       const list  = document.getElementById('file-list');
+      const warn  = document.getElementById('upload-warn');
       if (!zone || !input || !list) return;
 
       function fmt(b) {
@@ -590,11 +619,16 @@
       }
       function render(files) {
         list.innerHTML = '';
+        let total = 0;
         files.forEach(f => {
+          total += f.size;
           const li = document.createElement('li');
           li.innerHTML = `${f.name}<span class="file-size">${fmt(f.size)}</span>`;
           list.appendChild(li);
         });
+        // FormSubmit (offre gratuite) ne transmet pas les pièces jointes lourdes :
+        // au-delà de ~2 Mo, on prévient le client d'envoyer le fichier par email.
+        if (warn) warn.hidden = total <= 2 * 1024 * 1024;
       }
 
       input.addEventListener('change', e => render(Array.from(e.target.files)));
