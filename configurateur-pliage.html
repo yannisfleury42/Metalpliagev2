@@ -711,7 +711,13 @@
         <div class="recap-row"><dt>Dimensions</dt><dd id="recap-dims">—</dd></div>
         <div class="recap-row"><dt>Développé</dt><dd id="recap-dev">—</dd></div>
         <div class="recap-row"><dt>Couleur</dt><dd id="recap-color">—</dd></div>
-        <div class="recap-row"><dt>Quantité</dt><dd id="recap-qty">1</dd></div>
+        <div class="recap-row recap-row--qty"><dt>Quantité</dt><dd>
+          <div class="recap-qty-stepper" role="group" aria-label="Quantité">
+            <button type="button" id="recap-qty-minus" aria-label="Diminuer la quantité">−</button>
+            <input type="text" inputmode="numeric" id="recap-qty-input" value="1" aria-label="Quantité">
+            <button type="button" id="recap-qty-plus" aria-label="Augmenter la quantité">+</button>
+          </div>
+        </dd></div>
       </dl>
 
       <div class="sidebar-price-block">
