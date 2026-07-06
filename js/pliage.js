@@ -7,14 +7,22 @@
 'use strict';
 
 /* ── CONSTANTES ─────────────────────────────────────────────── */
+// Coefficient main d'œuvre + transport appliqué au coût matière (à affiner).
+// 3.64 reproduit le tarif de vente alu actuel (matière 27,5 €/m² → ~100 €/m²).
+const COEFF_MO_TRANSPORT = 3.64;
+
+// Coût matière HT/m² connu (devis Prolians n°803923 du 10/06/2026, alu laqué 1,5 mm ≈ 27,5 €/m²).
+// Seul l'alu 1,5 a une donnée fournisseur ; les autres matières conservent leur tarif.
+const MATIERE_ALU_1_5 = 27.5;
+
 const RATES = {
   'acier-0.75': 75,
-  'acier-1.5': 100,
-  'alu-1.5':   100,
-  'alu-2':     115,
-  'inox-1':    125,
-  'inox-2':    160,
-  'inox-3':    200,
+  'acier-1.5':  100,
+  'alu-1.5':    Math.round(MATIERE_ALU_1_5 * COEFF_MO_TRANSPORT), // matière 27,5 → ~100 €/m²
+  'alu-2':      115,
+  'inox-1':     125,
+  'inox-2':     160,
+  'inox-3':     200,
 };
 
 // Épaisseurs disponibles par matière
@@ -142,7 +150,9 @@ const elRecapMaterial   = $('recap-material');
 const elRecapDims       = $('recap-dims');
 const elRecapDev        = $('recap-dev');
 const elRecapColor      = $('recap-color');
-const elRecapQty        = $('recap-qty');
+const elRecapQtyInput   = $('recap-qty-input');
+const elRecapQtyMinus   = $('recap-qty-minus');
+const elRecapQtyPlus    = $('recap-qty-plus');
 const elBtnCart         = $('btn-cart');
 const elSidebarBtnCart  = $('sidebar-btn-cart');
 
@@ -550,7 +560,7 @@ function updateUI() {
   elRecapColor.textContent = state.color === 'brut'
     ? 'Inox Brut'
     : state.color ? `RAL ${state.color}` : '—';
-  elRecapQty.textContent = state.qty;
+  if (elRecapQtyInput) elRecapQtyInput.value = state.qty;
 }
 
 
@@ -733,29 +743,32 @@ elInputL.addEventListener('input', () => {
   checkUnlockStep4();
 });
 
-// Qty controls
-elMainQtyMinus.addEventListener('click', () => {
-  if (state.qty > 1) {
-    state.qty--;
-    elMainQty.value = state.qty;
-    updateUI();
-  }
-});
-
-elMainQtyPlus.addEventListener('click', () => {
-  if (state.qty < 999) {
-    state.qty++;
-    elMainQty.value = state.qty;
-    updateUI();
-  }
-});
-
-elMainQty.addEventListener('input', () => {
-  const v = parseInt(elMainQty.value, 10);
-  state.qty = isNaN(v) || v < 1 ? 1 : Math.min(999, v);
-  elMainQty.value = state.qty;
+// Qty controls — partagés entre le stepper principal (étape 6) et le
+// stepper du récap latéral. applyQty synchronise les deux affichages.
+function applyQty(v) {
+  state.qty = Math.max(1, Math.min(999, parseInt(v, 10) || 1));
+  if (elMainQty)       elMainQty.value = state.qty;
+  if (elRecapQtyInput) elRecapQtyInput.value = state.qty;
   updateUI();
+}
+
+elMainQtyMinus.addEventListener('click', () => applyQty(state.qty - 1));
+elMainQtyPlus.addEventListener('click',  () => applyQty(state.qty + 1));
+elMainQty.addEventListener('input', () => {
+  const raw = elMainQty.value.replace(/[^0-9]/g, '');
+  elMainQty.value = raw;
+  if (raw !== '') applyQty(raw);
 });
+
+if (elRecapQtyMinus) elRecapQtyMinus.addEventListener('click', () => applyQty(state.qty - 1));
+if (elRecapQtyPlus)  elRecapQtyPlus.addEventListener('click',  () => applyQty(state.qty + 1));
+if (elRecapQtyInput) {
+  elRecapQtyInput.addEventListener('input', () => {
+    const raw = elRecapQtyInput.value.replace(/[^0-9]/g, '');
+    elRecapQtyInput.value = raw;
+    if (raw !== '') applyQty(raw);
+  });
+}
 
 // Accessory qty controls
 document.querySelectorAll('.qty-btn[data-acc]').forEach((btn) => {

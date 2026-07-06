@@ -10,9 +10,17 @@
      CONSTANTS
   ──────────────────────────────────────────────────────────── */
 
+  // Coefficient main d'œuvre + transport appliqué au coût matière.
+  // À affiner quand les coûts MO/transport réels seront connus.
+  const COEFF_MO_TRANSPORT = 4.0;
+
+  // matiere = coût matière HT au m² (source : devis Prolians n°803923 du 10/06/2026,
+  //           tôle alu laqué 3000×1500×1,5 = 4,5 m² → ~27,5 €/m² HT).
+  //           null = hors devis, tarif de vente conservé en l'état.
+  // rate    = prix de vente HT au m² = matiere × COEFF_MO_TRANSPORT.
   const MATERIALS = {
-    acier: { name: 'Acier',     epaisseur: '0,75 mm', rate: 85  },
-    alu:   { name: 'Aluminium', epaisseur: '1,5 mm',  rate: 110 },
+    acier: { name: 'Acier',     epaisseur: '0,75 mm', matiere: null, rate: 85 },                      // matière à confirmer (hors devis Prolians)
+    alu:   { name: 'Aluminium', epaisseur: '1,5 mm',  matiere: 27.5, rate: 27.5 * COEFF_MO_TRANSPORT }, // = 110 €/m²
   };
 
   const MIN_PRICE_HT = 35;
@@ -77,7 +85,9 @@
   const recapDev      = document.getElementById('recap-dev');
   const recapColor    = document.getElementById('recap-color');
   const recapAcc      = document.getElementById('recap-acc');
-  const recapQty      = document.getElementById('recap-qty');
+  const recapQtyInput = document.getElementById('recap-qty-input');
+  const recapQtyMinus = document.getElementById('recap-qty-minus');
+  const recapQtyPlus  = document.getElementById('recap-qty-plus');
 
   /* ────────────────────────────────────────────────────────────
      STEP UNLOCK
@@ -481,7 +491,7 @@
       const parts = ACCESSORIES.filter(a => state.accessories[a.id].qty > 0).map(a => `${state.accessories[a.id].qty}× ${a.name}`);
       recapAcc.textContent = parts.length ? parts.join(', ') : '—';
     }
-    if (recapQty) recapQty.textContent = state.qty;
+    if (recapQtyInput) recapQtyInput.value = state.qty;
 
     const price = calcPrice();
     const htText  = price ? fmt(price.ht)  : '—';
@@ -689,22 +699,28 @@
      MAIN QTY
   ──────────────────────────────────────────────────────────── */
 
-  document.getElementById('main-qty-minus')?.addEventListener('click', () => {
-    state.qty = Math.max(1, state.qty - 1);
-    if (mainQtyInput) mainQtyInput.value = state.qty;
+  // applyQty synchronise le stepper principal (étape 5) et celui du récap latéral.
+  function applyQty(v) {
+    state.qty = Math.max(1, Math.min(999, parseInt(v, 10) || 1));
+    if (mainQtyInput)  mainQtyInput.value = state.qty;
+    if (recapQtyInput) recapQtyInput.value = state.qty;
     updateUI();
-  });
+  }
 
-  document.getElementById('main-qty-plus')?.addEventListener('click', () => {
-    state.qty = Math.min(999, state.qty + 1);
-    if (mainQtyInput) mainQtyInput.value = state.qty;
-    updateUI();
-  });
+  document.getElementById('main-qty-minus')?.addEventListener('click', () => applyQty(state.qty - 1));
+  document.getElementById('main-qty-plus')?.addEventListener('click',  () => applyQty(state.qty + 1));
 
   if (mainQtyInput) {
-    mainQtyInput.addEventListener('change', () => {
-      const val = parseInt(mainQtyInput.value, 10);
-      if (!isNaN(val) && val >= 1) { state.qty = Math.min(999, val); mainQtyInput.value = state.qty; updateUI(); }
+    mainQtyInput.addEventListener('change', () => applyQty(mainQtyInput.value));
+  }
+
+  recapQtyMinus?.addEventListener('click', () => applyQty(state.qty - 1));
+  recapQtyPlus?.addEventListener('click',  () => applyQty(state.qty + 1));
+  if (recapQtyInput) {
+    recapQtyInput.addEventListener('input', () => {
+      const raw = recapQtyInput.value.replace(/[^0-9]/g, '');
+      recapQtyInput.value = raw;
+      if (raw !== '') applyQty(raw);
     });
   }
 

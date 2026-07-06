@@ -669,6 +669,60 @@
   font-weight: 400;
 }
 
+/* Récap latéral — sélecteur de quantité +/− (aligné sur le bouton Ajouter) */
+.recap-row--qty {
+  align-items: center;
+}
+.recap-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255,255,255,.03);
+}
+.recap-qty-stepper button {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background .15s, color .15s;
+}
+.recap-qty-stepper button:hover {
+  background: rgba(255,69,0,.14);
+  color: var(--accent);
+}
+.recap-qty-stepper button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.recap-qty-stepper input {
+  width: 40px;
+  height: 30px;
+  border: 0;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  text-align: center;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+.recap-qty-stepper input::-webkit-outer-spin-button,
+.recap-qty-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .sidebar-price-block {
   padding: 1rem;
   background: rgba(255,69,0,.06);

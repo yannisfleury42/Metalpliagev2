@@ -10,9 +10,31 @@
 
   /* ── CONFIG ───────────────────────────────────────────────── */
   const ORDER_EMAIL = 'contact@metal-pliage.fr';
+  const STORAGE_KEY = 'mp_cart';   // panier persistant (survit aux changements de page)
+
+  /* ── PERSISTANCE ──────────────────────────────────────────────
+     Le panier est enregistré dans localStorage à CHAQUE modification.
+     Il survit ainsi au changement de page (pliage ↔ couvertines),
+     au rafraîchissement et à la fermeture du navigateur. ── */
+  function loadCart() {
+    try {
+      const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return Array.isArray(arr) ? arr : [];
+    } catch (err) {
+      return [];
+    }
+  }
+  function saveCart() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch (err) {}
+  }
+
+  /* Bouton panier flottant : injecté sur les pages qui n'en ont pas
+     (accueil, guides, accessoires…) pour que le panier soit accessible
+     depuis n'importe où. Ne fait rien si le bouton existe déjà. */
+  injectCartFab();
 
   /* ── STATE ────────────────────────────────────────────────── */
-  let cart = [];
+  let cart = loadCart();
   let selectedFinish = { id: 'ral7016', label: 'RAL 7016 Anthracite' };
   let selectedPrice = 2500; // cents
   let selectedLengthLabel = '2 mètres';
@@ -61,6 +83,9 @@
 
   /* ── CART RENDER ──────────────────────────────────────────── */
   function renderCart() {
+    // renderCart() est le point de passage après chaque mutation du panier
+    // (ajout, suppression, changement de quantité) → on persiste ici.
+    saveCart();
     if (!cartItemsList) return;
     cartItemsList.innerHTML = '';
 
@@ -88,9 +113,16 @@
         </div>
         <div class="cart-item-meta">
           <span>${item.finish}</span>
-          <span>${item.length} &mdash; qté&nbsp;: ${item.qty}</span>
+          <span>${item.length}</span>
         </div>
-        <button class="cart-item-remove" data-index="${index}" aria-label="Supprimer cet article">Supprimer</button>
+        <div class="cart-item-actions">
+          <div class="cart-qty" role="group" aria-label="Quantité">
+            <button type="button" class="cart-qty-btn" data-qty-dir="-1" data-index="${index}" aria-label="Diminuer la quantité">−</button>
+            <input type="text" inputmode="numeric" class="cart-qty-input" data-index="${index}" value="${item.qty}" aria-label="Quantité">
+            <button type="button" class="cart-qty-btn" data-qty-dir="1" data-index="${index}" aria-label="Augmenter la quantité">+</button>
+          </div>
+          <button class="cart-item-remove" data-index="${index}" aria-label="Supprimer cet article">Supprimer</button>
+        </div>
       `;
       cartItemsList.appendChild(el);
     });
@@ -198,13 +230,40 @@
     if (e.key === 'Escape') closeCart();
   });
 
-  /* ── REMOVE FROM CART ─────────────────────────────────────── */
+  /* ── QUANTITÉ & SUPPRESSION PAR LIGNE ─────────────────────────
+     Le stepper +/− par ligne permet de passer de 1 à N directement
+     dans le panier, quelle que soit la gamme (couvertine, pliage,
+     achat rapide) — tout transite par ce même panier. ── */
+  function setLineQty(index, val) {
+    if (!cart[index]) return;
+    cart[index].qty = Math.max(1, Math.min(999, parseInt(val, 10) || 1));
+    renderCart();
+  }
+
   if (cartItemsList) {
     cartItemsList.addEventListener('click', (e) => {
-      const btn = e.target.closest('.cart-item-remove');
-      if (!btn) return;
-      cart.splice(parseInt(btn.dataset.index, 10), 1);
+      const qtyBtn = e.target.closest('.cart-qty-btn');
+      if (qtyBtn) {
+        const idx = parseInt(qtyBtn.dataset.index, 10);
+        const dir = parseInt(qtyBtn.dataset.qtyDir, 10);
+        if (cart[idx]) setLineQty(idx, cart[idx].qty + dir);
+        return;
+      }
+      const rm = e.target.closest('.cart-item-remove');
+      if (!rm) return;
+      cart.splice(parseInt(rm.dataset.index, 10), 1);
       renderCart();
+    });
+
+    // Filtrage numérique en direct ; on applique la valeur au 'change'
+    // (blur / Entrée) pour ne pas perdre le focus pendant la frappe.
+    cartItemsList.addEventListener('input', (e) => {
+      const input = e.target.closest('.cart-qty-input');
+      if (input) input.value = input.value.replace(/[^0-9]/g, '');
+    });
+    cartItemsList.addEventListener('change', (e) => {
+      const input = e.target.closest('.cart-qty-input');
+      if (input) setLineQty(parseInt(input.dataset.index, 10), input.value);
     });
   }
 
@@ -226,6 +285,22 @@
     const p = (n) => String(n).padStart(2, '0');
     const rnd = Math.random().toString(36).slice(2, 4).toUpperCase();
     return `MP-${String(d.getFullYear()).slice(2)}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}-${rnd}`;
+  }
+
+  function injectCartQtyStyles() {
+    if (document.getElementById('cart-qty-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'cart-qty-styles';
+    st.textContent = `
+      .cart-item-actions{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.6rem;flex-wrap:wrap;}
+      .cart-qty{display:inline-flex;align-items:center;border:1px solid #3a3a3a;border-radius:6px;overflow:hidden;background:#161616;}
+      .cart-qty-btn{width:32px;height:32px;border:0;background:transparent;color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .15s,color .15s;}
+      .cart-qty-btn:hover{background:rgba(255,69,0,.14);color:var(--accent,#FF4500);}
+      .cart-qty-btn:focus-visible{outline:2px solid var(--accent,#FF4500);outline-offset:-2px;}
+      .cart-qty-input{width:42px;height:32px;border:0;border-left:1px solid #3a3a3a;border-right:1px solid #3a3a3a;background:transparent;color:#fff;text-align:center;font-family:inherit;font-size:.92rem;font-weight:600;font-variant-numeric:tabular-nums;-moz-appearance:textfield;}
+      .cart-qty-input::-webkit-outer-spin-button,.cart-qty-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+    `;
+    document.head.appendChild(st);
   }
 
   function injectOrderStyles() {
@@ -388,6 +463,7 @@
   }
 
   /* ── INIT ─────────────────────────────────────────────────── */
+  injectCartQtyStyles();
   renderCart();
   injectContinueButton();
   injectShippingNote();
