@@ -30,7 +30,6 @@
     { code: '7016', name: 'Gris Anthracite', hex: '#3C3F42', light: false },
     { code: '9005', name: 'Noir Satiné',     hex: '#0A0A0A', light: false },
     { code: '9010', name: 'Blanc Pur',       hex: '#F4F3EF', light: true  },
-    { code: '8014', name: 'Brun Chocolat',   hex: '#493427', light: false },
     { code: '9006', name: 'Gris Clair',      hex: '#A5A8A6', light: true  },
   ];
 
