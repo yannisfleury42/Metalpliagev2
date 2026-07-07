@@ -36,7 +36,6 @@ const RAL_COLORS = [
   { code: '7016', name: 'Gris Anthracite', hex: '#3C3F42' },
   { code: '9005', name: 'Noir Satiné',     hex: '#0A0A0A' },
   { code: '9010', name: 'Blanc Pur',       hex: '#F4F3EF' },
-  { code: '8014', name: 'Brun Chocolat',   hex: '#493427' },
   { code: '9006', name: 'Gris Clair',      hex: '#A5A8A6' },
 ];
 
@@ -674,7 +673,7 @@ document.querySelectorAll('.material-card').forEach((card) => {
       // RAL panel for acier
       elColorRalPanel.hidden  = false;
       elColorInoxPanel.hidden = true;
-      elColorStepDesc.textContent = '5 coloris RAL standard';
+      elColorStepDesc.textContent = '4 coloris RAL standard';
 
       // Auto-select if color was brut
       if (state.color === 'brut') {
@@ -688,7 +687,7 @@ document.querySelectorAll('.material-card').forEach((card) => {
 
       elColorRalPanel.hidden  = false;
       elColorInoxPanel.hidden = true;
-      elColorStepDesc.textContent = '5 coloris RAL standard';
+      elColorStepDesc.textContent = '4 coloris RAL standard';
 
       if (state.color === 'brut') {
         state.color = null;
