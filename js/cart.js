@@ -175,13 +175,19 @@
   /* ── ADD TO CART ──────────────────────────────────────────── */
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', () => {
+      // Même règle que window.CartAddItem : la longueur entre dans la clé,
+      // sinon deux longueurs vendues au même prix fusionneraient.
       const existing = cart.find(
-        (i) => i.finish === selectedFinish.label && i.price === selectedPrice
+        (i) => (i.name || 'Couvertine métallique') === 'Couvertine métallique'
+          && i.finish === selectedFinish.label
+          && i.price === selectedPrice
+          && i.length === selectedLengthLabel
       );
       if (existing) {
         existing.qty += qty;
       } else {
         cart.push({
+          name: 'Couvertine métallique',
           finish: selectedFinish.label,
           length: selectedLengthLabel,
           price: selectedPrice,
@@ -202,9 +208,15 @@
   }
 
   /* ── CART OPEN / CLOSE ────────────────────────────────────── */
+  /* Deux conventions coexistent dans le HTML : les configurateurs posent
+     l'attribut `hidden` sur le tiroir (CSS `.cart-drawer:not([hidden])`),
+     les autres pages s'appuient sur la classe `.is-open`. On pilote les
+     deux, sinon le tiroir reste marqué `hidden` pour les lecteurs d'écran
+     alors qu'il est visible à l'écran. ── */
   function openCart() {
     if (!cartDrawer) return;
     cartDrawer.classList.add('is-open');
+    cartDrawer.removeAttribute('hidden');
     cartDrawer.setAttribute('aria-hidden', 'false');
     if (cartBackdrop) cartBackdrop.classList.add('is-visible');
     document.body.style.overflow = 'hidden';
@@ -213,6 +225,7 @@
   function closeCart() {
     if (!cartDrawer) return;
     cartDrawer.classList.remove('is-open');
+    cartDrawer.setAttribute('hidden', '');
     cartDrawer.setAttribute('aria-hidden', 'true');
     if (cartBackdrop) cartBackdrop.classList.remove('is-visible');
     document.body.style.overflow = '';
@@ -449,6 +462,44 @@
     checkoutBtn.parentElement.insertBefore(cont, checkoutBtn);
   }
 
+  /* ── BOUTON PANIER FLOTTANT ──────────────────────────────────
+     Les deux configurateurs ont leur bouton #cart-open-btn codé en dur
+     dans le HTML. Les autres pages qui embarquent un tiroir panier
+     (accueil, guides, accessoires, appuis de fenêtre) n'en ont pas :
+     sans lui, le panier existe mais reste inatteignable. On l'injecte
+     donc ici, avec ses styles (.cart-fab n'existe que dans
+     configurateur.css, non chargé sur ces pages). ── */
+  function injectCartFab() {
+    // Le bouton est déjà dans le HTML (configurateurs) → rien à faire.
+    if (document.getElementById('cart-open-btn')) return;
+    // Pas de tiroir sur cette page → un bouton panier n'aurait rien à ouvrir.
+    if (!document.getElementById('cart-drawer')) return;
+    if (!document.body) return;
+
+    if (!document.getElementById('cart-fab-styles')) {
+      const st = document.createElement('style');
+      st.id = 'cart-fab-styles';
+      st.textContent = `
+        .cart-fab{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:var(--accent,#FF4500);color:#fff;border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 20px rgba(255,69,0,.35);z-index:100;transition:background .2s,transform .15s;}
+        .cart-fab:hover{background:var(--accent-hover,#e63e00);transform:scale(1.06);}
+        .cart-fab:focus-visible{outline:2px solid #fff;outline-offset:3px;}
+        .cart-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;display:grid;place-items:center;background:#fff;color:var(--accent,#FF4500);border-radius:10px;font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .2s;}
+        .cart-badge.has-items{opacity:1;}
+        @media (max-width:600px){.cart-fab{bottom:1.1rem;right:1.1rem;}}
+      `;
+      document.head.appendChild(st);
+    }
+
+    const btn = document.createElement('button');
+    btn.id = 'cart-open-btn';
+    btn.type = 'button';
+    btn.className = 'cart-fab';
+    btn.setAttribute('aria-label', 'Panier (0 article)');
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>'
+      + '<span id="cart-count-badge" class="cart-badge">0</span>';
+    document.body.appendChild(btn);
+  }
+
   /* ── BANDEAU « LIVRAISON INCLUSE » ───────────────────────────
      Affiché au-dessus du total du panier (argument différenciant :
      transport compris, contrairement aux concurrents). ── */
@@ -470,14 +521,19 @@
 
   /* ── GLOBAL API for configurateur.js ─────────────────────── */
   window.CartAddItem = function (item) {
+    // Le nom fait partie de la clé de fusion : sans lui, un U et un L de
+    // même finition, même longueur et même prix se confondraient en une
+    // seule ligne, et le client recevrait deux fois la même pièce.
+    const itemName = item.name || 'Pliage sur mesure';
     const existing = cart.find(
-      (i) => i.finish === item.finish && i.price === item.price && i.length === item.length
+      (i) => (i.name || 'Pliage sur mesure') === itemName
+        && i.finish === item.finish && i.price === item.price && i.length === item.length
     );
     if (existing) {
       existing.qty += item.qty || 1;
     } else {
       cart.push({
-        name:   item.name   || 'Pliage sur mesure',
+        name:   itemName,
         finish: item.finish || '—',
         length: item.length || '—',
         price:  item.price  || 0,
