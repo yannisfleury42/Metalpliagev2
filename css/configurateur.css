@@ -821,10 +821,14 @@
 
 
 /* ── CART FAB ────────────────────────────────────────────────── */
+/* Empilé AU-DESSUS du bouton WhatsApp (#wa-btn, injecté par main.js en
+   bottom:1.5rem / right:1.5rem, 56px). Calcul : 1,5rem + 3,5rem de hauteur
+   + 0,75rem d'écart = 5,75rem. Aligné sur le même bord droit.
+   Si tu déplaces #wa-btn, reporte le décalage ici ET dans injectCartFab(). */
 .cart-fab {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 5.75rem;
+  right: 1.5rem;
   width: 56px;
   height: 56px;
   display: flex;
@@ -841,6 +845,11 @@
 }
 
 .cart-fab:hover { background: var(--accent-hover); transform: scale(1.06); }
+
+/* Sur mobile #wa-btn passe en bottom:1rem / 50px -> 1 + 3,125 + 0,6 = 4,725rem */
+@media (max-width: 768px) {
+  .cart-fab { bottom: 4.75rem; right: 1rem; }
+}
 
 .cart-badge {
   position: absolute;

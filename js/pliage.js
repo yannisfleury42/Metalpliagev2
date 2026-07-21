@@ -135,6 +135,15 @@ const elInfoSurf        = $('info-surf');
 const elRalGrid         = $('ral-grid');
 const elColorRalPanel   = $('color-ral-panel');
 const elColorInoxPanel  = $('color-inox-panel');
+const elColorAcierPanel = $('color-acier-panel');
+const elLaqSection      = $('laq-section');
+
+// Le sens de laquage n'existe que pour une matière laquée (aluminium).
+// Acier brut et inox brut ne sont pas laqués : on masque le bloc.
+function setLaqVisible(show) {
+  if (elLaqSection) elLaqSection.style.display = show ? '' : 'none';
+}
+setLaqVisible(false); // caché tant qu'aucune matière laquée n'est choisie
 const elColorStepDesc   = $('color-step-desc');
 const elThicknessSelect = $('thickness-selector');
 const elMainQty         = $('main-qty');
@@ -504,7 +513,9 @@ function updateUI() {
   if (shape && dimsValid()) {
     const pts      = shape.pts(state.dims);
     const ralEntry = RAL_COLORS.find((r) => r.code === state.color);
-    const colorHex = ralEntry ? ralEntry.hex : (state.color === 'brut' ? '#C0C0C0' : '#FF4500');
+    // brut : acier = métal sombre, inox = argenté brossé
+    const brutHex  = state.material === 'acier' ? '#494c51' : '#C0C0C0';
+    const colorHex = ralEntry ? ralEntry.hex : (state.color === 'brut' ? brutHex : '#FF4500');
     drawSVG(elProfileSvg, pts, colorHex, true);
     drawSVG(elMiniSvg, pts, colorHex, false);
   } else if (shape) {
@@ -557,7 +568,7 @@ function updateUI() {
     elRecapDev.textContent  = '—';
   }
   elRecapColor.textContent = state.color === 'brut'
-    ? 'Inox Brut'
+    ? (state.material === 'acier' ? 'Acier brut' : 'Inox brut')
     : state.color ? `RAL ${state.color}` : '—';
   if (elRecapQtyInput) elRecapQtyInput.value = state.qty;
 }
@@ -664,31 +675,37 @@ document.querySelectorAll('.material-card').forEach((card) => {
     const mat = card.dataset.material;
     state.material = mat;
 
+    // Réinitialise l'état "sélectionné" des cartes brut à chaque changement
+    document.querySelector('.inox-brut-card:not(.acier-brut-card)')?.classList.remove('is-selected');
+    document.querySelector('.acier-brut-card')?.classList.remove('is-selected');
+
     // Thickness selector
     if (mat === 'acier') {
       elThicknessSelect.hidden = false;
       state.thickness = null;
       rebuildThicknessBtns('acier');
 
-      // RAL panel for acier
-      elColorRalPanel.hidden  = false;
-      elColorInoxPanel.hidden = true;
-      elColorStepDesc.textContent = '4 coloris RAL standard';
-
-      // Auto-select if color was brut
-      if (state.color === 'brut') {
-        state.color = null;
-        document.querySelectorAll('.ral-swatch').forEach((s) => s.classList.remove('is-selected'));
-      }
+      // Acier = brut/noir : jamais laqué, aucune couleur RAL (comme l'inox)
+      elColorRalPanel.hidden   = true;
+      elColorInoxPanel.hidden  = true;
+      elColorAcierPanel.hidden = false;
+      elColorStepDesc.textContent = 'Acier brut — sans laquage';
+      state.color = 'brut';
+      setLaqVisible(false);
+      document.querySelectorAll('.ral-swatch').forEach((s) => s.classList.remove('is-selected'));
+      document.querySelector('.acier-brut-card')?.classList.add('is-selected');
     } else if (mat === 'alu') {
       elThicknessSelect.hidden = false;
       state.thickness = null;
       rebuildThicknessBtns('alu');
 
-      elColorRalPanel.hidden  = false;
-      elColorInoxPanel.hidden = true;
+      elColorRalPanel.hidden   = false;
+      elColorInoxPanel.hidden  = true;
+      elColorAcierPanel.hidden = true;
       elColorStepDesc.textContent = '4 coloris RAL standard';
+      setLaqVisible(true);
 
+      // L'alu exige un choix de teinte : on repart de zéro si on venait du brut
       if (state.color === 'brut') {
         state.color = null;
         document.querySelectorAll('.ral-swatch').forEach((s) => s.classList.remove('is-selected'));
@@ -698,9 +715,11 @@ document.querySelectorAll('.material-card').forEach((card) => {
       state.thickness = null;
       rebuildThicknessBtns('inox');
 
-      elColorRalPanel.hidden  = true;
-      elColorInoxPanel.hidden = false;
+      elColorRalPanel.hidden   = true;
+      elColorInoxPanel.hidden  = false;
+      elColorAcierPanel.hidden = true;
       elColorStepDesc.textContent = 'Inox — finition brute uniquement';
+      setLaqVisible(false);
 
       // Inox = brut auto
       state.color = 'brut';
@@ -795,7 +814,9 @@ function addToCart() {
   if (!state.shape || !state.material) return;
   const shape     = SHAPES[state.shape];
   const dimStr    = shape.dimKeys.map((k) => `${k}=${state.dims[k]}mm`).join(' · ');
-  const finish    = state.color === 'brut' ? 'Inox Brut' : `RAL ${state.color}`;
+  const finish    = state.color === 'brut'
+    ? (state.material === 'acier' ? 'Acier brut' : 'Inox Brut')
+    : `RAL ${state.color}`;
   const th        = state.thickness;
   const { ttc }   = calcPrice();
 
@@ -847,12 +868,16 @@ if (cartOpenBtn && cartDrawer) {
 buildRalGrid();
 buildVisRalSwatches();
 
-// Inox brut panel: auto-unlock step 5 when inox is chosen
-const inoxBrutCard = document.querySelector('.inox-brut-card');
-if (inoxBrutCard) {
-  inoxBrutCard.addEventListener('click', () => {
+// Cartes "brut" (inox / acier) : la couleur est déjà 'brut' dès le choix
+// de la matière ; le clic ne fait que confirmer visuellement et débloquer
+// les étapes suivantes si les cotes sont valides.
+const inoxBrutCard  = document.querySelector('.inox-brut-card:not(.acier-brut-card)');
+const acierBrutCard = document.querySelector('.acier-brut-card');
+function selectBrutCard(card) {
+  if (!card) return;
+  card.addEventListener('click', () => {
     state.color = 'brut';
-    inoxBrutCard.classList.add('is-selected');
+    card.classList.add('is-selected');
     checkUnlockStep4();
     if (dimsValid()) {
       unlockStep(5);
@@ -861,6 +886,8 @@ if (inoxBrutCard) {
     }
   });
 }
+selectBrutCard(inoxBrutCard);
+selectBrutCard(acierBrutCard);
 
 // Initial draw (empty state)
 updateUI();
