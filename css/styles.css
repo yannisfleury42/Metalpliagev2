@@ -2964,3 +2964,8 @@ p { color: var(--text-secondary); }
     padding: 1.5rem;
   }
 }
+/* ── Appuis de fenêtre : grilles inline repliées sur mobile (évite tassement + 3px de débordement) ── */
+@media (max-width: 768px) {
+  .appui-2col { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .appui-3col { grid-template-columns: 1fr !important; }
+}
