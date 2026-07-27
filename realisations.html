@@ -145,39 +145,33 @@
   <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
   <!-- NAV -->
-  <nav id="navbar" class="navbar" role="navigation" aria-label="Navigation principale">
+  <nav id="navbar" aria-label="Navigation principale">
     <div class="nav-inner">
-      <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
-      <ul class="nav-list" role="list">
-        <li class="nav-item nav-item--dropdown">
-          <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-            Couvertines <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <ul class="nav-dropdown" role="list">
-            <li><a href="couvertines.html">Couvertines sur mesure</a></li>
-            <li><a href="accessoires.html">Accessoires</a></li>
-            <li><a href="guides.html">Guide de pose</a></li>
-          </ul>
-        </li>
-        <li class="nav-item nav-item--dropdown">
-          <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-            Pliage <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <ul class="nav-dropdown" role="list">
-            <li><a href="pliage.html">Pliage sur mesure</a></li>
-            <li><a href="appuis-de-fenetre.html">Appuis de fenêtre</a></li>
-            <li><a href="forme-libre.html">Forme libre</a></li>
-          </ul>
-        </li>
-        <li class="nav-item"><a href="realisations.html" aria-current="page">Réalisations</a></li>
-        <li class="nav-item"><a href="blog/">Blog</a></li>
-        <li class="nav-item"><a href="guides.html">Guides</a></li>
-        <li class="nav-item"><a href="contact.html">Contact</a></li>
-      </ul>
-      <a href="configurateur.html" class="btn-primary nav-cta">Configurer →</a>
-      <button class="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <div class="nav-left">
+        <a href="index.html" class="logo" aria-label="Metal Pliage — Accueil">METAL <span>PLIAGE</span></a>
+        <div class="france-badge" aria-label="Fabriqué en France">
+          <div class="france-flag" aria-hidden="true">
+            <span class="f-blue"></span>
+            <span class="f-white"></span>
+            <span class="f-red"></span>
+          </div>
+          Fabriqué en France
+        </div>
+      </div>
+      <button class="nav-hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
+      <ul id="nav-links" role="list">
+        <li class="nav-item"><a href="couvertines.html">Couvertines</a></li>
+        <li class="nav-item"><a href="pliage.html">Pliage</a></li>
+        <li class="nav-item"><a href="espace-pro.html">Espace Pro</a></li>
+        <li class="nav-item"><a href="guides.html">Guide de pose</a></li>
+        <li class="nav-item"><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="https://metallier-mds.fr" target="_blank" rel="noopener" class="nav-cta" style="margin-right:.5rem;border:1px solid var(--accent);color:var(--accent);background:transparent;">Métallerie MDS&nbsp;↗</a>
+        <a href="contact.html" class="nav-cta btn-outline">Demander un devis</a>
+      </div>
     </div>
   </nav>
 
