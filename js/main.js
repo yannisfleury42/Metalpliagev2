@@ -359,27 +359,9 @@
   }
 
 
-  /* ── RGPD COOKIE NOTICE ──────────────────────────────────────── */
-  (function () {
-    if (localStorage.getItem('mp-cookie-ok')) return;
-    const banner = document.createElement('div');
-    banner.id = 'cookie-notice';
-    banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Notice cookies');
-    banner.innerHTML = '<p style="margin:0 1rem 0 0;font-size:.85rem;color:#e5e7eb;">Ce site utilise des cookies d\'analyse (Plausible, sans suivi publicitaire) et un outil d\'e-mail (Brevo) pour vous recontacter. <a href="/confidentialite.html" style="color:#fff;text-decoration:underline;">En savoir plus</a></p><button id="cookie-accept" style="flex-shrink:0;padding:.5rem 1.2rem;border:none;border-radius:6px;background:#f97316;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;">J\'accepte</button><button id="cookie-refuse" style="flex-shrink:0;padding:.5rem 1rem;border:1px solid #6b7280;border-radius:6px;background:transparent;color:#9ca3af;font-size:.85rem;cursor:pointer;white-space:nowrap;margin-left:.5rem;">Refuser</button>';
-    const s = document.createElement('style');
-    s.textContent = '#cookie-notice{position:fixed;bottom:0;left:0;right:0;z-index:1000;display:flex;align-items:center;padding:1rem clamp(1rem,4vw,2rem);background:#1f2937;border-top:1px solid #374151;box-shadow:0 -4px 24px rgba(0,0,0,.3);}@media(max-width:600px){#cookie-notice{flex-direction:column;align-items:flex-start;gap:.75rem;}}';
-    document.head.appendChild(s);
-    document.body.appendChild(banner);
-
-    function dismiss(accepted) {
-      if (accepted) localStorage.setItem('mp-cookie-ok', '1');
-      else localStorage.setItem('mp-cookie-ok', 'no');
-      banner.remove();
-    }
-    document.getElementById('cookie-accept').addEventListener('click', () => dismiss(true));
-    document.getElementById('cookie-refuse').addEventListener('click', () => dismiss(false));
-  })();
+  /* ── RGPD COOKIE NOTICE — RETIRÉ (2026-07-27) ─────────────────────
+     Bandeau supprimé : Plausible est sans cookie et sans suivi, et l'outil
+     Brevo n'est plus utilisé. Aucun cookie de traçage → aucun bandeau requis. */
 
 
   /* ── WHATSAPP STICKY BUTTON ──────────────────────────────────── */
