@@ -10,18 +10,36 @@
      CONSTANTS
   ──────────────────────────────────────────────────────────── */
 
-  // Coefficient main d'œuvre + transport appliqué au coût matière.
-  // À affiner quand les coûts MO/transport réels seront connus.
-  const COEFF_MO_TRANSPORT = 4.0;
-
-  // matiere = coût matière HT au m² (source : devis Prolians n°803923 du 10/06/2026,
-  //           tôle alu laqué 3000×1500×1,5 = 4,5 m² → ~27,5 €/m² HT).
-  //           null = hors devis, tarif de vente conservé en l'état.
-  // rate    = prix de vente HT au m² = matiere × COEFF_MO_TRANSPORT.
+  // Tarif DÉGRESSIF par largeur de développé (révisé 2026-07-29) — comme la
+  // concurrence : plus la pièce est large, plus le €/m² baisse. Cela évite de
+  // surfacturer les grandes pièces (avant : 110 €/m² fixe → +47 % vs marché sur
+  // le 400 mm). Réf. matière alu laqué 1,5 mm ≈ 27,5 €/m² HT (devis Prolians
+  // n°803923). Palier standard (dev 250–350 mm, ex. couvertine 40/200/40) calé
+  // à 90 €/m² alu (coef. ≈ 3,3), positionnement intermédiaire, livraison incluse.
   const MATERIALS = {
-    acier: { name: 'Acier',     epaisseur: '0,75 mm', matiere: null, rate: 85 },                      // matière à confirmer (hors devis Prolians)
-    alu:   { name: 'Aluminium', epaisseur: '1,5 mm',  matiere: 27.5, rate: 27.5 * COEFF_MO_TRANSPORT }, // = 110 €/m²
+    acier: { name: 'Acier',     epaisseur: '0,75 mm' },
+    alu:   { name: 'Aluminium', epaisseur: '1,5 mm'  },
   };
+
+  // ── TARIF DÉGRESSIF (même logique que le configurateur pliage — garder en phase) ──
+  // Prix de vente = tarif de base €/m² HT (palier standard, développé 250–350 mm)
+  // × coefficient largeur. Les pièces étroites paient un peu plus au m² (plus de
+  // MO au m²), les larges un peu moins — comme la concurrence. alu = 90, acier = 85
+  // sont identiques au configurateur pliage (alu-1.5 / acier-0.75) → une même
+  // pièce alu donne le même prix des deux côtés.
+  const RATE_BASE = { alu: 90, acier: 85 };   // €/m² HT au palier standard
+  const WIDTH_MULT = [
+    { maxDev: 250,      mult: 1.07 },  // étroit
+    { maxDev: 350,      mult: 1.00 },  // standard (référence)
+    { maxDev: Infinity, mult: 0.89 },  // large
+  ];
+
+  function rateFor(material, devWidth) {
+    const base = RATE_BASE[material];
+    if (!base) return 0;
+    const tier = WIDTH_MULT.find(t => devWidth <= t.maxDev);
+    return Math.round(base * (tier ? tier.mult : 1));
+  }
 
   const MIN_PRICE_HT = 35;
   const TVA          = 0.20;
@@ -48,7 +66,7 @@
     material: null,
     B: 200,
     A: 40,
-    C: 250,   // largeur totale de tôle (B+50 par défaut, modifiable jusqu'à 400 mm)
+    C: 200,   // largeur de tôle du dessus = B par défaut (40/200/40 sans dépassement), modifiable jusqu'à 400 mm
     L: 2000,
     R: 10,
     color: null,
@@ -446,7 +464,7 @@
     const { A, C, L, R } = state;
     const devWidth = C + 2 * A + 2 * R; // mm (C = B + 2×OVH)
     const surface  = (devWidth / 1000) * (L / 1000);
-    const rate     = MATERIALS[state.material].rate;
+    const rate     = rateFor(state.material, devWidth);
     let ht = Math.max(surface * rate, MIN_PRICE_HT) * state.qty;
     for (const acc of ACCESSORIES) {
       const s = state.accessories[acc.id];
@@ -777,7 +795,7 @@
       name:   `Couvertine sur mesure — ${mat.name}`,
       finish: ral ? `RAL ${ral.code} ${ral.name}` : '—',
       length: `B=${state.B}mm · A=${state.A}mm · C=${state.C}mm · L=${state.L}mm`,
-      price:  Math.round(price.ttc * 100),
+      price:  Math.round(price.ttc / state.qty * 100), // prix UNITAIRE (calcPrice inclut déjà ×qty)
       qty:    state.qty,
     };
   }

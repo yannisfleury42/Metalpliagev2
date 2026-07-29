@@ -7,23 +7,33 @@
 'use strict';
 
 /* ── CONSTANTES ─────────────────────────────────────────────── */
-// Coefficient main d'œuvre + transport appliqué au coût matière (à affiner).
-// 3.64 reproduit le tarif de vente alu actuel (matière 27,5 €/m² → ~100 €/m²).
-const COEFF_MO_TRANSPORT = 3.64;
-
-// Coût matière HT/m² connu (devis Prolians n°803923 du 10/06/2026, alu laqué 1,5 mm ≈ 27,5 €/m²).
-// Seul l'alu 1,5 a une donnée fournisseur ; les autres matières conservent leur tarif.
-const MATIERE_ALU_1_5 = 27.5;
-
-const RATES = {
-  'acier-0.75': 75,
+// ── TARIF DÉGRESSIF (même logique que le configurateur couvertine — garder en phase) ──
+// RATE_BASE = prix de vente €/m² HT au palier STANDARD (développé 250–350 mm).
+// WIDTH_MULT applique la dégressivité par largeur (étroit +7 %, large −11 %),
+// comme la concurrence (aluhome/easypliage/e-pliage/pliages-online). alu-1.5 et
+// acier-0.75 sont calés sur le configurateur couvertine → une même pièce donne
+// le même prix des deux côtés. Réf. matière alu laqué 1,5 mm ≈ 27,5 €/m² HT
+// (devis Prolians n°803923). Révisé 2026-07-29. Livraison incluse.
+const RATE_BASE = {
+  'acier-0.75': 85,   // = couvertine acier
   'acier-1.5':  100,
-  'alu-1.5':    Math.round(MATIERE_ALU_1_5 * COEFF_MO_TRANSPORT), // matière 27,5 → ~100 €/m²
-  'alu-2':      115,
-  'inox-1':     125,
+  'alu-1.5':    90,   // = couvertine alu (était 100 ; aligné vers le bas)
+  'alu-2':      105,  // était 115 ; ré-aligné sur alu-1.5 (~+17 %)
+  'inox-1':     125,  // inox = premium, pas de benchmark concurrent → inchangé
   'inox-2':     160,
   'inox-3':     200,
 };
+const WIDTH_MULT = [
+  { maxDev: 250,      mult: 1.07 },  // étroit
+  { maxDev: 350,      mult: 1.00 },  // standard (référence)
+  { maxDev: Infinity, mult: 0.89 },  // large
+];
+function rateForPliage(key, devMm) {
+  const base = RATE_BASE[key];
+  if (!base) return 0;
+  const tier = WIDTH_MULT.find(t => devMm <= t.maxDev);
+  return Math.round(base * (tier ? tier.mult : 1));
+}
 
 // Épaisseurs disponibles par matière
 const THICKNESS_OPTIONS = {
@@ -186,7 +196,7 @@ function calcPrice() {
   const devMm  = shape.dev(state.dims);
   const surfM2 = (devMm / 1000) * (state.L / 1000);
   const rk     = rateKey();
-  const rate   = RATES[rk];
+  const rate   = rateForPliage(rk, devMm);
   if (!rate) return { ht: null, ttc: null };
 
   let priceHT  = Math.max(surfM2 * rate, PRICE_MIN) * state.qty;
@@ -834,7 +844,7 @@ function addToCart() {
     name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm${accSuffix}`,
     finish,
     length: `${dimStr} · L=${state.L}mm`,
-    price:  Math.round(ttc * 100),  // centimes TTC (cohérent avec cart.js)
+    price:  Math.round(ttc / state.qty * 100),  // prix UNITAIRE en centimes (calcPrice inclut déjà ×qty)
     qty:    state.qty,
   });
 }
