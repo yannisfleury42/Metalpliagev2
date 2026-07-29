@@ -1161,16 +1161,7 @@
       });
     });
 
-    /* Déclencher quand la config est complète (btn-cart devient actif) */
-    var btnCart = document.getElementById('btn-cart');
-    if (btnCart) {
-      var observer = new MutationObserver(function(){
-        if (!btnCart.disabled) {
-          setTimeout(showLeadMagnet, 2000);
-        }
-      });
-      observer.observe(btnCart, { attributes: true, attributeFilter: ['disabled'] });
-    }
+    /* Popup guide de pose désactivé (gêne visuelle) — plus aucun déclenchement. */
   })();
   </script>
 

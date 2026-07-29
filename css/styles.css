@@ -1578,13 +1578,16 @@ p { color: var(--text-secondary); }
     border-bottom: 1px solid var(--border);
     padding: 0.5rem 0 1rem;
     transform: translateY(-110%);
-    transition: transform 0.35s var(--ease);
+    visibility: hidden;
+    transition: transform 0.35s var(--ease), visibility 0s linear 0.35s;
     pointer-events: none;
     overflow-y: auto;
     max-height: calc(100vh - var(--nav-h));
   }
   #navbar.nav-open #nav-links {
     transform: translateY(0);
+    visibility: visible;
+    transition: transform 0.35s var(--ease), visibility 0s linear 0s;
     pointer-events: all;
   }
   .nav-item { width: 100%; }
