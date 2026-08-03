@@ -52,7 +52,7 @@
   ];
 
   const ACCESSORIES = [
-    { id: 'angle',    name: 'Angle 90°',          price: 8 },
+    { id: 'angle',    name: 'Angle 90°',          price: 45 },
     { id: 'clisse',   name: 'Éclisse',            price: 6 },
     { id: 'corniere', name: 'Cornière de départ', price: 7 },
     { id: 'talon',    name: 'Talon',              price: 5 },
