@@ -12,6 +12,14 @@
   const ORDER_EMAIL = 'contact@metal-pliage.fr';
   const STORAGE_KEY = 'mp_cart';   // panier persistant (survit aux changements de page)
 
+  /* ── POLITIQUE LIVRAISON (révisée 2026-08-03) ─────────────────
+     Livraison OFFERTE au-delà de ce seuil (TTC). En dessous : frais
+     de port selon devis (précisés avec le lien de paiement) OU retrait
+     gratuit à l'atelier de Saint-Étienne. Pas de commande minimum
+     bloquante. Seuil à ré-actualiser une fois les tarifs transporteur
+     figés. ── */
+  const FREE_SHIP_CENTS = 20000;   // 200 € TTC
+
   /* ── PERSISTANCE ──────────────────────────────────────────────
      Le panier est enregistré dans localStorage à CHAQUE modification.
      Il survit ainsi au changement de page (pliage ↔ couvertines),
@@ -128,6 +136,7 @@
     });
 
     if (cartTotalEl) cartTotalEl.textContent = formatPrice(total);
+    renderShippingNote(total);
     updateCartBadge();
   }
 
@@ -352,7 +361,7 @@
     form.method = 'POST';
     form.action = 'https://formsubmit.co/' + ORDER_EMAIL;
     form.innerHTML = `
-      <p class="order-reassure">Vous ne payez rien maintenant. Après vérification de votre commande, vous recevrez votre <strong>lien de paiement</strong> (carte bancaire ou virement), généralement sous 24&nbsp;h ouvrées.</p>
+      <p class="order-reassure">Vous ne payez rien maintenant. Après vérification de votre commande, vous recevrez votre <strong>lien de paiement</strong> (carte bancaire ou virement), généralement sous 24&nbsp;h ouvrées. Livraison <strong>offerte dès 200&nbsp;€</strong>&nbsp;; en dessous, les frais de port (ou le <strong>retrait gratuit à l'atelier</strong> de Saint-Étienne) vous seront précisés avec ce lien.</p>
       <label>Nom complet*<input type="text" name="Nom" required autocomplete="name"></label>
       <label>Email*<input type="email" name="Email" required autocomplete="email"></label>
       <label>Téléphone*<input type="tel" name="Telephone" inputmode="tel" required autocomplete="tel"></label>
@@ -401,6 +410,9 @@
         'Code postal et ville': order.client.adresse,
         Message: order.client.message,
         'Recapitulatif commande': cartSummaryText(),
+        Livraison: order.total >= FREE_SHIP_CENTS
+          ? 'Offerte (commande >= 200 EUR TTC)'
+          : 'A CHIFFRER — frais de port selon devis a ajouter au lien de paiement (offerte des 200 EUR), ou proposer le retrait gratuit a l\'atelier (Saint-Etienne).',
         _subject: 'Demande de commande ' + ref + ' — Metal Pliage',
         _template: 'table',
         _captcha: 'false',
@@ -500,24 +512,39 @@
     document.body.appendChild(btn);
   }
 
-  /* ── BANDEAU « LIVRAISON INCLUSE » ───────────────────────────
-     Affiché au-dessus du total du panier (argument différenciant :
-     transport compris, contrairement aux concurrents). ── */
-  function injectShippingNote() {
-    if (!cartFooter || document.getElementById('cart-ship-incl')) return;
-    const note = document.createElement('div');
-    note.id = 'cart-ship-incl';
-    note.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Livraison incluse (France métropolitaine)';
-    note.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:.4rem;'
-      + 'margin-bottom:.6rem;font-size:.82rem;font-weight:600;color:#1f9d55;';
-    cartFooter.insertBefore(note, cartFooter.firstChild);
+  /* ── BANDEAU LIVRAISON (dynamique) ───────────────────────────
+     ≥ seuil : livraison offerte. En dessous : frais de port selon
+     devis (précisés avec le lien de paiement) ou retrait gratuit à
+     l'atelier. Recalculé à chaque rendu du panier. ── */
+  const TRUCK_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;vertical-align:middle;"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>';
+  function renderShippingNote(total) {
+    if (!cartFooter) return;
+    let note = document.getElementById('cart-ship-incl');
+    if (!note) {
+      note = document.createElement('div');
+      note.id = 'cart-ship-incl';
+      cartFooter.insertBefore(note, cartFooter.firstChild);
+    }
+    const seuil = FREE_SHIP_CENTS / 100;
+    if (total >= FREE_SHIP_CENTS) {
+      note.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:.4rem;'
+        + 'margin-bottom:.6rem;font-size:.82rem;font-weight:600;color:#1f9d55;';
+      note.innerHTML = TRUCK_SVG + ' Livraison offerte (France métropolitaine)';
+    } else {
+      const reste = formatPrice(FREE_SHIP_CENTS - total);
+      note.style.cssText = 'margin-bottom:.6rem;font-size:.78rem;line-height:1.55;'
+        + 'color:var(--text-secondary,#bbb);text-align:center;';
+      note.innerHTML = TRUCK_SVG + ' <strong>Livraison offerte dès ' + seuil + '&nbsp;€</strong>'
+        + ' — plus que <strong style="color:var(--accent,#FF4500)">' + reste + '</strong>.<br>'
+        + 'En dessous&nbsp;: frais de port selon devis (précisés avec votre lien de paiement)'
+        + ' ou <strong>retrait gratuit à l\'atelier</strong> (Saint-Étienne).';
+    }
   }
 
   /* ── INIT ─────────────────────────────────────────────────── */
   injectCartQtyStyles();
   renderCart();
   injectContinueButton();
-  injectShippingNote();
 
   /* ── GLOBAL API for configurateur.js ─────────────────────── */
   window.CartAddItem = function (item) {

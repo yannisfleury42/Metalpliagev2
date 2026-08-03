@@ -13,7 +13,7 @@
 // comme la concurrence (aluhome/easypliage/e-pliage/pliages-online). alu-1.5 et
 // acier-0.75 sont calés sur le configurateur couvertine → une même pièce donne
 // le même prix des deux côtés. Réf. matière alu laqué 1,5 mm ≈ 27,5 €/m² HT
-// (devis Prolians n°803923). Révisé 2026-07-29. Livraison incluse.
+// (devis Prolians n°803923). Révisé 2026-07-29. Livraison offerte dès 200 €.
 const RATE_BASE = {
   'acier-0.75': 85,   // = couvertine acier
   'acier-1.5':  100,
