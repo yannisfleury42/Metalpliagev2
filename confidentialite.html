@@ -35,7 +35,8 @@
     .legal-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
     .legal-page .info-block { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin: 0.5rem 0 1rem; }
     .legal-page .info-block p { margin: 0.15rem 0; }
-  </style>  <script type="application/ld+json">
+  </style>
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -44,8 +45,8 @@
       { "@type": "ListItem", "position": 2, "name": "Politique de confidentialité", "item": "https://metal-pliage.fr/confidentialite.html" }
     ]
   }
-  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Plausible) -->
-  <script defer data-domain="metal-pliage.fr" src="https://plausible.io/js/script.js"></script>
+  </script>  <!-- Analytics RGPD-friendly — aucun cookie, conforme RGPD (Cloudflare Web Analytics) -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "426105e8e19148c482e439b9423ac270"}'></script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Aller au contenu principal</a>
@@ -80,7 +81,7 @@
     <h2>1. Responsable de traitement</h2>
     <div class="info-block">
       <p><strong>SARL METALLIER DESIGN SERVICE - M.D.S.</strong> (enseigne « Metal Pliage »)</p>
-      <p>8 Rue Édouard Martel, 42000 Saint-Étienne, France</p>
+      <p>8 Rue Édouard Martel, 42100 Saint-Étienne, France</p>
       <p>RCS Saint-Étienne 844 258 178 — SIRET 844 258 178 00010</p>
       <p>Email : <a href="mailto:contact@metal-pliage.fr" style="color:var(--accent)">contact@metal-pliage.fr</a></p>
       <p>Téléphone : <a href="tel:+33643218201" style="color:var(--accent)">06 43 21 82 01</a></p>
@@ -101,7 +102,8 @@
     <p>Les champs marqués obligatoires sont nécessaires au traitement de votre demande. Les autres restent à votre libre appréciation.</p>
 
     <h3>2.2 Données techniques</h3>
-    <p>Le site metal-pliage.fr <strong>n'utilise aucun outil de mesure d'audience ni de tracking publicitaire</strong> (pas de Google Analytics, pas de Meta Pixel, etc.). Aucun cookie de profilage ou de mesure n'est déposé sur votre terminal.</p>
+    <p>Le site metal-pliage.fr <strong>n'utilise aucun outil de tracking publicitaire</strong> (pas de Google Analytics, pas de Meta Pixel, etc.). Aucun cookie de profilage ou de publicité ciblée n'est déposé sur votre terminal.</p>
+    <p>Nous utilisons uniquement <strong>Cloudflare Web Analytics</strong>, un outil de mesure d'audience respectueux de la vie privée : il <strong>ne dépose aucun cookie</strong>, ne crée aucun identifiant persistant et ne permet ni de vous identifier ni de vous suivre d'un site à l'autre. Seules des statistiques agrégées et anonymes sont produites (nombre de pages vues, pages les plus consultées, type d'appareil, pays, site référent).</p>
     <p>Des données techniques minimales (adresse IP, type de navigateur, horodatage) peuvent être enregistrées de façon transitoire par nos hébergeurs dans leurs journaux serveurs, à des fins exclusives de sécurité et de bon fonctionnement du service.</p>
 
     <h3>2.3 Données de commande (paiement)</h3>
@@ -130,13 +132,14 @@
       <li><strong>Brevo (Sendinblue SAS)</strong> — 7 rue de Madrid, 75008 Paris, France — pour la transmission par email des messages issus du formulaire de contact.</li>
       <li><strong>Render Services, Inc.</strong> — pour l'hébergement du backend traitant temporairement le formulaire avant son envoi par email.</li>
       <li><strong>GitHub, Inc.</strong> — pour l'hébergement des pages statiques du site (GitHub Pages).</li>
+      <li><strong>Cloudflare, Inc.</strong> — pour la mesure d'audience anonyme du site, sans cookie ni identifiant persistant.</li>
       <li><strong>Stripe Payments Europe, Ltd.</strong> — pour le traitement futur des paiements par carte bancaire.</li>
       <li><strong>Transporteurs et expert-comptable</strong> — uniquement les données strictement nécessaires à l'exécution des prestations.</li>
     </ul>
     <p>Vos données ne sont jamais cédées, louées ou vendues à des tiers à des fins commerciales.</p>
 
     <h2>6. Transferts hors Union européenne</h2>
-    <p>Certains de nos sous-traitants (GitHub, Stripe pour partie) sont susceptibles d'héberger ou de traiter des données sur des serveurs situés aux États-Unis. Ces transferts sont encadrés par :</p>
+    <p>Certains de nos sous-traitants (GitHub, Cloudflare, Stripe pour partie) sont susceptibles d'héberger ou de traiter des données sur des serveurs situés aux États-Unis. Ces transferts sont encadrés par :</p>
     <ul>
       <li>les <strong>Clauses Contractuelles Types</strong> de la Commission européenne (décision 2021/914) ;</li>
       <li>l'adhésion de ces prestataires au <strong>EU-U.S. Data Privacy Framework</strong>, lorsque celle-ci est effective.</li>
@@ -144,7 +147,8 @@
     <p>Ces garanties assurent un niveau de protection des données équivalent à celui prévu par le RGPD.</p>
 
     <h2>7. Cookies et traceurs</h2>
-    <p>Le site metal-pliage.fr <strong>ne dépose actuellement aucun cookie publicitaire, de mesure d'audience ou de profilage</strong>. Seuls peuvent être utilisés des cookies strictement nécessaires au fonctionnement du site (par exemple, préférences d'affichage), dispensés de consentement au titre de l'article 82 de la loi Informatique et Libertés.</p>
+    <p>Le site metal-pliage.fr <strong>ne dépose aucun cookie publicitaire, de mesure d'audience ou de profilage</strong>. Seuls peuvent être utilisés des cookies strictement nécessaires au fonctionnement du site (par exemple, préférences d'affichage ou contenu du panier), dispensés de consentement au titre de l'article 82 de la loi Informatique et Libertés.</p>
+    <p>La mesure d'audience est assurée par <strong>Cloudflare Web Analytics</strong> (voir §2.2), qui fonctionne <strong>sans aucun cookie ni identifiant persistant</strong> et produit uniquement des statistiques anonymes et agrégées. À ce titre, et conformément aux lignes directrices de la CNIL sur les mesures d'audience strictement nécessaires, ce dispositif est dispensé de recueil du consentement : aucun bandeau cookies n'est donc affiché.</p>
     <p>Les polices d'écriture sont chargées depuis <strong>Google Fonts</strong> ; ce service peut entraîner la transmission de votre adresse IP aux serveurs de Google LLC (États-Unis). Si vous souhaitez bloquer ce chargement, vous pouvez utiliser une extension de navigateur dédiée.</p>
     <p>Si des outils de mesure ou de tracking étaient ajoutés à l'avenir, un bandeau de consentement conforme aux recommandations de la CNIL serait alors mis en place.</p>
 
@@ -196,7 +200,7 @@
       <address class="footer-contact">
         <p><a href="mailto:contact@metal-pliage.fr">contact@metal-pliage.fr</a></p>
         <p><a href="tel:+33643218201">06 43 21 82 01</a></p>
-        <p>8 Rue Édouard Martel<br>42000 Saint-Étienne</p>
+        <p>8 Rue Édouard Martel<br>42100 Saint-Étienne</p>
       </address>
     </div>
     <div class="footer-bottom">

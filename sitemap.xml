@@ -56,12 +56,9 @@
   </url>
 
   <!-- Réalisations & Atelier -->
-  <url>
-    <loc>https://metal-pliage.fr/realisations.html</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <!-- realisations.html retirée du sitemap le 2026-08-04 : page sans contenu (0 photo).
+       Une page vide indexée dégrade la qualité perçue du domaine.
+       À réintégrer dès qu'elle contient de vraies photos de chantier. -->
   <url>
     <loc>https://metal-pliage.fr/atelier.html</loc>
     <lastmod>2026-05-18</lastmod>
