@@ -49,7 +49,23 @@
     { code: '9005', name: 'Noir Satiné',     hex: '#0A0A0A', light: false },
     { code: '9010', name: 'Blanc Pur',       hex: '#F4F3EF', light: true  },
     { code: '9006', name: 'Gris Clair',      hex: '#A5A8A6', light: true  },
+    // Finition spéciale : thermolaquage effet Corten (aspect rouille).
+    // quote:true => aucun prix affiché, le parcours bascule en demande de devis.
+    // Tant que le coût laqueur n'est pas calé, on ne vend PAS au prix alu standard.
+    { code: 'CORTEN', name: 'Effet Corten', hex: '#8A4B2A', light: false, quote: true },
   ];
+
+  // Libellé d'une finition : « RAL 7016 Gris Anthracite » ou « Effet Corten »
+  function finishLabel(ral) {
+    if (!ral) return '—';
+    return ral.quote ? ral.name : `RAL ${ral.code} ${ral.name}`;
+  }
+
+  // La finition choisie impose-t-elle un devis (pas de prix instantané) ?
+  function isQuoteFinish(code) {
+    const ral = RAL_COLORS.find(c => c.code === code);
+    return !!(ral && ral.quote);
+  }
 
   const ACCESSORIES = [
     { id: 'angle',    name: 'Angle 90°',          price: 45 },
@@ -502,7 +518,7 @@
     if (recapDev)      recapDev.textContent      = state.material ? `${devWidth} mm` : '—';
     if (recapColor) {
       const ral = state.color ? RAL_COLORS.find(c => c.code === state.color) : null;
-      recapColor.textContent = ral ? `RAL ${ral.code} ${ral.name}` : '—';
+      recapColor.textContent = finishLabel(ral);
     }
     if (recapAcc) {
       const parts = ACCESSORIES.filter(a => state.accessories[a.id].qty > 0).map(a => `${state.accessories[a.id].qty}× ${a.name}`);
@@ -510,9 +526,10 @@
     }
     if (recapQtyInput) recapQtyInput.value = state.qty;
 
+    const quoteOnly = isQuoteFinish(state.color);
     const price = calcPrice();
-    const htText  = price ? fmt(price.ht)  : '—';
-    const ttcText = price ? fmt(price.ttc) : '—';
+    const htText  = quoteOnly ? 'Sur devis' : (price ? fmt(price.ht)  : '—');
+    const ttcText = quoteOnly ? 'Sur devis' : (price ? fmt(price.ttc) : '—');
     if (priceHt)   priceHt.textContent   = htText;
     if (priceTtc)  priceTtc.textContent  = ttcText;
     if (step5Ht)   step5Ht.textContent   = htText;
@@ -521,6 +538,21 @@
     const ready = !!(state.material && state.color);
     if (btnCart)         btnCart.disabled        = !ready;
     if (sidebarBtnCart)  sidebarBtnCart.disabled  = !ready;
+
+    // Finition sur devis : le bouton ne met pas au panier, il mène au formulaire pré-rempli.
+    // On échange l'innerHTML complet (icône incluse) et on mémorise l'original.
+    const QUOTE_BTN_HTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Demander mon devis';
+    [btnCart, sidebarBtnCart].forEach((b) => {
+      if (!b) return;
+      if (b.dataset.defaultHtml === undefined) b.dataset.defaultHtml = b.innerHTML;
+      const wanted = quoteOnly ? 'quote' : 'cart';
+      if (b.dataset.mode !== wanted) {
+        b.innerHTML = quoteOnly ? QUOTE_BTN_HTML : b.dataset.defaultHtml;
+        b.dataset.mode = wanted;
+      }
+    });
+    const quoteNote = document.getElementById('quote-note');
+    if (quoteNote) quoteNote.hidden = !quoteOnly;
 
     // Hint under disabled cart button
     const cartHint = document.getElementById('cart-hint');
@@ -614,11 +646,11 @@
       const btn = document.createElement('button');
       btn.className    = 'ral-swatch';
       btn.dataset.code = ral.code;
-      btn.setAttribute('aria-label', `RAL ${ral.code} ${ral.name}`);
-      btn.setAttribute('title', `RAL ${ral.code} — ${ral.name}`);
+      btn.setAttribute('aria-label', finishLabel(ral));
+      btn.setAttribute('title', ral.quote ? `${ral.name} — finition spéciale, sur devis` : `RAL ${ral.code} — ${ral.name}`);
       btn.innerHTML = `
         <span class="ral-swatch-circle" style="background:${ral.hex};box-shadow:inset 0 0 0 1px rgba(${ral.light?'0,0,0,0.2':'255,255,255,0.1'})"></span>
-        <span class="ral-swatch-name">RAL ${ral.code}<br><em>${ral.name}</em></span>
+        <span class="ral-swatch-name">${ral.quote ? 'Effet' : 'RAL ' + ral.code}<br><em>${ral.quote ? 'Corten — sur devis' : ral.name}</em></span>
       `;
       container.appendChild(btn);
     });
@@ -630,8 +662,8 @@
       const btn = document.createElement('button');
       btn.className    = 'ral-swatch';
       btn.dataset.code = ral.code;
-      btn.setAttribute('aria-label', `RAL ${ral.code}`);
-      btn.setAttribute('title', `RAL ${ral.code} ${ral.name}`);
+      btn.setAttribute('aria-label', finishLabel(ral));
+      btn.setAttribute('title', finishLabel(ral));
       btn.innerHTML = `<span class="ral-swatch-circle" style="background:${ral.hex};width:26px;height:26px;border-width:2px;outline-width:2px"></span>`;
       btn.addEventListener('click', () => {
         state.accessories[accId].color = ral.code;
@@ -793,7 +825,7 @@
     const price = calcPrice();
     return {
       name:   `Couvertine sur mesure — ${mat.name}`,
-      finish: ral ? `RAL ${ral.code} ${ral.name}` : '—',
+      finish: finishLabel(ral),
       length: `B=${state.B}mm · A=${state.A}mm · C=${state.C}mm · L=${state.L}mm`,
       price:  Math.round(price.ttc / state.qty * 100), // prix UNITAIRE (calcPrice inclut déjà ×qty)
       qty:    state.qty,
@@ -802,7 +834,27 @@
 
   function handleCartAdd() {
     if (!state.material || !state.color) return;
+    // Finition sur devis (effet Corten) : pas de mise au panier, on envoie
+    // vers le formulaire de contact pré-rempli avec la configuration.
+    if (isQuoteFinish(state.color)) { goToQuote(); return; }
     if (typeof window.CartAddItem === 'function') window.CartAddItem(buildCartItem());
+  }
+
+  function goToQuote() {
+    const mat = MATERIALS[state.material];
+    const p = new URLSearchParams({
+      produit:   'Couvertine sur mesure',
+      ral:       'Effet Corten (thermolaquage spécial)',
+      longueurs: `${state.qty} × ${state.L} mm`,
+      largeur:   `développé ${state.B + state.A + state.C} mm (B=${state.B} · A=${state.A} · C=${state.C})`,
+      quantite:  String(state.qty),
+      message:   `Bonjour, je souhaite un devis pour une couvertine sur mesure en finition EFFET CORTEN.\n\n`
+               + `Matière : ${mat.name} (${mat.epaisseur})\n`
+               + `Cotes : B=${state.B} mm · A=${state.A} mm · C=${state.C} mm · L=${state.L} mm\n`
+               + `Quantité : ${state.qty}\n\n`
+               + `Merci de me communiquer le prix et le délai pour cette finition.`,
+    });
+    window.location.href = 'contact.html?' + p.toString();
   }
 
   if (btnCart)         btnCart.addEventListener('click', handleCartAdd);
