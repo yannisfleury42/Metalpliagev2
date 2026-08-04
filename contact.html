@@ -572,6 +572,9 @@
       <nav class="footer-nav" aria-label="Liens de bas de page">
         <ul role="list">
           <li><a href="couvertines.html">Couvertines</a></li>
+          <li><a href="accessoires.html">Accessoires</a></li>
+          <li><a href="appuis-de-fenetre.html">Appuis de fenêtre</a></li>
+          <li><a href="forme-libre.html">Forme libre</a></li>
           <li><a href="pliage.html">Pliage</a></li>
           <li><a href="guides.html">Guide de pose</a></li>
           <li><a href="contact.html">Contact / Devis</a></li>
@@ -603,6 +606,39 @@
     function selectChoice() {
       document.getElementById('contact-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+    // ═══ PRÉ-REMPLISSAGE depuis les configurateurs ═══
+    // Utilisé quand une finition est « sur devis » (effet Corten) : le configurateur
+    // renvoie ici avec la configuration en paramètres d'URL.
+    (function() {
+      const p = new URLSearchParams(window.location.search);
+      if (![...p.keys()].length) return;
+      const map = {
+        produit:   'f-product',
+        longueurs: 'f-longueurs',
+        largeur:   'f-largeur',
+        quantite:  'f-quantite',
+        ral:       'f-ral',
+        message:   'f-message',
+      };
+      let filled = false;
+      Object.entries(map).forEach(([param, id]) => {
+        const val = p.get(param);
+        const el  = document.getElementById(id);
+        if (!val || !el) return;
+        if (el.tagName === 'SELECT') {
+          const opt = [...el.options].find(o => o.value.toLowerCase() === val.toLowerCase())
+                   || [...el.options].find(o => o.value.toLowerCase().includes('sur mesure'));
+          if (opt) { el.value = opt.value; filled = true; }
+        } else {
+          el.value = val;
+          filled = true;
+        }
+      });
+      if (filled) {
+        document.getElementById('contact-form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    })();
 
     // ═══ UPLOAD : drag & drop + listing fichiers ═══
     (function() {
