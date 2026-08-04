@@ -47,7 +47,26 @@ const RAL_COLORS = [
   { code: '9005', name: 'Noir Satiné',     hex: '#0A0A0A' },
   { code: '9010', name: 'Blanc Pur',       hex: '#F4F3EF' },
   { code: '9006', name: 'Gris Clair',      hex: '#A5A8A6' },
+  // Finition spéciale : thermolaquage effet Corten (aspect rouille), aluminium uniquement.
+  // quote:true => aucun prix affiché, bascule en demande de devis.
+  // Même règle que le configurateur couvertine (js/configurateur.js) tant que le
+  // coût du laqueur n'est pas connu : on ne vend PAS au tarif alu standard.
+  { code: 'CORTEN', name: 'Effet Corten', hex: '#8A4B2A', quote: true },
 ];
+
+// La finition choisie impose-t-elle un devis (pas de prix instantané) ?
+function isQuoteFinish(code) {
+  const ral = RAL_COLORS.find((r) => r.code === code);
+  return !!(ral && ral.quote);
+}
+
+// Libellé d'une finition, quel que soit son type
+function finishLabelFor(code, material) {
+  if (code === 'brut') return material === 'acier' ? 'Acier brut' : 'Inox brut';
+  const ral = RAL_COLORS.find((r) => r.code === code);
+  if (!ral) return '—';
+  return ral.quote ? ral.name : `RAL ${ral.code}`;
+}
 
 const DEG10  = 10  * Math.PI / 180;
 const DEG102 = 102 * Math.PI / 180;
@@ -461,18 +480,22 @@ function buildRalGrid() {
     const btn = document.createElement('button');
     btn.className = 'ral-swatch';
     btn.dataset.code = ral.code;
-    btn.setAttribute('aria-label', `RAL ${ral.code} — ${ral.name}`);
+    btn.setAttribute('aria-label', ral.quote ? `${ral.name} — sur devis` : `RAL ${ral.code} — ${ral.name}`);
     btn.innerHTML = `
       <span class="ral-swatch-circle" style="background:${ral.hex}"></span>
-      <span class="ral-swatch-name">RAL ${ral.code}<em>${ral.name}</em></span>
+      <span class="ral-swatch-name">${ral.quote ? 'Effet' : 'RAL ' + ral.code}<em>${ral.quote ? 'Corten — sur devis' : ral.name}</em></span>
     `;
     btn.addEventListener('click', () => {
       document.querySelectorAll('.ral-swatch').forEach((s) => s.classList.remove('is-selected'));
       btn.classList.add('is-selected');
       state.color = ral.code;
-      // Sync auto : la couleur de tête des vis suit celle de la tôle
-      state.accessories.vis.color = ral.code;
-      updateVisRalSelection();
+      // Sync auto : la couleur de tête des vis suit celle de la tôle.
+      // Exception : les finitions sur devis n'existent pas en tête de vis,
+      // on garde alors la couleur de vis déjà choisie.
+      if (!ral.quote) {
+        state.accessories.vis.color = ral.code;
+        updateVisRalSelection();
+      }
       updateUI();
       unlockStep(5);
       unlockStep(6);
@@ -487,7 +510,8 @@ function buildVisRalSwatches() {
   const wrap = document.getElementById('vis-ral-swatches');
   if (!wrap) return;
   wrap.innerHTML = '';
-  RAL_COLORS.forEach((ral) => {
+  // Les finitions sur devis (effet Corten) n'existent pas en tête de vis
+  RAL_COLORS.filter((r) => !r.quote).forEach((ral) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'vis-ral-swatch';
@@ -549,17 +573,35 @@ function updateUI() {
     elInfoSurf.textContent = `Surface : ${surfM2 !== '—' ? surfM2 + ' m²' : '—'}`;
   }
 
-  // Price
+  // Price — une finition sur devis n'affiche jamais de montant
+  const quoteOnly = isQuoteFinish(state.color);
   const { ht, ttc } = calcPrice();
-  elStep5HT.textContent  = ht !== null ? fmt(ht) : '—';
-  elStep5TTC.textContent = ttc !== null ? fmt(ttc) : '—';
-  elPriceHT.textContent  = ht !== null ? fmt(ht) : '—';
-  elPriceTTC.textContent = ttc !== null ? fmt(ttc) : '—';
+  const htTxt  = quoteOnly ? 'Sur devis' : (ht  !== null ? fmt(ht)  : '—');
+  const ttcTxt = quoteOnly ? 'Sur devis' : (ttc !== null ? fmt(ttc) : '—');
+  elStep5HT.textContent  = htTxt;
+  elStep5TTC.textContent = ttcTxt;
+  elPriceHT.textContent  = htTxt;
+  elPriceTTC.textContent = ttcTxt;
 
   // Cart buttons
   const canCart = state.color && dimsValid() && state.material;
   elBtnCart.disabled        = !canCart;
   elSidebarBtnCart.disabled = !canCart;
+
+  // Finition sur devis : le bouton mène au formulaire pré-rempli, pas au panier.
+  // On échange l'innerHTML complet pour préserver l'icône SVG.
+  const QUOTE_BTN_HTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Demander mon devis';
+  [elBtnCart, elSidebarBtnCart].forEach((b) => {
+    if (!b) return;
+    if (b.dataset.defaultHtml === undefined) b.dataset.defaultHtml = b.innerHTML;
+    const wanted = quoteOnly ? 'quote' : 'cart';
+    if (b.dataset.mode !== wanted) {
+      b.innerHTML = quoteOnly ? QUOTE_BTN_HTML : b.dataset.defaultHtml;
+      b.dataset.mode = wanted;
+    }
+  });
+  const quoteNote = document.getElementById('quote-note');
+  if (quoteNote) quoteNote.hidden = !quoteOnly;
 
   // Sidebar recap
   elRecapShape.textContent    = shape ? shape.label : '—';
@@ -577,9 +619,7 @@ function updateUI() {
     elRecapDims.textContent = '—';
     elRecapDev.textContent  = '—';
   }
-  elRecapColor.textContent = state.color === 'brut'
-    ? (state.material === 'acier' ? 'Acier brut' : 'Inox brut')
-    : state.color ? `RAL ${state.color}` : '—';
+  elRecapColor.textContent = state.color ? finishLabelFor(state.color, state.material) : '—';
   if (elRecapQtyInput) elRecapQtyInput.value = state.qty;
 }
 
@@ -819,14 +859,43 @@ ACCESSORIES_PLIAGE.forEach((acc) => {
   if (row) row.classList.add('acc-inactive');
 });
 
+// Finition sur devis : redirection vers le formulaire de contact pré-rempli
+function goToQuotePliage() {
+  const shape  = SHAPES[state.shape];
+  const dimStr = shape && dimsValid()
+    ? shape.dimKeys.map((k) => `${k}=${state.dims[k]}mm`).join(' · ')
+    : 'cotes à préciser';
+  const dev    = shape && dimsValid() ? `${shape.dev(state.dims)} mm` : '—';
+  const mat    = state.material
+    ? `${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${state.thickness} mm`
+    : '—';
+  const p = new URLSearchParams({
+    produit:   'Pliage Sur Mesure',
+    ral:       'Effet Corten (thermolaquage spécial)',
+    longueurs: `${state.qty} × ${state.L} mm`,
+    largeur:   `développé ${dev}`,
+    quantite:  String(state.qty),
+    message:   `Bonjour, je souhaite un devis pour un pliage sur mesure en finition EFFET CORTEN.\n\n`
+             + `Forme : ${shape ? shape.label : '—'}\n`
+             + `Matière : ${mat}\n`
+             + `Cotes : ${dimStr}\n`
+             + `Développé : ${dev}\n`
+             + `Longueur : ${state.L} mm\n`
+             + `Quantité : ${state.qty}\n\n`
+             + `Merci de me communiquer le prix et le délai pour cette finition.`,
+  });
+  window.location.href = 'contact.html?' + p.toString();
+}
+
 // Cart buttons
 function addToCart() {
   if (!state.shape || !state.material) return;
+  // Finition sur devis (effet Corten) : pas de mise au panier,
+  // on envoie vers le formulaire de contact pré-rempli.
+  if (isQuoteFinish(state.color)) { goToQuotePliage(); return; }
   const shape     = SHAPES[state.shape];
   const dimStr    = shape.dimKeys.map((k) => `${k}=${state.dims[k]}mm`).join(' · ');
-  const finish    = state.color === 'brut'
-    ? (state.material === 'acier' ? 'Acier brut' : 'Inox Brut')
-    : `RAL ${state.color}`;
+  const finish    = finishLabelFor(state.color, state.material);
   const th        = state.thickness;
   const { ttc }   = calcPrice();
 

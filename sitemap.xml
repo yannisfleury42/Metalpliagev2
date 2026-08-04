@@ -59,12 +59,9 @@
   <!-- realisations.html retirée du sitemap le 2026-08-04 : page sans contenu (0 photo).
        Une page vide indexée dégrade la qualité perçue du domaine.
        À réintégrer dès qu'elle contient de vraies photos de chantier. -->
-  <url>
-    <loc>https://metal-pliage.fr/atelier.html</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  <!-- atelier.html retirée du sitemap le 2026-08-04 (décision Yannis), même motif
+       que realisations.html : page sans contenu réel ni photo d'atelier.
+       À réintégrer quand de vraies photos existent. -->
 
   <url>
     <loc>https://metal-pliage.fr/espace-pro.html</loc>
