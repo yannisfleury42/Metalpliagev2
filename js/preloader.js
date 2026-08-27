@@ -64,13 +64,11 @@
       document.body.classList.remove('is-loading');
     };
 
-    // Anim complète ≈ 1.85s + buffer
-    const delay = prefersReducedMotion() ? 200 : 2100;
+    const delay = prefersReducedMotion() ? 150 : 600;
     setTimeout(hidePreloader, delay);
 
-    window.addEventListener('load', () => {
-      setTimeout(hidePreloader, prefersReducedMotion() ? 100 : 400);
-    }, { once: true });
+    // Dès que le DOM est prêt : on n'attend pas window.load (images, fonts, beacon).
+    requestAnimationFrame(() => setTimeout(hidePreloader, delay));
 
     /* ── Transition entre pages internes ── */
     const replayPreloader = () => {
@@ -84,21 +82,23 @@
       });
     };
 
+    // Transition de sortie SANS bloquer la navigation : le navigateur part
+    // immédiatement, l'animation ne fait qu'habiller le temps de chargement.
+    // (l'ancienne version interceptait le clic pendant 900 ms et cassait le ctrl+clic)
     document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const link = e.target.closest('a[href]');
       if (!link) return;
       const href = link.getAttribute('href');
       if (!href) return;
       if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-      if (link.target === '_blank') return;
-      const isHtml = href.endsWith('.html') || /\.html#/.test(href) || /\.html\?/.test(href);
+      if (link.target === '_blank' || link.hasAttribute('download')) return;
+      const isHtml = href.endsWith('.html') || /\.html#/.test(href) || /\.html\?/.test(href) || href.endsWith('blog/');
       if (!isHtml) return;
       const currentPath = window.location.pathname.split('/').pop();
       if (href === currentPath) return;
-
-      e.preventDefault();
       replayPreloader();
-      setTimeout(() => { window.location.href = link.href; }, 900);
     });
   }
 

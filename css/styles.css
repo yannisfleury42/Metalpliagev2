@@ -2601,6 +2601,7 @@ p { color: var(--text-secondary); }
   margin-bottom: 2.5rem;
 }
 
+.contact-form-header h1,
 .contact-form-header h2 {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 300;
