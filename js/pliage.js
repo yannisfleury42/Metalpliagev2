@@ -628,14 +628,24 @@ function updateUI() {
 function updateMaterialAvailability() {
   const isAppui = state.shape === 'appui';
   const inoxCard = document.querySelector('.material-card[data-material="inox"]');
+  const acierCard = document.querySelector('.material-card[data-material="acier"]');
   if (!inoxCard) return;
+
+  // L'appui de fenetre est fabrique en aluminium laque uniquement : il recoit
+  // l'eau en permanence et se recoupe a la longueur de la baie, donc ses chants
+  // restent a nu - c'est la que l'acier rouille.
+  if (acierCard) {
+    acierCard.style.opacity       = isAppui ? '0.3' : '';
+    acierCard.style.pointerEvents = isAppui ? 'none' : '';
+    acierCard.title = isAppui ? "L'appui de fenetre est fabrique en aluminium laque uniquement" : '';
+  }
 
   if (isAppui) {
     inoxCard.style.opacity = '0.3';
     inoxCard.style.pointerEvents = 'none';
     inoxCard.title = 'L\'inox n\'est pas disponible pour l\'appui de fenêtre';
     // Si inox était sélectionné, reset
-    if (state.material === 'inox') {
+    if (state.material === 'acier' || state.material === 'inox') {
       state.material = null;
       state.thickness = null;
       state.color = null;
