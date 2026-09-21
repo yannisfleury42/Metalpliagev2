@@ -565,6 +565,18 @@
               <input type="tel" name="Téléphone" autocomplete="tel" placeholder="06 12 34 56 78">
             </div>
           </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Code postal de livraison <span class="req">*</span></label>
+              <input type="text" name="Code postal" inputmode="numeric" autocomplete="postal-code"
+                     pattern="[0-9]{5}" maxlength="5" placeholder="42100" required
+                     title="5 chiffres — exemple : 42100">
+            </div>
+            <div class="field">
+              <label>Ville</label>
+              <input type="text" name="Ville" autocomplete="address-level2" placeholder="Saint-Étienne">
+            </div>
+          </div>
         </div>
 
         <!-- SECTION 2 : VOTRE PROJET -->

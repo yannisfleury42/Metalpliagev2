@@ -1212,6 +1212,12 @@ p { color: var(--text-secondary); }
   box-shadow: 0 0 0 2px var(--accent-glow);
   outline: none;
 }
+.form-group .form-hint {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin-top: -0.15rem;
+}
 
 .form-group select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8A8A' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");

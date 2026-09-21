@@ -484,12 +484,23 @@
         var tdq = document.createElement('td'); tdq.textContent = it.qty; tr.appendChild(tdq);
         var tdm = document.createElement('td'); tdm.textContent = euro(it.price * it.qty); tr.appendChild(tdm);
         tb.appendChild(tr);
+        // Accessoires : ligne propre, au forfait (jamais multipliée par la quantité)
+        if (it.extras || it.extrasCents) {
+          var trx = document.createElement('tr');
+          var tdx = document.createElement('td'); tdx.colSpan = 4;
+          tdx.textContent = 'dont accessoires : ' + (it.extras || '—');
+          trx.appendChild(tdx);
+          var tdxm = document.createElement('td'); tdxm.textContent = euro(it.extrasCents || 0);
+          trx.appendChild(tdxm);
+          tb.appendChild(trx);
+        }
       });
       var totEl = document.getElementById('r-total'); if (totEl) totEl.textContent = euro(o.total || 0);
       var c = o.client || {};
       var clEl = document.getElementById('r-client');
       if (clEl) {
-        clEl.textContent = [c.nom, c.email, c.tel, c.adresse].filter(Boolean).join('  ·  ');
+        const lieu = [c.cp, c.ville].filter(Boolean).join(' ') || c.adresse;
+        clEl.textContent = [c.nom, c.email, c.tel, lieu].filter(Boolean).join('  ·  ');
         if (c.message) { clEl.appendChild(document.createElement('br')); clEl.appendChild(document.createTextNode('« ' + c.message + ' »')); }
       }
       sec.hidden = false;

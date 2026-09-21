@@ -218,16 +218,26 @@ function calcPrice() {
   const rate   = rateForPliage(rk, devMm);
   if (!rate) return { ht: null, ttc: null };
 
-  let priceHT  = Math.max(surfM2 * rate, PRICE_MIN) * state.qty;
+  const piecesHT = Math.max(surfM2 * rate, PRICE_MIN) * state.qty;
 
-  // Accessoires (quantité absolue, non multipliée par state.qty)
+  // Accessoires (quantité absolue, non multipliée par state.qty) : tenus à part
+  // du prix des pièces, sinon changer la quantité depuis le panier les refacture.
+  let accHT = 0;
   for (const acc of ACCESSORIES_PLIAGE) {
     const q = state.accessories[acc.id].qty;
-    if (q > 0) priceHT += q * acc.price;
+    if (q > 0) accHT += q * acc.price;
   }
 
+  const priceHT  = piecesHT + accHT;
   const priceTTC = priceHT * TVA;
-  return { ht: priceHT, ttc: priceTTC };
+  return {
+    ht: priceHT,
+    ttc: priceTTC,
+    piecesHt: piecesHT,
+    accHt: accHT,
+    unitPieceTtc: (piecesHT / state.qty) * TVA,
+    accTtc: accHT * TVA,
+  };
 }
 
 function fmt(n) {
@@ -907,24 +917,30 @@ function addToCart() {
   const dimStr    = shape.dimKeys.map((k) => `${k}=${state.dims[k]}mm`).join(' · ');
   const finish    = finishLabelFor(state.color, state.material);
   const th        = state.thickness;
-  const { ttc }   = calcPrice();
+  const price     = calcPrice();
+  // Combinaison sans tarif (calcPrice renvoie ht/ttc à null) : on n'ajoute rien
+  // plutôt que d'envoyer une ligne à 0,00 € au panier.
+  if (!price || !Number.isFinite(price.unitPieceTtc)) return;
 
-  // Suffixe accessoires pour transparence (ex: "+ 2× vis RAL 7016")
+  // Accessoires détaillés (ex: « 2 × Vis inox auto-foreuses tête RAL (lot de 100) — RAL 7016 »).
+  // Ils sont chiffrés à part du prix de la pièce : forfait de ligne, non multiplié
+  // par la quantité — voir le même traitement dans configurateur.js.
   const accParts = ACCESSORIES_PLIAGE
     .filter((acc) => state.accessories[acc.id].qty > 0)
     .map((acc) => {
       const a = state.accessories[acc.id];
-      const ralPart = acc.id === 'vis' && a.color ? ` RAL ${a.color}` : '';
-      return `${a.qty}× ${acc.id}${ralPart}`;
+      const ralPart = acc.id === 'vis' && a.color ? ` — RAL ${a.color}` : '';
+      return `${a.qty} × ${acc.name}${ralPart}`;
     });
-  const accSuffix = accParts.length ? ` + ${accParts.join(', ')}` : '';
 
   window.CartAddItem?.({
-    name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm${accSuffix}`,
+    name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm`,
     finish,
     length: `${dimStr} · L=${state.L}mm`,
-    price:  Math.round(ttc / state.qty * 100),  // prix UNITAIRE en centimes (calcPrice inclut déjà ×qty)
-    qty:    state.qty,
+    extras: accParts.join(' · '),
+    price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires
+    extrasCents: Math.round(price.accTtc * 100),       // forfait accessoires de la ligne
+    qty:         state.qty,
   });
 }
 

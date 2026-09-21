@@ -481,14 +481,25 @@
     const devWidth = C + 2 * A + 2 * R; // mm (C = B + 2×OVH)
     const surface  = (devWidth / 1000) * (L / 1000);
     const rate     = rateFor(state.material, devWidth);
-    let ht = Math.max(surface * rate, MIN_PRICE_HT) * state.qty;
+    // Prix des PIÈCES (× quantité) et FORFAIT ACCESSOIRES de la ligne (quantité
+    // absolue, jamais multipliée par state.qty) tenus séparés : fondre les deux
+    // dans un prix unitaire fait refacturer les accessoires à chaque fois que le
+    // client change la quantité depuis le panier.
+    const piecesHt = Math.max(surface * rate, MIN_PRICE_HT) * state.qty;
+    let accHt = 0;
     for (const acc of ACCESSORIES) {
       const s = state.accessories[acc.id];
-      if (s.qty > 0) ht += s.qty * acc.price;
+      if (s.qty > 0) accHt += s.qty * acc.price;
     }
+    const ht = piecesHt + accHt;
+    const c2 = (v) => Math.round(v * 100) / 100;
     return {
-      ht:      Math.round(ht * 100) / 100,
-      ttc:     Math.round(ht * (1 + TVA) * 100) / 100,
+      ht:           c2(ht),
+      ttc:          c2(ht * (1 + TVA)),
+      piecesHt:     c2(piecesHt),
+      accHt:        c2(accHt),
+      unitPieceTtc: c2((piecesHt / state.qty) * (1 + TVA)),
+      accTtc:       c2(accHt * (1 + TVA)),
       devWidth,
       surface,
     };
@@ -827,8 +838,16 @@
       name:   `Couvertine sur mesure — ${mat.name}`,
       finish: finishLabel(ral),
       length: `B=${state.B}mm · A=${state.A}mm · C=${state.C}mm · L=${state.L}mm`,
-      price:  Math.round(price.ttc / state.qty * 100), // prix UNITAIRE (calcPrice inclut déjà ×qty)
-      qty:    state.qty,
+      // Accessoires listés en clair ET chiffrés à part : sans cela on ne sait pas
+      // ce que le client a commandé (commandes DOUISSARD 15/09 et BRÉCHET 20/09,
+      // indécidables a posteriori faute de détail dans le récapitulatif).
+      extras: ACCESSORIES
+        .filter(acc => state.accessories[acc.id].qty > 0)
+        .map(acc => `${state.accessories[acc.id].qty} × ${acc.name}`)
+        .join(' · '),
+      price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires
+      extrasCents: Math.round(price.accTtc * 100),       // forfait accessoires de la ligne
+      qty:         state.qty,
     };
   }
 
@@ -846,11 +865,12 @@
       produit:   'Couvertine sur mesure',
       ral:       'Effet Corten (thermolaquage spécial)',
       longueurs: `${state.qty} × ${state.L} mm`,
-      largeur:   `développé ${state.B + state.A + state.C} mm (B=${state.B} · A=${state.A} · C=${state.C})`,
+      largeur:   `développé ${state.C + 2 * state.A + 2 * state.R} mm (B=${state.B} · A=${state.A} · C=${state.C} · R=${state.R})`,
       quantite:  String(state.qty),
       message:   `Bonjour, je souhaite un devis pour une couvertine sur mesure en finition EFFET CORTEN.\n\n`
                + `Matière : ${mat.name} (${mat.epaisseur})\n`
                + `Cotes : B=${state.B} mm · A=${state.A} mm · C=${state.C} mm · L=${state.L} mm\n`
+               + `Développé (tôle à plat) : ${state.C + 2 * state.A + 2 * state.R} mm\n`
                + `Quantité : ${state.qty}\n\n`
                + `Merci de me communiquer le prix et le délai pour cette finition.`,
     });

@@ -163,16 +163,22 @@
       const honey = form.querySelector('input[name="_honey"]');
       if (honey && honey.value) return;
 
+      // Champs obligatoires : vides ET mal formatés (ex. code postal hors [0-9]{5})
       const required = form.querySelectorAll('[required]');
       let valid = true;
+      let premierKo = null;
       required.forEach((field) => {
         field.style.borderColor = '';
-        if (!field.value.trim()) {
+        if (!field.value.trim() || !field.checkValidity()) {
           field.style.borderColor = '#c0392b';
           valid = false;
+          if (!premierKo) premierKo = field;
         }
       });
-      if (!valid) return;
+      if (!valid) {
+        if (premierKo) { premierKo.reportValidity(); premierKo.focus(); }
+        return;
+      }
 
       const btn = form.querySelector('button[type="submit"]');
       const originalText = btn.textContent;

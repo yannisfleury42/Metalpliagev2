@@ -108,7 +108,11 @@
     let total = 0;
 
     cart.forEach((item, index) => {
-      const lineTotal = item.price * item.qty;
+      // Ligne = pièces (prix × quantité) + forfait accessoires, qui ne suit PAS
+      // la quantité : changer la quantité ne doit jamais refacturer les talons,
+      // éclisses ou cornières déjà comptés pour ce calepinage.
+      const extrasCents = item.extrasCents || 0;
+      const lineTotal = item.price * item.qty + extrasCents;
       total += lineTotal;
 
       const el = document.createElement('div');
@@ -122,6 +126,9 @@
         <div class="cart-item-meta">
           <span>${item.finish}</span>
           <span>${item.length}</span>
+          ${item.extras
+            ? `<span>Accessoires : ${item.extras}${extrasCents ? ` — ${formatPrice(extrasCents)}` : ''}</span>`
+            : ''}
         </div>
         <div class="cart-item-actions">
           <div class="cart-qty" role="group" aria-label="Quantité">
@@ -293,11 +300,26 @@
      Le client envoie sa demande (récap panier + coordonnées) par email
      via FormSubmit. MDS vérifie puis renvoie un lien de paiement. ── */
   function cartSummaryText() {
-    const lines = cart.map((it, i) =>
-      `${i + 1}. ${it.name || 'Couvertine métallique'} | ${it.finish} | ${it.length} | qté ${it.qty} | ${formatPrice(it.price)}/u = ${formatPrice(it.price * it.qty)}`
-    );
-    const total = cart.reduce((s, it) => s + it.price * it.qty, 0);
-    lines.push(`TOTAL : ${formatPrice(total)}`);
+    const lines = [];
+    cart.forEach((it, i) => {
+      const extrasCents = it.extrasCents || 0;
+      const piecesCents = it.price * it.qty;
+      lines.push(
+        `${i + 1}. ${it.name || 'Couvertine métallique'} | ${it.finish} | ${it.length}`
+        + ` | qté ${it.qty} × ${formatPrice(it.price)} = ${formatPrice(piecesCents)}`
+      );
+      // Détail obligatoire : sans lui, impossible de savoir a posteriori quels
+      // accessoires ont été commandés (cas DOUISSARD 15/09 et BRÉCHET 20/09).
+      if (it.extras || extrasCents) {
+        lines.push(
+          `   + accessoires : ${it.extras || '(non détaillés)'}`
+          + (extrasCents ? ` = ${formatPrice(extrasCents)} — forfait de ligne, non multiplié par la quantité` : '')
+        );
+        lines.push(`   sous-total ligne : ${formatPrice(piecesCents + extrasCents)}`);
+      }
+    });
+    const total = cart.reduce((s, it) => s + it.price * it.qty + (it.extrasCents || 0), 0);
+    lines.push(`TOTAL TTC : ${formatPrice(total)}`);
     return lines.join('\n');
   }
 
@@ -365,7 +387,10 @@
       <label>Nom complet*<input type="text" name="Nom" required autocomplete="name"></label>
       <label>Email*<input type="email" name="Email" required autocomplete="email"></label>
       <label>Téléphone*<input type="tel" name="Telephone" inputmode="tel" required autocomplete="tel"></label>
-      <label>Code postal &amp; ville*<input type="text" name="Code postal et ville" required></label>
+      <label>Code postal de livraison*<input type="text" name="Code postal" inputmode="numeric"
+             autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="42100" required
+             title="5 chiffres — exemple : 42100"></label>
+      <label>Ville*<input type="text" name="Ville" autocomplete="address-level2" placeholder="Saint-Étienne" required></label>
       <label>Message (accès, délai souhaité…)<textarea name="Message" rows="2"></textarea></label>
       <p class="order-error" id="order-error" hidden></p>
       <button type="submit" class="btn-primary btn-full">Envoyer ma demande</button>
@@ -390,13 +415,15 @@
         items: cart.map((it) => ({
           name: it.name || 'Couvertine métallique',
           finish: it.finish, length: it.length, price: it.price, qty: it.qty,
+          extras: it.extras || '', extrasCents: it.extrasCents || 0,
         })),
-        total: cart.reduce((s, it) => s + it.price * it.qty, 0),
+        total: cart.reduce((s, it) => s + it.price * it.qty + (it.extrasCents || 0), 0),
         client: {
           nom: form.querySelector('[name="Nom"]').value,
           email: form.querySelector('[name="Email"]').value,
           tel: form.querySelector('[name="Telephone"]').value,
-          adresse: form.querySelector('[name="Code postal et ville"]').value,
+          cp: form.querySelector('[name="Code postal"]').value.trim(),
+          ville: form.querySelector('[name="Ville"]').value.trim(),
           message: form.querySelector('[name="Message"]').value,
         },
       };
@@ -407,12 +434,15 @@
         Nom: order.client.nom,
         Email: order.client.email,
         Telephone: order.client.tel,
-        'Code postal et ville': order.client.adresse,
+        'Code postal': order.client.cp,
+        Ville: order.client.ville,
+        Departement: order.client.cp.slice(0, 2),
         Message: order.client.message,
         'Recapitulatif commande': cartSummaryText(),
-        Livraison: order.total >= FREE_SHIP_CENTS
-          ? 'Offerte (commande >= 200 EUR TTC)'
-          : 'A CHIFFRER — frais de port selon devis a ajouter au lien de paiement (offerte des 200 EUR), ou proposer le retrait gratuit a l\'atelier (Saint-Etienne).',
+        Livraison: (order.total >= FREE_SHIP_CENTS
+          ? 'Offerte — marchandise >= 200 EUR TTC (seuil calcule hors frais de port)'
+          : 'A CHIFFRER — frais de port a ajouter au lien de paiement (offerte des 200 EUR TTC de marchandise, hors port), ou proposer le retrait gratuit a l\'atelier (Saint-Etienne).')
+          + ' | Livraison dans le ' + order.client.cp.slice(0, 2) + ' — ' + order.client.cp + ' ' + order.client.ville,
         _subject: 'Demande de commande ' + ref + ' — Metal Pliage',
         _template: 'table',
         _captcha: 'false',
@@ -552,18 +582,26 @@
     // même finition, même longueur et même prix se confondraient en une
     // seule ligne, et le client recevrait deux fois la même pièce.
     const itemName = item.name || 'Pliage sur mesure';
+    const itemExtras = item.extras || '';
+    // Les accessoires font partie de la clé : deux pièces identiques accompagnées
+    // d'accessoires différents sont deux lignes de commande différentes.
     const existing = cart.find(
       (i) => (i.name || 'Pliage sur mesure') === itemName
         && i.finish === item.finish && i.price === item.price && i.length === item.length
+        && (i.extras || '') === itemExtras
     );
     if (existing) {
       existing.qty += item.qty || 1;
+      // Forfait accessoires : on additionne les deux ajouts, on ne les multiplie pas.
+      existing.extrasCents = (existing.extrasCents || 0) + (item.extrasCents || 0);
     } else {
       cart.push({
         name:   itemName,
         finish: item.finish || '—',
         length: item.length || '—',
+        extras: itemExtras,
         price:  item.price  || 0,
+        extrasCents: item.extrasCents || 0,
         qty:    item.qty    || 1,
       });
     }

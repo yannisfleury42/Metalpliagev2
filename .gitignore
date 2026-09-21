@@ -39,3 +39,9 @@ assets/photos/_orig/
 assets/photos/*.png
 assets/photos/*.jpg
 assets/photos/*.jpeg
+
+# Captures de controle et pages de test locales (jamais deployees)
+_check_*.png
+_test-*.html
+_analyse-visuelle/
+_commandes/

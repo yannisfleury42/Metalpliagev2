@@ -422,6 +422,19 @@
               <input type="tel" id="f-phone" name="Téléphone" autocomplete="tel" placeholder="+33 6 00 00 00 00">
             </div>
           </div>
+          <div class="form-row form-row--2col">
+            <div class="form-group">
+              <label for="f-cp">Code postal de livraison *</label>
+              <input type="text" id="f-cp" name="Code postal" inputmode="numeric" autocomplete="postal-code"
+                     pattern="[0-9]{5}" maxlength="5" placeholder="42100" required aria-required="true"
+                     title="5 chiffres — exemple : 42100">
+              <small class="form-hint">Indispensable pour chiffrer la livraison. L'adresse complète n'est demandée qu'à la commande.</small>
+            </div>
+            <div class="form-group">
+              <label for="f-ville">Ville</label>
+              <input type="text" id="f-ville" name="Ville" autocomplete="address-level2" placeholder="Saint-Étienne">
+            </div>
+          </div>
           <div class="form-group">
             <label for="f-product">Produit</label>
             <select id="f-product" name="Produit">
