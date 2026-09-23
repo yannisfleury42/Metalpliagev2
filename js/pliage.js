@@ -965,7 +965,10 @@ function addToCart() {
   window.CartAddItem?.({
     name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm`,
     finish,
-    length: `${dimStr} · L=${state.L}mm`,
+    // Le developpe est la cote de DEBIT. Sur l'appui de fenetre il n'est meme
+    // pas recalculable de tete : shape.dev() ajoute une pince fixe de 12 mm
+    // (PINCE_MM), donc un atelier qui additionne A+B+C tombe 12 mm court.
+    length: `${dimStr} · L=${state.L}mm · développé ${SHAPES[state.shape].dev(state.dims)}mm`,
     extras: accParts.join(' · '),
     price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires
     extrasCents: Math.round(price.accTtc * 100),       // forfait accessoires de la ligne

@@ -30,8 +30,23 @@
 
   function handleAdd(btn) {
     const name    = btn.dataset.productName  || 'Accessoire';
-    const finish  = btn.dataset.productFinish || '—';
     const length  = btn.dataset.productLength || '—';
+
+    // Teinte. Les 5 accessoires laques portent desormais un selecteur RAL dans
+    // leur carte ; avant, `data-product-finish` valait « RAL au choix » en dur et
+    // l'atelier recevait une commande sans couleur, donc infabricable. Les deux
+    // autres produits (support inox/galva, colle) n'ont pas de teinte a choisir
+    // et gardent la valeur de l'attribut.
+    const card   = btn.closest('.acc-card') || btn.closest('article');
+    const ralSel = card && card.querySelector('.acc-ral-select');
+    if (ralSel && !ralSel.value) {
+      ralSel.classList.add('is-missing');
+      ralSel.focus();
+      flashFeedback(btn, 'Choisissez une teinte', false);
+      return;
+    }
+    if (ralSel) ralSel.classList.remove('is-missing');
+    const finish = ralSel ? 'RAL ' + ralSel.value : (btn.dataset.productFinish || '—');
     const priceHt = parseFloat(btn.dataset.productPrice || '0');
     if (!priceHt || isNaN(priceHt)) {
       flashFeedback(btn, 'Erreur prix', false);

@@ -532,7 +532,11 @@
       recapColor.textContent = finishLabel(ral);
     }
     if (recapAcc) {
-      const parts = ACCESSORIES.filter(a => state.accessories[a.id].qty > 0).map(a => `${state.accessories[a.id].qty}× ${a.name}`);
+      const parts = ACCESSORIES.filter(a => state.accessories[a.id].qty > 0).map((a) => {
+        const sel = state.accessories[a.id];
+        const ral = RAL_COLORS.find(c => c.code === (sel.color || state.color));
+        return `${sel.qty}× ${a.name}${ral ? ` (${finishLabel(ral)})` : ''}`;
+      });
       recapAcc.textContent = parts.length ? parts.join(', ') : '—';
     }
     if (recapQtyInput) recapQtyInput.value = state.qty;
@@ -669,7 +673,10 @@
 
   function buildAccColors(container, accId) {
     container.innerHTML = '';
-    RAL_COLORS.forEach((ral) => {
+    // Les finitions « sur devis » (effet Corten) sont exclues : leur prix n'est
+    // pas cale, et un accessoire a 5 EUR ne peut pas embarquer un passage au
+    // thermolaquage. js/pliage.js fait deja ce filtre sur les tetes de vis.
+    RAL_COLORS.filter((r) => !r.quote).forEach((ral) => {
       const btn = document.createElement('button');
       btn.className    = 'ral-swatch';
       btn.dataset.code = ral.code;
@@ -835,15 +842,26 @@
     const ral   = RAL_COLORS.find(c => c.code === state.color);
     const price = calcPrice();
     return {
-      name:   `Couvertine sur mesure — ${mat.name}`,
+      name:   `Couvertine sur mesure — ${mat.name} ${mat.epaisseur}`,
       finish: finishLabel(ral),
-      length: `B=${state.B}mm · A=${state.A}mm · C=${state.C}mm · L=${state.L}mm`,
+      // Le developpe est la cote de DEBIT : sans lui l'atelier doit refaire
+      // C + 2A + 2R a la main, avec un R de 10 mm qui n'etait transmis nulle part.
+      length: `B=${state.B}mm · A=${state.A}mm · C=${state.C}mm · R=${state.R}mm · L=${state.L}mm`
+            + ` · développé ${state.C + 2 * state.A + 2 * state.R}mm`,
       // Accessoires listés en clair ET chiffrés à part : sans cela on ne sait pas
       // ce que le client a commandé (commandes DOUISSARD 15/09 et BRÉCHET 20/09,
       // indécidables a posteriori faute de détail dans le récapitulatif).
+      // La teinte choisie POUR CHAQUE accessoire doit suivre : le client peut
+      // prendre une couvertine RAL 7016 et des talons RAL 9010. Elle etait
+      // selectionnee a l'ecran, stockee dans state, et perdue ici — meme defaut
+      // que le sens de laquage du configurateur pliage (corrige le 23/09/2026).
       extras: ACCESSORIES
         .filter(acc => state.accessories[acc.id].qty > 0)
-        .map(acc => `${state.accessories[acc.id].qty} × ${acc.name}`)
+        .map(acc => {
+          const a   = state.accessories[acc.id];
+          const ral = RAL_COLORS.find(c => c.code === (a.color || state.color));
+          return `${a.qty} × ${acc.name}${ral ? ` — ${finishLabel(ral)}` : ''}`;
+        })
         .join(' · '),
       price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires
       extrasCents: Math.round(price.accTtc * 100),       // forfait accessoires de la ligne

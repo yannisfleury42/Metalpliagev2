@@ -20,6 +20,43 @@
      figés. ── */
   const FREE_SHIP_CENTS = 20000;   // 200 € TTC
 
+  // Departement d'apres le code postal. `cp.slice(0,2)` se trompe deux fois :
+  // la Corse (20xxx = 2A/2B) et l'outre-mer, ou le departement tient sur
+  // 3 chiffres (97400 = 974, pas 97).
+  function departement(cp) {
+    cp = String(cp || '');
+    if (/^9[78]/.test(cp)) return cp.slice(0, 3);
+    if (/^20/.test(cp))    return '2A/2B';
+    return cp.slice(0, 2);
+  }
+
+  // Metropole seule. Le bandeau du panier annonce « France metropolitaine » :
+  // le franco ne doit donc pas se declencher sur un envoi ultramarin, dont le
+  // port n'a rien a voir avec celui d'un envoi continental.
+  function estMetropole(cp) { return !/^9[78]/.test(String(cp || '')); }
+
+  // Ligne « Livraison » du mail de commande. Elle porte l'arbitrage du port ET
+  // l'adresse postale complete, pour qu'une etiquette transporteur puisse etre
+  // editee sans rouvrir le dossier.
+  function livraisonLigne(order) {
+    const c = order.client;
+    if (c.mode === 'Retrait atelier') {
+      return 'RETRAIT A L ATELIER — aucune expedition. Prevenir le client des que la commande est prete '
+           + '(8 rue Edouard Martel, 42100 Saint-Etienne).';
+    }
+    const franco = order.total >= FREE_SHIP_CENTS && estMetropole(c.cp);
+    const tete = franco
+      ? 'Offerte — marchandise >= 200 EUR TTC (seuil calcule hors frais de port)'
+      : (estMetropole(c.cp)
+          ? 'A CHIFFRER — frais de port a ajouter au lien de paiement (offerte des 200 EUR TTC de marchandise, '
+            + 'hors port), ou proposer le retrait gratuit a l atelier (Saint-Etienne).'
+          : 'A CHIFFRER — HORS METROPOLE : le franco de 200 EUR ne s applique pas, demander une cotation au '
+            + 'transporteur avant d annoncer un prix.');
+    const adresse = [c.adresse, c.complement].filter(Boolean).join(' — ');
+    return tete + ' | Livrer a : ' + adresse + ', ' + c.cp + ' ' + c.ville
+         + ' (departement ' + departement(c.cp) + ')';
+  }
+
   /* ── PERSISTANCE ──────────────────────────────────────────────
      Le panier est enregistré dans localStorage à CHAQUE modification.
      Il survit ainsi au changement de page (pliage ↔ couvertines),
@@ -360,6 +397,11 @@
       .order-mini{font-size:.72rem;color:var(--text-muted,#888);line-height:1.45;margin:.2rem 0 0;}
       .order-error{font-size:.82rem;line-height:1.45;background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.45);color:#fca5a5;padding:.6rem .75rem;border-radius:5px;margin:0;}
       .order-error a{color:#fca5a5;text-decoration:underline;}
+      .order-mode{border:1px solid #3a3a3a;border-radius:5px;padding:.5rem .7rem .6rem;margin:0;display:flex;flex-direction:column;gap:.35rem;}
+      .order-mode legend{font-size:.82rem;color:var(--text-secondary,#bbb);padding:0 .3rem;}
+      .order-form label.order-radio{flex-direction:row;align-items:center;gap:.45rem;font-size:.88rem;color:var(--text-primary,#eee);cursor:pointer;}
+      .order-form label.order-radio input{width:auto;padding:0;accent-color:var(--accent,#FF4500);}
+      .order-form label[hidden]{display:none;}
     `;
     document.head.appendChild(st);
   }
@@ -371,7 +413,8 @@
       || cartDrawer;
     const existing = host.querySelector('#order-form');
     if (existing) {
-      existing.querySelector('[name="Recapitulatif commande"]').value = cartSummaryText();
+      // Pas de champ « Recapitulatif commande » dans ce formulaire : le recap
+      // n'existe que dans le payload AJAX. Y acceder ici levait une TypeError.
       existing.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       return;
     }
@@ -385,8 +428,18 @@
     form.innerHTML = `
       <p class="order-reassure">Vous ne payez rien maintenant. Après vérification de votre commande, vous recevrez votre <strong>lien de paiement</strong> (carte bancaire ou virement), généralement sous 24&nbsp;h ouvrées. Livraison <strong>offerte dès 200&nbsp;€</strong>&nbsp;; en dessous, les frais de port (ou le <strong>retrait gratuit à l'atelier</strong> de Saint-Étienne) vous seront précisés avec ce lien.</p>
       <label>Nom complet*<input type="text" name="Nom" required autocomplete="name"></label>
+      <label>Société (si la facture est au nom d'une entreprise)<input type="text" name="Societe" autocomplete="organization"></label>
       <label>Email*<input type="email" name="Email" required autocomplete="email"></label>
       <label>Téléphone*<input type="tel" name="Telephone" inputmode="tel" required autocomplete="tel"></label>
+      <fieldset class="order-mode">
+        <legend>Mode de réception*</legend>
+        <label class="order-radio"><input type="radio" name="Mode" value="Livraison" checked> Livraison à mon adresse</label>
+        <label class="order-radio"><input type="radio" name="Mode" value="Retrait atelier"> Retrait gratuit à l'atelier (Saint-Étienne)</label>
+      </fieldset>
+      <label id="lbl-adresse">Adresse de livraison*<input type="text" name="Adresse" required
+             autocomplete="street-address" placeholder="8 rue Édouard Martel"></label>
+      <label id="lbl-complement">Complément (bâtiment, étage, digicode, accès camion)<input type="text"
+             name="Complement" autocomplete="address-line2"></label>
       <label>Code postal de livraison*<input type="text" name="Code postal" inputmode="numeric"
              autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="42100" required
              title="5 chiffres — exemple : 42100"></label>
@@ -397,6 +450,22 @@
       <p class="order-mini">Produits fabriqués sur mesure : ni repris, ni échangés (art. L221-28 du Code de la consommation). Le prix indiqué est ferme.</p>
     `;
     host.appendChild(form);
+
+    // Retrait a l'atelier : l'adresse de livraison n'a plus de sens. On masque les
+    // deux champs et on retire le `required`, sinon le navigateur refuse d'envoyer
+    // le formulaire a cause d'un champ obligatoire invisible, sans rien expliquer.
+    const adrLbl = form.querySelector('#lbl-adresse');
+    const cplLbl = form.querySelector('#lbl-complement');
+    const adrIn  = form.querySelector('[name="Adresse"]');
+    function syncMode() {
+      const retrait = form.querySelector('[name="Mode"]:checked').value === 'Retrait atelier';
+      if (adrLbl) adrLbl.hidden = retrait;
+      if (cplLbl) cplLbl.hidden = retrait;
+      if (adrIn)  adrIn.required = !retrait;
+    }
+    form.querySelectorAll('[name="Mode"]').forEach((r) => r.addEventListener('change', syncMode));
+    syncMode();
+
     form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
     // Envoi en AJAX : permet de DÉTECTER un échec (sinon une commande peut se perdre
@@ -422,6 +491,10 @@
           nom: form.querySelector('[name="Nom"]').value,
           email: form.querySelector('[name="Email"]').value,
           tel: form.querySelector('[name="Telephone"]').value,
+          societe: form.querySelector('[name="Societe"]').value.trim(),
+          mode: form.querySelector('[name="Mode"]:checked').value,
+          adresse: form.querySelector('[name="Adresse"]').value.trim(),
+          complement: form.querySelector('[name="Complement"]').value.trim(),
           cp: form.querySelector('[name="Code postal"]').value.trim(),
           ville: form.querySelector('[name="Ville"]').value.trim(),
           message: form.querySelector('[name="Message"]').value,
@@ -434,15 +507,18 @@
         Nom: order.client.nom,
         Email: order.client.email,
         Telephone: order.client.tel,
+        Societe: order.client.societe || '—',
+        'Mode de reception': order.client.mode,
+        'Adresse de livraison': order.client.mode === 'Retrait atelier'
+          ? 'RETRAIT A L ATELIER — aucune expedition'
+          : order.client.adresse,
+        'Complement adresse': order.client.complement || '—',
         'Code postal': order.client.cp,
         Ville: order.client.ville,
-        Departement: order.client.cp.slice(0, 2),
+        Departement: departement(order.client.cp),
         Message: order.client.message,
         'Recapitulatif commande': cartSummaryText(),
-        Livraison: (order.total >= FREE_SHIP_CENTS
-          ? 'Offerte — marchandise >= 200 EUR TTC (seuil calcule hors frais de port)'
-          : 'A CHIFFRER — frais de port a ajouter au lien de paiement (offerte des 200 EUR TTC de marchandise, hors port), ou proposer le retrait gratuit a l\'atelier (Saint-Etienne).')
-          + ' | Livraison dans le ' + order.client.cp.slice(0, 2) + ' — ' + order.client.cp + ' ' + order.client.ville,
+        Livraison: livraisonLigne(order),
         _subject: 'Demande de commande ' + ref + ' — Metal Pliage',
         _template: 'table',
         _captcha: 'false',
@@ -464,6 +540,13 @@
         if (!res.ok || !(data && (data.success === 'true' || data.success === true))) {
           throw new Error('FormSubmit a renvoyé une erreur');
         }
+        // Commande partie : on vide le panier. Sans ca le client la retrouve
+        // intacte a sa prochaine visite, pastille allumee, et la renvoie — ou
+        // ajoute un article a un panier qu'il croit vide. `mp_last_order` est
+        // deja enregistre, la page de confirmation reste donc alimentee.
+        cart.length = 0;
+        saveCart();
+        renderCart();
         window.location.href = 'commande-confirmee.html?order=' + encodeURIComponent(ref);
       } catch (err) {
         if (btn) { btn.disabled = false; btn.textContent = 'Envoyer ma demande'; }

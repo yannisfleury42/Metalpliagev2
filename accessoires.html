@@ -72,6 +72,29 @@
       color: var(--accent);
       margin-bottom: 0.5rem;
     }
+    .acc-ral {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary, #bbb);
+      margin-bottom: 0.7rem;
+    }
+    .acc-ral-select {
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--border, #3a3a3a);
+      background: var(--bg-base, #161616);
+      color: var(--text-primary, #fff);
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .acc-ral-select:focus { outline: none; border-color: var(--accent, #FF4500); }
+    .acc-ral-select.is-missing { border-color: #dc2626; }
     .acc-card h3 {
       font-size: 1rem;
       font-weight: 300;
@@ -189,8 +212,8 @@
         "item": {
           "@type": "Product",
           "name": "Talon d'extrémité pour couvertine",
-          "description": "Embout en L pour fermer les extrémités d'une couvertine. Livré par paire. Compatible acier et aluminium.",
-          "url": "https://metal-pliage.fr/accessoires.html#talon",
+          "description": "Embout en L pour fermer l'extrémité d'une couvertine. Vendu à la pièce. Compatible acier et aluminium.",
+          "url": "https://metal-pliage.fr/accessoires.html#embouts",
           "brand": { "@type": "Brand", "name": "Metal Pliage" },
           "offers": { "@type": "Offer", "priceCurrency": "EUR", "price": "5", "availability": "https://schema.org/InStock", "seller": { "@type": "Organization", "name": "Metal Pliage" } }
         }
@@ -202,7 +225,7 @@
           "@type": "Product",
           "name": "Éclisse de jonction pour couvertine",
           "description": "Manchon de 150 mm pour assembler deux couvertines bout à bout. Rejet d'eau 90°. Compatible acier et aluminium.",
-          "url": "https://metal-pliage.fr/accessoires.html#eclisse",
+          "url": "https://metal-pliage.fr/accessoires.html#eclisses",
           "brand": { "@type": "Brand", "name": "Metal Pliage" },
           "offers": { "@type": "Offer", "priceCurrency": "EUR", "price": "6", "availability": "https://schema.org/InStock", "seller": { "@type": "Organization", "name": "Metal Pliage" } }
         }
@@ -214,7 +237,7 @@
           "@type": "Product",
           "name": "Angle 90° pour couvertine",
           "description": "Angle en tôle pliée pour les retours de couvertine à 90°. Assure l'étanchéité aux coins saillants.",
-          "url": "https://metal-pliage.fr/accessoires.html#angle",
+          "url": "https://metal-pliage.fr/accessoires.html#angles",
           "brand": { "@type": "Brand", "name": "Metal Pliage" },
           "offers": { "@type": "Offer", "priceCurrency": "EUR", "price": "45", "availability": "https://schema.org/InStock", "seller": { "@type": "Organization", "name": "Metal Pliage" } }
         }
@@ -302,8 +325,8 @@
         </div>
         <div class="acc-num">Accessoire 01</div>
         <h3>Éclisses de Jonction</h3>
-        <p>Manchon intérieur métallique permettant de raccorder bout-à-bout deux longueurs de couvertine. Glisse à l'intérieur des deux éléments pour une jonction invisible et étanche.</p>
-        <p style="font-size: 13px; line-height: 1.7;">Disponibles dans toutes les largeurs de couvertine. La longueur de chevauchement recommandée est de 150 mm de chaque côté pour une parfaite tenue.</p>
+        <p>Manchon métallique permettant de raccorder bout à bout deux longueurs de couvertine. Il se pose <strong>par-dessus</strong> la jonction, environ 1,5 mm plus large que le profilé, et se clipse sous la goutte d'eau pour une jonction nette et étanche.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Disponibles dans toutes les largeurs de couvertine. Bande de <strong>150 mm de large</strong>, soit 75 mm de recouvrement de chaque côté du joint, avec rejet d'eau à 90°.</p>
         <div class="acc-badges">
           <span class="acc-badge acc-badge--color">4 coloris RAL standard</span>
           <span class="acc-badge">Toutes largeurs</span>
@@ -315,6 +338,15 @@
             <span class="acc-price-unit">HT / pièce</span>
             <span class="acc-price-ttc">soit 7,20 € TTC</span>
           </div>
+                    <label class="acc-ral">Teinte*
+            <select class="acc-ral-select" aria-label="Teinte RAL de l'accessoire">
+              <option value="" selected disabled>Choisir une teinte</option>
+              <option value="7016">RAL 7016 — Gris Anthracite</option>
+              <option value="9005">RAL 9005 — Noir Satiné</option>
+              <option value="9010">RAL 9010 — Blanc Pur</option>
+              <option value="9006">RAL 9006 — Gris Clair</option>
+            </select>
+          </label>
           <button type="button" class="acc-add-btn"
                   data-product-name="Éclisse de jonction"
                   data-product-finish="RAL au choix"
@@ -347,6 +379,15 @@
             <span class="acc-price-unit">HT / pièce</span>
             <span class="acc-price-ttc">soit 54,00 € TTC</span>
           </div>
+                    <label class="acc-ral">Teinte*
+            <select class="acc-ral-select" aria-label="Teinte RAL de l'accessoire">
+              <option value="" selected disabled>Choisir une teinte</option>
+              <option value="7016">RAL 7016 — Gris Anthracite</option>
+              <option value="9005">RAL 9005 — Noir Satiné</option>
+              <option value="9010">RAL 9010 — Blanc Pur</option>
+              <option value="9006">RAL 9006 — Gris Clair</option>
+            </select>
+          </label>
           <button type="button" class="acc-add-btn"
                   data-product-name="Angle de couvertine 90°"
                   data-product-finish="RAL au choix"
@@ -378,6 +419,15 @@
             <span class="acc-price-unit">HT / pièce (2 m)</span>
             <span class="acc-price-ttc">soit 8,40 € TTC</span>
           </div>
+                    <label class="acc-ral">Teinte*
+            <select class="acc-ral-select" aria-label="Teinte RAL de l'accessoire">
+              <option value="" selected disabled>Choisir une teinte</option>
+              <option value="7016">RAL 7016 — Gris Anthracite</option>
+              <option value="9005">RAL 9005 — Noir Satiné</option>
+              <option value="9010">RAL 9010 — Blanc Pur</option>
+              <option value="9006">RAL 9006 — Gris Clair</option>
+            </select>
+          </label>
           <button type="button" class="acc-add-btn"
                   data-product-name="Cornière de départ (2 m)"
                   data-product-finish="RAL au choix"
@@ -428,7 +478,7 @@
         <div class="acc-num">Accessoire 05</div>
         <h3>Embouts de Couvertine</h3>
         <p>Pièces de fermeture positionnées aux extrémités ouvertes d'une couvertine. Ils ferment les faces latérales, empêchent l'infiltration d'eau et d'insectes, et donnent une finition nette à l'extrémité du profilé.</p>
-        <p style="font-size: 13px; line-height: 1.7;">Fabriqués sur mesure selon le profil exact de votre couvertine. Pose par agrafage ou collage.</p>
+        <p style="font-size: 13px; line-height: 1.7;">Cornière en L fabriquée sur mesure au profil exact de votre couvertine : un retour se glisse à l'intérieur du profilé. Pose par collage au mastic MS ou par vis.</p>
         <div class="acc-badges">
           <span class="acc-badge acc-badge--color">4 coloris RAL standard</span>
           <span class="acc-badge">Sur mesure</span>
@@ -440,6 +490,15 @@
             <span class="acc-price-unit">HT / pièce</span>
             <span class="acc-price-ttc">soit 6,00 € TTC</span>
           </div>
+                    <label class="acc-ral">Teinte*
+            <select class="acc-ral-select" aria-label="Teinte RAL de l'accessoire">
+              <option value="" selected disabled>Choisir une teinte</option>
+              <option value="7016">RAL 7016 — Gris Anthracite</option>
+              <option value="9005">RAL 9005 — Noir Satiné</option>
+              <option value="9010">RAL 9010 — Blanc Pur</option>
+              <option value="9006">RAL 9006 — Gris Clair</option>
+            </select>
+          </label>
           <button type="button" class="acc-add-btn"
                   data-product-name="Talon / embout de fermeture"
                   data-product-finish="RAL au choix"
@@ -502,6 +561,15 @@
             <span class="acc-price-unit">HT / boîte de 100</span>
             <span class="acc-price-ttc">soit 38,40 € TTC</span>
           </div>
+                    <label class="acc-ral">Teinte*
+            <select class="acc-ral-select" aria-label="Teinte RAL de l'accessoire">
+              <option value="" selected disabled>Choisir une teinte</option>
+              <option value="7016">RAL 7016 — Gris Anthracite</option>
+              <option value="9005">RAL 9005 — Noir Satiné</option>
+              <option value="9010">RAL 9010 — Blanc Pur</option>
+              <option value="9006">RAL 9006 — Gris Clair</option>
+            </select>
+          </label>
           <button type="button" class="acc-add-btn"
                   data-product-name="Vis inox auto-foreuses tête RAL (lot de 100)"
                   data-product-finish="RAL au choix"
