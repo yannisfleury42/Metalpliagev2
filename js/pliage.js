@@ -172,6 +172,30 @@ const elLaqSection      = $('laq-section');
 function setLaqVisible(show) {
   if (elLaqSection) elLaqSection.style.display = show ? '' : 'none';
 }
+
+// Sens de laquage choisi par le client. Le switch vit dans le script inline de
+// configurateur-pliage.html, qui maintient #laq-switch[data-pos] ('ext' | 'int')
+// et redessine le lisere du schema. On lit cette valeur ici pour la faire entrer
+// dans la commande : sans ca, le client choisit un sens que personne ne recoit.
+// Constat du 23/09/2026 sur la commande DOUISSARD MP-260922-1420-1O - deux
+// cornieres en L arrivees a l'atelier sans qu'on sache quelle face est peinte.
+// Renvoie null quand la notion ne s'applique pas (matiere brute, bloc masque).
+function laqSide() {
+  if (!elLaqSection || elLaqSection.style.display === 'none') return null;
+  const sw = document.getElementById('laq-switch');
+  return sw && sw.dataset.pos === 'int' ? 'int' : 'ext';
+}
+
+// Libelle lisible, repris tel quel dans le panier puis dans le mail de commande.
+// Sur une forme pliee, « exterieur » veut dire la face CONVEXE, a l'exterieur de
+// l'angle : c'est ce que trace le lisere du configurateur, et c'est le defaut.
+function laqLabel() {
+  const side = laqSide();
+  if (!side) return '';
+  return side === 'int'
+    ? 'laquage face intérieure (concave)'
+    : 'laquage face extérieure (convexe)';
+}
 setLaqVisible(false); // caché tant qu'aucune matière laquée n'est choisie
 const elColorStepDesc   = $('color-step-desc');
 const elThicknessSelect = $('thickness-selector');
@@ -629,7 +653,10 @@ function updateUI() {
     elRecapDims.textContent = '—';
     elRecapDev.textContent  = '—';
   }
-  elRecapColor.textContent = state.color ? finishLabelFor(state.color, state.material) : '—';
+  const laqTxt = laqLabel();
+  elRecapColor.textContent = state.color
+    ? finishLabelFor(state.color, state.material) + (laqTxt ? ' · ' + laqTxt : '')
+    : '—';
   if (elRecapQtyInput) elRecapQtyInput.value = state.qty;
 }
 
@@ -901,6 +928,7 @@ function goToQuotePliage() {
              + `Cotes : ${dimStr}\n`
              + `Développé : ${dev}\n`
              + `Longueur : ${state.L} mm\n`
+             + (laqLabel() ? `Sens de laquage : ${laqLabel()}\n` : '')
              + `Quantité : ${state.qty}\n\n`
              + `Merci de me communiquer le prix et le délai pour cette finition.`,
   });
@@ -915,7 +943,8 @@ function addToCart() {
   if (isQuoteFinish(state.color)) { goToQuotePliage(); return; }
   const shape     = SHAPES[state.shape];
   const dimStr    = shape.dimKeys.map((k) => `${k}=${state.dims[k]}mm`).join(' · ');
-  const finish    = finishLabelFor(state.color, state.material);
+  const laqTxt    = laqLabel();
+  const finish    = finishLabelFor(state.color, state.material) + (laqTxt ? ` · ${laqTxt}` : '');
   const th        = state.thickness;
   const price     = calcPrice();
   // Combinaison sans tarif (calcPrice renvoie ht/ttc à null) : on n'ajoute rien
