@@ -71,7 +71,7 @@
     { id: 'angle',    name: 'Angle 90°',          price: 45 },
     { id: 'clisse',   name: 'Éclisse',            price: 6 },
     { id: 'corniere', name: 'Cornière de départ', price: 7 },
-    { id: 'talon',    name: 'Talon',              price: 5 },
+    { id: 'talon',    name: 'Talon',              price: 8 },
   ];
 
   /* ────────────────────────────────────────────────────────────
@@ -698,7 +698,7 @@
   function buildAccColors(container, accId) {
     container.innerHTML = '';
     // Les finitions « sur devis » (effet Corten) sont exclues : leur prix n'est
-    // pas cale, et un accessoire a 5 EUR ne peut pas embarquer un passage au
+    // pas cale, et un accessoire a 8 EUR ne peut pas embarquer un passage au
     // thermolaquage. js/pliage.js fait deja ce filtre sur les tetes de vis.
     RAL_COLORS.filter((r) => !r.quote).forEach((ral) => {
       const btn = document.createElement('button');
