@@ -17,7 +17,7 @@
   // n°803923). Palier standard (dev 250–350 mm, ex. couvertine 40/200/40) calé
   // à 90 €/m² alu (coef. ≈ 3,3), positionnement intermédiaire ; livraison offerte dès 200 €.
   const MATERIALS = {
-    acier: { name: 'Acier',     epaisseur: '0,75 mm' },
+    acier: { name: 'Acier prélaqué', epaisseur: '0,75 mm' },
     alu:   { name: 'Aluminium', epaisseur: '1,5 mm'  },
   };
 
