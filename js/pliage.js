@@ -71,6 +71,7 @@ function finishLabelFor(code, material) {
 const DEG10  = 10  * Math.PI / 180;
 const DEG102 = 102 * Math.PI / 180;
 const PRICE_MIN = 35;
+const MATIERE_LABEL = { alu: 'Aluminium', acier: 'Acier', inox: 'Inox' };
 const TVA = 1.20;
 const PINCE_MM = 12; // appui de fenêtre — pince fixe
 
@@ -959,11 +960,14 @@ function addToCart() {
     .map((acc) => {
       const a = state.accessories[acc.id];
       const ralPart = acc.id === 'vis' && a.color ? ` — RAL ${a.color}` : '';
-      return `${a.qty} × ${acc.name}${ralPart}`;
+      return `${a.qty} × ${acc.name}${ralPart}`
+           + ` (${(acc.price * TVA).toFixed(2).replace('.', ',')} € TTC/u)`;
     });
 
   window.CartAddItem?.({
-    name:   `Pliage ${shape.label} — ${state.material.charAt(0).toUpperCase() + state.material.slice(1)} ${th}mm`,
+    // Meme ecriture que le configurateur couvertine : « Aluminium 1,5 mm » et non
+    // « Alu 1.5mm ». Le meme produit sortait avec deux libelles selon la page.
+    name:   `Pliage ${shape.label} — ${MATIERE_LABEL[state.material] || state.material} ${String(th).replace('.', ',')} mm`,
     finish,
     // Le developpe est la cote de DEBIT. Sur l'appui de fenetre il n'est meme
     // pas recalculable de tete : shape.dev() ajoute une pince fixe de 12 mm

@@ -513,6 +513,9 @@
 
   function updateUI() {
     drawSVG();
+    // Les bornes de C suivent le muret : a resynchroniser a chaque rendu, pas
+    // seulement quand B change (etat restaure du localStorage ou d'une URL).
+    syncBornesC();
 
     const { B, A, C, L, R } = state;
     const devWidth = C + 2 * A + 2 * R;
@@ -622,6 +625,25 @@
 
   const inputC = document.getElementById('input-C');
 
+  // Largeur de tôle maximale sur le dessus. Elle DÉPEND du muret : C = B + 2 débords.
+  // Un plafond fixe à 400 rendait clamp(val, B+10, 400) absurde dès que le muret
+  // dépassait ~390 — le min passait au-dessus du max et clamp renvoyait 400, donc
+  // une couvertine PLUS ÉTROITE QUE LE MURET, sans la moindre alerte. Le débord est
+  // limité à 50 mm par côté, et le développé doit tenir dans la tôle de 1 185.
+  function maxC() {
+    const parDebord = state.B + 100;
+    const parTole   = 1185 - 2 * state.A - 2 * state.R - 20; // 20 mm de garde
+    return Math.max(state.B + 10, Math.min(parDebord, parTole));
+  }
+
+  // Le champ HTML doit porter les mêmes bornes que le clamp, sinon il reste
+  // durablement invalide (« minimale 470 supérieure à maximale 400 »).
+  function syncBornesC() {
+    if (!inputC) return;
+    inputC.setAttribute('min', state.B + 10);
+    inputC.setAttribute('max', maxC());
+  }
+
   function onDimInput(e) {
     const val = parseInt(e.target.value, 10);
     if (isNaN(val)) return;
@@ -632,11 +654,13 @@
         state.C = state.B + 50;
         if (inputC) inputC.value = state.C;
       }
-      if (inputC) inputC.setAttribute('min', state.B + 10);
+      syncBornesC();
     }
-    if (e.target.id === 'input-A') state.A = clamp(val, 20, 150);
+    // La retombée est annoncée « 20 à 60 mm » sur le site (configurateur.html) :
+    // clamp montait à 150 et laissait donc passer une cote hors gamme.
+    if (e.target.id === 'input-A') state.A = clamp(val, 20, 60);
     if (e.target.id === 'input-C') {
-      state.C = clamp(val, state.B + 10, 400);
+      state.C = clamp(val, state.B + 10, maxC());
       // Recadrage uniquement à la sortie du champ (change), pas à chaque frappe :
       // sinon taper "170" devient impossible ("1"->130 puis "17"->400).
       if (e.type === 'change') e.target.value = state.C;
@@ -860,7 +884,8 @@
         .map(acc => {
           const a   = state.accessories[acc.id];
           const ral = RAL_COLORS.find(c => c.code === (a.color || state.color));
-          return `${a.qty} × ${acc.name}${ral ? ` — ${finishLabel(ral)}` : ''}`;
+          return `${a.qty} × ${acc.name}${ral ? ` — ${finishLabel(ral)}` : ''}`
+               + ` (${(acc.price * 1.2).toFixed(2).replace('.', ',')} € TTC/u)`;
         })
         .join(' · '),
       price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires

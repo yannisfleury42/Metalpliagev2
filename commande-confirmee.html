@@ -451,7 +451,9 @@
       const el = document.getElementById('order-id-value');
       if (!el) return;
       if (fromUrl) {
-        el.textContent = fromUrl.length > 14 ? fromUrl.slice(0, 14).toUpperCase() : fromUrl.toUpperCase();
+        // Ne jamais tronquer : la reference fait 17 caracteres (MP-AAMMJJ-HHMM-XX)
+        // et c'est elle que le client cite quand il rappelle ou repond.
+        el.textContent = fromUrl.toUpperCase();
       } else {
         const d = new Date();
         const yy = d.getFullYear();
@@ -499,8 +501,13 @@
       var c = o.client || {};
       var clEl = document.getElementById('r-client');
       if (clEl) {
-        const lieu = [c.cp, c.ville].filter(Boolean).join(' ') || c.adresse;
-        clEl.textContent = [c.nom, c.email, c.tel, lieu].filter(Boolean).join('  ·  ');
+        // Adresse de livraison affichee EN ENTIER : c'est la derniere occasion
+        // pour le client de reperer une faute de frappe avant l'expedition.
+        const retrait = c.mode === 'Retrait atelier';
+        const lieu = retrait
+          ? 'Retrait a l atelier — 8 rue Edouard Martel, 42100 Saint-Etienne'
+          : [c.adresse, c.complement, [c.cp, c.ville].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+        clEl.textContent = [c.nom, c.societe, c.email, c.tel, lieu].filter(Boolean).join('  ·  ');
         if (c.message) { clEl.appendChild(document.createElement('br')); clEl.appendChild(document.createTextNode('« ' + c.message + ' »')); }
       }
       sec.hidden = false;
