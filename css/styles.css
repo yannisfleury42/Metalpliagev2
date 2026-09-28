@@ -4,6 +4,28 @@
 ═══════════════════════════════════════════════════════════════ */
 
 /* ── VARIABLES ─────────────────────────────────────────────── */
+/* ── POLICE DE REPLI AUX METRIQUES D'INTER ─────────────────────
+   Inter est charge depuis Google Fonts avec `display=swap` : le texte s'affiche
+   d'abord dans la police systeme, puis bascule sur Inter quand elle arrive. Les
+   deux n'ayant pas les memes metriques, tout le texte se reflow au moment du
+   swap. Sur `#nav-links`, qui est centre dans la grille `1fr auto 1fr` de
+   `.nav-inner`, le moindre changement de largeur deplace le bloc entier :
+   Cloudflare mesurait un CLS de 1 (le seuil « bon » est 0,1) sur 30 mesures,
+   plus des decalages sur `.specs-table`, `.hero-content` et `ul.form-uses` —
+   tous des blocs de texte, meme cause.
+   Cette police de repli n'a pas de fichier a telecharger : elle reprend Arial
+   (ou Helvetica) en corrigeant ses metriques pour occuper exactement la place
+   d'Inter. Le swap devient invisible.
+   Ne pas retirer sans remesurer le CLS dans Cloudflare. ── */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+}
+
 :root {
   --bg-base:       #242424;
   --bg-surface:    #2E2E2E;
@@ -20,8 +42,8 @@
   --text-secondary:#E0E0E0;
   --text-muted:    #C8C8C8;
 
-  --font-head: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-head: 'Inter', 'Inter Fallback', sans-serif;
+  --font-body: 'Inter', 'Inter Fallback', sans-serif;
 
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);

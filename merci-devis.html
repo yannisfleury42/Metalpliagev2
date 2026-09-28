@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Demande envoyée — Metal Pliage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://metal-pliage.fr/merci-devis.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1a1a">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/preloader.css">
+  <style>
+    .merci-wrap {
+      min-height: calc(100vh - var(--nav-h));
+      background: var(--bg-base);
+      padding: calc(var(--nav-h) + 56px) 24px 80px;
+    }
+    .merci-inner { max-width: 720px; margin: 0 auto; }
+    .merci-check {
+      width: 64px; height: 64px; margin: 0 auto 1.8rem;
+      display: grid; place-items: center;
+      border: 2px solid var(--accent); border-radius: 50%;
+      color: var(--accent);
+    }
+    .merci-inner h1 {
+      font-family: var(--font-head);
+      font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+      text-align: center; margin: 0 0 0.8rem; line-height: 1.15;
+    }
+    .merci-lead {
+      text-align: center; color: var(--text-secondary);
+      font-size: 15px; line-height: 1.7; margin: 0 auto 2.6rem; max-width: 34rem;
+    }
+    .merci-steps {
+      list-style: none; margin: 0 0 2.6rem; padding: 0;
+      border-top: 1px solid var(--border);
+    }
+    .merci-steps li {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+    }
+    .merci-steps .num {
+      flex: none; width: 26px; height: 26px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--accent); color: #fff;
+      font-size: 0.78rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    }
+    .merci-steps .txt { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
+    .merci-steps .txt strong { color: var(--text-primary); }
+    .merci-contact {
+      text-align: center; font-size: 14px; line-height: 1.8;
+      color: var(--text-secondary); margin-bottom: 2.4rem;
+    }
+    .merci-contact a { color: var(--accent); }
+    .merci-ctas { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+    @media (max-width: 600px) { .merci-ctas .btn-primary, .merci-ctas .btn-ghost { width: 100%; text-align: center; } }
+  </style>
+</head>
+<body>
+  <div id="preloader" aria-hidden="true"><div class="preloader-bar"></div></div>
+
+  <nav id="navbar" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="index.html" class="logo">METAL<span>PLIAGE</span></a>
+      </div>
+      <div class="nav-right">
+        <a href="configurateur.html" class="btn-nav-cta">Calculer mon prix</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="merci-wrap">
+    <div class="merci-inner">
+      <div class="merci-check">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+
+      <h1>Votre demande est partie</h1>
+      <p class="merci-lead">
+        Nous l'avons bien reçue, pièces jointes comprises. Un métallier la lit et vous répond
+        personnellement — pas un formulaire automatique.
+      </p>
+
+      <ol class="merci-steps">
+        <li>
+          <span class="num">1</span>
+          <span class="txt"><strong>Sous 24 h ouvrées</strong> — nous vous répondons par e-mail, et par téléphone si votre demande le justifie.</span>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <span class="txt"><strong>Nous validons la solution technique avec vous</strong> avant tout chiffrage : section, finition, mode de pose.</span>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <span class="txt"><strong>Vous recevez votre devis</strong>, avec le schéma coté de chaque pièce et le délai de fabrication.</span>
+        </li>
+      </ol>
+
+      <p class="merci-contact">
+        Une précision à apporter&nbsp;? Répondez simplement à notre e-mail, ou appelez-nous&nbsp;:<br>
+        <a href="tel:+33643218201">06&nbsp;43&nbsp;21&nbsp;82&nbsp;01</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:contact@metal-pliage.fr">contact@metal-pliage.fr</a><br>
+        Atelier ouvert du lundi au vendredi, 8h&nbsp;–&nbsp;17h — Saint-Étienne&nbsp;(42).
+      </p>
+
+      <div class="merci-ctas">
+        <a href="configurateur.html" class="btn-primary">Calculer un prix en ligne</a>
+        <a href="index.html" class="btn-ghost">Retour à l'accueil</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/preloader.js" defer></script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "426105e8e19148c482e439b9423ac270"}'></script>
+</body>
+</html>

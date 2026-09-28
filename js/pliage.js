@@ -486,7 +486,7 @@ function renderDimInputs() {
     input.addEventListener('input', () => {
       const v = parseInt(input.value, 10);
       state.dims[k] = isNaN(v) ? def.def : Math.min(def.max, Math.max(def.min, v));
-      updateUI();
+      scheduleUpdateUI();
       checkUnlockStep4();
     });
   }
@@ -573,6 +573,17 @@ function updateVisRalSelection() {
   });
 }
 
+
+/* ── RENDU DIFFERE ─────────────────────────────────
+   Meme correctif que js/configurateur.js : l'etat reste calcule de maniere
+   synchrone, mais le rendu lourd (SVG + prix + ecritures DOM) est repousse a la
+   frame suivante et dedoublonne, pour ne plus le payer a chaque frappe dans un
+   champ de cote. ── */
+let uiFrame = 0;
+function scheduleUpdateUI() {
+  if (uiFrame) return;
+  uiFrame = requestAnimationFrame(() => { uiFrame = 0; updateUI(); });
+}
 
 /* ── UPDATE UI ───────────────────────────────────────────────── */
 function updateUI() {
@@ -855,7 +866,7 @@ function rebuildThicknessBtns(mat) {
 elInputL.addEventListener('input', () => {
   const v = parseInt(elInputL.value, 10);
   state.L = isNaN(v) ? 2000 : Math.min(3000, Math.max(100, v));
-  updateUI();
+  scheduleUpdateUI();
   checkUnlockStep4();
 });
 

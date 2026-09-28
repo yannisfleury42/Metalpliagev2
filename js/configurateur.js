@@ -644,6 +644,22 @@
     inputC.setAttribute('max', maxC());
   }
 
+  // Le calcul de l'etat reste synchrone (le clamp doit rester immediat), mais le
+  // rendu lourd — drawSVG + updateAccDiagram + recalcul du prix + une vingtaine
+  // d'ecritures DOM — est repousse a la frame suivante et dedoublonne.
+  // Sans ca, chaque frappe dans un champ de cote paie le rendu complet, et les
+  // ecouteurs 'input' + 'change' le paient deux fois a la sortie du champ :
+  // Cloudflare mesurait 1 312 ms d'INP sur #input-B, le premier champ que le
+  // client remplit sur la page la plus consultee du site.
+  let uiFrame = 0;
+  function scheduleUpdateUI() {
+    if (uiFrame) return;
+    uiFrame = requestAnimationFrame(() => {
+      uiFrame = 0;
+      updateUI();
+    });
+  }
+
   function onDimInput(e) {
     const val = parseInt(e.target.value, 10);
     if (isNaN(val)) return;
@@ -666,7 +682,7 @@
       if (e.type === 'change') e.target.value = state.C;
     }
     if (e.target.id === 'input-L') state.L = clamp(val, 200, 3000);
-    updateUI();
+    scheduleUpdateUI();
     if (state.B >= 80 && state.A >= 20 && state.L >= 200) unlockStep(3);
   }
 

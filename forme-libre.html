@@ -630,7 +630,11 @@
             <h2>Votre plan ou schéma <span style="font-size:.7em;font-weight:400;color:var(--text-muted);">(optionnel)</span></h2>
           </div>
           <div class="upload-zone" id="upload-zone">
-            <input type="file" name="Fichiers[]" id="file-input"
+            <!-- Pas de crochets dans le nom : FormSubmit repond 500 sur `Fichiers[]`.
+                 Ce formulaire n'ayant aucun JavaScript d'envoi, le client voyait la page
+                 d'erreur — donc toute demande de pliage sur plan accompagnee d'un fichier
+                 echouait, et c'est precisement le formulaire fait pour en recevoir. -->
+            <input type="file" name="attachment" id="file-input"
                    multiple
                    accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
             <div class="upload-icon">↑</div>
@@ -795,6 +799,27 @@
       <p class="footer-flag">🇫🇷 Fabrication 100% française</p>
     </div>
   </footer>
+
+  <!-- Tiroir panier — sans ce bloc, js/cart.js sort sur `if (!document.getElementById('cart-drawer')) return;`
+       et le panier (toujours present dans localStorage) devient invisible et inatteignable. -->
+  <div class="cart-drawer" id="cart-drawer" aria-hidden="true" role="dialog" aria-label="Votre panier">
+    <div class="cart-drawer-inner">
+      <div class="cart-drawer-header">
+        <h3>VOTRE DEMANDE DE COMMANDE</h3>
+        <button class="cart-close-btn" id="cart-close-btn" aria-label="Fermer le panier">×</button>
+      </div>
+      <div class="cart-items-list" id="cart-items-list"></div>
+      <div class="cart-empty-state" id="cart-empty"><p>Votre panier est vide.</p></div>
+      <div class="cart-drawer-footer" id="cart-footer" hidden>
+        <div class="cart-total-row">
+          <span>Total commande</span>
+          <span id="cart-total-display">0,00 €</span>
+        </div>
+        <button class="btn-checkout" id="btn-checkout">Valider ma demande de commande</button>
+      </div>
+    </div>
+  </div>
+  <div class="cart-backdrop" id="cart-backdrop"></div>
 
   <script src="js/main.js"></script>
   <script src="js/cart.js?v=20260721"></script>
