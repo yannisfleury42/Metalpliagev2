@@ -110,15 +110,23 @@ rejoue('1 couvertine alu 2 m (FRUMHOLTZ) — port 84,00 € attendu', [
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 330, lenMm: 2000 } },
 ], ['84,00', '155,28']);
 
-rejoue('4 couvertines acier 2 m à 367,20 € — franco 350 € attendu', [
-  { name: 'Couvertine métallique', finish: 'RAL 7016', length: 'L=2000mm', price: 9180, qty: 4,
+rejoue('5 couvertines acier 2 m à 459 € et 19,1 kg — franco 400 € atteint', [
+  { name: 'Couvertine métallique', finish: 'RAL 7016', length: 'L=2000mm', price: 9180, qty: 5,
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 2000 } },
 ], ['OFFERTE']);
 
-rejoue('1 pièce de 3 m — messagerie industrielle, 162,00 € attendu', [
+// Le transporteur tarife au poids jusqu'a 4 m : une piece de 3 m paie le meme
+// port qu'une de 2 m a poids egal. C'est ce que l'ancien palier a 2 100 mm
+// surfacturait (162 EUR au lieu de 84).
+rejoue('1 pièce de 3 m, 6,7 kg — même tarif au poids que du 2 m, 84,00 € attendu', [
   { name: 'Couvertine métallique', finish: 'RAL 7016', length: 'L=3000mm', price: 13770, qty: 1,
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 3000 } },
-], ['162,00']);
+], ['84,00']);
+
+rejoue('1 pièce de 4,50 m — hors des 4 m tarifés au poids, cotation', [
+  { name: 'Pliage sur mesure', finish: 'Brut', length: 'L=4500mm', price: 20000, qty: 1,
+    ship: { material: 'alu', thicknessMm: 2, devMm: 300, lenMm: 4500 } },
+], ['sur devis']);
 
 console.log('\n' + (ko ? 'ECHEC : ' + ko + ' assertion(s)' : 'OK : cart.js se rend sans lever, port affiche'));
 process.exit(ko ? 1 : 0);

@@ -30,7 +30,7 @@ function scenario(titre, items, cp, attendu) {
   console.log('   marchandise      : ' + eur(total) + ' TTC');
   console.log('   poids net pieces : ' + e.kgNet.toFixed(2) + ' kg');
   console.log('   poids brut colis : ' + e.kgBrut.toFixed(2) + ' kg');
-  const RES = { petit: 'colis compact', fardeau: 'fardeau colis long', long: 'messagerie INDUSTRIELLE' };
+  const RES = { petit: 'colis compact', long: 'fardeau colis long (tarif au poids)' };
   console.log('   longueur maxi    : ' + e.lMax + ' mm  → ' + RES[e.reseau]);
   console.log('   gabarit declare  : ' + e.gabarit);
   console.log('   port             : ' + (e.gratuit ? 'OFFERT (franco ' + e.franco / 100 + ' € TTC)'
@@ -62,24 +62,42 @@ scenario('DOUISSARD version 3 000 mm (celle qui faisait sortir du reseau colis)'
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 120, lenMm: 3000, accKg: 0.60, accLenMm: 120 } },
   { name: 'Pliage L 70x50', price: 4200, qty: 1, extrasCents: 0, length: 'L=2000mm',
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 120, lenMm: 2000 } },
-], '88400', { hors: true, gratuit: false });
+], '88400', { reseau: 'long', hors: false, gratuit: false, portHtCents: 7000 });
 
 /* ── 3. FRUMHOLTZ MP-260920-1154-0I (reelle) ────────────────────────────── */
 scenario('FRUMHOLTZ — 1 couvertine alu 1,5 RAL 9006, dev. 330, L 2000', [
   { name: 'Couvertine', price: 7128, qty: 1, length: 'L=2000mm',
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 330, lenMm: 2000 } },
-], '57360', { hors: false, gratuit: false, portHtCents: 7000, reseau: 'fardeau' });
+], '57360', { hors: false, gratuit: false, portHtCents: 7000, reseau: 'long' });
 
 /* ── 4. Le franco doit se declencher, et seulement au bon endroit ──────── */
-scenario('Commande 4 couvertines acier 0,75 dev. 300 L2000 — au-dessus du franco colis', [
+scenario('4 couvertines acier 2 m, 367,20 EUR TTC — sous le franco de 400, port facture', [
   { name: 'Couvertine', price: 9180, qty: 4, length: 'L=2000mm',
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 2000 } },
-], '42100', { gratuit: true, hors: false });
+], '42100', { gratuit: false, reseau: 'long', portHtCents: 8600 });
 
-scenario('Meme commande en 3 000 mm — le franco colis ne doit PAS s appliquer', [
+scenario('5 couvertines acier 2 m, 459 EUR TTC et 19,1 kg — franco atteint', [
+  { name: 'Couvertine', price: 9180, qty: 5, length: 'L=2000mm',
+    ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 2000 } },
+], '42100', { gratuit: true, reseau: 'long', portHtCents: 0 });
+
+scenario('Meme commande en 3 000 mm — meme circuit, tarif au poids (plus de palier)', [
   { name: 'Couvertine', price: 13770, qty: 4, length: 'L=3000mm',
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 3000 } },
-], '42100', { gratuit: false, hors: true });
+], '42100', { reseau: 'long', hors: false, gratuit: false, portHtCents: 10000 });
+
+/* Le franco est borne par le POIDS : un panier tres au-dessus du seuil en euros
+   mais trop lourd ne doit PAS passer en port offert. */
+scenario('8 couvertines acier 3 m, 1 100 EUR TTC mais 42 kg — franco hors de portee', [
+  { name: 'Couvertine', price: 13770, qty: 8, length: 'L=3000mm',
+    ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 3000 } },
+], '42100', { gratuit: false, portHtCents: 13000 });
+
+/* Au-dela des 4 m que le transporteur annonce tarifer au poids : on cote. */
+scenario('1 piece de 4 500 mm — hors limite annoncee', [
+  { name: 'Pliage', price: 20000, qty: 1, length: 'L=4500mm',
+    ship: { material: 'alu', thicknessMm: 2, devMm: 300, lenMm: 4500 } },
+], '42100', { surDevis: true, portHtCents: 0 });
 
 /* ── 5. Outre-mer : jamais de franco, jamais de prix devine ────────────── */
 scenario('Envoi a La Reunion (97400) au-dessus du franco', [
@@ -96,7 +114,7 @@ scenario('1 cartouche de colle MS seule', [
 /* ── 7. Panier ancien, sans `ship` : doit retomber sur un defaut prudent ─ */
 scenario('Panier legacy sans champ ship (localStorage d avant le 28/09)', [
   { name: 'Couvertine métallique', price: 9180, qty: 2, length: '2,5 m' },
-], '42100', { lMax: 2500, hors: true });
+], '42100', { lMax: 2500, reseau: 'long', hors: false });
 
 console.log('\n' + (echecs ? '✗ ' + echecs + ' assertion(s) en echec' : '✓ toutes les assertions passent'));
 process.exit(echecs ? 1 : 0);

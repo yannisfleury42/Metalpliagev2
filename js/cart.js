@@ -25,8 +25,8 @@
      moins 15 EUR de frais fixes et 63,27 EUR de transport = 6,73 EUR de marge
      nette. Voir project_rentabilite_metalpliage.
 
-     A REVOIR des reception de la grille signee : GRILLE_PETIT, GRILLE_FARDEAU,
-     GRILLE_LONG et FRANCO. Rien d'autre. ── */
+     A REVOIR des reception du barreme : GRILLE_PETIT, GRILLE_LONG, FRANCO et
+     FRANCO_KG. Rien d'autre. ── */
 
   const TVA = 1.20;
 
@@ -44,63 +44,71 @@
   // surcapot. Pese sur le colis DOUISSARD. Son COUT est deja compris dans les
   // grilles ci-dessous (elles sont tout compris) ; seul son POIDS se calcule,
   // parce que c'est le poids brut que le transporteur facture.
-  const EMBALLAGE_KG = { petit: 0.4, fardeau: 1.4 };
+  const EMBALLAGE_KG = { petit: 0.4, long: 1.4 };
 
-  /* ── LES TROIS RESEAUX ─────────────────────────────────────────
-     Ce n'est pas le poids qui decide du tarif, c'est la LONGUEUR. Une
-     couvertine alu de 2 m pese 3 kg et une de 3 m 4,5 kg : les deux sont sous
-     10 kg, mais la seconde coute deux fois plus cher a expedier. Toute grille
-     construite sur le seul poids perd de l'argent sur le 3 m.
+  /* ── DEUX CIRCUITS, UN SEUL CRITERE : LE POIDS ──────────────────
+     Precision du transporteur, 28/09/2026 : **le prix se fait au poids jusqu'a
+     4 m de longueur**. Il n'y a donc pas de rupture de tarif a 2,10 m — c'etait
+     mon extrapolation, et elle surfacturait les pieces de 2,50 et 3 m. MDS ne
+     vend jamais au-dela de 3 000 mm : tout le flux tient dans un seul circuit.
 
-       <= 1 200 mm  reseau colis standard (Colissimo / agregateur)
-       <= 2 100 mm  fardeau « colis long » — le gros du B2C
-        > 2 100 mm  messagerie industrielle : longueur + ceinture > 3 m, les
-                    hubs trient sur des convoyeurs qui s'arretent a 3 m
+     Ce qui reste : un carton de visserie ne part pas dans le meme circuit qu'un
+     fardeau de 2 m. D'ou deux grilles, separees par la longueur, mais chacune
+     tarifee au poids.
 
-     Le seuil de 2 100 mm est ce qui a manque le 22/09 : une barre de 3 000 mm
-     ajoutee au panier DOUISSARD a fait passer le fardeau de 2 050 a 3 050 mm,
-     sans que le site ne signale quoi que ce soit. ── */
+       <= 1 200 mm   colis compact (accessoires, visserie, colle)
+       <= 4 000 mm   fardeau colis long — tout notre catalogue
+        > 4 000 mm   hors limite annoncee par le transporteur -> cotation ── */
   const SEUIL_PETIT_MM = 1200;
-  const SEUIL_LONG_MM  = 2100;
+  const SEUIL_MAX_MM   = 4000;
 
   /* Grilles de VENTE, TOUT COMPRIS (transport + emballage), en centimes HT,
      France metropolitaine. Tranches de poids BRUT.
 
-     Le seul chiffre REEL est 63,27 EUR HT : fardeau DOUISSARD de 2 050 mm et
-     9,6 kg brut vers le 88, facture par le transporteur le 28/09/2026. La
-     tranche 0-10 kg du fardeau est donc calee dessus et vendue AU COUT
-     (63,27 de transport + ~4 d'emballage = 67 EUR, vendus 70). Le port ne
-     porte volontairement aucune marge : elle vient de la piece. Tout le reste
-     de ces deux grilles est extrapole et sera remplace par la grille signee. */
+     Le seul point REEL est 63,27 EUR HT : fardeau DOUISSARD, 2 050 mm, 9,6 kg
+     brut vers le 88, facture le 28/09/2026. Il cale la tranche 0-10 kg a
+     70 EUR (63,27 + ~4 d'emballage, vendus 70). Au-dessus, la pente retenue est
+     de ~1,50 EUR/kg, valeur prudente faute de barreme : elle sera remplacee des
+     que le transporteur aura donne son minimum de perception et son prix au kg.
+
+     ATTENTION a la lecture du point mesure : 63,27 EUR pour 9,6 kg font
+     6,59 EUR/kg, un tarif impossible en messagerie. Donc ou le minimum de
+     perception est eleve, ou nous sommes factures au poids VOLUMETRIQUE et pas
+     au poids reel (le fardeau fait 0,14 m3, soit 36 kg taxables a 250 kg/m3 —
+     et 63,27 / 36 = 1,76 EUR/kg, ce qui est plausible). Tant que ce point n'est
+     pas tranche, ces grilles restent volontairement hautes. */
   const GRILLE_PETIT = [       // colis compact <= 1 200 mm
     { maxKg:  2, ht: 1100 },
     { maxKg:  5, ht: 1400 },
     { maxKg: 10, ht: 1800 },
     { maxKg: 30, ht: 2600 },
   ];
-  const GRILLE_FARDEAU = [     // 1 200 < longueur <= 2 100 mm
+  const GRILLE_LONG = [        // 1 200 < longueur <= 4 000 mm
     { maxKg: 10, ht:  7000 },  // <- mesure : DOUISSARD, 63,27 EUR HT + emballage
-    { maxKg: 20, ht:  8400 },
-    { maxKg: 35, ht:  9800 },
-    { maxKg: 60, ht: 12500 },
-  ];
-  const GRILLE_LONG = [        // > 2 100 mm, messagerie industrielle
-    { maxKg: 20, ht: 13500 },
-    { maxKg: 40, ht: 15500 },
-    { maxKg: 80, ht: 19000 },
+    { maxKg: 20, ht:  8600 },
+    { maxKg: 30, ht: 10000 },
+    { maxKg: 50, ht: 13000 },
+    { maxKg: 80, ht: 17500 },
   ];
 
-  /* Franco de port, par reseau. L'ancien seuil unique de 200 EUR TTC ne couvrait
-     pas le port : 166,67 EUR HT de marchandise a 51 % de marge = 85 EUR, moins
-     15 EUR de frais fixes de commande et 63,27 EUR de transport = 6,73 EUR de
-     marge nette. Recalcule pour laisser 20 % de marge nette APRES port reel,
-     soit (port + frais fixes) / (0,51 - 0,20) :
-       petit colis : (18 + 15) / 0,31 = 106 EUR HT  -> 150 EUR TTC
-       fardeau     : (70 + 15) / 0,31 = 274 EUR HT  -> 350 EUR TTC
-       long        : (135 + 15) / 0,31 = 484 EUR HT -> 600 EUR TTC
-     Le franco ne se declenche jamais hors metropole : le port d'un envoi
-     ultramarin n'a rien a voir avec celui d'un envoi continental. ── */
-  const FRANCO = { petit: 15000, fardeau: 35000, long: 60000 };
+  /* Franco de port. Il doit couvrir le port le plus cher qu'il puisse
+     rencontrer, sinon il redevient ce qu'il etait : une facon de payer pour
+     vendre. D'ou un plafond de POIDS en plus du seuil en euros — au-dela, le
+     port est toujours facture. Le plafond remplace l'ancien palier de longueur,
+     qui n'avait plus de sens : ajouter une barre de 3 m au panier ne fait plus
+     basculer le tarif, ajouter du poids si.
+
+     Calcul, marge fabrication 51 % et 15 EUR de frais fixes par commande :
+       seuil = (port le plus cher sous le plafond + frais fixes + emballage) / (0,51 - 0,20)
+       long  : (86 + 15 + 4) / 0,31 = 339 EUR HT  -> 400 EUR TTC, plafond 20 kg
+       petit : (26 + 15 + 4) / 0,31 = 145 EUR HT  -> 150 EUR TTC, plafond 30 kg
+     Verification a 400 EUR TTC et 20 kg : 333,33 x 0,51 = 170,00 - 15 - 4 - 86
+     = +65,00 EUR, soit 19,5 %. A 10 kg : +81,00 EUR, soit 24,3 %.
+
+     Jamais de franco hors metropole : le port d'un envoi ultramarin n'a rien a
+     voir avec celui d'un envoi continental. ── */
+  const FRANCO    = { petit: 15000, long: 40000 };
+  const FRANCO_KG = { petit: 30,    long: 20    };
 
   // Departement d'apres le code postal. `cp.slice(0,2)` se trompe deux fois :
   // la Corse (20xxx = 2A/2B) et l'outre-mer, ou le departement tient sur
@@ -151,32 +159,26 @@
     // quantite de pieces, exactement comme `extrasCents` pour leur prix.
     const kgPieces = cart.reduce(
       (s, it) => s + poidsUnitaireKg(it) * it.qty + ((it.ship && it.ship.accKg) || 0), 0);
-    // Une corniere de depart de 2 m dans une commande de talons de 200 mm impose
-    // sa longueur au fardeau : c'est elle qui decide du tarif.
     const lMax = cart.reduce(
       (m, it) => Math.max(m, longueurMm(it), (it.ship && it.ship.accLenMm) || 0), 0) || 0;
 
-    const reseau = lMax <= SEUIL_PETIT_MM ? 'petit'
-                 : (lMax <= SEUIL_LONG_MM ? 'fardeau' : 'long');
-    const grille = reseau === 'petit' ? GRILLE_PETIT
-                 : (reseau === 'fardeau' ? GRILLE_FARDEAU : GRILLE_LONG);
-    const kgBrut = cart.length
-      ? kgPieces + EMBALLAGE_KG[reseau === 'petit' ? 'petit' : 'fardeau']
-      : 0;
+    const reseau = lMax <= SEUIL_PETIT_MM ? 'petit' : 'long';
+    const grille = reseau === 'petit' ? GRILLE_PETIT : GRILLE_LONG;
+    const kgBrut = cart.length ? kgPieces + EMBALLAGE_KG[reseau] : 0;
 
     const franco  = FRANCO[reseau];
     const tranche = grille.find((t) => kgBrut <= t.maxKg) || null;
     const metro   = (cp === undefined || cp === null || cp === '') ? true : estMetropole(cp);
-    // Pas de tranche (fardeau trop lourd) ou envoi ultramarin : on ne devine pas
-    // un prix, cotation transporteur au cas par cas.
-    const surDevis = !tranche || !metro;
-    const gratuit  = !surDevis && totalCents >= franco;
-    const portHt   = (gratuit || surDevis) ? 0 : tranche.ht;
+    // Pas de tranche, piece au-dela des 4 m que le transporteur annonce tarifer
+    // au poids, ou envoi ultramarin : on ne devine pas un prix.
+    const surDevis = !tranche || !metro || lMax > SEUIL_MAX_MM;
+    // Le franco est plafonne en POIDS : c'est lui qui fait le prix, donc lui qui
+    // doit borner la gratuite.
+    const gratuit = !surDevis && totalCents >= franco && kgBrut <= FRANCO_KG[reseau];
+    const portHt  = (gratuit || surDevis) ? 0 : tranche.ht;
 
     // Enveloppe declaree au transporteur : celle du cahier des charges
-    // CDC-2026-01, qu'il a deja entre les mains. On sur-declare legerement le
-    // volume plutot que l'inverse — un colis sous-declare est retarife au tri,
-    // et la difference est pour nous.
+    // CDC-2026-01, qu'il a deja entre les mains.
     const type = reseau === 'petit' ? null
                : (lMax <= 2100 ? 'A' : (lMax <= 2600 ? 'B' : 'C'));
     const gabarit = reseau === 'petit'
@@ -185,8 +187,9 @@
 
     return {
       kgNet: kgPieces, kgBrut: kgBrut, lMax: lMax, reseau: reseau,
-      hors: reseau === 'long',
-      surDevis: surDevis, gratuit: gratuit, franco: franco, tranche: tranche,
+      hors: lMax > SEUIL_MAX_MM,
+      surDevis: surDevis, gratuit: gratuit, franco: franco,
+      francoKg: FRANCO_KG[reseau], tranche: tranche,
       portHtCents:  portHt,
       portTtcCents: Math.round(portHt * TVA),
       gabarit: gabarit,
@@ -194,9 +197,8 @@
   }
 
   const RESEAU_LABEL = {
-    petit:   'colis compact <= 1 200 mm',
-    fardeau: 'fardeau colis long <= 2 100 mm',
-    long:    'messagerie industrielle > 2 100 mm',
+    petit: 'colis compact <= 1 200 mm',
+    long:  'fardeau colis long, tarife au poids',
   };
 
   function livraisonLigne(order) {
@@ -848,11 +850,13 @@
       return;
     }
 
-    // Le reste a parcourir avant le franco n'est affiche que s'il est credible :
-    // proposer « encore 280 EUR » a qui commande une couvertine de 60 EUR est une
-    // incitation vide, et le franco d'un colis > 2,1 m est hors d'atteinte du B2C.
+    // Le reste a parcourir avant le franco n'est affiche que si la gratuite est
+    // reellement atteignable : proposer « encore 280 EUR » a qui commande une
+    // couvertine de 60 EUR est une incitation vide, et surtout le franco est
+    // plafonne en poids — au-dela, aucun montant ne le declenche, et l'annoncer
+    // serait une promesse fausse.
     const reste = e.franco - total;
-    const relance = (!e.hors && reste > 0 && reste <= total)
+    const relance = (e.kgBrut <= e.francoKg && reste > 0 && reste <= total)
       ? '<br>Offerte dès <strong>' + (e.franco / 100) + '\u00a0\u20ac</strong>'
         + ' — plus que <strong style="color:var(--accent,#FF4500)">' + formatPrice(reste) + '</strong>.'
       : '';
