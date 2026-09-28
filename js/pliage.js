@@ -132,8 +132,10 @@ const SHAPES = {
 
 
 /* ── ACCESSOIRES ─────────────────────────────────────────────── */
+// `kg` sert au calcul du port (cart.js) : un lot de 100 vis inox de 4,8 × 35
+// pèse ~0,6 kg, ce n'est pas négligeable sur un colis de 4 kg.
 const ACCESSORIES_PLIAGE = [
-  { id: 'vis', name: 'Vis inox auto-foreuses tête RAL (lot de 100)', price: 32.00 },
+  { id: 'vis', name: 'Vis inox auto-foreuses tête RAL (lot de 100)', price: 32.00, kg: 0.60, lenMm: 120 },
 ];
 
 
@@ -988,6 +990,20 @@ function addToCart() {
     price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires
     extrasCents: Math.round(price.accTtc * 100),       // forfait accessoires de la ligne
     qty:         state.qty,
+    // Géométrie d'expédition — voir le même bloc dans configurateur.js. Le
+    // développé passe par shape.dev() et non par une somme des cotes : sur
+    // l'appui de fenêtre il ajoute une pince fixe de 12 mm.
+    ship: {
+      material:    state.material,
+      thicknessMm: th,
+      devMm:       shape.dev(state.dims),
+      lenMm:       state.L,
+      accKg:       ACCESSORIES_PLIAGE.reduce(
+                     (s, acc) => s + state.accessories[acc.id].qty * acc.kg, 0),
+      accLenMm:    ACCESSORIES_PLIAGE.reduce(
+                     (m, acc) => state.accessories[acc.id].qty > 0
+                       ? Math.max(m, acc.lenMm) : m, 0),
+    },
   });
 }
 

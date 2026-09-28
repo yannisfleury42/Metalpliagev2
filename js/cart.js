@@ -1,4 +1,4 @@
-﻿/* ═══════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    cart.js — Panier + demande de commande (sans paiement immédiat)
    Metal Pliage
    Flux : le client valide sa demande → email à MDS via FormSubmit →
@@ -12,13 +12,95 @@
   const ORDER_EMAIL = 'contact@metal-pliage.fr';
   const STORAGE_KEY = 'mp_cart';   // panier persistant (survit aux changements de page)
 
-  /* ── POLITIQUE LIVRAISON (révisée 2026-08-03) ─────────────────
-     Livraison OFFERTE au-delà de ce seuil (TTC). En dessous : frais
-     de port selon devis (précisés avec le lien de paiement) OU retrait
-     gratuit à l'atelier de Saint-Étienne. Pas de commande minimum
-     bloquante. Seuil à ré-actualiser une fois les tarifs transporteur
-     figés. ── */
-  const FREE_SHIP_CENTS = 20000;   // 200 € TTC
+  /* ── MODELE D'EXPEDITION (revise 2026-09-28) ──────────────
+     Premiere grille adossee a un cout transporteur REEL et non a une
+     estimation : 63,27 EUR HT pour le fardeau DOUISSARD — 2 050 mm,
+     9,6 kg brut, Saint-Etienne vers 88400 Gerardmer, enlevement du 30/09/2026.
+
+     Tant que la grille complete du transporteur n'est pas signee, le port est
+     vendu AU COUT : la marge vient de la piece, pas du transport. Ce qui etait
+     faux avant le 28/09 : le panier affichait « A CHIFFRER » (le client ne
+     connaissait son total qu'apres s'etre engage) et le franco a 200 EUR TTC ne
+     couvrait pas le port — 166,67 EUR HT de marchandise a 51 % de marge = 85 EUR,
+     moins 15 EUR de frais fixes et 63,27 EUR de transport = 6,73 EUR de marge
+     nette. Voir project_rentabilite_metalpliage.
+
+     A REVOIR des reception de la grille signee : GRILLE_PETIT, GRILLE_FARDEAU,
+     GRILLE_LONG et FRANCO. Rien d'autre. ── */
+
+  const TVA = 1.20;
+
+  // Masse surfacique. On ne code pas « 4,05 kg/m2 » en dur : le configurateur
+  // pliage vend 3 matieres et 5 epaisseurs, la densite est la seule donnee qui
+  // ne se perime pas.
+  const DENSITE = { alu: 2700, acier: 7850, inox: 7900 };   // kg/m3
+  function kgParM2(material, thicknessMm) {
+    const d = DENSITE[material];
+    if (!d || !thicknessMm) return null;
+    return d * (thicknessMm / 1000);
+  }
+
+  // Emballage : chevrons bois, cornieres carton, intercalaires, film etirable,
+  // surcapot. Pese sur le colis DOUISSARD. Son COUT est deja compris dans les
+  // grilles ci-dessous (elles sont tout compris) ; seul son POIDS se calcule,
+  // parce que c'est le poids brut que le transporteur facture.
+  const EMBALLAGE_KG = { petit: 0.4, fardeau: 1.4 };
+
+  /* ── LES TROIS RESEAUX ─────────────────────────────────────────
+     Ce n'est pas le poids qui decide du tarif, c'est la LONGUEUR. Une
+     couvertine alu de 2 m pese 3 kg et une de 3 m 4,5 kg : les deux sont sous
+     10 kg, mais la seconde coute deux fois plus cher a expedier. Toute grille
+     construite sur le seul poids perd de l'argent sur le 3 m.
+
+       <= 1 200 mm  reseau colis standard (Colissimo / agregateur)
+       <= 2 100 mm  fardeau « colis long » — le gros du B2C
+        > 2 100 mm  messagerie industrielle : longueur + ceinture > 3 m, les
+                    hubs trient sur des convoyeurs qui s'arretent a 3 m
+
+     Le seuil de 2 100 mm est ce qui a manque le 22/09 : une barre de 3 000 mm
+     ajoutee au panier DOUISSARD a fait passer le fardeau de 2 050 a 3 050 mm,
+     sans que le site ne signale quoi que ce soit. ── */
+  const SEUIL_PETIT_MM = 1200;
+  const SEUIL_LONG_MM  = 2100;
+
+  /* Grilles de VENTE, TOUT COMPRIS (transport + emballage), en centimes HT,
+     France metropolitaine. Tranches de poids BRUT.
+
+     Le seul chiffre REEL est 63,27 EUR HT : fardeau DOUISSARD de 2 050 mm et
+     9,6 kg brut vers le 88, facture par le transporteur le 28/09/2026. La
+     tranche 0-10 kg du fardeau est donc calee dessus et vendue AU COUT
+     (63,27 de transport + ~4 d'emballage = 67 EUR, vendus 70). Le port ne
+     porte volontairement aucune marge : elle vient de la piece. Tout le reste
+     de ces deux grilles est extrapole et sera remplace par la grille signee. */
+  const GRILLE_PETIT = [       // colis compact <= 1 200 mm
+    { maxKg:  2, ht: 1100 },
+    { maxKg:  5, ht: 1400 },
+    { maxKg: 10, ht: 1800 },
+    { maxKg: 30, ht: 2600 },
+  ];
+  const GRILLE_FARDEAU = [     // 1 200 < longueur <= 2 100 mm
+    { maxKg: 10, ht:  7000 },  // <- mesure : DOUISSARD, 63,27 EUR HT + emballage
+    { maxKg: 20, ht:  8400 },
+    { maxKg: 35, ht:  9800 },
+    { maxKg: 60, ht: 12500 },
+  ];
+  const GRILLE_LONG = [        // > 2 100 mm, messagerie industrielle
+    { maxKg: 20, ht: 13500 },
+    { maxKg: 40, ht: 15500 },
+    { maxKg: 80, ht: 19000 },
+  ];
+
+  /* Franco de port, par reseau. L'ancien seuil unique de 200 EUR TTC ne couvrait
+     pas le port : 166,67 EUR HT de marchandise a 51 % de marge = 85 EUR, moins
+     15 EUR de frais fixes de commande et 63,27 EUR de transport = 6,73 EUR de
+     marge nette. Recalcule pour laisser 20 % de marge nette APRES port reel,
+     soit (port + frais fixes) / (0,51 - 0,20) :
+       petit colis : (18 + 15) / 0,31 = 106 EUR HT  -> 150 EUR TTC
+       fardeau     : (70 + 15) / 0,31 = 274 EUR HT  -> 350 EUR TTC
+       long        : (135 + 15) / 0,31 = 484 EUR HT -> 600 EUR TTC
+     Le franco ne se declenche jamais hors metropole : le port d'un envoi
+     ultramarin n'a rien a voir avec celui d'un envoi continental. ── */
+  const FRANCO = { petit: 15000, fardeau: 35000, long: 60000 };
 
   // Departement d'apres le code postal. `cp.slice(0,2)` se trompe deux fois :
   // la Corse (20xxx = 2A/2B) et l'outre-mer, ou le departement tient sur
@@ -30,28 +112,109 @@
     return cp.slice(0, 2);
   }
 
-  // Metropole seule. Le bandeau du panier annonce « France metropolitaine » :
-  // le franco ne doit donc pas se declencher sur un envoi ultramarin, dont le
-  // port n'a rien a voir avec celui d'un envoi continental.
   function estMetropole(cp) { return !/^9[78]/.test(String(cp || '')); }
 
-  // Ligne « Livraison » du mail de commande. Elle porte l'arbitrage du port ET
-  // l'adresse postale complete, pour qu'une etiquette transporteur puisse etre
-  // editee sans rouvrir le dossier.
+  /* Poids unitaire d'un article. `it.ship` est pose par les configurateurs
+     ({material, thicknessMm, devMm, lenMm}) ou par accessoires.js ({kg, lenMm}).
+     Un article sans `ship` — panier deja en localStorage avant cette version,
+     selecteur simplifie de couvertines.html — retombe sur une estimation
+     prudente : compter 0 kg reviendrait a sous-facturer le port. */
+  function poidsUnitaireKg(it) {
+    const s = it.ship || null;
+    if (s && Number.isFinite(s.kg)) return s.kg;
+    if (s && s.material && s.devMm && s.lenMm) {
+      const kgm2 = kgParM2(s.material, s.thicknessMm);
+      if (kgm2) return (s.devMm / 1000) * (s.lenMm / 1000) * kgm2;
+    }
+    return 4;   // couvertine alu 1,5 de 2 m, developpe 500 — defaut haut
+  }
+
+  /* Longueur d'un article, en mm. Le libelle est le dernier recours : les deux
+     configurateurs ecrivent « L=2000mm », le selecteur simplifie « 2 m ». */
+  function longueurMm(it) {
+    const s = it.ship || null;
+    if (s && Number.isFinite(s.lenMm)) return s.lenMm;
+    const txt = String(it.length || '');
+    const mm = /L\s*=\s*(\d{3,4})\s*mm/i.exec(txt) || /(\d{4})\s*mm/.exec(txt);
+    if (mm) return parseInt(mm[1], 10);
+    const m = /([1-6])\s*(?:[,.]\s*(\d))?\s*m(?![a-z])/i.exec(txt);
+    if (m) return parseInt(m[1], 10) * 1000 + (m[2] ? parseInt(m[2], 10) * 100 : 0);
+    return 2000;
+  }
+
+  /* Synthese d'expedition du panier. Alimente a la fois le bandeau client, la
+     ligne « Livraison » du mail et les champs Poids / Gabarit que le
+     transporteur reclame pour coter — c'est la seule source de ces chiffres.
+     `cp` est facultatif : il n'est connu qu'au moment du formulaire. */
+  function expedition(totalCents, cp) {
+    // Les accessoires sont un forfait de LIGNE : leur poids ne suit pas la
+    // quantite de pieces, exactement comme `extrasCents` pour leur prix.
+    const kgPieces = cart.reduce(
+      (s, it) => s + poidsUnitaireKg(it) * it.qty + ((it.ship && it.ship.accKg) || 0), 0);
+    // Une corniere de depart de 2 m dans une commande de talons de 200 mm impose
+    // sa longueur au fardeau : c'est elle qui decide du tarif.
+    const lMax = cart.reduce(
+      (m, it) => Math.max(m, longueurMm(it), (it.ship && it.ship.accLenMm) || 0), 0) || 0;
+
+    const reseau = lMax <= SEUIL_PETIT_MM ? 'petit'
+                 : (lMax <= SEUIL_LONG_MM ? 'fardeau' : 'long');
+    const grille = reseau === 'petit' ? GRILLE_PETIT
+                 : (reseau === 'fardeau' ? GRILLE_FARDEAU : GRILLE_LONG);
+    const kgBrut = cart.length
+      ? kgPieces + EMBALLAGE_KG[reseau === 'petit' ? 'petit' : 'fardeau']
+      : 0;
+
+    const franco  = FRANCO[reseau];
+    const tranche = grille.find((t) => kgBrut <= t.maxKg) || null;
+    const metro   = (cp === undefined || cp === null || cp === '') ? true : estMetropole(cp);
+    // Pas de tranche (fardeau trop lourd) ou envoi ultramarin : on ne devine pas
+    // un prix, cotation transporteur au cas par cas.
+    const surDevis = !tranche || !metro;
+    const gratuit  = !surDevis && totalCents >= franco;
+    const portHt   = (gratuit || surDevis) ? 0 : tranche.ht;
+
+    // Enveloppe declaree au transporteur : celle du cahier des charges
+    // CDC-2026-01, qu'il a deja entre les mains. On sur-declare legerement le
+    // volume plutot que l'inverse — un colis sous-declare est retarife au tri,
+    // et la difference est pour nous.
+    const type = reseau === 'petit' ? null
+               : (lMax <= 2100 ? 'A' : (lMax <= 2600 ? 'B' : 'C'));
+    const gabarit = reseau === 'petit'
+      ? Math.max(lMax + 40, 200) + ' \u00d7 300 \u00d7 200 mm (colis compact)'
+      : (lMax + 60) + ' \u00d7 350 \u00d7 200 mm (type ' + type + ' du CDC-2026-01)';
+
+    return {
+      kgNet: kgPieces, kgBrut: kgBrut, lMax: lMax, reseau: reseau,
+      hors: reseau === 'long',
+      surDevis: surDevis, gratuit: gratuit, franco: franco, tranche: tranche,
+      portHtCents:  portHt,
+      portTtcCents: Math.round(portHt * TVA),
+      gabarit: gabarit,
+    };
+  }
+
+  const RESEAU_LABEL = {
+    petit:   'colis compact <= 1 200 mm',
+    fardeau: 'fardeau colis long <= 2 100 mm',
+    long:    'messagerie industrielle > 2 100 mm',
+  };
+
   function livraisonLigne(order) {
     const c = order.client;
     if (c.mode === 'Retrait atelier') {
       return 'RETRAIT A L ATELIER — aucune expedition. Prevenir le client des que la commande est prete '
            + '(8 rue Edouard Martel, 42100 Saint-Etienne).';
     }
-    const franco = order.total >= FREE_SHIP_CENTS && estMetropole(c.cp);
-    const tete = franco
-      ? 'Offerte — marchandise >= 200 EUR TTC (seuil calcule hors frais de port)'
-      : (estMetropole(c.cp)
-          ? 'A CHIFFRER — frais de port a ajouter au lien de paiement (offerte des 200 EUR TTC de marchandise, '
-            + 'hors port), ou proposer le retrait gratuit a l atelier (Saint-Etienne).'
-          : 'A CHIFFRER — HORS METROPOLE : le franco de 200 EUR ne s applique pas, demander une cotation au '
-            + 'transporteur avant d annoncer un prix.');
+    const e = order.exp;
+    const tete = e.gratuit
+      ? 'Port OFFERT — marchandise >= ' + (e.franco / 100) + ' EUR TTC. Le cout transporteur reste a la charge de MDS.'
+      : (e.surDevis
+          ? 'A COTER — aucune tranche de la grille ne couvre cet envoi (fardeau hors tranche, ou hors metropole). '
+            + 'Demander une cotation au transporteur AVANT d annoncer un prix.'
+          : 'Port FACTURE ' + (e.portTtcCents / 100).toFixed(2).replace('.', ',') + ' EUR TTC ('
+            + (e.portHtCents / 100).toFixed(2).replace('.', ',') + ' EUR HT) — grille '
+            + RESEAU_LABEL[e.reseau]
+            + ', tranche ' + e.tranche.maxKg + ' kg.');
     const adresse = [c.adresse, c.complement].filter(Boolean).join(' — ');
     return tete + ' | Livrer a : ' + adresse + ', ' + c.cp + ' ' + c.ville
          + ' (departement ' + departement(c.cp) + ')';
@@ -426,7 +589,7 @@
     form.method = 'POST';
     form.action = 'https://formsubmit.co/' + ORDER_EMAIL;
     form.innerHTML = `
-      <p class="order-reassure">Vous ne payez rien maintenant. Après vérification de votre commande, vous recevrez votre <strong>lien de paiement</strong> (carte bancaire ou virement), généralement sous 24&nbsp;h ouvrées. Livraison <strong>offerte dès 200&nbsp;€</strong>&nbsp;; en dessous, les frais de port (ou le <strong>retrait gratuit à l'atelier</strong> de Saint-Étienne) vous seront précisés avec ce lien.</p>
+      <p class="order-reassure">Vous ne payez rien maintenant. Après vérification de votre commande, vous recevrez votre <strong>lien de paiement</strong> (carte bancaire ou virement), généralement sous 24&nbsp;h ouvrées. Les <strong>frais de port affichés ci-dessus sont fermes</strong> pour la France métropolitaine&nbsp;; le <strong>retrait à l'atelier</strong> de Saint-Étienne reste gratuit.</p>
       <label>Nom complet*<input type="text" name="Nom" required autocomplete="name"></label>
       <label>Société (si la facture est au nom d'une entreprise)<input type="text" name="Societe" autocomplete="organization"></label>
       <label>Email*<input type="email" name="Email" required autocomplete="email"></label>
@@ -500,6 +663,12 @@
           message: form.querySelector('[name="Message"]').value,
         },
       };
+      // Synthese d'expedition (poids, gabarit, port) : calculee une seule fois,
+      // puis relue par livraisonLigne() et par le payload. Le CP est connu ici,
+      // donc un envoi ultramarin basculera bien en « a coter ».
+      order.exp = expedition(order.total, order.client.cp);
+      order.portTtcCents = order.client.mode === 'Retrait atelier' ? 0 : order.exp.portTtcCents;
+      order.totalAvecPort = order.total + order.portTtcCents;
       try { localStorage.setItem('mp_last_order', JSON.stringify(order)); } catch (err) {}
 
       const payload = {
@@ -518,6 +687,21 @@
         Departement: departement(order.client.cp),
         Message: order.client.message,
         'Recapitulatif commande': cartSummaryText(),
+        // Les 4 champs que le transporteur reclame pour coter un enlevement. Ils
+        // etaient absents du mail : il fallait rouvrir le dossier et repeser la
+        // commande a la main a chaque demande de prix (cas FRUMHOLTZ, 28/09).
+        'Poids net pieces': order.exp.kgNet.toFixed(1).replace('.', ',') + ' kg',
+        'Poids brut colis': order.exp.kgBrut.toFixed(1).replace('.', ',') + ' kg (emballage compris)',
+        'Gabarit du colis': order.exp.gabarit,
+        'Frais de port': order.client.mode === 'Retrait atelier'
+          ? 'RETRAIT ATELIER — 0,00 EUR'
+          : (order.exp.gratuit
+              ? 'OFFERT (franco ' + (order.exp.franco / 100) + ' EUR TTC)'
+              : (order.exp.surDevis
+                  ? 'A COTER — hors grille'
+                  : formatPrice(order.exp.portTtcCents) + ' TTC')),
+        'TOTAL a encaisser': formatPrice(order.totalAvecPort) + ' TTC'
+          + (order.exp.surDevis && order.client.mode !== 'Retrait atelier' ? ' + port a coter' : ''),
         Livraison: livraisonLigne(order),
         _subject: 'Demande de commande ' + ref + ' — Metal Pliage',
         _template: 'table',
@@ -626,10 +810,12 @@
   }
 
   /* ── BANDEAU LIVRAISON (dynamique) ───────────────────────────
-     ≥ seuil : livraison offerte. En dessous : frais de port selon
-     devis (précisés avec le lien de paiement) ou retrait gratuit à
-     l'atelier. Recalculé à chaque rendu du panier. ── */
+     Le client voit le PRIX du port avant de s'engager. L'audit SEO du 28/09
+     a identifie le « A CHIFFRER » comme le premier frein du tunnel : 540
+     visites/mois pour 0,28 % de conversion. On affiche donc poids, tranche,
+     port et total port compris. ── */
   const TRUCK_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;vertical-align:middle;"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>';
+
   function renderShippingNote(total) {
     if (!cartFooter) return;
     let note = document.getElementById('cart-ship-incl');
@@ -638,20 +824,46 @@
       note.id = 'cart-ship-incl';
       cartFooter.insertBefore(note, cartFooter.firstChild);
     }
-    const seuil = FREE_SHIP_CENTS / 100;
-    if (total >= FREE_SHIP_CENTS) {
-      note.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:.4rem;'
-        + 'margin-bottom:.6rem;font-size:.82rem;font-weight:600;color:#1f9d55;';
-      note.innerHTML = TRUCK_SVG + ' Livraison offerte (France métropolitaine)';
-    } else {
-      const reste = formatPrice(FREE_SHIP_CENTS - total);
-      note.style.cssText = 'margin-bottom:.6rem;font-size:.78rem;line-height:1.55;'
-        + 'color:var(--text-secondary,#bbb);text-align:center;';
-      note.innerHTML = TRUCK_SVG + ' <strong>Livraison offerte dès ' + seuil + '&nbsp;€</strong>'
-        + ' — plus que <strong style="color:var(--accent,#FF4500)">' + reste + '</strong>.<br>'
-        + 'En dessous&nbsp;: frais de port selon devis (précisés avec votre lien de paiement)'
-        + ' ou <strong>retrait gratuit à l\'atelier</strong> (Saint-Étienne).';
+    if (!cart.length) { note.innerHTML = ''; return; }
+
+    const e = expedition(total);
+    const poids = e.kgBrut.toFixed(1).replace('.', ',') + ' kg';
+    const base = 'margin-bottom:.6rem;font-size:.78rem;line-height:1.6;'
+               + 'color:var(--text-secondary,#bbb);text-align:center;';
+
+    if (e.gratuit) {
+      note.style.cssText = base + 'color:#1f9d55;font-weight:600;';
+      note.innerHTML = TRUCK_SVG + ' Livraison OFFERTE (France metropolitaine)'
+        + '<br><span style="font-weight:400;color:var(--text-secondary,#bbb)">Colis '
+        + poids + ' \u00b7 longueur ' + (e.lMax + 60) + ' mm</span>';
+      return;
     }
+
+    if (e.surDevis) {
+      note.style.cssText = base;
+      note.innerHTML = TRUCK_SVG + ' <strong>Frais de port sur devis</strong> — colis '
+        + poids + ', longueur ' + (e.lMax + 60) + ' mm : hors grille standard.'
+        + '<br>Nous vous communiquons le prix exact sous 24 h ouvrees, avant tout paiement.'
+        + ' Ou <strong>retrait gratuit a l\'atelier</strong> (Saint-Etienne).';
+      return;
+    }
+
+    // Le reste a parcourir avant le franco n'est affiche que s'il est credible :
+    // proposer « encore 280 EUR » a qui commande une couvertine de 60 EUR est une
+    // incitation vide, et le franco d'un colis > 2,1 m est hors d'atteinte du B2C.
+    const reste = e.franco - total;
+    const relance = (!e.hors && reste > 0 && reste <= total)
+      ? '<br>Offerte des <strong>' + (e.franco / 100) + '\u00a0\u20ac</strong>'
+        + ' — plus que <strong style="color:var(--accent,#FF4500)">' + formatPrice(reste) + '</strong>.'
+      : '';
+
+    note.style.cssText = base;
+    note.innerHTML = TRUCK_SVG + ' Livraison <strong>' + formatPrice(e.portTtcCents) + '</strong>'
+      + ' <span style="opacity:.75">(colis ' + poids + ' \u00b7 ' + (e.lMax + 60) + ' mm)</span>'
+      + '<br>Total port compris : <strong style="color:var(--accent,#FF4500)">'
+      + formatPrice(total + e.portTtcCents) + '</strong>'
+      + relance
+      + '<br><span style="opacity:.75">Ou <strong>retrait gratuit a l\'atelier</strong> (Saint-Etienne).</span>';
   }
 
   /* ── INIT ─────────────────────────────────────────────────── */
@@ -686,6 +898,9 @@
         price:  item.price  || 0,
         extrasCents: item.extrasCents || 0,
         qty:    item.qty    || 1,
+        // Geometrie d'expedition : sans elle le panier ne peut ni peser la
+        // commande ni savoir si le colis sort du reseau standard.
+        ship:   item.ship || null,
       });
     }
     renderCart();

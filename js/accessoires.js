@@ -62,12 +62,22 @@
       return;
     }
 
+    // Poids et longueur portés par la carte produit. Sans eux le panier compte
+    // 4 kg par défaut (hypothèse couvertine) et surfacture le port d'une
+    // cartouche de colle.
+    const kg    = parseFloat(btn.dataset.productKg);
+    const lenMm = parseInt(btn.dataset.productLen, 10);
+
     window.CartAddItem({
       name:   name,
       finish: finish,
       length: length,
       price:  priceTtcCents,
       qty:    1,
+      ship:   {
+        kg:    Number.isFinite(kg)    ? kg    : 0.5,
+        lenMm: Number.isFinite(lenMm) ? lenMm : 300,
+      },
     });
 
     flashFeedback(btn, '✓ Ajouté au panier', true);

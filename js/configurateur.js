@@ -67,11 +67,13 @@
     return !!(ral && ral.quote);
   }
 
+  // `kg` et `lenMm` servent au calcul du port (cart.js). La cornière de départ
+  // fait 2 m : elle impose sa longueur au fardeau, donc au tarif transporteur.
   const ACCESSORIES = [
-    { id: 'angle',    name: 'Angle 90°',          price: 45 },
-    { id: 'clisse',   name: 'Éclisse',            price: 6 },
-    { id: 'corniere', name: 'Cornière de départ', price: 7 },
-    { id: 'talon',    name: 'Talon',              price: 8 },
+    { id: 'angle',    name: 'Angle 90°',          price: 45, kg: 0.50, lenMm: 300  },
+    { id: 'clisse',   name: 'Éclisse',            price: 6,  kg: 0.15, lenMm: 150  },
+    { id: 'corniere', name: 'Cornière de départ', price: 7,  kg: 0.50, lenMm: 2000 },
+    { id: 'talon',    name: 'Talon',              price: 8,  kg: 0.10, lenMm: 200  },
   ];
 
   /* ────────────────────────────────────────────────────────────
@@ -907,6 +909,22 @@
       price:       Math.round(price.unitPieceTtc * 100), // prix TTC d'UNE pièce, hors accessoires
       extrasCents: Math.round(price.accTtc * 100),       // forfait accessoires de la ligne
       qty:         state.qty,
+      // Géométrie d'expédition. Le développé EST la largeur de tôle débitée,
+      // donc la surface qui pèse ; la longueur décide si le colis reste dans le
+      // réseau messagerie standard (≤ 2 100 mm) ou passe en messagerie
+      // industrielle, où le prix double. Les accessoires de la ligne comptent
+      // dans le fardeau : c'est la cornière de 2 m qui l'a rappelé.
+      ship: {
+        material:    state.material,
+        thicknessMm: state.material === 'alu' ? 1.5 : 0.75,
+        devMm:       state.C + 2 * state.A + 2 * state.R,
+        lenMm:       state.L,
+        accKg:       ACCESSORIES.reduce(
+                       (s, acc) => s + state.accessories[acc.id].qty * acc.kg, 0),
+        accLenMm:    ACCESSORIES.reduce(
+                       (m, acc) => state.accessories[acc.id].qty > 0
+                         ? Math.max(m, acc.lenMm) : m, 0),
+      },
     };
   }
 
