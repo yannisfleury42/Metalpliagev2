@@ -53,9 +53,6 @@ if (-not $Urls) {
         exit 1
     }
     $Urls = ([xml](Get-Content $sitemap -Raw)).urlset.url.loc
-    # blog/index.html est absent du sitemap alors que c'est le hub des articles
-    $hub = "https://$Host_/blog/"
-    if ($Urls -notcontains $hub) { $Urls += $hub }
 }
 
 $corps = @{
