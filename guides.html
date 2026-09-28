@@ -448,7 +448,9 @@
   <section tabindex="-1" id="guide-colle" style="padding: var(--section-pad) 0; background: var(--bg-base);">
     <div class="guide-block">
 
-      <div class="guide-title-row animate-fadeup">
+      <!-- Pas d'animate-fadeup ici : ce bloc porte le H1, donc le LCP d'une page
+           sans aucune image. En opacity:0 il attendait main.js pour s'afficher. -->
+      <div class="guide-title-row">
         <div class="guide-num-circle" aria-hidden="true">POSE</div>
         <div>
           <span class="section-label">MÉTHODE</span>
@@ -457,7 +459,7 @@
       </div>
 
       <!-- Matériel nécessaire -->
-      <div class="materials-wrap animate-fadeup">
+      <div class="materials-wrap">
         <h3>Matériel nécessaire</h3>
         <div class="materials-grid">
           <div class="material-item">
@@ -810,7 +812,7 @@
     <div class="section-inner">
       <header class="section-header animate-fadeup" style="text-align:center;margin-bottom:3rem;">
         <span class="section-label">QUESTIONS FRÉQUENTES</span>
-        <h2 style="font-size:clamp(1.7rem,3vw,2.6rem);">FAQ — POSE<br>À LA COLLE</h2>
+        <h2 style="font-size:clamp(1.7rem,3vw,2.6rem);">FAQ — POSE<br> À LA COLLE</h2>
       </header>
     </div>
 
@@ -876,7 +878,7 @@
     <div class="help-cta animate-fadeup">
       <div class="help-cta-inner">
         <span class="section-label" style="color:var(--accent);">CONSEIL TECHNIQUE</span>
-        <h3>BESOIN D'AIDE POUR<br>VOTRE PROJET&nbsp;?</h3>
+        <h3>BESOIN D'AIDE POUR<br> VOTRE PROJET&nbsp;?</h3>
         <p>Notre équipe technique vous accompagne sur le dimensionnement, le choix des accessoires nécessaires et la cotation de vos pièces sur mesure.</p>
         <div class="help-cta-actions">
           <a href="contact.html" class="btn-primary">Demander un conseil →</a>
@@ -1118,9 +1120,9 @@
     ]
   }
   </script>
-  <script src="js/main.js"></script>
-  <script src="js/cart.js?v=20260721"></script>
-  <script src="js/futuriste.js"></script>
-  <script src="js/preloader.js"></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/cart.js?v=20260721" defer></script>
+  <script src="js/futuriste.js" defer></script>
+  <script src="js/preloader.js" defer></script>
 </body>
 </html>
