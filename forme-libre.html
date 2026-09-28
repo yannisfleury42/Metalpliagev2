@@ -630,7 +630,11 @@
             <h2>Votre plan ou schéma <span style="font-size:.7em;font-weight:400;color:var(--text-muted);">(optionnel)</span></h2>
           </div>
           <div class="upload-zone" id="upload-zone">
-            <input type="file" name="Fichiers[]" id="file-input"
+            <!-- Pas de crochets dans le nom : FormSubmit repond 500 sur `Fichiers[]`.
+                 Ce formulaire n'ayant aucun JavaScript d'envoi, le client voyait la page
+                 d'erreur — donc toute demande de pliage sur plan accompagnee d'un fichier
+                 echouait, et c'est precisement le formulaire fait pour en recevoir. -->
+            <input type="file" name="attachment" id="file-input"
                    multiple
                    accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
             <div class="upload-icon">↑</div>

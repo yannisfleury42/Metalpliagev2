@@ -484,7 +484,11 @@
           <div class="form-group">
             <label for="file-input">Joindre une photo ou un croquis <span style="color:var(--text-muted);font-weight:normal;">(optionnel)</span></label>
             <div class="upload-zone" id="upload-zone">
-              <input type="file" name="Fichiers[]" id="file-input"
+              <!-- Le nom du champ ne doit PAS porter de crochets : FormSubmit repond 500
+                   sur `Fichiers[]` (verifie le 28/09/2026 — sans fichier 200, avec le meme
+                   fichier sous `Fichiers[]` 500, sous un nom simple 200, y compris a
+                   plusieurs fichiers). Ne pas remettre `[]` en croyant gerer le multiple. -->
+              <input type="file" name="attachment" id="file-input"
                      multiple
                      accept=".dxf,.dwg,.pdf,.jpg,.jpeg,.png,.heic,.webp">
               <div class="upload-icon" aria-hidden="true">↑</div>
