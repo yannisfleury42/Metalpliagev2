@@ -28,9 +28,24 @@
   }
 
 
-  /* ── HERO: force visible on load (no scroll needed) ──────── */
+  /* ── VISIBLE AU CHARGEMENT : tout ce qui est deja dans l'ecran ──
+     `.animate-fadeup` pose `opacity: 0` par defaut (css/styles.css:389). Tant
+     que l'IntersectionObserver n'a pas ajoute `.in-view`, l'element n'est pas
+     peint — et s'il s'agit du plus grand element de la page, c'est lui que
+     Google chronometre en LCP. Cloudflare mesurait 4 340 ms sur la photo de
+     couvertines.html (`article.couvertine-featured.animate-fadeup`), alors que
+     l'image est deja en preload + fetchpriority="high" : ce n'etait pas le
+     telechargement, c'etait l'animation.
+     On ne force donc plus seulement le hero, mais tout element deja visible
+     dans la fenetre au chargement. L'animation reste en place pour le reste de
+     la page, au defilement. ── */
   document.querySelectorAll('#hero .animate-fadeup').forEach((el) => {
     el.classList.add('in-view');
+  });
+
+  fadeEls.forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in-view');
   });
 
 
@@ -153,11 +168,14 @@
 
 
   /* ── CONTACT FORM ─────────────────────────────────────────── */
+  // La garde ne depend plus que du formulaire. Elle exigeait aussi
+  // `.form-success-msg`, alors que la reussite se joue desormais sur une page
+  // dediee (merci-devis.html) : retirer ce bloc du HTML aurait desactive la
+  // validation ET l'envoi, sans aucun signal.
   const form = document.querySelector('.contact-form');
-  const successMsg = document.querySelector('.form-success-msg');
 
-  if (form && successMsg) {
-    form.addEventListener('submit', async (e) => {
+  if (form) {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
 
       const honey = form.querySelector('input[name="_honey"]');
@@ -180,32 +198,19 @@
         return;
       }
 
+      // Envoi NATIF (multipart), surtout pas en fetch/JSON.
+      // L'ancienne version sérialisait le formulaire avec
+      // JSON.stringify(Object.fromEntries(new FormData(form))) : un objet File
+      // n'a aucune propriété propre énumérable, il devenait donc `{}` et la
+      // pièce jointe du client était perdue en silence — alors que la page
+      // promet « Joignez vos plans (PDF, DWG, DXF) ». L'endpoint /ajax de
+      // FormSubmit ne gère de toute façon pas les fichiers.
+      // Effet de bord voulu : le POST natif suit `_next`, donc la réussite a
+      // enfin une URL distincte (merci-devis.html) et devient mesurable.
       const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
       btn.textContent = 'Envoi en cours…';
       btn.disabled = true;
-
-      try {
-        const data = Object.fromEntries(new FormData(form));
-        delete data._honey;
-        const res = await fetch('https://formsubmit.co/ajax/contact@metal-pliage.fr', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            ...data,
-            _subject: 'Demande de contact — Metal Pliage',
-            _captcha: 'false',
-          }),
-        });
-        if (!res.ok) throw new Error("Erreur d'envoi");
-        form.hidden = true;
-        successMsg.hidden = false;
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } catch (err) {
-        alert("Erreur d'envoi. Réessayez ou écrivez directement à contact@metal-pliage.fr");
-        btn.textContent = originalText;
-        btn.disabled = false;
-      }
+      form.submit();
     });
 
     form.querySelectorAll('input, select, textarea').forEach((field) => {
