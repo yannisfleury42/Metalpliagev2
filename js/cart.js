@@ -833,7 +833,7 @@
 
     if (e.gratuit) {
       note.style.cssText = base + 'color:#1f9d55;font-weight:600;';
-      note.innerHTML = TRUCK_SVG + ' Livraison OFFERTE (France metropolitaine)'
+      note.innerHTML = TRUCK_SVG + ' Livraison OFFERTE (France métropolitaine)'
         + '<br><span style="font-weight:400;color:var(--text-secondary,#bbb)">Colis '
         + poids + ' \u00b7 longueur ' + (e.lMax + 60) + ' mm</span>';
       return;
@@ -842,9 +842,9 @@
     if (e.surDevis) {
       note.style.cssText = base;
       note.innerHTML = TRUCK_SVG + ' <strong>Frais de port sur devis</strong> — colis '
-        + poids + ', longueur ' + (e.lMax + 60) + ' mm : hors grille standard.'
-        + '<br>Nous vous communiquons le prix exact sous 24 h ouvrees, avant tout paiement.'
-        + ' Ou <strong>retrait gratuit a l\'atelier</strong> (Saint-Etienne).';
+        + poids + ', longueur ' + (e.lMax + 60) + ' mm : hors grille standard.'
+        + '<br>Nous vous communiquons le prix exact sous 24 h ouvrées, avant tout paiement.'
+        + ' Ou <strong>retrait gratuit à l\'atelier</strong> (Saint-Étienne).';
       return;
     }
 
@@ -853,7 +853,7 @@
     // incitation vide, et le franco d'un colis > 2,1 m est hors d'atteinte du B2C.
     const reste = e.franco - total;
     const relance = (!e.hors && reste > 0 && reste <= total)
-      ? '<br>Offerte des <strong>' + (e.franco / 100) + '\u00a0\u20ac</strong>'
+      ? '<br>Offerte dès <strong>' + (e.franco / 100) + '\u00a0\u20ac</strong>'
         + ' — plus que <strong style="color:var(--accent,#FF4500)">' + formatPrice(reste) + '</strong>.'
       : '';
 
@@ -863,7 +863,7 @@
       + '<br>Total port compris : <strong style="color:var(--accent,#FF4500)">'
       + formatPrice(total + e.portTtcCents) + '</strong>'
       + relance
-      + '<br><span style="opacity:.75">Ou <strong>retrait gratuit a l\'atelier</strong> (Saint-Etienne).</span>';
+      + '<br><span style="opacity:.75">Ou <strong>retrait gratuit à l\'atelier</strong> (Saint-Étienne).</span>';
   }
 
   /* ── INIT ─────────────────────────────────────────────────── */
