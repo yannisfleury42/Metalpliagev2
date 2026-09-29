@@ -62,19 +62,19 @@ scenario('DOUISSARD version 3 000 mm (celle qui faisait sortir du reseau colis)'
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 120, lenMm: 3000, accKg: 0.60, accLenMm: 120 } },
   { name: 'Pliage L 70x50', price: 4200, qty: 1, extrasCents: 0, length: 'L=2000mm',
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 120, lenMm: 2000 } },
-], '88400', { reseau: 'long', hors: false, gratuit: false, portHtCents: 7000 });
+], '88400', { reseau: 'long', hors: false, gratuit: false, portHtCents: 8000 });
 
 /* ── 3. FRUMHOLTZ MP-260920-1154-0I (reelle) ────────────────────────────── */
 scenario('FRUMHOLTZ — 1 couvertine alu 1,5 RAL 9006, dev. 330, L 2000', [
   { name: 'Couvertine', price: 7128, qty: 1, length: 'L=2000mm',
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 330, lenMm: 2000 } },
-], '57360', { hors: false, gratuit: false, portHtCents: 7000, reseau: 'long' });
+], '57360', { hors: false, gratuit: false, portHtCents: 5700, reseau: 'long' });
 
 /* ── 4. Le franco doit se declencher, et seulement au bon endroit ──────── */
 scenario('4 couvertines acier 2 m, 367,20 EUR TTC — sous le franco de 400, port facture', [
   { name: 'Couvertine', price: 9180, qty: 4, length: 'L=2000mm',
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 2000 } },
-], '42100', { gratuit: false, reseau: 'long', portHtCents: 8600 });
+], '42100', { gratuit: false, reseau: 'long', portHtCents: 12500 });
 
 scenario('5 couvertines acier 2 m, 459 EUR TTC et 19,1 kg — franco atteint', [
   { name: 'Couvertine', price: 9180, qty: 5, length: 'L=2000mm',
@@ -84,14 +84,16 @@ scenario('5 couvertines acier 2 m, 459 EUR TTC et 19,1 kg — franco atteint', [
 scenario('Meme commande en 3 000 mm — meme circuit, tarif au poids (plus de palier)', [
   { name: 'Couvertine', price: 13770, qty: 4, length: 'L=3000mm',
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 3000 } },
-], '42100', { reseau: 'long', hors: false, gratuit: false, portHtCents: 10000 });
+], '42100', { reseau: 'long', hors: false, gratuit: false, portHtCents: 17000 });
 
 /* Le franco est borne par le POIDS : un panier tres au-dessus du seuil en euros
-   mais trop lourd ne doit PAS passer en port offert. */
+   mais trop lourd ne doit PAS passer en port offert. Depuis le recalage du
+   29/09, 42 kg sortent en plus de la derniere tranche affichable (30 kg) : ce
+   panier part donc en COTATION, pas en port offert ni en prix devine. */
 scenario('8 couvertines acier 3 m, 1 100 EUR TTC mais 42 kg — franco hors de portee', [
   { name: 'Couvertine', price: 13770, qty: 8, length: 'L=3000mm',
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 3000 } },
-], '42100', { gratuit: false, portHtCents: 13000 });
+], '42100', { surDevis: true, gratuit: false, portHtCents: 0 });
 
 /* Au-dela des 4 m que le transporteur annonce tarifer au poids : on cote. */
 scenario('1 piece de 4 500 mm — hors limite annoncee', [

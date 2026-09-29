@@ -25,6 +25,8 @@
      moins 15 EUR de frais fixes et 63,27 EUR de transport = 6,73 EUR de marge
      nette. Voir project_rentabilite_metalpliage.
 
+     Recale le 29/09/2026 sur le 2e prix transporteur reel (FRUMHOLTZ, 42,03 EUR
+     HT) : la structure du tarif est maintenant connue, pas seulement un point.
      A REVOIR des reception du barreme : GRILLE_PETIT, GRILLE_LONG, FRANCO et
      FRANCO_KG. Rien d'autre. ── */
 
@@ -65,18 +67,38 @@
   /* Grilles de VENTE, TOUT COMPRIS (transport + emballage), en centimes HT,
      France metropolitaine. Tranches de poids BRUT.
 
-     Le seul point REEL est 63,27 EUR HT : fardeau DOUISSARD, 2 050 mm, 9,6 kg
-     brut vers le 88, facture le 28/09/2026. Il cale la tranche 0-10 kg a
-     70 EUR (63,27 + ~4 d'emballage, vendus 70). Au-dessus, la pente retenue est
-     de ~1,50 EUR/kg, valeur prudente faute de barreme : elle sera remplacee des
-     que le transporteur aura donne son minimum de perception et son prix au kg.
+     DEUX prix transporteur reels, tous deux vers l'Est (donc hors surcharge de
+     zone), qui donnent la structure du tarif :
+       DOUISSARD  9,6 kg  2 050 mm  -> 88400 (~350 km)  63,27 EUR HT  28/09/2026
+       FRUMHOLTZ  4,1 kg  2 060 mm  -> 57360 (~490 km)  42,03 EUR HT  29/09/2026
+     Deux points, une droite : **cout = 26,20 EUR + 3,86 EUR/kg**
+     (verif : 4,1 x 3,86 + 26,20 = 42,03).
 
-     ATTENTION a la lecture du point mesure : 63,27 EUR pour 9,6 kg font
-     6,59 EUR/kg, un tarif impossible en messagerie. Donc ou le minimum de
-     perception est eleve, ou nous sommes factures au poids VOLUMETRIQUE et pas
-     au poids reel (le fardeau fait 0,14 m3, soit 36 kg taxables a 250 kg/m3 —
-     et 63,27 / 36 = 1,76 EUR/kg, ce qui est plausible). Tant que ce point n'est
-     pas tranche, ces grilles restent volontairement hautes. */
+     Ce que ces deux points TRANCHENT, et qu'il ne faut plus reouvrir :
+     — La facturation n'est PAS volumetrique. Les deux colis font le meme volume
+       (0,064 m3 ; 2 050 contre 2 060 mm) pour des prix ecartes de 50 %. C'est le
+       poids REEL qui fait le prix. Donc pas de ratio 250 kg/m3, et emballer plus
+       serre ne fait PAS baisser le port.
+     — Il n'y a pas de minimum de perception eleve : la part fixe est de ~26 EUR,
+       pas 55-60. Les 6,59 EUR/kg de Douissard etaient un artefact du fixe.
+
+     Ce qu'ils NE tranchent pas : les deux mesures sont a l'Est, donc aucune des
+     surcharges annoncees (Ouest, Nord-Ouest, Paris) n'est dedans, et elles ne
+     couvrent que l'intervalle 4-10 kg. Prix de vente = (cout + 4 EUR d'emballage)
+     x 1,15 : ces 15 % ne sont pas de la marge, ils absorbent la surcharge de zone
+     que Yannis a choisi de ne pas afficher au code postal.
+
+     Au-dela de 30 kg il n'y a plus de prix automatique : extrapoler 3,86 EUR/kg
+     jusqu'a 50 ou 80 kg donnerait 260 et 390 EUR, ce qu'aucune messagerie ne
+     facture reellement (elles degressent). Un prix invente a ce niveau se paie
+     soit en marge, soit en commande perdue -> cotation. */
+  /* NON MESUREE : aucun colis compact n'a encore ete expedie, ces montants sont
+     ceux d'un reseau colis type La Poste / Mondial Relay. S'ils partent chez le
+     meme transporteur que les fardeaux, la part fixe de 26 EUR s'applique aussi
+     et les 11 EUR de la premiere tranche sont une perte seche de ~19 EUR. Cas
+     concret a ne pas perdre de vue : une commande de visserie seule (42 EUR HT).
+     A caler sur le premier envoi compact reel, ou en demandant au transporteur
+     s'il a une offre < 1,20 m. */
   const GRILLE_PETIT = [       // colis compact <= 1 200 mm
     { maxKg:  2, ht: 1100 },
     { maxKg:  5, ht: 1400 },
@@ -84,12 +106,12 @@
     { maxKg: 30, ht: 2600 },
   ];
   const GRILLE_LONG = [        // 1 200 < longueur <= 4 000 mm
-    { maxKg: 10, ht:  7000 },  // <- mesure : DOUISSARD, 63,27 EUR HT + emballage
-    { maxKg: 20, ht:  8600 },
-    { maxKg: 30, ht: 10000 },
-    { maxKg: 50, ht: 13000 },
-    { maxKg: 80, ht: 17500 },
-  ];
+    // cout = 26,20 + 3,86/kg, au poids HAUT de la tranche, puis +4 d'emballage, x1,15
+    { maxKg:  5, ht:  5700 },  // <- mesure : FRUMHOLTZ 4,1 kg = 42,03 EUR HT
+    { maxKg: 10, ht:  8000 },  // <- mesure : DOUISSARD  9,6 kg = 63,27 EUR HT
+    { maxKg: 20, ht: 12500 },  // extrapole (103,40 de cout) — l'ancien 86 perdait des 11,6 kg
+    { maxKg: 30, ht: 17000 },  // extrapole (142,00 de cout) — derniere tranche affichable
+  ];                           // > 30 kg : plus de tranche -> surDevis, on cote
 
   /* Franco de port. Il doit couvrir le port le plus cher qu'il puisse
      rencontrer, sinon il redevient ce qu'il etait : une facon de payer pour
@@ -100,10 +122,18 @@
 
      Calcul, marge fabrication 51 % et 15 EUR de frais fixes par commande :
        seuil = (port le plus cher sous le plafond + frais fixes + emballage) / (0,51 - 0,20)
-       long  : (86 + 15 + 4) / 0,31 = 339 EUR HT  -> 400 EUR TTC, plafond 20 kg
-       petit : (26 + 15 + 4) / 0,31 = 145 EUR HT  -> 150 EUR TTC, plafond 30 kg
-     Verification a 400 EUR TTC et 20 kg : 333,33 x 0,51 = 170,00 - 15 - 4 - 86
-     = +65,00 EUR, soit 19,5 %. A 10 kg : +81,00 EUR, soit 24,3 %.
+       long  : (125 + 15 + 4) / 0,31 = 465 EUR HT -> 550 EUR TTC en toute rigueur
+       petit : (26 + 15 + 4) / 0,31  = 145 EUR HT -> 150 EUR TTC, plafond 30 kg
+
+     Le franco long RESTE a 400 EUR TTC / 20 kg, et c'est un choix assume : il a
+     deja bouge de 200 a 400 le 28/09, le rebouger a 550 deux jours plus tard le
+     rendrait illisible. Il ne perd pas d'argent, il gagne juste peu —
+     verification au pire cas (20 kg, marge alu 51 %) : 333,33 x 0,51 = 170,00
+     - 15 - 4 - 125 = **+26,00 EUR, soit 7,8 %** (contre +65 avant recalage).
+     A 10 kg : +71,00 EUR, soit 21,3 %. C'est la tranche 20 kg qui l'essore :
+     si le barreme signe la confirme, c'est le seuil en euros qu'il faudra
+     relever, pas le plafond de poids (le baisser a 10 kg rendrait le franco
+     quasi inatteignable : 400 EUR TTC de couvertines font deja ~16 kg).
 
      Jamais de franco hors metropole : le port d'un envoi ultramarin n'a rien a
      voir avec celui d'un envoi continental. ── */
