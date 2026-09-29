@@ -132,10 +132,10 @@ const SHAPES = {
 
 
 /* ── ACCESSOIRES ─────────────────────────────────────────────── */
-// `kg` sert au calcul du port (cart.js) : un lot de 100 vis inox de 4,8 × 35
+// `kg` sert au calcul du port (cart.js) : un lot de 100 vis acier zingué de 4,8 × 35
 // pèse ~0,6 kg, ce n'est pas négligeable sur un colis de 4 kg.
 const ACCESSORIES_PLIAGE = [
-  { id: 'vis', name: 'Vis inox auto-foreuses tête RAL (lot de 100)', price: 32.00, kg: 0.60, lenMm: 120 },
+  { id: 'vis', name: 'Vis autoperceuses tête hexagonale, rondelle EPDM (lot de 100)', price: 42.00, kg: 0.60, lenMm: 120 },
 ];
 
 
@@ -965,7 +965,7 @@ function addToCart() {
   // plutôt que d'envoyer une ligne à 0,00 € au panier.
   if (!price || !Number.isFinite(price.unitPieceTtc)) return;
 
-  // Accessoires détaillés (ex: « 2 × Vis inox auto-foreuses tête RAL (lot de 100) — RAL 7016 »).
+  // Accessoires détaillés (ex: « 2 × Vis autoperceuses tête hexagonale, rondelle EPDM (lot de 100) — RAL 7016 »).
   // Ils sont chiffrés à part du prix de la pièce : forfait de ligne, non multiplié
   // par la quantité — voir le même traitement dans configurateur.js.
   const accParts = ACCESSORIES_PLIAGE
