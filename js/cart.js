@@ -12,27 +12,68 @@
   const ORDER_EMAIL = 'contact@metal-pliage.fr';
   const STORAGE_KEY = 'mp_cart';   // panier persistant (survit aux changements de page)
 
-  /* ── MODELE D'EXPEDITION (revise 2026-09-28) ──────────────
-     Premiere grille adossee a un cout transporteur REEL et non a une
-     estimation : 63,27 EUR HT pour le fardeau DOUISSARD — 2 050 mm,
-     9,6 kg brut, Saint-Etienne vers 88400 Gerardmer, enlevement du 30/09/2026.
+  /* ── MODELE D'EXPEDITION (revise 2026-10-06) ──────────────
+     Adosse au BAREME GEODIS SIGNE — offre messageriePlus France, reference
+     client MY50, domicile/domicile HT au depart de Saint-Etienne, applicable
+     du 01/10/2026 au 30/09/2027. Compte ouvert en facturation mensuelle,
+     ENLEVEMENT COMPRIS, delai ~2 jours.
 
-     Tant que la grille complete du transporteur n'est pas signee, le port est
-     vendu AU COUT : la marge vient de la piece, pas du transport. Ce qui etait
-     faux avant le 28/09 : le panier affichait « A CHIFFRER » (le client ne
-     connaissait son total qu'apres s'etre engage) et le franco a 200 EUR TTC ne
-     couvrait pas le port — 166,67 EUR HT de marchandise a 51 % de marge = 85 EUR,
-     moins 15 EUR de frais fixes et 63,27 EUR de transport = 6,73 EUR de marge
-     nette. Voir project_rentabilite_metalpliage.
+     Ce bareme remplace les deux prix spot (DOUISSARD 63,27 / FRUMHOLTZ 42,03)
+     sur lesquels cette grille etait calee, et il invalide ce qu'on en avait
+     deduit. A ne plus jamais rouvrir :
 
-     Recale le 29/09/2026 sur le 2e prix transporteur reel (FRUMHOLTZ, 42,03 EUR
-     HT) : la structure du tarif est maintenant connue, pas seulement un point.
-     A REVOIR des reception du barreme : GRILLE_PETIT, GRILLE_LONG, FRANCO et
-     FRANCO_KG. Rien d'autre. ── */
+     1. LA PENTE A 3,86 EUR/KG N'EXISTE PAS. Entre deux tranches voisines le
+        bareme monte de ~1 EUR/kg. Le port est un FIXE DE ZONE, pas un prix au
+        kilo. Verification : FRUMHOLTZ 4,1 kg vers le 57 = 41,74 au bareme contre
+        42,03 factures (0,7 % d'ecart). DOUISSARD 9,6 kg vers le 88 = 50,55 au
+        bareme contre 63,27 factures : c'etait un prix spot d'avant bareme.
+
+     2. LA FACTURATION EST VOLUMETRIQUE. Ligne 116 du bareme : rapport
+        poids/volume >= 150 kg/m3. Le poids taxable est donc
+        max(poids brut ; volume x 150), arrondi au kg superieur — et sur TOUT
+        notre catalogue c'est le volume qui gagne. Une couvertine alu 1,5 de 2 m
+        pese 2,4 kg reels et 7 kg TAXABLES. Consequence : alleger l'emballage ne
+        fait rien gagner, SEULE LA SECTION DU COLIS FAIT LE PRIX.
+
+     3. LE PIRE CAS METROPOLE N'EST PAS PARIS mais la Bretagne/Normandie des
+        5 kg (29 Finistere : 59,08 en 10-14 kg contre 55,45 pour le 75, et
+        l'ecart se creuse avec le poids). La surcharge Ouest/Nord-Ouest annoncee
+        oralement le 28/09 est donc DEJA INTEGREE EN ZONE.
+
+     Yannis a choisi un PRIX NATIONAL UNIQUE, pas de majoration au code postal
+     (le client du 42 paie donc 60 EUR pour un envoi qui en coute 28 ; la reponse
+     a ce cas est le retrait atelier gratuit, pas une grille par departement).
+     Chaque tranche est donc calee sur le DEPARTEMENT LE PLUS CHER de metropole,
+     + 9,9 % de surcharge energie PROVISIONNEE, + 4 EUR d'emballage, arrondi :
+
+       tranche   pire metro   +9,9 %   +4 EUR   retenu
+       0-4 kg      45,44       49,94    53,94     55
+       5-9 kg      50,70       55,72    59,72     60
+       10-14 kg    59,08       64,93    68,93     70
+       15-19 kg    67,51       74,19    78,19     80
+       20-29 kg    75,90       83,41    87,41     90
+       30-39 kg    82,64       90,82    94,82     95
+
+     Pas de +15 % par-dessus : ces 15 % absorbaient une surcharge de zone
+     inconnue, elle est maintenant dans le bareme et on se cale sur le maximum.
+     Le port est vendu au cout, la marge vient de la piece.
+
+     LES BORNES SONT CELLES DE GEODIS (4/9/14/19/29/39/49/59/69/79/99) et pas
+     des chiffres ronds. C'est le defaut qui coutait le plus cher : une tranche
+     << <= 10 kg >> facture le tarif 5-9 alors qu'a 10 kg Geodis bascule en 10-14.
+
+     RESERVE ASSUMEE : les 9,9 % de surcharge energie sont PROVISIONNES, pas
+     confirmes. Le fichier s'intitule << tout inclus >> mais sa ligne 113 dit
+     << hors surcharge energie >> ; le 9,9 vient d'une cellule orpheline de la
+     feuille. Si Cedric Chauveau (Geodis, 07 64 56 16 65) confirme le tout
+     inclus, chaque tranche peut baisser de ~5 EUR. Reste aussi a chiffrer
+     l'AD VALOREM : la responsabilite est plafonnee a 33 EUR/kg et 1 000 EUR par
+     colis, soit 79 EUR d'indemnite pour une couvertine alu de 2,4 kg cassee.
+     Detail : reference_grille_port_metalpliage en memoire. ── */
 
   const TVA = 1.20;
 
-  // Masse surfacique. On ne code pas « 4,05 kg/m2 » en dur : le configurateur
+  // Masse surfacique. On ne code pas << 4,05 kg/m2 >> en dur : le configurateur
   // pliage vend 3 matieres et 5 epaisseurs, la densite est la seule donnee qui
   // ne se perime pas.
   const DENSITE = { alu: 2700, acier: 7850, inox: 7900 };   // kg/m3
@@ -42,103 +83,89 @@
     return d * (thicknessMm / 1000);
   }
 
-  // Emballage : chevrons bois, cornieres carton, intercalaires, film etirable,
-  // surcapot. Pese sur le colis DOUISSARD. Son COUT est deja compris dans les
-  // grilles ci-dessous (elles sont tout compris) ; seul son POIDS se calcule,
-  // parce que c'est le poids brut que le transporteur facture.
-  const EMBALLAGE_KG = { petit: 0.4, long: 1.4 };
+  /* Emballage : PAPIER BULLE, confirme par Yannis le 06/10/2026. Pas de
+     chevron, pas de corniere, pas de fardeau — rien qui ajoute du poids. Ces
+     0,2 kg ne servent qu'a declarer un poids brut juste au transporteur : ils
+     ne changent AUCUN prix, puisque c'est le volume qui fait le poids taxable. */
+  const EMBALLAGE_KG = { petit: 0.1, long: 0.2 };
 
-  /* ── DEUX CIRCUITS, UN SEUL CRITERE : LE POIDS ──────────────────
-     Precision du transporteur, 28/09/2026 : **le prix se fait au poids jusqu'a
-     4 m de longueur**. Il n'y a donc pas de rupture de tarif a 2,10 m — c'etait
-     mon extrapolation, et elle surfacturait les pieces de 2,50 et 3 m. MDS ne
-     vend jamais au-dela de 3 000 mm : tout le flux tient dans un seul circuit.
+  /* Ratio de poids taxable impose par le bareme (ligne 116) : 150 kg/m3. */
+  const KG_PAR_M3 = 150;
 
-     Ce qui reste : un carton de visserie ne part pas dans le meme circuit qu'un
-     fardeau de 2 m. D'ou deux grilles, separees par la longueur, mais chacune
-     tarifee au poids.
+  /* ── GEOMETRIE DU COLIS = GEOMETRIE DU PRIX ────────────────
+     Puisque le prix se fait au volume, l'enveloppe declaree EST le tarif. Calee
+     sur le seul colis reellement mesure (DOUISSARD : 2 050 x 260 x 120 pour
+     2 pieces), d'ou largeur 260 fixe et hauteur 60 + 30 par piece.
 
-       <= 1 200 mm   colis compact (accessoires, visserie, colle)
-       <= 4 000 mm   fardeau colis long — tout notre catalogue
-        > 4 000 mm   hors limite annoncee par le transporteur -> cotation ── */
+     HAUTEUR QUI FAIT CHANGER DE TRANCHE (largeur 260) — le seul parametre a
+     surveiller a l'atelier :
+       2 000 mm : 60 EUR jusqu'a 112 mm, 70 jusqu'a 174, 80 jusqu'a 236
+       2 500 mm : 60 EUR jusqu'a  90 mm, 70 jusqu'a 140, 80 jusqu'a 190
+       3 000 mm : 60 EUR jusqu'a  75 mm, 70 jusqu'a 117, 80 jusqu'a 159
+     En 3 m, 75 mm d'epaisseur de colis valent 10 EUR.
+
+     A RECALER sur les prochains envois reels (demande de Yannis du 06/10) : si
+     l'atelier emballe plus epais que ce qui est declare ici, Geodis refacture et
+     la marge part. C'est le seul vrai risque de cette grille. ── */
+  const COLIS_LARGEUR_MM = 260;
+  const COLIS_HAUTEUR_BASE_MM = 60;
+  const COLIS_HAUTEUR_PAR_PIECE_MM = 30;
+
+  /* ── UN SEUL RESEAU, UNE SEULE GRILLE ────────────────────
+     Geodis n'a AUCUNE offre colis sous 1,20 m : son 0-4 kg est a 45,44 EUR pire
+     metropole. Les 11 / 14 / 18 / 26 EUR de l'ancienne GRILLE_PETIT etaient des
+     prix de reseau colis type La Poste, jamais mesures, et une perte seche de
+     ~30 EUR par envoi. Tant qu'un compte Colissimo Entreprise n'est pas ouvert,
+     TOUT part chez Geodis et tout se tarife avec la meme grille. Un carton de
+     visserie seule (42 EUR HT) coute donc 55 EUR de port : dissuasif, mais
+     honnete — et c'est le comportement voulu, la visserie voyage GRATUITEMENT
+     dans le colis d'une couvertine, elle n'a aucune raison de partir seule.
+     Ouvrir Colissimo est la seule facon de descendre cette premiere tranche.
+
+     La longueur ne sert plus qu'a declarer le bon gabarit, plus a choisir un
+     tarif. Au-dela de 99 kg taxables, hors metropole ou au-dela de 4 m : pas de
+     prix devine, on cote. */
   const SEUIL_PETIT_MM = 1200;
   const SEUIL_MAX_MM   = 4000;
 
-  /* Grilles de VENTE, TOUT COMPRIS (transport + emballage), en centimes HT,
-     France metropolitaine. Tranches de poids BRUT.
+  const GRILLE = [            // bornes = celles du bareme Geodis, en centimes HT
+    { maxKg:  4, ht:  5500 },
+    { maxKg:  9, ht:  6000 },
+    { maxKg: 14, ht:  7000 },
+    { maxKg: 19, ht:  8000 },
+    { maxKg: 29, ht:  9000 },
+    { maxKg: 39, ht:  9500 },
+    { maxKg: 49, ht: 10500 },
+    { maxKg: 59, ht: 11000 },
+    { maxKg: 69, ht: 12000 },
+    { maxKg: 79, ht: 12500 },
+    { maxKg: 99, ht: 14000 },
+  ];                          // > 99 kg : cotation
 
-     DEUX prix transporteur reels, tous deux vers l'Est (donc hors surcharge de
-     zone), qui donnent la structure du tarif :
-       DOUISSARD  9,6 kg  2 050 mm  -> 88400 (~350 km)  63,27 EUR HT  28/09/2026
-       FRUMHOLTZ  4,1 kg  2 060 mm  -> 57360 (~490 km)  42,03 EUR HT  29/09/2026
-     Deux points, une droite : **cout = 26,20 EUR + 3,86 EUR/kg**
-     (verif : 4,1 x 3,86 + 26,20 = 42,03).
+  /* Franco de port — recale le 06/10/2026 a 300 EUR TTC, SANS PLAFOND DE POIDS.
 
-     Ce que ces deux points TRANCHENT, et qu'il ne faut plus reouvrir :
-     — La facturation n'est PAS volumetrique. Les deux colis font le meme volume
-       (0,064 m3 ; 2 050 contre 2 060 mm) pour des prix ecartes de 50 %. C'est le
-       poids REEL qui fait le prix. Donc pas de ratio 250 kg/m3, et emballer plus
-       serre ne fait PAS baisser le port.
-     — Il n'y a pas de minimum de perception eleve : la part fixe est de ~26 EUR,
-       pas 55-60. Les 6,59 EUR/kg de Douissard etaient un artefact du fixe.
+     Le plafond de poids ne protegeait rien et rendait le franco illisible : il
+     supposait que le poids fait le prix du port, ce qui est faux ici (c'est le
+     volume), et il oubliait que le poids fait aussi le prix de la MARCHANDISE,
+     bien plus vite.
 
-     Ce qu'ils NE tranchent pas : les deux mesures sont a l'Est, donc aucune des
-     surcharges annoncees (Ouest, Nord-Ouest, Paris) n'est dedans, et elles ne
-     couvrent que l'intervalle 4-10 kg. Prix de vente = (cout + 4 EUR d'emballage)
-     x 1,15 : ces 15 % ne sont pas de la marge, ils absorbent la surcharge de zone
-     que Yannis a choisi de ne pas afficher au code postal.
+     Verification au seuil, sur les deux pires ratios valeur/poids du catalogue
+     (marge fabrication, 15 EUR de frais fixes, port reel de la tranche) :
+       250 EUR HT d'acier dev 520 : 26 kg taxables -> port 90 EUR
+         0,64 x 250 - 15 - 90 = +47 EUR
+       250 EUR HT d'alu dev 520   : 26 kg taxables -> port 90 EUR
+         0,51 x 250 - 15 - 90 = +22 EUR
+     Positif partout. Et au-dela de 99 kg taxables il n'y a plus de tarif du
+     tout, c'est une cotation : le plafond de poids est inutile par construction.
 
-     Au-dela de 30 kg il n'y a plus de prix automatique : extrapoler 3,86 EUR/kg
-     jusqu'a 50 ou 80 kg donnerait 260 et 390 EUR, ce qu'aucune messagerie ne
-     facture reellement (elles degressent). Un prix invente a ce niveau se paie
-     soit en marge, soit en commande perdue -> cotation. */
-  /* NON MESUREE : aucun colis compact n'a encore ete expedie, ces montants sont
-     ceux d'un reseau colis type La Poste / Mondial Relay. S'ils partent chez le
-     meme transporteur que les fardeaux, la part fixe de 26 EUR s'applique aussi
-     et les 11 EUR de la premiere tranche sont une perte seche de ~19 EUR. Cas
-     concret a ne pas perdre de vue : une commande de visserie seule (42 EUR HT).
-     A caler sur le premier envoi compact reel, ou en demandant au transporteur
-     s'il a une offre < 1,20 m. */
-  const GRILLE_PETIT = [       // colis compact <= 1 200 mm
-    { maxKg:  2, ht: 1100 },
-    { maxKg:  5, ht: 1400 },
-    { maxKg: 10, ht: 1800 },
-    { maxKg: 30, ht: 2600 },
-  ];
-  const GRILLE_LONG = [        // 1 200 < longueur <= 4 000 mm
-    // cout = 26,20 + 3,86/kg, au poids HAUT de la tranche, puis +4 d'emballage, x1,15
-    { maxKg:  5, ht:  5700 },  // <- mesure : FRUMHOLTZ 4,1 kg = 42,03 EUR HT
-    { maxKg: 10, ht:  8000 },  // <- mesure : DOUISSARD  9,6 kg = 63,27 EUR HT
-    { maxKg: 20, ht: 12500 },  // extrapole (103,40 de cout) — l'ancien 86 perdait des 11,6 kg
-    { maxKg: 30, ht: 17000 },  // extrapole (142,00 de cout) — derniere tranche affichable
-  ];                           // > 30 kg : plus de tranche -> surDevis, on cote
-
-  /* Franco de port. Il doit couvrir le port le plus cher qu'il puisse
-     rencontrer, sinon il redevient ce qu'il etait : une facon de payer pour
-     vendre. D'ou un plafond de POIDS en plus du seuil en euros — au-dela, le
-     port est toujours facture. Le plafond remplace l'ancien palier de longueur,
-     qui n'avait plus de sens : ajouter une barre de 3 m au panier ne fait plus
-     basculer le tarif, ajouter du poids si.
-
-     Calcul, marge fabrication 51 % et 15 EUR de frais fixes par commande :
-       seuil = (port le plus cher sous le plafond + frais fixes + emballage) / (0,51 - 0,20)
-       long  : (125 + 15 + 4) / 0,31 = 465 EUR HT -> 550 EUR TTC en toute rigueur
-       petit : (26 + 15 + 4) / 0,31  = 145 EUR HT -> 150 EUR TTC, plafond 30 kg
-
-     Le franco long RESTE a 400 EUR TTC / 20 kg, et c'est un choix assume : il a
-     deja bouge de 200 a 400 le 28/09, le rebouger a 550 deux jours plus tard le
-     rendrait illisible. Il ne perd pas d'argent, il gagne juste peu —
-     verification au pire cas (20 kg, marge alu 51 %) : 333,33 x 0,51 = 170,00
-     - 15 - 4 - 125 = **+26,00 EUR, soit 7,8 %** (contre +65 avant recalage).
-     A 10 kg : +71,00 EUR, soit 21,3 %. C'est la tranche 20 kg qui l'essore :
-     si le barreme signe la confirme, c'est le seuil en euros qu'il faudra
-     relever, pas le plafond de poids (le baisser a 10 kg rendrait le franco
-     quasi inatteignable : 400 EUR TTC de couvertines font deja ~16 kg).
+     Ce que le franco a 300 change pour le client : une commande de 5 couvertines
+     alu 2,5 m (405 EUR TTC) payait 125 EUR de port, elle est maintenant franco —
+     150 EUR d'ecart sur le ticket. L'audit SEO du 28/09 identifie le tunnel
+     comme le goulot (540 visites/mois pour 0,28 % de conversion), pas le trafic.
 
      Jamais de franco hors metropole : le port d'un envoi ultramarin n'a rien a
      voir avec celui d'un envoi continental. ── */
-  const FRANCO    = { petit: 15000, long: 40000 };
-  const FRANCO_KG = { petit: 30,    long: 20    };
+  const FRANCO = 30000;       // 300 EUR TTC de marchandise
 
   // Departement d'apres le code postal. `cp.slice(0,2)` se trompe deux fois :
   // la Corse (20xxx = 2A/2B) et l'outre-mer, ou le departement tient sur
@@ -191,35 +218,49 @@
       (s, it) => s + poidsUnitaireKg(it) * it.qty + ((it.ship && it.ship.accKg) || 0), 0);
     const lMax = cart.reduce(
       (m, it) => Math.max(m, longueurMm(it), (it.ship && it.ship.accLenMm) || 0), 0) || 0;
+    // Nombre de pieces empilees : c'est lui qui fait la hauteur du colis, donc
+    // le volume, donc le prix. Un accessoire qui voyage a plat dans le meme
+    // colis n'ajoute pas d'epaisseur -> il ne compte pas.
+    const nbPieces = cart.reduce((n, it) => n + (it.qty || 1), 0);
 
     const reseau = lMax <= SEUIL_PETIT_MM ? 'petit' : 'long';
-    const grille = reseau === 'petit' ? GRILLE_PETIT : GRILLE_LONG;
     const kgBrut = cart.length ? kgPieces + EMBALLAGE_KG[reseau] : 0;
 
-    const franco  = FRANCO[reseau];
-    const tranche = grille.find((t) => kgBrut <= t.maxKg) || null;
+    // Enveloppe declaree au transporteur. Elle n'est pas decorative : c'est
+    // elle qui fixe le poids taxable, donc le prix.
+    const colis = reseau === 'petit'
+      ? { l: Math.max(lMax + 40, 200), w: 300, h: 200 }
+      : { l: lMax + 60, w: COLIS_LARGEUR_MM,
+          h: COLIS_HAUTEUR_BASE_MM + COLIS_HAUTEUR_PAR_PIECE_MM * nbPieces };
+    const volM3 = cart.length ? (colis.l / 1000) * (colis.w / 1000) * (colis.h / 1000) : 0;
+
+    /* POIDS TAXABLE — la seule base de facturation Geodis (bareme ligne 116 :
+       rapport poids/volume >= 150 kg/m3 ; ligne 114 : arrondi au kg superieur).
+       Sur notre catalogue c'est presque toujours le volume qui l'emporte : une
+       couvertine alu 1,5 de 2 m pese 2,4 kg reels et 7 kg taxables. */
+    const kgTaxable = cart.length
+      ? Math.ceil(Math.max(kgBrut, volM3 * KG_PAR_M3))
+      : 0;
+
+    const tranche = GRILLE.find((t) => kgTaxable <= t.maxKg) || null;
     const metro   = (cp === undefined || cp === null || cp === '') ? true : estMetropole(cp);
-    // Pas de tranche, piece au-dela des 4 m que le transporteur annonce tarifer
-    // au poids, ou envoi ultramarin : on ne devine pas un prix.
+    // Pas de tranche (> 99 kg taxables), piece au-dela des 4 m du bareme, ou
+    // envoi ultramarin : on ne devine pas un prix, on cote.
     const surDevis = !tranche || !metro || lMax > SEUIL_MAX_MM;
-    // Le franco est plafonne en POIDS : c'est lui qui fait le prix, donc lui qui
-    // doit borner la gratuite.
-    const gratuit = !surDevis && totalCents >= franco && kgBrut <= FRANCO_KG[reseau];
+    // Plus de plafond de poids : au-dela de la derniere tranche il n'y a plus
+    // de tarif du tout, donc plus de franco a borner.
+    const gratuit = !surDevis && totalCents >= FRANCO;
     const portHt  = (gratuit || surDevis) ? 0 : tranche.ht;
 
-    // Enveloppe declaree au transporteur : celle du cahier des charges
-    // CDC-2026-01, qu'il a deja entre les mains.
-    const type = reseau === 'petit' ? null
-               : (lMax <= 2100 ? 'A' : (lMax <= 2600 ? 'B' : 'C'));
-    const gabarit = reseau === 'petit'
-      ? Math.max(lMax + 40, 200) + ' \u00d7 300 \u00d7 200 mm (colis compact)'
-      : (lMax + 60) + ' \u00d7 350 \u00d7 200 mm (type ' + type + ' du CDC-2026-01)';
+    const gabarit = colis.l + ' \u00d7 ' + colis.w + ' \u00d7 ' + colis.h + ' mm'
+      + (reseau === 'petit' ? ' (colis compact)' : ' (colis long, papier bulle)')
+      + ' \u2014 ' + volM3.toFixed(3).replace('.', ',') + ' m\u00b3';
 
     return {
-      kgNet: kgPieces, kgBrut: kgBrut, lMax: lMax, reseau: reseau,
+      kgNet: kgPieces, kgBrut: kgBrut, kgTaxable: kgTaxable, volM3: volM3,
+      lMax: lMax, nbPieces: nbPieces, reseau: reseau,
       hors: lMax > SEUIL_MAX_MM,
-      surDevis: surDevis, gratuit: gratuit, franco: franco,
-      francoKg: FRANCO_KG[reseau], tranche: tranche,
+      surDevis: surDevis, gratuit: gratuit, franco: FRANCO, tranche: tranche,
       portHtCents:  portHt,
       portTtcCents: Math.round(portHt * TVA),
       gabarit: gabarit,
@@ -228,7 +269,7 @@
 
   const RESEAU_LABEL = {
     petit: 'colis compact <= 1 200 mm',
-    long:  'fardeau colis long, tarife au poids',
+    long:  'colis long',
   };
 
   function livraisonLigne(order) {
@@ -246,7 +287,8 @@
           : 'Port FACTURE ' + (e.portTtcCents / 100).toFixed(2).replace('.', ',') + ' EUR TTC ('
             + (e.portHtCents / 100).toFixed(2).replace('.', ',') + ' EUR HT) — grille '
             + RESEAU_LABEL[e.reseau]
-            + ', tranche ' + e.tranche.maxKg + ' kg.');
+            + ', tranche <= ' + e.tranche.maxKg + ' kg taxables (poids taxable retenu : '
+            + e.kgTaxable + ' kg, dont ' + e.kgBrut.toFixed(1).replace('.', ',') + ' kg reels).');
     const adresse = [c.adresse, c.complement].filter(Boolean).join(' — ');
     return tete + ' | Livrer a : ' + adresse + ', ' + c.cp + ' ' + c.ville
          + ' (departement ' + departement(c.cp) + ')';
@@ -723,7 +765,11 @@
         // etaient absents du mail : il fallait rouvrir le dossier et repeser la
         // commande a la main a chaque demande de prix (cas FRUMHOLTZ, 28/09).
         'Poids net pieces': order.exp.kgNet.toFixed(1).replace('.', ',') + ' kg',
-        'Poids brut colis': order.exp.kgBrut.toFixed(1).replace('.', ',') + ' kg (emballage compris)',
+        'Poids brut colis': order.exp.kgBrut.toFixed(1).replace('.', ',') + ' kg (papier bulle compris)',
+        // C'est CE poids que Geodis facture : max(brut ; volume x 150 kg/m3),
+        // arrondi au kg superieur. Sur un colis long c'est toujours le volume
+        // qui l'emporte — sans ce champ, la facture transporteur est illisible.
+        'Poids taxable': order.exp.kgTaxable + ' kg (base de facturation Geodis, 150 kg/m³)',
         'Gabarit du colis': order.exp.gabarit,
         'Frais de port': order.client.mode === 'Retrait atelier'
           ? 'RETRAIT ATELIER — 0,00 EUR'
@@ -859,22 +905,27 @@
     if (!cart.length) { note.innerHTML = ''; return; }
 
     const e = expedition(total);
-    const poids = e.kgBrut.toFixed(1).replace('.', ',') + ' kg';
+    /* On n'affiche PLUS le poids au client. Depuis le bareme du 06/10 le prix se
+       fait au volume : annoncer « colis 2,9 kg » a cote de « livraison 72 € »
+       passe pour une erreur de tarif. Ce qui est vrai et verifiable par le
+       client, c'est l'encombrement. Le poids reel et le poids taxable restent
+       dans le mail de commande, pour l'enlevement. */
+    const taille = (e.lMax + 60) + ' mm';
     const base = 'margin-bottom:.6rem;font-size:.78rem;line-height:1.6;'
                + 'color:var(--text-secondary,#bbb);text-align:center;';
 
     if (e.gratuit) {
       note.style.cssText = base + 'color:#1f9d55;font-weight:600;';
       note.innerHTML = TRUCK_SVG + ' Livraison OFFERTE (France métropolitaine)'
-        + '<br><span style="font-weight:400;color:var(--text-secondary,#bbb)">Colis '
-        + poids + ' \u00b7 longueur ' + (e.lMax + 60) + ' mm</span>';
+        + '<br><span style="font-weight:400;color:var(--text-secondary,#bbb)">Colis de '
+        + taille + ' \u00b7 livre sous 2 jours ouvres</span>';
       return;
     }
 
     if (e.surDevis) {
       note.style.cssText = base;
-      note.innerHTML = TRUCK_SVG + ' <strong>Frais de port sur devis</strong> — colis '
-        + poids + ', longueur ' + (e.lMax + 60) + ' mm : hors grille standard.'
+      note.innerHTML = TRUCK_SVG + ' <strong>Frais de port sur devis</strong> — colis de '
+        + taille + ' : hors grille standard.'
         + '<br>Nous vous communiquons le prix exact sous 24 h ouvrées, avant tout paiement.'
         + ' Ou <strong>retrait gratuit à l\'atelier</strong> (Saint-Étienne).';
       return;
@@ -882,18 +933,18 @@
 
     // Le reste a parcourir avant le franco n'est affiche que si la gratuite est
     // reellement atteignable : proposer « encore 280 EUR » a qui commande une
-    // couvertine de 60 EUR est une incitation vide, et surtout le franco est
-    // plafonne en poids — au-dela, aucun montant ne le declenche, et l'annoncer
-    // serait une promesse fausse.
+    // couvertine de 60 EUR est une incitation vide. Depuis le 06/10 il n'y a
+    // plus de plafond de poids a verifier : dans toute la plage tarifee, le
+    // montant seul declenche le franco.
     const reste = e.franco - total;
-    const relance = (e.kgBrut <= e.francoKg && reste > 0 && reste <= total)
+    const relance = (reste > 0 && reste <= total)
       ? '<br>Offerte dès <strong>' + (e.franco / 100) + '\u00a0\u20ac</strong>'
         + ' — plus que <strong style="color:var(--accent,#FF4500)">' + formatPrice(reste) + '</strong>.'
       : '';
 
     note.style.cssText = base;
     note.innerHTML = TRUCK_SVG + ' Livraison <strong>' + formatPrice(e.portTtcCents) + '</strong>'
-      + ' <span style="opacity:.75">(colis ' + poids + ' \u00b7 ' + (e.lMax + 60) + ' mm)</span>'
+      + ' <span style="opacity:.75">(colis de ' + taille + ', livre sous 2 jours ouvres)</span>'
       + '<br>Total port compris : <strong style="color:var(--accent,#FF4500)">'
       + formatPrice(total + e.portTtcCents) + '</strong>'
       + relance

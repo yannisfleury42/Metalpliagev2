@@ -573,7 +573,7 @@
   margin-bottom: 1.5rem;
 }
 
-.step5-price-ht {
+.step5-price-main {
   font-family: var(--font-head);
   font-size: 2.2rem;
   font-weight: 800;
@@ -581,14 +581,14 @@
   line-height: 1;
 }
 
-.step5-price-ht em {
+.step5-price-main em {
   font-size: 1.1rem;
   font-style: normal;
   color: var(--text-secondary);
   font-weight: 400;
 }
 
-.step5-price-ttc {
+.step5-price-sub {
   font-size: 0.85rem;
   color: var(--text-secondary);
   margin-top: 0.4rem;
@@ -730,7 +730,7 @@
   border-radius: 8px;
 }
 
-.sidebar-price-ht {
+.sidebar-price-main {
   font-family: var(--font-head);
   font-size: 1.8rem;
   font-weight: 800;
@@ -738,14 +738,14 @@
   line-height: 1;
 }
 
-.sidebar-price-ht em {
+.sidebar-price-main em {
   font-size: 0.9rem;
   font-style: normal;
   color: var(--text-secondary);
   font-weight: 400;
 }
 
-.sidebar-price-ttc {
+.sidebar-price-sub {
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin-top: 0.3rem;

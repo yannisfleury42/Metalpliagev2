@@ -105,25 +105,26 @@ void patchId;
 
 rejoue('Panier vide', []);
 
-rejoue('1 couvertine alu 2 m (FRUMHOLTZ) — 4,07 kg, tranche 5 kg, port 68,40 € attendu', [
+rejoue('1 couvertine alu 2 m (FRUMHOLTZ) — 2,9 kg reels mais 8 kg TAXABLES, tranche <= 9 kg, port 72,00 € attendu', [
   { name: 'Couvertine métallique', finish: 'RAL 9006', length: 'L=2000mm', price: 7128, qty: 1,
     ship: { material: 'alu', thicknessMm: 1.5, devMm: 330, lenMm: 2000 } },
-], ['68,40', '139,68']);
+], ['72,00', '143,28']);
 
-rejoue('5 couvertines acier 2 m à 459 € et 19,1 kg — franco 400 € atteint', [
+rejoue('5 couvertines acier 2 m à 459 € — franco 300 € atteint', [
   { name: 'Couvertine métallique', finish: 'RAL 7016', length: 'L=2000mm', price: 9180, qty: 5,
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 2000 } },
 ], ['OFFERTE']);
 
-// Le transporteur tarife au poids jusqu'a 4 m : une piece de 3 m paie le meme
-// port qu'une de 2 m a poids egal. C'est ce que l'ancien palier a 2 100 mm
-// surfacturait (162 EUR au lieu de 84).
-rejoue('1 pièce de 3 m — même tarif au poids que du 2 m, tranche 10 kg, port 96,00 € attendu', [
+// La longueur ne cree pas de palier tarifaire : elle fait du VOLUME, et c'est
+// le volume qui paie. Une piece de 3 m declare 0,072 m3 soit 11 kg taxables ->
+// tranche <= 14 kg, 70 EUR HT / 84 EUR TTC. L'ancien palier a 2 100 mm
+// surfacturait la meme piece a 162 EUR.
+rejoue('1 pièce de 3 m — 11 kg taxables, tranche <= 14 kg, port 84,00 € attendu', [
   { name: 'Couvertine métallique', finish: 'RAL 7016', length: 'L=3000mm', price: 13770, qty: 1,
     ship: { material: 'acier', thicknessMm: 0.75, devMm: 300, lenMm: 3000 } },
-], ['96,00']);
+], ['84,00']);
 
-rejoue('1 pièce de 4,50 m — hors des 4 m tarifés au poids, cotation', [
+rejoue('1 pièce de 4,50 m — au-dela des 4 m du bareme, cotation', [
   { name: 'Pliage sur mesure', finish: 'Brut', length: 'L=4500mm', price: 20000, qty: 1,
     ship: { material: 'alu', thicknessMm: 2, devMm: 300, lenMm: 4500 } },
 ], ['sur devis']);
