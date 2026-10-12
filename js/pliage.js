@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    CONFIGURATEUR PLIAGE SUR MESURE — Metal Pliage
    Formes U / L / Z / Appui de fenêtre
-   Acier 0.75mm · Aluminium 1 ou 2mm · Inox 1 ou 2mm (brut)
+   Acier 0.75 ou 1.5mm · Aluminium laqué 1.5mm · Inox 1, 2 ou 3mm (brut)
 ═══════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -18,7 +18,6 @@ const RATE_BASE = {
   'acier-0.75': 85,   // = couvertine acier
   'acier-1.5':  100,
   'alu-1.5':    90,   // = couvertine alu (était 100 ; aligné vers le bas)
-  'alu-2':      105,  // était 115 ; ré-aligné sur alu-1.5 (~+17 %)
   'inox-1':     125,  // inox = premium, pas de benchmark concurrent → inchangé
   'inox-2':     160,
   'inox-3':     200,
@@ -38,7 +37,7 @@ function rateForPliage(key, devMm) {
 // Épaisseurs disponibles par matière
 const THICKNESS_OPTIONS = {
   acier: [0.75, 1.5],
-  alu:   [1.5, 2],
+  alu:   [1.5],   // l'alu 2 mm ne se vend plus : aucun gain de tenue sur le 1,5 pour un coût matière supérieur (12/10/2026)
   inox:  [1, 2, 3],
 };
 
@@ -143,7 +142,7 @@ const ACCESSORIES_PLIAGE = [
 const state = {
   shape:     null,  // 'U' | 'L' | 'Z' | 'appui'
   material:  null,  // 'acier' | 'alu' | 'inox'
-  thickness: null,  // null (acier=0.75 auto) | 1 | 2
+  thickness: null,  // 0.75 | 1 | 1.5 | 2 | 3 selon THICKNESS_OPTIONS ; auto-sélectionné si la matière n'en propose qu'une
   dims:      {},    // { A, B, H } selon forme
   L:         2000,
   color:     null,  // code RAL | 'brut'
@@ -862,6 +861,18 @@ function rebuildThicknessBtns(mat) {
     });
     wrap.appendChild(btn);
   });
+
+  // Une seule épaisseur possible (alu) : on la présélectionne. Sans ça, l'étape 3
+  // reste verrouillée derrière un bouton unique à cliquer, sans aucun choix à faire.
+  if (options.length === 1) {
+    const only = wrap.querySelector('.thickness-btn');
+    if (only) {
+      only.setAttribute('aria-pressed', 'true');
+      state.thickness = parseFloat(only.dataset.thickness);
+      checkUnlockStep3();
+      checkUnlockStep4();
+    }
+  }
 }
 
 // Longueur input

@@ -523,7 +523,7 @@
             </div>
             <div class="material-card-body">
               <strong>Aluminium</strong>
-              <span class="material-epaisseur" id="alu-epaisseur">1,5 ou 2 mm</span>
+              <span class="material-epaisseur" id="alu-epaisseur">1,5 mm</span>
               <span class="material-desc">Légèreté · Anticorrosion</span>
             </div>
             <div class="material-card-check" aria-hidden="true">
@@ -555,8 +555,9 @@
         <div class="thickness-selector" id="thickness-selector" hidden>
           <p class="thickness-label">Épaisseur de la tôle</p>
           <div class="thickness-btns" role="group" aria-label="Épaisseur">
-            <button class="thickness-btn" data-thickness="1" aria-pressed="false">1 mm</button>
-            <button class="thickness-btn" data-thickness="2" aria-pressed="false">2 mm</button>
+            <!-- Boutons générés par rebuildThicknessBtns() selon la matière (THICKNESS_OPTIONS
+                 dans js/pliage.js). Ne pas les écrire en dur ici : ce markup statique
+                 proposait encore un alu 2 mm retiré de la gamme le 12/10/2026. -->
           </div>
         </div>
       </section>
